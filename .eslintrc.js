@@ -18,6 +18,9 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.{ts,tsx}'],
+      parserOptions: {
+        project: ['./tsconfig.json'], // Specify it only for TypeScript files
+      },
       env: {
         jest: true,
       },
@@ -28,23 +31,25 @@ module.exports = {
         'import/parsers': {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
-        'import/resolver': {
-          typescript: {
-            project: './tsconfig.json',
-          },
-        },
       },
       parser: '@typescript-eslint/parser',
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
-        'plugin:import/errors',
-        'plugin:import/warnings',
         'plugin:import/typescript',
         'prettier',
       ],
+      rules: {
+        // temp allowing during TS migration
+        '@typescript-eslint/ban-ts-comment': [
+          'error',
+          {
+            'ts-ignore': 'allow-with-description',
+            minimumDescriptionLength: 4,
+          },
+        ],
+      },
     },
   ],
 }

@@ -242,15 +242,15 @@
         give any warranties and will not be liable for any loss, direct or
         indirect through continued use of this feature.
       </div>
-      <div>
+      <!-- <div>
         <button @click="ids">get ids</button>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
 
 <script>
-import { computed, defineComponent, ref, onMounted } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import { useMint } from '~/composables/web3/useMint'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
@@ -291,20 +291,18 @@ export default defineComponent({
     const limitMultiLength = (value) => {
       if (value.length > 4) {
         multiMintId.value = value.slice(0, 4)
-        console.log(value)
       }
     }
 
     const limitLength = (value) => {
       if (value.length > 4) {
         singleMint.value = value.slice(0, 4)
-        console.log(value)
       }
     }
 
-    onMounted(async () => {
-      await ids()
-    })
+    // onMounted(async () => {
+    //   await ids()
+    // })
 
     return {
       etherSingleMintCost,
