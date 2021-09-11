@@ -15,7 +15,7 @@
             </nav>
             
             <div class="mx-auto my-20">
-                <a class="hover:bg-gracy-700 " href="https://github.com/BibliothecaForAdventurers/nuxt-frontend"><Github class="w-8 h-8"/></a>
+                <a class="hover:bg-gracy-700 " href="https://github.com/BibliothecaForAdventurers/bibliotheca-webite"><Github class="w-8 h-8"/></a>
                 <a class="hover:bg-gracy-700 " href="https://discord.gg/8NS4JxGmUC"><Discord class="w-8 h-8 fill-current mt-4"/></a>
                 <a class="hover:bg-gracy-700 " target="blank_" href="https://medium.com/@bibliotheca">
                 <Medium class="w-8 h-8 fill-current mt-4"/>
