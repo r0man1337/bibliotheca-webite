@@ -25,6 +25,9 @@ body {
     @apply font-body text-white; 
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 @tailwind components;
 @tailwind utilities;

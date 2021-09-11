@@ -27,7 +27,7 @@ const erc721tokens = {
     { key: 'LootRealms', type: 'token', symbol: 'LootRealms', name: 'Realms (for Adventurers)', address: '0x6B13F1C319c2DdA7Ae15c04f540671B8A0E2AE9B' }
   ]),
 };
-const result = reactive({mint: null});
+const result = reactive({ mint: null });
 
 const tokenIds = ref(null);
 
@@ -38,33 +38,33 @@ export function useMint() {
   const { ethersProviders, account, networkName, activate } = useWeb3();
 
   const mint = async (lootId) => {
-      if (!account.value) return activate();
-      try {
-        error.mint = null
-        loading.value = true
-        loadingModal.value = true
-        result.mint = await mintToken(account.value, networkName.value, lootId)
-      } catch (e) {
-        error.mint = e.message
-      } finally {
-        loading.value = false
-      }
+    if (!account.value) return activate();
+    try {
+      error.mint = null
+      loading.value = true
+      loadingModal.value = true
+      result.mint = await mintToken(account.value, networkName.value, lootId)
+    } catch (e) {
+      error.mint = e.message
+    } finally {
+      loading.value = false
+    }
   };
 
   const multiMint = async (lootIds) => {
-      if (!account.value) return activate();
+    if (!account.value) return activate();
 
-      try {
-        error.mint = null
-        loadingModal.value = true
-        loading.value = true
-        result.mint = await multiMintToken(account.value, networkName.value, lootIds)
-      } catch (e) {
-        console.log(e)
-        error.mint = e.message
-      } finally {
-        loading.value = false
-      }
+    try {
+      error.mint = null
+      loadingModal.value = true
+      loading.value = true
+      result.mint = await multiMintToken(account.value, networkName.value, lootIds)
+    } catch (e) {
+      console.log(e)
+      error.mint = e.message
+    } finally {
+      loading.value = false
+    }
   };
 
   const ids = async () => {
@@ -80,7 +80,7 @@ export function useMint() {
     } finally {
       loading.value = false
     }
-};
+  };
 
 
 
@@ -101,22 +101,22 @@ async function mintToken(
   lootId
 ) {
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const tokensArr = erc721tokens[network].allTokens;
-    const signer = provider.getSigner()
-    const tokensAddrArr = tokensArr.map(a => a.address);
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = erc721tokens[network].allTokens;
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map(a => a.address);
 
-    const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer );
-    console.log(tokensAddrArr)
-    console.log(owner);
-    const overrides = {
-      // To convert Ether to Wei:
-      value: ethers.utils.parseEther("0.1") 
-    }
-    const mint = await tokenContract.mint(lootId, overrides)
-    await mint.wait();
+  const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer);
+  console.log(tokensAddrArr)
+  console.log(owner);
+  const overrides = {
+    // To convert Ether to Wei:
+    value: ethers.utils.parseEther("0.1")
+  }
+  const mint = await tokenContract.mint(lootId, overrides)
+  await mint.wait();
 
-    return mint;
+  return mint;
 }
 
 async function multiMintToken(
@@ -126,25 +126,25 @@ async function multiMintToken(
 ) {
 
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const tokensArr = erc721tokens[network].allTokens;
-    const signer = provider.getSigner()
-    const tokensAddrArr = tokensArr.map(a => a.address);
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = erc721tokens[network].allTokens;
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map(a => a.address);
 
-    const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer );
+  const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer);
 
-    const wei = 0.1 * lootIds.length
-    const overrides = {
-      // To convert Ether to Wei:
-      value: ethers.utils.parseEther(wei.toString()) 
-    }
-    console.log()
-    const mint = await tokenContract.multiMint(lootIds, overrides)
-    await mint.wait();
+  const wei = 0.1 * lootIds.length
+  const overrides = {
+    // To convert Ether to Wei:
+    value: ethers.utils.parseEther(wei.toString())
+  }
+  console.log()
+  const mint = await tokenContract.multiMint(lootIds, overrides)
+  await mint.wait();
 
-    return mint;
+  return mint;
 
-}  
+}
 
 async function checkTokenMint(
   network: Network
@@ -155,15 +155,15 @@ async function checkTokenMint(
     const tokensArr = erc721tokens[network].allTokens;
     const signer = provider.getSigner()
     const tokensAddrArr = tokensArr.map(a => a.address);
-    const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer );
-    
+    const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer);
+
     const ids = []
 
     for (let step = 1; step < 8000; step++) {
       const mint = await tokenContract.tokenByIndex(step.toString())
 
       await mint.wait();
-      
+
       if (mint) {
         console.log(step)
         ids.push(step)
