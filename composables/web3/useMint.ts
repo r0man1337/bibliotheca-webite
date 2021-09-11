@@ -69,7 +69,7 @@ export function useMint() {
 
   const ids = async () => {
     if (!account.value) return;
-
+    console.log("2")
     try {
       error.mint = null
       tokenIds.value = await checkTokenMint(networkName.value)
