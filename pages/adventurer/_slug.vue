@@ -50,6 +50,12 @@
           href="#treasure"
           >Treasure: {{ adventurer.treasures.length }}</a
         >
+        <a
+          v-if="adventurer.mloots.length"
+          class="hover:bg-gray-900 px-2 py-1 rounded"
+          href="#mloot"
+          >mLoot: {{ adventurer.mloots.length }}</a
+        >
       </div>
       <div v-if="adventurer.bags.length" id="loot">
         <h3 class="mt-8">Loot: {{ adventurer.bags.length }}</h3>
@@ -59,7 +65,7 @@
             :key="index"
             class="w-80"
           >
-            <LootCard :loot="loot">
+            <LootCard is-o-g :loot="loot">
               <div class="flex">
                 Score:
                 <span v-if="rariety" class="ml-auto">{{
@@ -71,7 +77,8 @@
                 ></div>
               </div>
               <div class="flex">
-                Rank:
+                <span>Rank: </span>
+
                 <span v-if="rariety" class="ml-auto">{{
                   lootRariety(loot.id).rarest
                 }}</span>
@@ -174,6 +181,15 @@
           </div>
         </div>
       </div>
+      <div v-if="adventurer.mloots.length" id="mloot">
+        <hr />
+        <h3 class="mt-8">mLoot: {{ adventurer.mloots.length }}</h3>
+        <div class="flex flex-wrap w-full">
+          <div v-for="loot in adventurer.mloots" :key="loot.id" class="w-80">
+            <LootCard :loot="loot" />
+          </div>
+        </div>
+      </div>
     </div>
     <Loader v-else />
   </section>
@@ -232,6 +248,22 @@ export default defineComponent({
           }
         }
         bags(first: 30, where: { currentOwner: $slug }) {
+          id
+          head
+          neck
+          chest
+          hand
+          ring
+          weapon
+          waist
+          foot
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
+        mloots(first: 30, where: { currentOwner: $slug }) {
           id
           head
           neck

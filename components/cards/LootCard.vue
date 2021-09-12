@@ -24,14 +24,15 @@
       <slot> </slot>
     </div>
     <div>
+      {{ loot.weapon }} <br />
       {{ loot.chest }} <br />
-      {{ loot.foot }} <br />
       {{ loot.hand }} <br />
       {{ loot.head }} <br />
       {{ loot.neck }} <br />
       {{ loot.ring }} <br />
       {{ loot.waist }} <br />
-      {{ loot.weapon }}
+
+      {{ loot.foot }} <br />
     </div>
     <div class="mt-auto">
       <span
@@ -57,13 +58,20 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    isOG: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, context) {
     const { shortenHash } = useFormatting()
     const navigate = () => {
+      const url = props.isOG
+        ? '0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7'
+        : '0x1dfe7ca09e99d10835bf73044a23b73fc20623df'
       window.open(
-        'https://opensea.io/assets/0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7/' +
-          props.loot.id,
+        'https://opensea.io/assets/' + url + '/' + props.loot.id,
         '_blank'
       )
     }

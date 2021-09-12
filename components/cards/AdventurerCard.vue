@@ -30,6 +30,8 @@
         >Treasure:
         {{ adventurer.treasuresHeld ? adventurer.treasuresHeld : 0 }}</span
       >
+      <br />
+      <span>mLoot: {{ adventurer.mLootHeld ? adventurer.mLootHeld : 0 }}</span>
     </div>
     <div class="mt-auto flex text-gray-300">
       Visit Adventurers Profile <ArrowRight class="ml-4 w-4 h-4 self-center" />

@@ -61,6 +61,7 @@ export default defineComponent({
           realmsHeld
           bagsHeld
           treasuresHeld
+          mLootHeld
         }
       }
     `)
