@@ -9,7 +9,7 @@
     v-on="$listeners"
     @click="externalSite()"
   >
-    <slot v-if="!loading"  />
+    <slot v-if="!loading" />
     <span v-else>Loading</span>
   </component>
 </template>
@@ -19,23 +19,23 @@ export default {
   props: {
     to: {
       type: String,
-      default: null
+      default: null,
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     href: {
       type: String,
-      default: null
+      default: null,
     },
     block: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     type: {
       required: false,
@@ -43,17 +43,17 @@ export default {
       default: 'default',
       validator: (value) => {
         return Object.keys(ButtonColors).includes(value)
-      }
-    }
+      },
+    },
   },
   computed: {
-    buttonColor () {
+    buttonColor() {
       return ButtonColors[this.type]
     },
-    tag () {
+    tag() {
       return this.to ? 'nuxt-link' : 'button'
     },
-    btnClass () {
+    btnClass() {
       const classes = []
       if (this.block) {
         classes.push('w-full')
@@ -65,14 +65,14 @@ export default {
         classes.push('bg-red-400')
       }
       return classes.join(' ')
-    }
+    },
   },
   methods: {
-    externalSite () {
+    externalSite() {
       if (this.href) {
         window.location = this.href
       }
-    }
-  }
+    },
+  },
 }
 </script>

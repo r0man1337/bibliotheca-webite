@@ -6,8 +6,8 @@ const jsonServer = require('json-server')
 const router = jsonServer.router(path.join(__dirname, 'db.json'))
 
 app.use(express.json())
-app.use('/', jsonServer.defaults([{id: "lootId"}]), router);
+app.use('/', jsonServer.defaults([{ id: 'lootId' }]), router)
 
-app.listen(3001);
+app.listen(3001)
 
 module.exports = app

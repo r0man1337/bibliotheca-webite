@@ -60,25 +60,25 @@
             class="w-80"
           >
             <LootCard :loot="loot">
-              <div>
+              <div class="flex">
                 Score:
                 <span v-if="rariety" class="ml-auto">{{
                   lootRariety(loot.id).score
                 }}</span>
-                <span
+                <div
                   v-else
-                  class="h-5 w-8 bg-gray-500 rounded animate-pulse"
-                ></span>
+                  class="h-6 w-10 bg-white rounded animate-pulse ml-2"
+                ></div>
               </div>
-              <div>
+              <div class="flex">
                 Rank:
                 <span v-if="rariety" class="ml-auto">{{
                   lootRariety(loot.id).rarest
                 }}</span>
-                <span
+                <div
                   v-else
-                  class="h-5 w-8 bg-gray-500 rounded animate-pulse"
-                ></span>
+                  class="h-6 w-10 bg-white rounded animate-pulse ml-2"
+                ></div>
               </div>
             </LootCard>
           </div>
@@ -315,7 +315,7 @@ export default defineComponent({
       return openSeaData.value.find((realm) => realm.token_id === id)
     }
 
-    const rariety = ref()
+    const rariety = ref(null)
 
     const rarietyFetch = async () => {
       const idString = adventurer.value

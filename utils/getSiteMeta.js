@@ -2,7 +2,8 @@ const type = 'website'
 const url = 'https://bibliotheca.com'
 const title = 'Bibliotheca (for Loot)'
 const description = 'Graphing the Lootverse to allow adventurers to explore.'
-const mainImage = '"https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
+const mainImage =
+  '"https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
 
 export default (meta) => {
   return [

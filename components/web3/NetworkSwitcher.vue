@@ -1,20 +1,50 @@
 <template>
-  <div v-if="networks.length > 1" v-click-outside="hide" class="relative w-[160px] md:w-[178px] mr-6">
+  <div
+    v-if="networks.length > 1"
+    v-click-outside="hide"
+    class="relative w-[160px] md:w-[178px] mr-6"
+  >
     <button
       type="button"
-      class="bg-primary-light hover:bg-primary-blue-hover relative w-full border border-primary-blue-border rounded pl-2.5 pr-10 py-1.5 text-left focus:outline-none focus:ring-1 focus:ring-[#0846E4] focus:border-[#0846E4] sm:text-sm"
+      class="
+        bg-primary-light
+        hover:bg-primary-blue-hover
+        relative
+        w-full
+        border border-primary-blue-border
+        rounded
+        pl-2.5
+        pr-10
+        py-1.5
+        text-left
+        focus:outline-none
+        focus:ring-1
+        focus:ring-[#0846E4]
+        focus:border-[#0846E4]
+        sm:text-sm
+      "
       aria-haspopup="listbox"
       aria-expanded="true"
       aria-labelledby="listbox-label"
       @click="show = !show"
     >
-      <span class="flex items-center capitalize font-medium text-sm ">
+      <span class="flex items-center capitalize font-medium text-sm">
         <component :is="activeNetwork.icon" class="w-6 h-6 mr-2" />
 
         {{ activeNetwork.name }}
       </span>
       <span
-        class="absolute inset-y-0 right-0 flex fill-current text-gray-500 items-center pr-3 pointer-events-none"
+        class="
+          absolute
+          inset-y-0
+          right-0
+          flex
+          fill-current
+          text-gray-500
+          items-center
+          pr-3
+          pointer-events-none
+        "
       >
         <svg
           :class="{ 'rotate-180': show }"
@@ -42,7 +72,20 @@
     -->
     <div v-show="show" class="w-full px-2 absolute z-10 mt-0.5">
       <ul
-        class="w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm divide-y divide-[#556D9C]/8"
+        class="
+          w-full
+          bg-white
+          shadow-lg
+          max-h-60
+          rounded-md
+          py-1
+          text-base
+          ring-1 ring-black ring-opacity-5
+          overflow-auto
+          focus:outline-none
+          sm:text-sm
+          divide-y divide-[#556D9C]/8
+        "
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"
@@ -75,7 +118,15 @@
         -->
           <span
             v-if="activeNetwork.id === network.id"
-            class="text-primary-blue-dark absolute inset-y-0 right-0 flex items-center pr-4"
+            class="
+              text-primary-blue-dark
+              absolute
+              inset-y-0
+              right-0
+              flex
+              items-center
+              pr-4
+            "
           >
             <svg
               width="8"
@@ -97,41 +148,52 @@
 </template>
 
 <script>
-import { defineComponent, nextTick, ref, watch } from '@nuxtjs/composition-api';
-import { useNetwork } from '~/composables/web3/useNetwork';
-import { useWeb3 } from '~/composables/web3/useWeb3';
-import { useModal } from '~/composables/useModal';
+import { defineComponent, nextTick, ref, watch } from '@nuxtjs/composition-api'
+import { useNetwork } from '~/composables/web3/useNetwork'
+import { useWeb3 } from '~/composables/web3/useWeb3'
+import { useModal } from '~/composables/useModal'
 
 // import { useTenderly } from '~/composables/web3/useTenderly';
 
 export default defineComponent({
   setup() {
-    const show = ref(false);
-    const {chainId, ethersProviders} = useWeb3();
-    const { networks, activeNetworkId, activeNetwork, checkForNetworkMismatch, networkMismatch, networkName } = useNetwork();
-    const { showNetworksMismatchDialog } = useModal();
+    const show = ref(false)
+    const { chainId, ethersProviders } = useWeb3()
+    const {
+      networks,
+      activeNetworkId,
+      activeNetwork,
+      checkForNetworkMismatch,
+      networkMismatch,
+      networkName,
+    } = useNetwork()
+    const { showNetworksMismatchDialog } = useModal()
 
-    const setActiveNetwork = async networkId => {
+    const setActiveNetwork = async (networkId) => {
       // await stopSimulation();
-      activeNetworkId.value = networkId;
-      show.value = false;
-      await nextTick();
-      checkForNetworkMismatch();
-    };
+      activeNetworkId.value = networkId
+      show.value = false
+      await nextTick()
+      checkForNetworkMismatch()
+    }
 
-    watch(chainId, (val) => {
-      if (val) {
-        if ([1, 4, 42161, 421611].includes(val)) {
-          checkForNetworkMismatch();
-        } else {
-          showNetworksMismatchDialog();
+    watch(
+      chainId,
+      (val) => {
+        if (val) {
+          if ([1, 4, 42161, 421611].includes(val)) {
+            checkForNetworkMismatch()
+          } else {
+            showNetworksMismatchDialog()
+          }
         }
-      }
-    }, { immediate: true });
+      },
+      { immediate: true }
+    )
 
     const hide = () => {
-      show.value = false;
-    };
+      show.value = false
+    }
 
     return {
       chainId,
@@ -142,9 +204,8 @@ export default defineComponent({
       networkName,
       activeNetwork,
       setActiveNetwork,
-      activeNetworkId
-    };
-
-  }
-});
+      activeNetworkId,
+    }
+  },
+})
 </script>

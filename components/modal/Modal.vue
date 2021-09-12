@@ -1,8 +1,21 @@
 <template>
   <transition :duration="{ enter: 300, leave: 200 }">
-    <div v-show="isShown" class="fixed inset-0 z-10 overflow-y-auto pointer-events-auto">
+    <div
+      v-show="isShown"
+      class="fixed inset-0 z-10 overflow-y-auto pointer-events-auto"
+    >
       <div
-        class="flex flex-col items-center justify-end min-h-screen px-4 pt-4 pb-20 text-center sm:justify-center sm:p-0"
+        class="
+          flex flex-col
+          items-center
+          justify-end
+          min-h-screen
+          px-4
+          pt-4
+          pb-20
+          text-center
+          sm:justify-center sm:p-0
+        "
       >
         <transition
           enter-active-class="duration-300 ease-out"
@@ -14,7 +27,15 @@
         >
           <div
             v-if="isShown"
-            class="fixed inset-0 z-20 bg-black dark:bg-dark-500 bg-opacity-70 dark:bg-opacity-70"
+            class="
+              fixed
+              inset-0
+              z-20
+              bg-black
+              dark:bg-dark-500
+              bg-opacity-70
+              dark:bg-opacity-70
+            "
             @click="close"
           ></div>
         </transition>

@@ -1,6 +1,24 @@
 <template>
   <div
-    class="inline-block w-full max-w-sm px-4 py-6 overflow-hidden text-left align-bottom transition-all transform bg-white border border-opacity-50 rounded-lg shadow-xl  dark:bg-dark-400 sm:my-8 sm:align-middle sm:p-6 border-green-light"
+    class="
+      inline-block
+      w-full
+      max-w-sm
+      px-4
+      py-6
+      overflow-hidden
+      text-left
+      align-bottom
+      transition-all
+      transform
+      bg-white
+      border border-opacity-50
+      rounded-lg
+      shadow-xl
+      dark:bg-dark-400
+      sm:my-8 sm:align-middle sm:p-6
+      border-green-light
+    "
     role="dialog"
     aria-modal="true"
     aria-labelledby="modal-headline"
@@ -25,24 +43,24 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api';
-import { useModal } from '~/composables/useModal';
-import { useNetwork } from '~/composables/web3/useNetwork';
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useModal } from '~/composables/useModal'
+import { useNetwork } from '~/composables/web3/useNetwork'
 
 export default defineComponent({
   setup() {
-    const { close } = useModal();
-    const { activeNetwork, switchNetwork } = useNetwork();
+    const { close } = useModal()
+    const { activeNetwork, switchNetwork } = useNetwork()
 
     async function switchAndClose() {
       try {
-        await switchNetwork();
+        await switchNetwork()
 
-        close();
-      } catch (error) { }
+        close()
+      } catch (error) {}
     }
 
-    return { switchAndClose, activeNetwork };
-  }
-});
+    return { switchAndClose, activeNetwork }
+  },
+})
 </script>

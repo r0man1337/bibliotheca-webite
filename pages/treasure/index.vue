@@ -6,23 +6,31 @@
         <input v-model="search" placeholder="insert wallet address" class="bg-black rounded px-4 py-2 text-xl" type="text">
         <button class="px-4" type="submit">find adventurer</button>
       </form> -->
-      
+
       <div class="flex flex-wrap">
-        <div v-for="(treasure, index) in treasures" :key="index" class="w-80 ">
-          <TreasureCard owner :treasure="treasure"/>
+        <div v-for="(treasure, index) in treasures" :key="index" class="w-80">
+          <TreasureCard owner :treasure="treasure" />
         </div>
       </div>
-      <BButton :loading="loading" type="primary" @click.native="fetchMore">Load more</BButton>
+      <BButton :loading="loading" type="primary" @click.native="fetchMore"
+        >Load more</BButton
+      >
     </div>
     <div v-else>
-      <Loader/>
+      <Loader />
     </div>
   </section>
 </template>
 
 <script>
 import { gql } from 'nuxt-graphql-request'
-import { computed, defineComponent, ref, useContext, useFetch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+  useFetch,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup(props, context) {
@@ -31,7 +39,7 @@ export default defineComponent({
     const offset = ref(1)
     const query = ref(gql`
       query treasureQuery($offset: Int!) {
-        treasures (first: 100, skip: $offset, ) {
+        treasures(first: 100, skip: $offset) {
           id
           asset1
           asset2
@@ -53,14 +61,16 @@ export default defineComponent({
     const treasures = ref(null)
 
     const submitSearch = () => {
-      if(search.value.length === 42) {
+      if (search.value.length === 42) {
         context.root.$router.push(`/adventurer/${search.value}`)
       }
     }
 
     useFetch(async () => {
-        const response = await $graphql.default.request(query.value, { offset: offset.value })
-        treasures.value = response.treasures
+      const response = await $graphql.default.request(query.value, {
+        offset: offset.value,
+      })
+      treasures.value = response.treasures
     })
 
     const loading = ref(false)
@@ -71,14 +81,15 @@ export default defineComponent({
       offset.value = offset.value + 100
 
       try {
-        const response = await $graphql.default.request(query.value, { offset: offset.value })
+        const response = await $graphql.default.request(query.value, {
+          offset: offset.value,
+        })
         treasures.value = treasures.value.concat(response.treasures)
-      } catch(e) {
+      } catch (e) {
         console.log(e)
       } finally {
         loading.value = false
       }
-
     }
 
     return {
@@ -86,9 +97,8 @@ export default defineComponent({
       search,
       submitSearch,
       fetchMore,
-      loading
+      loading,
     }
-    
   },
 })
 </script>
