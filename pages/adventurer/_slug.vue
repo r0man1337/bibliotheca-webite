@@ -92,81 +92,75 @@
         </div>
       </div>
 
-      <div v-if="adventurer.realms.length" id="realms">
+      <div v-if="adventurer.realms.length && openSeaData" id="realms">
         <hr />
         <h3 class="mt-8">Realms: {{ adventurer.realms.length }}</h3>
         <div class="flex flex-wrap w-full">
-          <div v-for="realm in adventurer.realms" :key="realm.id" class="w-80">
-            <RealmCard :id="realm.id" :realm="realm">
-              <div v-if="openSeaData">
-                <div class="relative">
-                  <img
-                    v-if="realmOpenSea(realm.id).image_url"
-                    class="rounded-xl p-1"
-                    :src="realmOpenSea(realm.id).image_url"
-                  />
-                  <div
-                    v-else
-                    class="
-                      bg-gray-100
-                      text-black
-                      p-2
-                      rounded
-                      flex
-                      self-center
-                      h-48
-                      w-full
-                      justify-between
-                    "
-                  >
-                    no image yet
-                  </div>
-                  <RealmRarity
-                    v-if="realmOpenSea(realm.id).traits"
-                    class="absolute top-10 right-10"
-                    :traits="realmOpenSea(realm.id).traits"
-                  />
-                </div>
-
-                <div
-                  v-if="realmOpenSea(realm.id).traits"
-                  class="p-2 flex flex-wrap text-xs"
-                >
-                  <ResourceChip
-                    v-for="(resource, index) in resources(
-                      realmOpenSea(realm.id).traits
-                    )"
-                    :key="index"
-                    class="mr-2 my-1"
-                    :resource="resource"
-                  />
-                </div>
-                <div
-                  v-if="wonder(realmOpenSea(realm.id).traits)"
-                  class="px-2 text-center border-white rounded py-1 border mx-2"
-                >
-                  {{ wonder(realmOpenSea(realm.id).traits).value }}
-                </div>
-                <div v-if="realmOpenSea(realm.id).name" class="px-4 pt-4">
-                  <h4>{{ realmOpenSea(realm.id).name }} - #{{ realm.id }}</h4>
-                </div>
-              </div>
-              <div v-else class="h-32 p-2">
-                <div
-                  class="
-                    animate-pulse
-                    flex
-                    space-x-4
-                    bg-gray-700
-                    h-32
-                    rounded-xl
-                    p-1
-                  "
+          <div v-for="realm in sortedRealms" :key="realm.id" class="w-80">
+            <RealmCard :id="realm.token_id" :realm="realm">
+              <div class="relative">
+                <img
+                  v-if="realm.image_url"
+                  class="rounded-xl p-1"
+                  :src="realm.image_url"
                 />
+                <div
+                  v-else
+                  class="
+                    bg-gray-100
+                    text-black
+                    p-2
+                    rounded
+                    flex
+                    self-center
+                    h-48
+                    w-full
+                    justify-between
+                  "
+                >
+                  no image yet
+                </div>
+                <RealmRarity
+                  class="absolute top-10 right-10"
+                  :traits="realm.traits"
+                />
+              </div>
+
+              <div class="p-2 flex flex-wrap text-xs">
+                <ResourceChip
+                  v-for="(resource, index) in resources(realm.traits)"
+                  :key="index"
+                  class="mr-2 my-1"
+                  :resource="resource"
+                />
+              </div>
+              <div
+                v-if="wonder(realm.traits)"
+                class="
+                  px-2
+                  text-center
+                  border-white
+                  rounded
+                  py-1
+                  border
+                  mx-2
+                  mb-2
+                "
+              >
+                {{ wonder(realm.traits).value }}
+              </div>
+              <div class="px-4">
+                <h4>{{ realm.name }} - #{{ realm.token_id }}</h4>
+                <h6 class="text-gray-500">
+                  Realm sales: {{ realm.num_sales }}
+                </h6>
               </div>
             </RealmCard>
           </div>
         </div>
+      </div>
+      <div v-else class="flex flex-wrap mt-4">
+        <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
       </div>
       <div v-if="adventurer.treasures.length" id="treasure">
         <hr />
@@ -203,15 +197,17 @@ import {
   ref,
   useContext,
   useFetch,
+  computed,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { Contract, ethers } from 'ethers'
 import { useFormatting } from '~/composables/useFormatting'
 import GoldAbi from '~/abi/gold.json'
-import { usePrice } from '~/composables'
+import { usePrice, useRarity } from '~/composables'
 export default defineComponent({
   setup(props, context) {
     const { $graphql } = useContext()
+    const { checkRealmRarity } = useRarity()
     const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
@@ -383,6 +379,14 @@ export default defineComponent({
       )
     }
 
+    const sortedRealms = computed(() => {
+      return openSeaData.value
+        ? openSeaData.value.sort((a, b) => {
+            return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
+          })
+        : null
+    })
+
     return {
       adventurer,
       slug,
@@ -396,6 +400,7 @@ export default defineComponent({
       lootRariety,
       resources,
       wonder,
+      sortedRealms,
     }
   },
 })
