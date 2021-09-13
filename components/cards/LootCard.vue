@@ -24,15 +24,25 @@
       <slot> </slot>
     </div>
     <div>
-      {{ loot.weapon }} <br />
-      {{ loot.chest }} <br />
-      {{ loot.hand }} <br />
-      {{ loot.head }} <br />
-      {{ loot.neck }} <br />
-      {{ loot.ring }} <br />
-      {{ loot.waist }} <br />
+      <span :style="'color:' + rarityColor(loot.weapon)">{{
+        loot.weapon
+      }}</span>
+      <br />
+      <span :style="'color:' + rarityColor(loot.chest)">{{ loot.chest }}</span>
+      <br />
+      <span :style="'color:' + rarityColor(loot.head)">{{ loot.head }}</span>
+      <br />
+      <span :style="'color:' + rarityColor(loot.waist)">{{ loot.waist }}</span>
+      <br />
+      <span :style="'color:' + rarityColor(loot.foot)">{{ loot.foot }}</span
+      ><br />
+      <span :style="'color:' + rarityColor(loot.hand)">{{ loot.hand }}</span>
+      <br />
+      <span :style="'color:' + rarityColor(loot.neck)">{{ loot.neck }}</span>
+      <br />
 
-      {{ loot.foot }} <br />
+      <span :style="'color:' + rarityColor(loot.ring)">{{ loot.ring }}</span>
+      <br />
     </div>
     <div class="mt-auto">
       <span
@@ -52,6 +62,7 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
+import { useLootRarity } from '~/composables/useLootRarity'
 export default defineComponent({
   props: {
     loot: {
@@ -65,6 +76,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const { rarityColor } = useLootRarity()
     const { shortenHash } = useFormatting()
     const navigate = () => {
       const url = props.isOG
@@ -79,6 +91,7 @@ export default defineComponent({
     return {
       shortenHash,
       navigate,
+      rarityColor,
     }
   },
 })
