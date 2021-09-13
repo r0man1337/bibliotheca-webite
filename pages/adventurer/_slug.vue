@@ -167,9 +167,6 @@
           <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
         </div>
       </div>
-      <div v-else class="flex flex-wrap mt-4">
-        <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
-      </div>
       <div v-if="adventurer.treasures.length" id="treasure">
         <hr />
         <h3 class="mt-8">Treasure: {{ adventurer.wallet.treasuresHeld }}</h3>
