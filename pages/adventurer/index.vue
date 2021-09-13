@@ -12,6 +12,18 @@
         <button class="px-4" type="submit">find adventurer</button>
       </form>
 
+      <div class="mt-4 mb-2 pl-4 flex flex-wrap">
+        <span class="pr-4">Rank By:</span>
+        <button
+          v-for="(button, index) in orderByButtons"
+          :key="index"
+          class="px-4"
+          type="submit"
+          @click="orderBy(button.data)"
+        >
+          {{ button.label }}
+        </button>
+      </div>
       <div v-if="!$fetchState.pending" class="flex flex-wrap">
         <div
           v-for="(adventurer, index) in adventurers"
@@ -47,7 +59,7 @@ export default defineComponent({
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
-    const query = ref(gql`
+    let query = ref(gql`
       query walletQuery($offset: Int!) {
         wallets(
           orderBy: bagsHeld
@@ -67,6 +79,25 @@ export default defineComponent({
     `)
 
     const adventurers = ref(null)
+
+    const orderByButtons = [
+      {
+        label: 'Loot',
+        data: 'bagsHeld',
+      },
+      {
+        label: 'mLoot',
+        data: 'mLootHeld',
+      },
+      {
+        label: 'Realms',
+        data: 'realmsHeld',
+      },
+      {
+        label: 'Treasure',
+        data: 'treasuresHeld',
+      },
+    ]
 
     const submitSearch = () => {
       if (search.value.length === 42) {
@@ -100,12 +131,39 @@ export default defineComponent({
       }
     }
 
+    const orderBy = async (param) => {
+      query = ref(gql`
+        query walletQuery($offset: Int!) {
+          wallets(
+            orderBy: ${param}
+            orderDirection: desc
+            first: 100
+            skip: $offset
+            where: { ${param}_not: null }
+          ) {
+            id
+            address
+            realmsHeld
+            bagsHeld
+            treasuresHeld
+            mLootHeld
+          }
+        }
+      `)
+      const response = await $graphql.default.request(query.value, {
+        offset: offset.value,
+      })
+      adventurers.value = response.wallets
+    }
+
     return {
       adventurers,
+      orderByButtons,
       search,
       submitSearch,
       fetchMore,
       loading,
+      orderBy,
     }
   },
 })
