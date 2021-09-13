@@ -40,7 +40,7 @@ if (activeNetworks.includes('arbitrum')) {
     icon: MainnetSVG,
   })
 }
-if (activeNetworks.includes('rinkearbitrumby')) {
+if (activeNetworks.includes('arbitrum-rinkeby')) {
   networks.push({
     id: 'arbitrum-rinkeby',
     chainId: 421611,

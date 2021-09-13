@@ -8,13 +8,15 @@
       </h5>
     </div>
     <div class="flex mt-8 flex-wrap">
-      <div class="sm:w-5/12 flex justify-around">
+      <div class="sm:w-5/12 flex justify-around top-50 h-full">
         <div>
           <h4 class="mb-4 flex">
-            Ethereum Layer 1 <Lock v-if="networkId === 4" class="ml-4" />
+            Ethereum Layer 1 <Lock v-if="networkId === 421611" class="ml-4" />
           </h4>
           <div
-            :class="{ 'opacity-75 bg-gray-200 text-black': networkId === 4 }"
+            :class="{
+              'opacity-75 bg-gray-200 text-black': networkId === 421611,
+            }"
             class="bg-black rounded-2xl p-4 w-80"
           >
             <h4 class="mb-4">Realms</h4>
@@ -26,36 +28,36 @@
           </div>
         </div>
       </div>
-      <div class="sm:w-2/12 flex flex-col justify-around my-4">
+      <div class="sm:w-2/12 justify-around my-4 sticky top-50 h-full">
         <div class="flex">
           <ArrowLeft
             :class="{
-              'rotate-180': networkId === 1,
+              'rotate-180': networkId === 4,
             }"
             class="w-8 h-8 self-center mx-2 transform"
           />
           <div class="text-center w-full">
             <button class="rounded px-4 py-2 bg-gray-700 w-full">
               {{
-                networkId === 1 ? 'Warp To Arbitrum L2' : 'Warp To Ethereum L1'
+                networkId === 4 ? 'Warp To Arbitrum L2' : 'Warp To Ethereum L1'
               }}
             </button>
           </div>
           <ArrowRight
             :class="{
-              'rotate-180': networkId === 4,
+              'rotate-180': networkId === 421611,
             }"
             class="w-8 h-8 self-center mx-2 transform"
           />
         </div>
       </div>
-      <div class="sm:w-5/12 flex justify-around">
+      <div class="sm:w-5/12 flex justify-around sticky top-50 h-full">
         <div>
           <h4 class="mb-4 flex">
-            Arbitrum Layer 2 <Lock v-if="networkId === 1" class="ml-4" />
+            Arbitrum Layer 2 <Lock v-if="networkId === 4" class="ml-4" />
           </h4>
           <div
-            :class="{ 'opacity-75 bg-gray-200 text-black': networkId === 1 }"
+            :class="{ 'opacity-75 bg-gray-200 text-black': networkId === 4 }"
             class="bg-black rounded-2xl p-4 w-80"
           >
             <h4 class="mb-4">Realms</h4>
