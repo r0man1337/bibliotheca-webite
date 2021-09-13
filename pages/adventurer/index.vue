@@ -56,27 +56,31 @@ import AdventurerCard from '~/components/cards/AdventurerCard.vue'
 export default defineComponent({
   components: { AdventurerCard },
   setup(props, context) {
+    const getQuery = (param) => {
+      return ref(gql`
+        query walletQuery($offset: Int!) {
+          wallets(
+            orderBy: ${param}
+            orderDirection: desc
+            first: 100
+            skip: $offset
+            where: { ${param}_not: null }
+          ) {
+            id
+            address
+            realmsHeld
+            bagsHeld
+            treasuresHeld
+            mLootHeld
+          }
+        }
+      `)
+    }
+
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
-    let query = ref(gql`
-      query walletQuery($offset: Int!) {
-        wallets(
-          orderBy: bagsHeld
-          orderDirection: desc
-          first: 100
-          skip: $offset
-          where: { bagsHeld_not: null }
-        ) {
-          id
-          address
-          realmsHeld
-          bagsHeld
-          treasuresHeld
-          mLootHeld
-        }
-      }
-    `)
+    let query = getQuery('bagsHeld')
 
     const adventurers = ref(null)
 
@@ -105,7 +109,7 @@ export default defineComponent({
       }
     }
 
-    useFetch(async () => {
+    const { fetch } = useFetch(async () => {
       const response = await $graphql.default.request(query.value, {
         offset: offset.value,
       })
@@ -131,29 +135,9 @@ export default defineComponent({
       }
     }
 
-    const orderBy = async (param) => {
-      query = ref(gql`
-        query walletQuery($offset: Int!) {
-          wallets(
-            orderBy: ${param}
-            orderDirection: desc
-            first: 100
-            skip: $offset
-            where: { ${param}_not: null }
-          ) {
-            id
-            address
-            realmsHeld
-            bagsHeld
-            treasuresHeld
-            mLootHeld
-          }
-        }
-      `)
-      const response = await $graphql.default.request(query.value, {
-        offset: offset.value,
-      })
-      adventurers.value = response.wallets
+    const orderBy = (param) => {
+      query = getQuery(param)
+      fetch()
     }
 
     return {
@@ -164,6 +148,7 @@ export default defineComponent({
       fetchMore,
       loading,
       orderBy,
+      fetch,
     }
   },
 })
