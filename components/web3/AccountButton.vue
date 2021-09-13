@@ -1,5 +1,6 @@
 <template>
   <div class="hidden sm:flex justify-end px-4 py-4">
+    <NetworkSwitcher />
     <div v-if="active" v-click-outside="hide" class="flex">
       <div class="px-4 self-center">
         <NuxtLink
