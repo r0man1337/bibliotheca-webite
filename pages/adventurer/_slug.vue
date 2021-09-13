@@ -172,7 +172,7 @@
       </div>
       <div v-if="adventurer.treasures.length" id="treasure">
         <hr />
-        <h3 class="mt-8">Treasure: {{ adventurer.treasures.length }}</h3>
+        <h3 class="mt-8">Treasure: {{ adventurer.wallet.treasuresHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div
             v-for="treasure in adventurer.treasures"
@@ -185,7 +185,7 @@
       </div>
       <div v-if="adventurer.mloots.length" id="mloot">
         <hr />
-        <h3 class="mt-8">mLoot: {{ adventurer.mloots.length }}</h3>
+        <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div v-for="loot in adventurer.mloots" :key="loot.id" class="w-80">
             <LootCard :loot="loot" />
@@ -232,7 +232,7 @@ export default defineComponent({
           treasuresHeld
           mLootHeld
         }
-        realms(first: 100, where: { currentOwner: $slug }) {
+        realms(first: 30, where: { currentOwner: $slug }) {
           id
           tokenURI
           currentOwner {
@@ -241,7 +241,7 @@ export default defineComponent({
             joined
           }
         }
-        treasures(first: 100, where: { currentOwner: $slug }) {
+        treasures(first: 30, where: { currentOwner: $slug }) {
           id
           asset1
           asset2
@@ -273,7 +273,7 @@ export default defineComponent({
             joined
           }
         }
-        mloots(first: 100, where: { currentOwner: $slug }) {
+        mloots(first: 30, where: { currentOwner: $slug }) {
           id
           head
           neck
@@ -328,7 +328,7 @@ export default defineComponent({
     const offset = ref(0)
     const openSeaFetch = async (off) => {
       loading.value = true
-      const numPages = Math.ceil(adventurer.value.realms.length / 50)
+      const numPages = Math.ceil(adventurer.value.wallet.realmsHeld / 50)
 
       for (let page = 0; page < numPages; page++) {
         try {
@@ -336,7 +336,7 @@ export default defineComponent({
             'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&owner=' +
               slug +
               '&offset=' +
-              page
+              page * 50
           )
           openSeaData.value = openSeaData.value.concat(response.data.assets)
         } catch (e) {
