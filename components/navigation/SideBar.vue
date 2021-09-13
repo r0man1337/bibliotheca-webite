@@ -51,16 +51,26 @@
 
       <div class="mx-auto my-20">
         <a
+          target="blank_"
           class="hover:bg-gracy-700"
           href="https://github.com/BibliothecaForAdventurers/bibliotheca-webite"
           ><Github class="w-8 h-8"
         /></a>
-        <a class="hover:bg-gracy-700" href="https://discord.gg/8NS4JxGmUC"
+        <a
+          target="blank_"
+          class="hover:bg-gracy-700"
+          href="https://discord.gg/8NS4JxGmUC"
           ><Discord class="w-8 h-8 fill-current mt-4"
         /></a>
         <a
-          class="hover:bg-gracy-700"
           target="blank_"
+          class="hover:bg-gracy-700"
+          href="https://twitter.com/lootgraph"
+          ><Twitter class="w-8 h-8 fill-current mt-4"
+        /></a>
+        <a
+          target="blank_"
+          class="hover:bg-gracy-700"
           href="https://medium.com/@bibliotheca"
         >
           <Medium class="w-8 h-8 fill-current mt-4" />
@@ -78,6 +88,7 @@ import Close from '~/assets/img/x-square.svg?inline'
 import Github from '~/assets/img/github.svg?inline'
 import Discord from '~/assets/img/discord.svg?inline'
 import Medium from '~/assets/img/medium.svg?inline'
+import Twitter from '~/assets/img/twitter.svg?inline'
 export default {
   name: 'SideBar',
   components: {
@@ -86,6 +97,7 @@ export default {
     Github,
     Discord,
     Medium,
+    Twitter,
   },
   setup() {
     const { toggleSideBar, sideBarOpen } = useUiState()

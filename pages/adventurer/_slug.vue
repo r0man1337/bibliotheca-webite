@@ -35,30 +35,33 @@
           border
         "
       >
-        <a class="hover:bg-gray-900 px-2 py-1 rounded" href="#loot"
-          >Loot: {{ adventurer.bags.length }}
+        <a
+          v-if="adventurer.wallet.bagsHeld"
+          class="hover:bg-gray-900 px-2 py-1 rounded"
+          href="#loot"
+          >Loot: {{ adventurer.wallet.bagsHeld }}
         </a>
         <a
-          v-if="adventurer.realms.length"
+          v-if="adventurer.wallet.realmsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#realms"
-          >Realms: {{ adventurer.realms.length }}</a
+          >Realms: {{ adventurer.wallet.realmsHeld }}</a
         >
         <a
-          v-if="adventurer.treasures.length"
+          v-if="adventurer.wallet.treasuresHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#treasure"
-          >Treasure: {{ adventurer.treasures.length }}</a
+          >Treasure: {{ adventurer.wallet.treasuresHeld }}</a
         >
         <a
-          v-if="adventurer.mloots.length"
+          v-if="adventurer.wallet.mLootHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mloot"
-          >mLoot: {{ adventurer.mloots.length }}</a
+          >mLoot: {{ adventurer.wallet.mLootHeld }}</a
         >
       </div>
       <div v-if="adventurer.bags.length" id="loot">
-        <h3 class="mt-8">Loot: {{ adventurer.bags.length }}</h3>
+        <h3 class="mt-8">Loot: {{ adventurer.wallet.bagsHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div
             v-for="(loot, index) in adventurer.bags"
@@ -94,16 +97,16 @@
 
       <div v-if="adventurer.realms.length" id="realms">
         <hr />
-        <h3 class="mt-8">Realms: {{ adventurer.realms.length }}</h3>
-        <div class="flex flex-wrap w-full">
-          <div v-for="realm in adventurer.realms" :key="realm.id" class="w-80">
-            <RealmCard :id="realm.id" :realm="realm">
-              <div v-if="openSeaData">
+        <div v-if="openSeaData.length">
+          <h3 class="mt-8">Realms: {{ adventurer.wallet.realmsHeld }}</h3>
+          <div class="flex flex-wrap w-full">
+            <div v-for="realm in sortedRealms" :key="realm.id" class="w-80">
+              <RealmCard :id="realm.token_id" :realm="realm">
                 <div class="relative">
                   <img
-                    v-if="realmOpenSea(realm.id).image_url"
+                    v-if="realm.image_url"
                     class="rounded-xl p-1"
-                    :src="realmOpenSea(realm.id).image_url"
+                    :src="realm.image_url"
                   />
                   <div
                     v-else
@@ -122,55 +125,54 @@
                     no image yet
                   </div>
                   <RealmRarity
-                    v-if="realmOpenSea(realm.id).traits"
                     class="absolute top-10 right-10"
-                    :traits="realmOpenSea(realm.id).traits"
+                    :traits="realm.traits"
                   />
                 </div>
 
-                <div
-                  v-if="realmOpenSea(realm.id).traits"
-                  class="p-2 flex flex-wrap text-xs"
-                >
+                <div class="p-2 flex flex-wrap text-xs">
                   <ResourceChip
-                    v-for="(resource, index) in resources(
-                      realmOpenSea(realm.id).traits
-                    )"
+                    v-for="(resource, index) in resources(realm.traits)"
                     :key="index"
                     class="mr-2 my-1"
                     :resource="resource"
                   />
                 </div>
                 <div
-                  v-if="wonder(realmOpenSea(realm.id).traits)"
-                  class="px-2 text-center border-white rounded py-1 border mx-2"
-                >
-                  {{ wonder(realmOpenSea(realm.id).traits).value }}
-                </div>
-                <div v-if="realmOpenSea(realm.id).name" class="px-4 pt-4">
-                  <h4>{{ realmOpenSea(realm.id).name }} - #{{ realm.id }}</h4>
-                </div>
-              </div>
-              <div v-else class="h-32 p-2">
-                <div
+                  v-if="wonder(realm.traits)"
                   class="
-                    animate-pulse
-                    flex
-                    space-x-4
-                    bg-gray-700
-                    h-32
-                    rounded-xl
-                    p-1
+                    px-2
+                    text-center
+                    border-white
+                    rounded
+                    py-1
+                    border
+                    mx-2
+                    mb-2
                   "
-                />
-              </div>
-            </RealmCard>
+                >
+                  {{ wonder(realm.traits).value }}
+                </div>
+                <div class="px-4">
+                  <h4>{{ realm.name }} - #{{ realm.token_id }}</h4>
+                  <h6 class="text-gray-500">
+                    Realm sales: {{ realm.num_sales }}
+                  </h6>
+                </div>
+              </RealmCard>
+            </div>
           </div>
         </div>
+        <div v-else class="flex flex-wrap mt-4">
+          <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
+        </div>
+      </div>
+      <div v-else class="flex flex-wrap mt-4">
+        <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
       </div>
       <div v-if="adventurer.treasures.length" id="treasure">
         <hr />
-        <h3 class="mt-8">Treasure: {{ adventurer.treasures.length }}</h3>
+        <h3 class="mt-8">Treasure: {{ adventurer.wallet.treasuresHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div
             v-for="treasure in adventurer.treasures"
@@ -183,7 +185,7 @@
       </div>
       <div v-if="adventurer.mloots.length" id="mloot">
         <hr />
-        <h3 class="mt-8">mLoot: {{ adventurer.mloots.length }}</h3>
+        <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div v-for="loot in adventurer.mloots" :key="loot.id" class="w-80">
             <LootCard :loot="loot" />
@@ -203,15 +205,17 @@ import {
   ref,
   useContext,
   useFetch,
+  computed,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { Contract, ethers } from 'ethers'
 import { useFormatting } from '~/composables/useFormatting'
 import GoldAbi from '~/abi/gold.json'
-import { usePrice } from '~/composables'
+import { usePrice, useRarity } from '~/composables'
 export default defineComponent({
   setup(props, context) {
     const { $graphql } = useContext()
+    const { checkRealmRarity } = useRarity()
     const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
@@ -222,6 +226,12 @@ export default defineComponent({
 
     const query = ref(gql`
       query userSlug($slug: String!) {
+        wallet(id: $slug) {
+          realmsHeld
+          bagsHeld
+          treasuresHeld
+          mLootHeld
+        }
         realms(first: 30, where: { currentOwner: $slug }) {
           id
           tokenURI
@@ -313,28 +323,22 @@ export default defineComponent({
       )
     })
 
-    const openSeaData = ref()
+    const openSeaData = ref([])
     const loading = ref()
-
-    const openSeaFetch = async () => {
+    const offset = ref(0)
+    const openSeaFetch = async (off) => {
       loading.value = true
+      const numPages = Math.ceil(adventurer.value.wallet.realmsHeld / 50)
 
-      const idString = adventurer.value
-        ? adventurer.value.realms
-            .map((realm) => {
-              return 'token_ids=' + realm.id + '&'
-            })
-            .join('')
-        : ''
-
-      if (idString !== '') {
+      for (let page = 0; page < numPages; page++) {
         try {
           const response = await axios.get(
-            'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&' +
-              idString +
-              'order_direction=desc&offset=0&limit=30'
+            'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&owner=' +
+              slug +
+              '&offset=' +
+              page * 50
           )
-          openSeaData.value = response.data.assets
+          openSeaData.value = openSeaData.value.concat(response.data.assets)
         } catch (e) {
           console.log(e)
         } finally {
@@ -383,6 +387,14 @@ export default defineComponent({
       )
     }
 
+    const sortedRealms = computed(() => {
+      return openSeaData.value
+        ? openSeaData.value.sort((a, b) => {
+            return checkRealmRarity(b.traits) - checkRealmRarity(a.traits)
+          })
+        : null
+    })
+
     return {
       adventurer,
       slug,
@@ -396,6 +408,8 @@ export default defineComponent({
       lootRariety,
       resources,
       wonder,
+      sortedRealms,
+      offset,
     }
   },
 })
