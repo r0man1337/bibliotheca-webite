@@ -8099,13 +8099,6 @@ loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-loot-rarity@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/loot-rarity/-/loot-rarity-4.2.0.tgz#dc64bdd33f1124390328865752d773058993c95d"
-  integrity sha512-C9v5S08tkZ2//6muC78t7LaXtrFpWyYEIoDuyNI/MhrVo/3SmTr8Yy6FJbVA6F7VrZxOa7xyjj09UXCIEYyZtg==
-  dependencies:
-    cross-fetch "^3.1.4"
-
 lowdb@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowdb/-/lowdb-1.0.0.tgz#5243be6b22786ccce30e50c9a33eac36b20c8064"
