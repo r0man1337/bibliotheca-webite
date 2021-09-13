@@ -71,11 +71,19 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  onUpdated,
+  ref,
+} from '@nuxtjs/composition-api'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
 import ArrowLeft from '~/assets/img/arrow-left.svg?inline'
 import Lock from '~/assets/img/lock.svg?inline'
 import { useNetwork } from '~/composables/web3/useNetwork'
+import { useWeb3 } from '~/composables/web3/useWeb3'
+
+import { useGraph } from '~/composables/web3/useGraph'
 
 export default defineComponent({
   components: {
@@ -86,6 +94,8 @@ export default defineComponent({
 
   setup() {
     const { activeNetwork } = useNetwork()
+    const { getUsersRealms } = useGraph()
+    const { account } = useWeb3()
 
     const networkName = computed(() => {
       return activeNetwork.value.name
@@ -95,14 +105,11 @@ export default defineComponent({
       return activeNetwork.value.chainId
     })
 
-    const assetsOnL1 = [
-      {
-        id: 123,
-      },
-      {
-        id: 2312,
-      },
-    ]
+    const assetsOnL1 = ref()
+
+    onUpdated(async () => {
+      assetsOnL1.value = await getUsersRealms()
+    })
 
     const assetsOnL2 = [
       {
@@ -119,6 +126,8 @@ export default defineComponent({
       networkName,
       assetsOnL2,
       assetsOnL1,
+
+      account,
     }
   },
 })

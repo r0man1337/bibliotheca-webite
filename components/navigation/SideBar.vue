@@ -116,6 +116,10 @@ export default {
         page: '/treasure',
         title: 'Treasure',
       },
+      {
+        page: '/bridge/arbitrum',
+        title: 'Arbitrum Bridge',
+      },
     ]
 
     const adventureLinks = [
