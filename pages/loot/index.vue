@@ -1,0 +1,210 @@
+<template>
+  <section>
+    <h2>Loot</h2>
+    <form class="flex flex-wrap" method="POST" @submit.prevent="submitSearch">
+      <DropDown :items="lootFeatures" @itemSelect="setQuery" />
+      <input
+        v-model="search"
+        placeholder="insert loot item name"
+        class="bg-black rounded px-4 py-2 text-xl sm:mx-2"
+        type="text"
+      />
+      <button
+        class="px-4 py-3 hover:bg-black transition duration-150 rounded"
+        type="submit"
+      >
+        Find Item Bags
+      </button>
+    </form>
+    <div class="mt-2 text-gray-300">Notice: Search is case sensitive</div>
+    <div v-if="!$fetchState.pending">
+      <div v-if="!queryLoading" class="flex flex-wrap">
+        <div v-for="(l, index) in loot" :key="index" class="w-80">
+          <LootCard is-o-g :loot="l" />
+        </div>
+      </div>
+
+      <div v-if="queryLoading" class="flex flex-wrap mt-8">
+        <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
+      </div>
+      <div v-if="!queryLoading && !loot.length" class="my-3">
+        <div class="text-2xl">No Loot found - Try adjusting your query.</div>
+      </div>
+      <BButton
+        v-if="loot.length"
+        :disabled="queryLoading"
+        :loading="loading"
+        type="primary"
+        class="mt-8"
+        @click.native="fetchMore"
+        >{{ loading ? 'loading' : 'Load more loot' }}</BButton
+      >
+    </div>
+    <div v-else>
+      <Loader />
+    </div>
+  </section>
+</template>
+
+<script>
+import { gql } from 'nuxt-graphql-request'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useFetch,
+} from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup(props, context) {
+    const { $graphql } = useContext()
+    const search = ref()
+    const offset = ref(1)
+    const query = ref(gql`
+      query bagsQuery($offset: Int!) {
+        bags(first: 100, skip: $offset) {
+          id
+          head
+          neck
+          chest
+          hand
+          ring
+          weapon
+          waist
+          foot
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
+      }
+    `)
+
+    const getSearchQuery = (param) => {
+      return ref(gql`
+      query bagsQuery($offset: Int!, $search: String) {
+        bags(first: 100, skip: $offset, where: { ${param}_contains: $search }) {
+          id
+          head
+          neck
+          chest
+          hand
+          ring
+          weapon
+          waist
+          foot
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
+      }
+    `)
+    }
+
+    const loot = ref(null)
+
+    const lootFeatures = [
+      {
+        name: 'head',
+      },
+      {
+        name: 'neck',
+      },
+      {
+        name: 'chest',
+      },
+      {
+        name: 'hand',
+      },
+      {
+        name: 'ring',
+      },
+      {
+        name: 'weapon',
+      },
+      {
+        name: 'waist',
+      },
+      {
+        name: 'foot',
+      },
+    ]
+
+    const lootQuery = ref(lootFeatures[0])
+    const queryLoading = ref(false)
+    const loading = ref(false)
+
+    const setQuery = (value) => {
+      lootQuery.value = value
+    }
+
+    const searchBy = async () => {
+      queryLoading.value = true
+
+      try {
+        const newQuery = getSearchQuery(lootQuery.value.name)
+        const response = await $graphql.default.request(newQuery.value, {
+          offset: offset.value,
+          search: search.value,
+        })
+        loot.value = response.bags
+      } catch (e) {
+        console.log(e)
+      } finally {
+        queryLoading.value = false
+      }
+    }
+
+    const submitSearch = () => {
+      searchBy()
+    }
+
+    useFetch(async () => {
+      const response = await $graphql.default.request(query.value, {
+        offset: offset.value,
+      })
+      loot.value = response.bags
+    })
+
+    const fetchMore = async () => {
+      loading.value = true
+      offset.value = offset.value + 100
+      try {
+        if (search.value) {
+          const newQuery = getSearchQuery(lootQuery.value.name)
+          const response = await $graphql.default.request(newQuery.value, {
+            offset: offset.value,
+            search: search.value,
+          })
+          loot.value = loot.value.concat(response.bags)
+        } else {
+          const response = await $graphql.default.request(query.value, {
+            offset: offset.value,
+          })
+          loot.value = loot.value.concat(response.bags)
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        loading.value = false
+      }
+    }
+
+    return {
+      loot,
+      search,
+      submitSearch,
+      fetchMore,
+      loading,
+      lootFeatures,
+      setQuery,
+      lootQuery,
+      queryLoading,
+      offset,
+    }
+  },
+})
+</script>

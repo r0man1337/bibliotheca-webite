@@ -33,6 +33,29 @@
         <NuxtLink
           v-for="(link, i) in adventureLinks"
           :key="i"
+          class="
+            w-full
+            text-xl
+            rounded-xl
+            hover:bg-black
+            p-2
+            flex
+            justify-around
+          "
+          :to="link.page"
+          @click.native="toggleSideBar"
+        >
+          <span class="flex"
+            ><Helm
+              class="w-8 h-8 stroke-current fill-current self-center mr-2"
+            />
+            {{ link.title }}</span
+          >
+        </NuxtLink>
+        <hr class="my-2" />
+        <NuxtLink
+          v-for="(link, index) in assetLinks"
+          :key="index"
           class="w-full text-xl rounded-xl hover:bg-black p-2"
           :to="link.page"
           @click.native="toggleSideBar"
@@ -40,7 +63,7 @@
         >
         <hr class="my-2" />
         <NuxtLink
-          v-for="(link, index) in sideLinks"
+          v-for="(link, index) in utilLinks"
           :key="index"
           class="w-full text-xl rounded-xl hover:bg-black p-2"
           :to="link.page"
@@ -89,6 +112,7 @@ import Github from '~/assets/img/github.svg?inline'
 import Discord from '~/assets/img/discord.svg?inline'
 import Medium from '~/assets/img/medium.svg?inline'
 import Twitter from '~/assets/img/twitter.svg?inline'
+import Helm from '~/assets/img/helm.svg?inline'
 export default {
   name: 'SideBar',
   components: {
@@ -98,19 +122,20 @@ export default {
     Discord,
     Medium,
     Twitter,
+    Helm,
   },
   setup() {
     const { toggleSideBar, sideBarOpen } = useUiState()
     const { goldPrice, getGoldPrice } = usePrice()
 
-    const sideLinks = [
+    const assetLinks = [
+      {
+        page: '/loot',
+        title: 'Loot',
+      },
       {
         page: '/realms',
         title: 'Realms',
-      },
-      {
-        page: '/realms/mint',
-        title: 'Mint realms',
       },
       {
         page: '/treasure',
@@ -119,6 +144,13 @@ export default {
       {
         page: '/bridge/arbitrum',
         title: 'Arbitrum Bridge',
+      },
+    ]
+
+    const utilLinks = [
+      {
+        page: '/realms/mint',
+        title: 'Mint realms',
       },
     ]
 
@@ -141,7 +173,8 @@ export default {
       sideBarOpen,
       goldPrice,
       getGoldPrice,
-      sideLinks,
+      assetLinks,
+      utilLinks,
       adventureLinks,
     }
   },
