@@ -43,7 +43,7 @@
         >{{ loading ? 'loading' : 'Load more loot' }}</BButton
       >
     </div>
-    <div v-else>
+    <div v-else class="mt-4">
       <Loader />
     </div>
   </section>

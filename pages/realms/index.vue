@@ -1,7 +1,7 @@
 <template>
   <section>
     <div>
-      <h1 class="mt-8">Realms</h1>
+      <h1>Realms</h1>
 
       <form method="POST" @submit.prevent="submitSearch">
         <input
