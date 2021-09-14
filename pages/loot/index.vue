@@ -5,7 +5,7 @@
       <DropDown :items="lootFeatures" @itemSelect="setQuery" />
       <input
         v-model="search"
-        placeholder="insert loot id"
+        placeholder="insert loot item name"
         class="bg-black rounded px-4 py-2 text-xl sm:mx-2"
         type="text"
       />
