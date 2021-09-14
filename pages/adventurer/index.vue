@@ -13,11 +13,20 @@
       </form>
 
       <div class="mt-4 mb-2 pl-4 flex flex-wrap">
-        <span class="pr-4">Rank By:</span>
+        <span class="pr-4 self-center">Rank By:</span>
         <button
           v-for="(button, index) in orderByButtons"
           :key="index"
-          class="px-4"
+          :class="{ 'bg-black': button.data === currentSortBy }"
+          class="
+            px-4
+            py-2
+            rounded
+            hover:bg-black
+            transition
+            duration-150
+            ease-linear
+          "
           type="submit"
           @click="orderBy(button.data)"
         >
@@ -80,7 +89,8 @@ export default defineComponent({
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
-    let query = getQuery('bagsHeld')
+    const currentSortBy = ref('bagsHeld')
+    let query = getQuery(currentSortBy.value)
 
     const adventurers = ref(null)
 
@@ -136,6 +146,7 @@ export default defineComponent({
     }
 
     const orderBy = (param) => {
+      currentSortBy.value = param
       query = getQuery(param)
       fetch()
     }
@@ -149,6 +160,7 @@ export default defineComponent({
       loading,
       orderBy,
       fetch,
+      currentSortBy,
     }
   },
 })
