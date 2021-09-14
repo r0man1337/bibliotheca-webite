@@ -2,7 +2,11 @@
   <section>
     <h2>Loot</h2>
     <form class="flex flex-wrap" method="POST" @submit.prevent="submitSearch">
-      <DropDown :items="lootFeatures" @itemSelect="setQuery" />
+      <DropDown
+        class="my-2 sm:my-0"
+        :items="lootFeatures"
+        @itemSelect="setQuery"
+      />
       <input
         v-model="search"
         placeholder="insert loot item name"
@@ -16,7 +20,6 @@
         Find Item Bags
       </button>
     </form>
-    <div class="mt-2 text-gray-300">Notice: Search is case sensitive</div>
     <div v-if="!$fetchState.pending">
       <div v-if="!queryLoading" class="flex flex-wrap">
         <div v-for="(l, index) in loot" :key="index" class="w-80">
@@ -141,6 +144,14 @@ export default defineComponent({
       lootQuery.value = value
     }
 
+    const toSentenceCase = (str) => {
+      return str
+        .replace(/\w\S*/g, function (txt) {
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+        })
+        .replace('Of', 'of')
+    }
+
     const searchBy = async () => {
       queryLoading.value = true
 
@@ -148,7 +159,7 @@ export default defineComponent({
         const newQuery = getSearchQuery(lootQuery.value.name)
         const response = await $graphql.default.request(newQuery.value, {
           offset: offset.value,
-          search: search.value,
+          search: toSentenceCase(search.value),
         })
         loot.value = response.bags
       } catch (e) {
