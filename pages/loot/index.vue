@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2>Loot</h2>
+    <h1>Loot</h1>
     <form class="flex flex-wrap" method="POST" @submit.prevent="submitSearch">
       <DropDown
         class="my-2 sm:my-0"
