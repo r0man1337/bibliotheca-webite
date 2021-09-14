@@ -1,6 +1,6 @@
 <template>
   <div class="relative inline-block text-left">
-    <div v-click-outside="hide">
+    <div>
       <button
         id="menu-button"
         type="button"
@@ -124,6 +124,7 @@ export default defineComponent({
     }
 
     const setElement = (item) => {
+      active.value = false
       activeElement.value = item
       context.emit('itemSelect', item)
     }
