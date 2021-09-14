@@ -26,9 +26,11 @@ export function useGraph() {
     } catch (e) {
       console.log(e)
     } finally {
-      response = await gqlRequest(usersRealms, { address: account.value })
+      if (account.value) {
+        response = await gqlRequest(usersRealms, { address: account.value })
+      }
     }
-    return response.realms
+    return response ? response.realms : []
   }
 
   return {
