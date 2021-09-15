@@ -3,15 +3,29 @@
     <div>
       <h1>Realms</h1>
 
-      <form method="POST" @submit.prevent="submitSearch">
+      <form class="flex" method="POST" @submit.prevent="submitSearch">
         <input
           v-model="search"
           placeholder="insert realm id"
           class="bg-black rounded px-4 py-2 text-xl"
           type="text"
         />
-        <button class="px-4" type="submit">find realm</button>
+        <BButton class="ml-3" type="primary">find realm</BButton>
       </form>
+
+      <div class="flex flex-wrap sm:space-x-3 my-3">
+        <h4 class="self-center">Order By:</h4>
+        <BButton
+          v-for="(data, index) in orderByData"
+          :key="index"
+          type="primary"
+          :class="{ 'bg-black text-red-300': data.data === orderBy }"
+          class="px-2 py-2 hover:bg-black rounded capitalize hover:text-red-300"
+          @click="setOrderBy(data)"
+        >
+          {{ data.name }}
+        </BButton>
+      </div>
       <h3 class="my-2">Higher the number, the rarer the Realm.</h3>
       <div v-if="!$fetchState.pending" class="flex flex-wrap w-full">
         <div v-for="realm in openSeaData" :key="realm.id" class="w-80">
@@ -70,11 +84,15 @@
             <div class="px-4">
               <h4>{{ realm.name }} - #{{ realm.token_id }}</h4>
               <h6 class="text-gray-500">Realm sales: {{ realm.num_sales }}</h6>
+              <h6 v-if="realm.last_sale" class="text-gray-500">
+                Last sale price:
+                {{ intRoundFloor(realm.last_sale.total_price) / 10 ** 18 }} ETH
+              </h6>
             </div>
           </RealmCard>
         </div>
       </div>
-      <div v-else class="flex flex-wrap">
+      <div v-else class="flex flex-wrap mt-6">
         <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
       </div>
 
@@ -94,26 +112,62 @@
 import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
+import { useBigNumber } from '~/composables/web3/useBigNumber'
 export default defineComponent({
   setup(props, context) {
     const { shortenHash } = useFormatting()
+    const { intRoundFloor } = useBigNumber()
     const adventurer = ref(null)
     const usersGold = ref(null)
     const search = ref()
+    const openSeaData = ref()
+    const loading = ref()
+    const orderBy = ref('sale_date')
+    const offset = ref(0)
 
-    useFetch(async () => {
-      const response = await axios.get(
-        'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
+    const orderByData = [
+      {
+        data: 'sale_date',
+        name: 'sale date',
+      },
+      {
+        data: 'sale_count',
+        name: 'sale count',
+      },
+      {
+        data: 'sale_price',
+        name: 'sale price',
+      },
+    ]
+
+    const baseAssetAddress =
+      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
+
+    const getOSData = async () => {
+      return await axios.get(
+        baseAssetAddress +
+          '&offset=' +
+          offset.value +
+          '&order_by=' +
+          orderBy.value
       )
+    }
+
+    const { fetch } = useFetch(async () => {
+      const response = await getOSData()
       openSeaData.value = response.data.assets
     })
 
-    const openSeaData = ref()
-
-    const loading = ref()
+    const setOrderBy = async (data) => {
+      offset.value = 0
+      orderBy.value = data.data
+      await fetch()
+    }
 
     const submitSearch = () => {
-      context.root.$router.push(`/realms/${search.value}`)
+      if (search.value > 0 && search.value <= 8000) {
+        context.root.$router.push(`/realms/${search.value}`)
+      }
     }
 
     const resources = (traits) => {
@@ -128,10 +182,9 @@ export default defineComponent({
 
     const fetchMoreRealms = async () => {
       loading.value = true
+      offset.value = offset.value + 50
       try {
-        const response = await axios.get(
-          'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&offset=50'
-        )
+        const response = await getOSData()
         const newRealms = response.data.assets
         openSeaData.value = openSeaData.value.concat(newRealms)
       } catch (e) {
@@ -152,6 +205,10 @@ export default defineComponent({
       resources,
       fetchMoreRealms,
       wonder,
+      orderByData,
+      setOrderBy,
+      orderBy,
+      intRoundFloor,
     }
   },
 })

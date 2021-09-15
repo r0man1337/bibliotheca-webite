@@ -1,9 +1,8 @@
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
 
-BigNumber.config({ POW_PRECISION: 200 });
+BigNumber.config({ POW_PRECISION: 200 })
 
 export function useBigNumber() {
-
   /**
    * Returns value as BigNumber if it exists and can be parsed by BigNumber,
    * otherwise returns BigNumber('0')
@@ -11,10 +10,10 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function ensureValue(value: BigNumber.Value) {
-    if (!value) return new BigNumber('0');
-    if (new BigNumber(value).isNaN()) return new BigNumber('0');
+    if (!value) return new BigNumber('0')
+    if (new BigNumber(value).isNaN()) return new BigNumber('0')
 
-    return new BigNumber(value);
+    return new BigNumber(value)
   }
 
   /**
@@ -23,7 +22,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function toBN(value: BigNumber.Value) {
-    return ensureValue(value);
+    return ensureValue(value)
   }
 
   /**
@@ -32,7 +31,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function isZero(val: BigNumber.Value) {
-    return toBN(val).isZero();
+    return toBN(val).isZero()
   }
 
   /**
@@ -42,7 +41,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function times(value: BigNumber.Value, multiplier: BigNumber.Value) {
-    return toBN(value).times(toBN(multiplier));
+    return toBN(value).times(toBN(multiplier))
   }
 
   /**
@@ -52,8 +51,8 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function div(value: BigNumber.Value, divisor: BigNumber.Value) {
-    if (isZero(divisor) || isZero(value)) return toBN('0');
-    return toBN(value).div(toBN(divisor));
+    if (isZero(divisor) || isZero(value)) return toBN('0')
+    return toBN(value).div(toBN(divisor))
   }
 
   /**
@@ -63,7 +62,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function minus(value: BigNumber.Value, subtractor: BigNumber.Value) {
-    return toBN(value).minus(toBN(subtractor));
+    return toBN(value).minus(toBN(subtractor))
   }
 
   /**
@@ -73,7 +72,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function plus(value: BigNumber.Value, adder: BigNumber.Value) {
-    return toBN(value).plus(toBN(adder));
+    return toBN(value).plus(toBN(adder))
   }
 
   /**
@@ -83,7 +82,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function pow(value: BigNumber.Value, exponent: BigNumber.Value) {
-    return toBN(value).pow(toBN(exponent));
+    return toBN(value).pow(toBN(exponent))
   }
 
   /**
@@ -91,7 +90,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function max(...args) {
-    return BigNumber.max(...args);
+    return BigNumber.max(...args)
   }
 
   /**
@@ -99,7 +98,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function min(...args: BigNumber.Value[]) {
-    return BigNumber.min(...args);
+    return BigNumber.min(...args)
   }
 
   /**
@@ -109,7 +108,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function gt(value: BigNumber.Value, compareWith: BigNumber.Value) {
-    return toBN(value).gt(toBN(compareWith));
+    return toBN(value).gt(toBN(compareWith))
   }
 
   /**
@@ -119,7 +118,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function eq(value: BigNumber.Value, compareWith: BigNumber.Value) {
-    return toBN(value).eq(toBN(compareWith));
+    return toBN(value).eq(toBN(compareWith))
   }
 
   /**
@@ -129,7 +128,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function lt(value: BigNumber.Value, compareWith: BigNumber.Value) {
-    return toBN(value).lt(toBN(compareWith));
+    return toBN(value).lt(toBN(compareWith))
   }
 
   /**
@@ -139,7 +138,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function lte(value: BigNumber.Value, compareWith: BigNumber.Value) {
-    return toBN(value).lte(toBN(compareWith));
+    return toBN(value).lte(toBN(compareWith))
   }
 
   /**
@@ -149,7 +148,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function gte(value: BigNumber.Value, compareWith: BigNumber.Value) {
-    return toBN(value).gte(toBN(compareWith));
+    return toBN(value).gte(toBN(compareWith))
   }
 
   /**
@@ -158,7 +157,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function isBigNumber(value: BigNumber.Value) {
-    return BigNumber.isBigNumber(value);
+    return BigNumber.isBigNumber(value)
   }
 
   /**
@@ -167,7 +166,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function isNegative(value: BigNumber.Value) {
-    return toBN(value).isNegative();
+    return toBN(value).isNegative()
   }
 
   /**
@@ -176,7 +175,7 @@ export function useBigNumber() {
    * @returns {boolean}
    */
   function isPositive(value: BigNumber.Value) {
-    return toBN(value).isPositive();
+    return toBN(value).isPositive()
   }
 
   /**
@@ -185,7 +184,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function abs(value: BigNumber.Value) {
-    return toBN(value).abs();
+    return toBN(value).abs()
   }
 
   /**
@@ -194,7 +193,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function negated(value: BigNumber.Value) {
-    return toBN(value).negated();
+    return toBN(value).negated()
   }
 
   /**
@@ -203,7 +202,7 @@ export function useBigNumber() {
    * @returns BigNumber
    */
   function intRoundFloor(value: BigNumber.Value) {
-    return toBN(value).dp(0, 3);
+    return toBN(value).dp(0, 3)
   }
 
   return {
@@ -227,6 +226,6 @@ export function useBigNumber() {
     isPositive,
     abs,
     negated,
-    intRoundFloor
-  };
+    intRoundFloor,
+  }
 }
