@@ -1,8 +1,8 @@
 <template>
   <section>
-    <div v-if="!$fetchState.pending && adventurer.wallet">
-      <h4 class="text-gray-400">adventurer</h4>
-      <h1>{{ shortenHash(slug) }}</h1>
+    <h4 class="text-gray-400">adventurer</h4>
+    <h1>{{ shortenHash(slug) }}</h1>
+    <div v-if="!$fetchState.pending">
       <h3>
         <span class="text-2xl">
           <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
@@ -309,7 +309,10 @@ export default defineComponent({
 
     onMounted(async () => {
       usersGold.value = await getBalance(options)
-      openSeaFetch()
+      if (adventurer.value) {
+        openSeaFetch()
+      }
+
       rarietyFetch()
     })
 

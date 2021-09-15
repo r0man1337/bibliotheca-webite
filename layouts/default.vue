@@ -11,8 +11,8 @@
     <SideBar class="fixed sm:relative w-80 min-h-screen" />
     <div class="w-full">
       <AccountButton />
-
-      <Nuxt class="p-8" />
+      <NetworkSwitcher />
+      <Nuxt class="p-3 sm:p-8" />
       <Modal />
     </div>
   </div>

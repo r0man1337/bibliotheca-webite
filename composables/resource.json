@@ -1,9 +1,5 @@
 [
     {
-        "Trait": "Ethereal Silica",
-        "Value": 162
-    },
-    {
         "Trait": "Wood",
         "Value": 5015
     },
@@ -70,6 +66,10 @@
     {
         "Trait": "Ignium",
         "Value": 172
+    },
+    {
+        "Trait": "Ethereal Silica",
+        "Value": 162
     },
     {
         "Trait": "True Ice",

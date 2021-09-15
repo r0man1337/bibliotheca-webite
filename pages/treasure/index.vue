@@ -1,7 +1,7 @@
 <template>
   <section>
+    <h1>Treasure</h1>
     <div v-if="!$fetchState.pending">
-      <h2>Treasure</h2>
       <!-- <form  method="POST" @submit.prevent="submitSearch">
         <input v-model="search" placeholder="insert wallet address" class="bg-black rounded px-4 py-2 text-xl" type="text">
         <button class="px-4" type="submit">find adventurer</button>
@@ -25,7 +25,6 @@
 <script>
 import { gql } from 'nuxt-graphql-request'
 import {
-  computed,
   defineComponent,
   ref,
   useContext,

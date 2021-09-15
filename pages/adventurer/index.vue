@@ -12,6 +12,29 @@
         <button class="px-4" type="submit">find adventurer</button>
       </form>
 
+      <div class="mt-4 mb-2 pl-4 flex flex-wrap">
+        <span class="pr-4 self-center">Rank By:</span>
+        <BButton
+          v-for="(button, index) in orderByButtons"
+          :key="index"
+          type="primary"
+          :class="{ 'bg-black text-red-300': button.data === currentSortBy }"
+          class="
+            px-4
+            py-2
+            rounded
+            hover:bg-black
+            transition
+            duration-150
+            ease-linear
+            mb-2
+            mr-2
+          "
+          @click="orderBy(button.data)"
+        >
+          {{ button.label }}
+        </BButton>
+      </div>
       <div v-if="!$fetchState.pending" class="flex flex-wrap">
         <div
           v-for="(adventurer, index) in adventurers"
@@ -44,29 +67,53 @@ import AdventurerCard from '~/components/cards/AdventurerCard.vue'
 export default defineComponent({
   components: { AdventurerCard },
   setup(props, context) {
+    const getQuery = (param) => {
+      return ref(gql`
+        query walletQuery($offset: Int!) {
+          wallets(
+            orderBy: ${param}
+            orderDirection: desc
+            first: 100
+            skip: $offset
+            where: { ${param}_not: null }
+          ) {
+            id
+            address
+            realmsHeld
+            bagsHeld
+            treasuresHeld
+            mLootHeld
+          }
+        }
+      `)
+    }
+
     const { $graphql } = useContext()
     const search = ref()
     const offset = ref(1)
-    const query = ref(gql`
-      query walletQuery($offset: Int!) {
-        wallets(
-          orderBy: bagsHeld
-          orderDirection: desc
-          first: 100
-          skip: $offset
-          where: { bagsHeld_not: null }
-        ) {
-          id
-          address
-          realmsHeld
-          bagsHeld
-          treasuresHeld
-          mLootHeld
-        }
-      }
-    `)
+    const currentSortBy = ref('bagsHeld')
+    let query = getQuery(currentSortBy.value)
 
     const adventurers = ref(null)
+
+    const orderByButtons = [
+      {
+        label: 'Loot',
+        data: 'bagsHeld',
+      },
+      {
+        label: 'mLoot',
+        data: 'mLootHeld',
+      },
+      {
+        label: 'Realms',
+        data: 'realmsHeld',
+      },
+      {
+        label: 'Treasure',
+        data: 'treasuresHeld',
+      },
+    ]
 
     const submitSearch = () => {
       if (search.value.length === 42) {
@@ -74,7 +121,7 @@ export default defineComponent({
       }
     }
 
-    useFetch(async () => {
+    const { fetch } = useFetch(async () => {
       const response = await $graphql.default.request(query.value, {
         offset: offset.value,
       })
@@ -100,12 +147,22 @@ export default defineComponent({
       }
     }
 
+    const orderBy = (param) => {
+      currentSortBy.value = param
+      query = getQuery(param)
+      fetch()
+    }
+
     return {
       adventurers,
+      orderByButtons,
       search,
       submitSearch,
       fetchMore,
       loading,
+      orderBy,
+      fetch,
+      currentSortBy,
     }
   },
 })
