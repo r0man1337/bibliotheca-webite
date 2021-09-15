@@ -12,7 +12,7 @@
     <div class="w-full">
       <AccountButton />
       <NetworkSwitcher />
-      <Nuxt class="p-8" />
+      <Nuxt class="p-3 sm:p-8" />
       <Modal />
     </div>
   </div>

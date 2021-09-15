@@ -3,30 +3,45 @@
     <div>
       <h1>Realms</h1>
 
-      <form class="flex" method="POST" @submit.prevent="submitSearch">
+      <form class="flex sm:w-1/3" method="POST" @submit.prevent="submitSearch">
         <input
           v-model="search"
           placeholder="insert realm id"
-          class="bg-black rounded px-4 py-2 text-xl"
+          class="bg-black rounded px-4 py-2 text-xl w-2/3"
           type="text"
         />
-        <BButton class="ml-3" type="primary">find realm</BButton>
+        <BButton class="ml-3 w-1/3 text-sm" type="primary">find realm</BButton>
       </form>
 
       <div class="flex flex-wrap sm:space-x-3 my-3">
-        <h4 class="self-center">Order By:</h4>
+        <span class="pr-4 self-center">Order By:</span>
         <BButton
           v-for="(data, index) in orderByData"
           :key="index"
           type="primary"
           :class="{ 'bg-black text-red-300': data.data === orderBy }"
-          class="px-2 py-2 hover:bg-black rounded capitalize hover:text-red-300"
+          class="
+            px-2
+            py-2
+            hover:bg-black
+            rounded
+            capitalize
+            hover:text-red-300
+            mb-2
+            mr-2
+          "
           @click="setOrderBy(data)"
         >
           {{ data.name }}
         </BButton>
       </div>
-      <h3 class="my-2">Higher the number, the rarer the Realm.</h3>
+      <div>
+        <span
+          >Final rarity is still being determined until mint finishes. Higher
+          numbers are more rare, and range between 5 and 8300.</span
+        >
+      </div>
+
       <div v-if="!$fetchState.pending" class="flex flex-wrap w-full">
         <div v-for="realm in openSeaData" :key="realm.id" class="w-80">
           <RealmCard :id="realm.token_id" :realm="realm">

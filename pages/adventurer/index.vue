@@ -14,10 +14,11 @@
 
       <div class="mt-4 mb-2 pl-4 flex flex-wrap">
         <span class="pr-4 self-center">Rank By:</span>
-        <button
+        <BButton
           v-for="(button, index) in orderByButtons"
           :key="index"
-          :class="{ 'bg-black': button.data === currentSortBy }"
+          type="primary"
+          :class="{ 'bg-black text-red-300': button.data === currentSortBy }"
           class="
             px-4
             py-2
@@ -26,12 +27,13 @@
             transition
             duration-150
             ease-linear
+            mb-2
+            mr-2
           "
-          type="submit"
           @click="orderBy(button.data)"
         >
           {{ button.label }}
-        </button>
+        </BButton>
       </div>
       <div v-if="!$fetchState.pending" class="flex flex-wrap">
         <div
