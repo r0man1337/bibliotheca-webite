@@ -137,7 +137,7 @@ export default defineComponent({
     const search = ref()
     const openSeaData = ref()
     const loading = ref()
-    const orderBy = ref('sale_date')
+    const orderBy = ref()
     const offset = ref(0)
 
     const orderByData = [
@@ -159,13 +159,17 @@ export default defineComponent({
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
     const getOSData = async () => {
-      return await axios.get(
-        baseAssetAddress +
-          '&offset=' +
-          offset.value +
-          '&order_by=' +
-          orderBy.value
-      )
+      if (orderBy.value) {
+        return await axios.get(
+          baseAssetAddress +
+            '&offset=' +
+            offset.value +
+            '&order_by=' +
+            orderBy.value
+        )
+      } else {
+        return await axios.get(baseAssetAddress + '&offset=' + offset.value)
+      }
     }
 
     const { fetch } = useFetch(async () => {
