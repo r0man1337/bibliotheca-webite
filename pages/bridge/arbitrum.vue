@@ -37,7 +37,7 @@
             class="w-8 h-8 self-center mx-2 transform"
           />
           <div class="text-center w-full">
-            <button class="rounded px-4 py-2 bg-gray-700 w-full">
+            <button class="rounded px-4 py-2 bg-gray-700 w-full text-xl">
               {{
                 networkId === 4 ? 'Warp To Arbitrum L2' : 'Warp To Ethereum L1'
               }}
