@@ -158,7 +158,7 @@ import { useModal } from '~/composables/useModal'
 export default defineComponent({
   setup() {
     const show = ref(false)
-    const { chainId, ethersProviders } = useWeb3()
+    const { chainId, ethersProviders, account } = useWeb3()
     const {
       networks,
       activeNetworkId,
@@ -205,6 +205,8 @@ export default defineComponent({
       activeNetwork,
       setActiveNetwork,
       activeNetworkId,
+      account,
+      ethersProviders,
     }
   },
 })

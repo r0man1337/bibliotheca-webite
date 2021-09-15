@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div v-if="!$fetchState.pending">
+    <div v-if="!$fetchState.pending && adventurer.wallet">
       <h4 class="text-gray-400">adventurer</h4>
       <h1>{{ shortenHash(slug) }}</h1>
       <h3>

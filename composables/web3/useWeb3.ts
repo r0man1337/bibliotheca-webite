@@ -81,6 +81,11 @@ export function useWeb3() {
     const { chainId: response } = await newWeb3.getNetwork()
     chainId.value = response
     ethersProviders.value = newWeb3
+    if (web3Provider.selectedAddress) {
+      account.value = web3Provider.selectedAddress
+    } else if (web3Provider.accounts && web3Provider.accounts.length) {
+      account.value = web3Provider.accounts[0]
+    }
   }
 
   const setProvider = (provider) => {
@@ -107,7 +112,10 @@ export function useWeb3() {
 
     // Subscribe to chainId change
     provider.on('chainChanged', refreshWeb3)
-    provider.on('accountsChanged', refreshWeb3)
+    provider.on('accountsChanged', () => {
+      refreshWeb3()
+      console.log('accountChanged')
+    })
   }
 
   const activate = async () => {
