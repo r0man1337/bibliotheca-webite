@@ -4,12 +4,12 @@
       <h1>Arbitrum Warp Bridge</h1>
       <h5 class="text-xl">
         You are currently connected to
-        <span class="tex">{{ networkName }}</span>
+        <span class="text-red-400">{{ networkName }}</span>
       </h5>
     </div>
     <div class="flex mt-8 flex-wrap">
-      <div class="sm:w-5/12 flex justify-around top-50 h-full">
-        <div>
+      <div class="sm:w-4/12 flex justify-around top-50">
+        <div class="">
           <h4 class="mb-4 flex">
             Ethereum Layer 1
             <Lock v-if="networkChainId === 421611" class="ml-4" />
@@ -25,11 +25,24 @@
               v-for="(asset, index) in assetsOnL1"
               :key="index"
               :asset="asset"
+              :disabled="networkChainId === 421611"
+              @click.native="selectRealmForTransfer(asset)"
             />
           </div>
         </div>
       </div>
-      <div class="sm:w-2/12 justify-around my-4 sticky top-50 h-full">
+      <div class="sm:w-4/12 justify-around my-4 sticky top-50 h-full">
+        <div class="bg-black w-full p-4 rounded-xl my-4 border border-white">
+          <h3>Selected Realm</h3>
+          <div v-if="selectedRealm">
+            <RealmCard
+              v-if="!loading"
+              :id="selectedRealm.token_id"
+              :realm="selectedRealm"
+            />
+            <Loader v-else />
+          </div>
+        </div>
         <div class="flex">
           <ArrowLeft
             :class="{
@@ -54,7 +67,7 @@
           />
         </div>
       </div>
-      <div class="sm:w-5/12 flex justify-around sticky top-50 h-full">
+      <div class="sm:w-4/12 flex justify-around sticky top-50 h-full">
         <div>
           <h4 class="mb-4 flex">
             Arbitrum Layer 2 <Lock v-if="networkChainId === 4" class="ml-4" />
@@ -69,7 +82,9 @@
             <AssetPill
               v-for="(asset, index) in assetsOnL2"
               :key="index"
+              :disabled="networkChainId === 4"
               :asset="asset"
+              @click.native="selectRealmForTransfer(asset)"
             />
           </div>
         </div>
@@ -85,14 +100,14 @@ import {
   ref,
   watch,
 } from '@nuxtjs/composition-api'
+import axios from 'axios'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
 import ArrowLeft from '~/assets/img/arrow-left.svg?inline'
 import Lock from '~/assets/img/lock.svg?inline'
 import { useNetwork } from '~/composables/web3/useNetwork'
 import { useWeb3 } from '~/composables/web3/useWeb3'
-
+import { useModal } from '~/composables/useModal'
 import { useGraph } from '~/composables/web3/useGraph'
-
 export default defineComponent({
   components: {
     ArrowRight,
@@ -101,6 +116,7 @@ export default defineComponent({
   },
 
   setup() {
+    const { showAssetBox } = useModal()
     const { activeNetwork } = useNetwork()
     const { getUsersRealms } = useGraph()
     const { account } = useWeb3()
@@ -161,6 +177,28 @@ export default defineComponent({
       },
     ]
 
+    const selectedRealm = ref()
+    const loading = ref(false)
+
+    const selectRealmForTransfer = async (realm) => {
+      loading.value = true
+      try {
+        const response = await fetchRealmMetaData(realm.id)
+        selectedRealm.value = response.data
+      } catch (e) {
+        console.log(e)
+      } finally {
+        loading.value = false
+      }
+    }
+
+    const fetchRealmMetaData = async (id) => {
+      return await axios.get(
+        'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
+          id
+      )
+    }
+
     return {
       activeNetwork,
       networkChainId,
@@ -168,6 +206,10 @@ export default defineComponent({
       assetsOnL2,
       assetsOnL1,
       account,
+      showAssetBox,
+      selectRealmForTransfer,
+      selectedRealm,
+      loading,
     }
   },
 })

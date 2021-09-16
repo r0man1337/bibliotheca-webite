@@ -141,16 +141,16 @@ export default {
         page: '/treasure',
         title: 'Treasure',
       },
-      {
-        page: '/bridge/arbitrum',
-        title: 'Arbitrum Bridge',
-      },
     ]
 
     const utilLinks = [
       {
         page: '/realms/mint',
         title: 'Mint realms',
+      },
+      {
+        page: '/bridge/arbitrum',
+        title: 'Arbitrum Bridge',
       },
     ]
 

@@ -64,20 +64,15 @@ import {
   computed,
   defineComponent,
   ref,
-  useContext,
   useFetch,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
-import { usePrice } from '~/composables'
 export default defineComponent({
   setup(props, context) {
-    const { $graphql } = useContext()
-    const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { id } = context.root.$route.params
     const adventurer = ref(null)
-    const usersGold = ref(null)
 
     useFetch(async () => {
       const response = await axios.get(
@@ -129,8 +124,6 @@ export default defineComponent({
     return {
       adventurer,
       shortenHash,
-      goldPrice,
-      usersGold,
       openSeaData,
       loading,
       resources,

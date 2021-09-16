@@ -1,5 +1,6 @@
 import { computed, ref } from '@nuxtjs/composition-api'
 import NetworksMismatchDialog from '~/components/modal/NetworksMismatchDialog.vue'
+import AssetBridgeModal from '~/components/modal/AssetBridgeModal.vue'
 
 const modal = ref(null)
 const props = ref({})
@@ -7,6 +8,10 @@ const props = ref({})
 export function useModal() {
   function showNetworksMismatchDialog() {
     modal.value = NetworksMismatchDialog
+  }
+
+  function showAssetBox() {
+    modal.value = AssetBridgeModal
   }
 
   function close() {
@@ -36,5 +41,6 @@ export function useModal() {
     modal: computed(() => modal.value),
     props: computed(() => props.value),
     showComponent,
+    showAssetBox,
   }
 }
