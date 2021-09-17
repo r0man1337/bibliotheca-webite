@@ -1,5 +1,5 @@
 /* eslint-disable max-depth */
-import {
+/* import {
   computed,
   reactive,
   onMounted,
@@ -35,7 +35,13 @@ const loading = reactive({
 export function useBridge() {
   const loadingModal = ref(false)
 
-  const l1Signer = ethProvider.getSigner(0)
+  const { times, plus, ensureValue } = useBigNumber()
+  const { ethersProviders, account, networkName, activate } = useWeb3()
+
+  const arbProvider = new ethers.providers.JsonRpcProvider(partnerNetwork.url)
+  const l1NetworkID = useL1Network().chainID as string
+  const l2NetworkID = useL2Network().chainID as string
+  const l1Signer = ethersProviders.getSigner(0)
   const l2Signer = arbProvider.getSigner(window.ethereum?.selectedAddress)
   const bridge = Bridge.init(
     l1Signer,
@@ -43,13 +49,6 @@ export function useBridge() {
     RINKEBY_L1_BRIDGE_ADDRESS,
     ARB_RINKEBY_L2_BRIDGE_ADDRESS
   )
-  const { times, plus, ensureValue } = useBigNumber()
-  const { ethersProviders, account, networkName, activate } = useWeb3()
-
-  const ethProvider = ethersProviders
-  const arbProvider = new ethers.providers.JsonRpcProvider(partnerNetwork.url)
-  const l1NetworkID = useL1Network().chainID as string
-  const l2NetworkID = useL2Network().chainID as string
 
   const deposit = async (lootId) => {
     if (!account.value) return activate()
@@ -57,7 +56,7 @@ export function useBridge() {
       error.depositL1 = null
       loading.depositL1.value = true
       loadingModal.value = true
-      result.mint = await depositToken(account.value, networkName.value, lootId)
+      const result.deposit = await depositToken(account.value, networkName.value, lootId)
     } catch (e) {
       error.depositL1 = e.message
     } finally {
@@ -175,3 +174,4 @@ async function checkTokenMint(network: Network) {
     error.mint = e
   }
 }
+*/

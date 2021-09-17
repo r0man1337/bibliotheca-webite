@@ -123,7 +123,7 @@
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useModal } from '~/composables/useModal'
-import { injected, ledger } from '~/connectors'
+import { injected } from '~/connectors'
 import { SUPPORTED_WALLETS } from '~/connectors/wallets'
 import { Network, useNetwork } from '~/composables/web3/useNetwork'
 import { useNotification } from '~/composables/useNotification'
@@ -164,12 +164,12 @@ export default defineComponent({
           if (wallet.connector === injected && !isMetamask.value) {
             return null
           }
-          if (
+          /* if (
             wallet.connector === ledger &&
             activeNetworkId.value !== Network.Mainnet
           ) {
             return null
-          }
+          } */
           return wallet
         })
         .filter(Boolean)

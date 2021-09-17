@@ -30,7 +30,7 @@ export function useGraph() {
     }
     let response
     try {
-      await activate()
+      // await activate()
     } catch (e) {
       console.log(e)
     } finally {
