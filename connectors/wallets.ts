@@ -1,5 +1,5 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { injected, walletconnect, portis, ledger } from '~/connectors'
+import { injected, walletconnect, portis /*, ledger */ } from '~/connectors'
 
 import METAMASK_ICON_URL from '~/assets/icons/metamask.svg?inline'
 import WALLETCONNECT_ICON_URL from '~/assets/icons/wallet-connect.svg?inline'
@@ -28,9 +28,9 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     name: 'Portis',
     iconURL: PORTIS_ICON_URL,
   },
-  LEDGER: {
+  /* LEDGER: {
     connector: ledger,
     name: 'Ledger',
     iconURL: LEDGER_ICON_URL,
-  },
+  }, */
 }

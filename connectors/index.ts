@@ -35,8 +35,8 @@ export const portis = new PortisConnector({
   networks: [1],
 })
 
-export const ledger = new LedgerConnector({
+/* export const ledger = new LedgerConnector({
   chainId: 1,
   url: RPC_URLS[1],
   pollingInterval: POLLING_INTERVAL,
-})
+}) */
