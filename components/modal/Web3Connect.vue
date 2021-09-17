@@ -125,7 +125,7 @@ import { useWeb3 } from '@instadapp/vue-web3'
 import { useModal } from '~/composables/useModal'
 import { injected } from '~/connectors'
 import { SUPPORTED_WALLETS } from '~/connectors/wallets'
-import { Network, useNetwork } from '~/composables/web3/useNetwork'
+// import { Network, useNetwork } from '~/composables/web3/useNetwork'
 import { useNotification } from '~/composables/useNotification'
 export default defineComponent({
   props: {
@@ -137,7 +137,7 @@ export default defineComponent({
   setup() {
     const { close } = useModal()
     const { activate } = useWeb3()
-    const { activeNetworkId } = useNetwork()
+    // const { activeNetworkId } = useNetwork()
     const { showError, showAwaiting, closeAll } = useNotification()
     const connecting = ref(false)
     const connect = async (connector) => {
