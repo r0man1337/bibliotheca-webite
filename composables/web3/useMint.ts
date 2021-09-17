@@ -47,10 +47,10 @@ export function useMint() {
   const loading = ref(false)
   const loadingModal = ref(false)
   const { times, plus, ensureValue } = useBigNumber()
-  const { ethersProviders, account, networkName, activate } = useWeb3()
+  const { provider, account, networkName, activate } = useWeb3()
 
   const mint = async (lootId) => {
-    if (!account.value) return activate()
+    // if (!account.value) return activate() Open Web3Connect instead?
     try {
       error.mint = null
       loading.value = true
@@ -64,7 +64,7 @@ export function useMint() {
   }
 
   const multiMint = async (lootIds) => {
-    if (!account.value) return activate()
+   // if (!account.value) return activate()
 
     try {
       error.mint = null

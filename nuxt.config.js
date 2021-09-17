@@ -129,7 +129,6 @@ export default {
   plugins: [
     '~/plugins/vue-formulate',
     '~/plugins/analytics.js',
-    '~/plugins/web3modal.js',
     '~/plugins/v-click-outside.js',
   ],
   components: [

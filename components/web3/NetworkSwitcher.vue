@@ -149,8 +149,8 @@
 
 <script>
 import { defineComponent, nextTick, ref, watch } from '@nuxtjs/composition-api'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork } from '~/composables/web3/useNetwork'
-import { useWeb3 } from '~/composables/web3/useWeb3'
 import { useModal } from '~/composables/useModal'
 
 // import { useTenderly } from '~/composables/web3/useTenderly';

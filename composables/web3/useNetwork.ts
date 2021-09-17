@@ -59,12 +59,12 @@ export const activeNetwork = computed(
 
 export function useNetwork() {
   const { showWarning } = useNotification()
-  const { account, networkName, refreshWeb3 } = useWeb3()
+  const { account, chainId } = useWeb3()
   const { showNetworksMismatchDialog } = useModal()
 
   const networkMismatch = computed(
     // eslint-disable-next-line eqeqeq
-    () => networkName.value != activeNetworkId.value
+    () => chainId.value != activeNetwork.value?.chainId
   )
 
   const checkForNetworkMismatch = () => {
@@ -211,14 +211,12 @@ export function useNetwork() {
     }
     // @ts-ignore issue
     activeNetworkId.value = localStorage.getItem('network') || 'mainnet'
-
-    refreshWeb3()
   })
 
   return {
     networkMismatch,
     networks,
-    networkName,
+    chainId,
     activeNetworkId,
     activeNetwork,
     switchNetwork,

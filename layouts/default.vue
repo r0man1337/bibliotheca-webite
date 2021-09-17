@@ -19,7 +19,9 @@
 </template>
 <script>
 import { useUiState } from '~/composables'
+import { useConnect } from '~/composables/web3/useConnect'
 import Book from '~/assets/img/book-open.svg?inline'
+useConnect()
 export default {
   components: {
     Book,

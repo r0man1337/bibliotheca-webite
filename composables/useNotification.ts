@@ -1,42 +1,42 @@
-import { ref } from '@nuxtjs/composition-api';
+import { ref } from '@nuxtjs/composition-api'
 // import { useFormatting } from '@/composables/useFormatting';
 // import { getEtherscanLink, getMaticLink, getTenderlyLink } from './useLink';
 // import { useRandom } from './useRandom';
-import { Network, activeNetworkId } from './web3/useNetwork';
+import { Network, activeNetworkId } from './web3/useNetwork'
 // const { makeid } = useRandom();
 
-const queue = ref([]);
+const queue = ref([])
 
 export function useNotification() {
   // const { shortenHash } = useFormatting();
 
   function close(key) {
-    queue.value = queue.value.filter(item => item.key !== key);
+    queue.value = queue.value.filter((item) => item.key !== key)
   }
 
   function closeAll() {
     queue.value.forEach((item, index) => {
       setTimeout(() => {
-        queue.value.shift();
-      }, index * 150);
-    });
+        queue.value.shift()
+      }, index * 150)
+    })
   }
 
   function closeAwaiting(title, success = true, key) {
-    const found = queue.value.find(item => item.key === key);
-    if (!found) return;
+    const found = queue.value.find((item) => item.key === key)
+    if (!found) return
 
     if (success) {
-      found.icon = 'success';
-      found.title = title;
+      found.icon = 'success'
+      found.title = title
     } else {
-      found.icon = 'error';
-      found.title = title;
+      found.icon = 'error'
+      found.title = title
     }
 
     setTimeout(() => {
-      close(key);
-    }, 2000);
+      close(key)
+    }, 2000)
   }
 
   /**
@@ -51,42 +51,42 @@ export function useNotification() {
    */
   function show(params) {
     if (params) {
-      if (!params.key) params.key = 10;// makeid(10);
-      queue.value.push(params);
+      if (!params.key) params.key = 10 // makeid(10);
+      queue.value.push(params)
     }
   }
 
   function showError(title, body, href) {
-    show({ icon: 'error', title, body, href, duration: 0 });
+    show({ icon: 'error', title, body, href, duration: 0 })
   }
 
   function showWarning(title, body = '') {
-    show({ icon: 'warning', title, body, duration: 0 });
+    show({ icon: 'warning', title, body, duration: 0 })
   }
 
   function showNotImplemented() {
     show({
       icon: 'warning',
       title: 'Not implemented',
-      body: 'This feature is not yet implemented.'
-    });
+      body: 'This feature is not yet implemented.',
+    })
   }
 
   function showSuccess(title, body) {
-    show({ icon: 'success', title, body, duration: 5000 });
+    show({ icon: 'success', title, body, duration: 5000 })
   }
 
   function showInfo(title, body) {
-    show({ icon: 'info', title, body, duration: 7000 });
+    show({ icon: 'info', title, body, duration: 7000 })
   }
 
-  /* function showAwaiting(title, body) {
-    const key = makeid(10);
-    show({ icon: 'spinner', title, body, duration: 0, key });
-    return key;
+  function showAwaiting(title, body) {
+    const key = title
+    show({ icon: 'spinner', title, body, duration: 0, key })
+    return key
   }
 
-  function showPendingTransaction(transactionHash, network?: Network) {
+  /* function showPendingTransaction(transactionHash, network?: Network) {
     network = network || activeNetworkId.value;
 
     let href;
@@ -146,13 +146,13 @@ export function useNotification() {
       body,
       duration: 5000
     });
-  }*/
+  } */
 
   function showLoggedIn(title, body) {
-    show({ icon: 'logged-in', title, body, duration: 2000 });
+    show({ icon: 'logged-in', title, body, duration: 2000 })
   }
   function showLoggedOut(title, body) {
-    show({ icon: 'logged-out', title, body, duration: 2000 });
+    show({ icon: 'logged-out', title, body, duration: 2000 })
   }
 
   return {
@@ -167,10 +167,10 @@ export function useNotification() {
 
     /* showPendingTransaction,
     showConfirmedTransaction,
-    showConfirmedSimulation,*/
+    showConfirmedSimulation, */
     showLoggedIn,
     showLoggedOut,
-    // showAwaiting,
-    closeAll
-  };
+    showAwaiting,
+    closeAll,
+  }
 }
