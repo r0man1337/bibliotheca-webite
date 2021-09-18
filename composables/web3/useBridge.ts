@@ -174,4 +174,4 @@ async function checkTokenMint(network: Network) {
     error.mint = e
   }
 }
-*/
+

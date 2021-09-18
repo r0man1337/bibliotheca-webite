@@ -143,14 +143,18 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      await updateRealms()
+      if (account.value) {
+        console.log(account.value)
+        await updateRealms()
+      }
     })
 
     watch(
-      networkChainId,
+      account,
       async (val) => {
         if (val) {
           await updateRealms()
+          console.log('watch account')
         }
       },
       {
@@ -158,10 +162,11 @@ export default defineComponent({
       }
     )
     watch(
-      account,
+      networkChainId,
       async (val) => {
         if (val) {
           await updateRealms()
+          console.log('watch chain id')
         }
       },
       {

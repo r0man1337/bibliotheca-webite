@@ -54,8 +54,8 @@
         </NuxtLink>
         <hr class="my-2" />
         <NuxtLink
-          v-for="(link, index) in assetLinks"
-          :key="index"
+          v-for="link in assetLinks"
+          :key="link.title"
           class="w-full text-xl rounded-xl hover:bg-black p-2"
           :to="link.page"
           @click.native="toggleSideBar"
@@ -63,8 +63,8 @@
         >
         <hr class="my-2" />
         <NuxtLink
-          v-for="(link, index) in utilLinks"
-          :key="index"
+          v-for="link in utilLinks"
+          :key="link.title"
           class="w-full text-xl rounded-xl hover:bg-black p-2"
           :to="link.page"
           @click.native="toggleSideBar"

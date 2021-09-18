@@ -13,7 +13,6 @@ export function useGraph() {
     network: any = 'default'
   ) => {
     loading.value = true
-    console.log(network)
     try {
       return await $graphql[network].request(query, variables)
     } catch (e) {
@@ -24,23 +23,27 @@ export function useGraph() {
   }
 
   const getUsersRealms = async (network) => {
-    console.log(network)
-    if (!network) {
-      network = 'default'
+    if (account.value) {
+      console.log(network + 'get realms')
+      if (!network) {
+        network = 'default'
+      }
+      let response
+      try {
+        // await activate()
+      } catch (e) {
+        console.log(e)
+      } finally {
+        response = await gqlRequest(
+          usersRealms,
+          { address: account.value.toLowerCase() },
+          network
+        )
+      }
+      return response ? response.realms : []
+    } else {
+      return null
     }
-    let response
-    try {
-      // await activate()
-    } catch (e) {
-      console.log(e)
-    } finally {
-      response = await gqlRequest(
-        usersRealms,
-        { address: account.value },
-        network
-      )
-    }
-    return response ? response.realms : []
   }
 
   return {

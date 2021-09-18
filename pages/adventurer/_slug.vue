@@ -2,7 +2,10 @@
   <section>
     <h4 class="text-gray-400">adventurer</h4>
     <h1>{{ shortenHash(slug) }}</h1>
-    <div v-if="!$fetchState.pending">
+    <div v-if="!$fetchState.pending && !adventurer.wallet">
+      No Loot or Derivatives for this adventurer... yet.
+    </div>
+    <div v-else-if="!$fetchState.pending && adventurer.wallet">
       <h3>
         <span class="text-2xl">
           <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
@@ -158,7 +161,7 @@ export default defineComponent({
     const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
-    const variables = ref({ slug })
+    const variables = ref({ slug: slug.toLowerCase() })
     const adventurer = ref(null)
     const usersGold = ref(null)
     const goldTokenAddress = '0x32353A6C91143bfd6C7d363B546e62a9A2489A20'
