@@ -15,6 +15,8 @@ import { useNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
 import { LootRealmsLockbox } from '~/typechain/LootRealmsLockbox'
+// eslint-disable-next-line camelcase
+import { LootRealmsLockbox__factory } from '~/typechain/factories/LootRealmsLockbox__factory'
 
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
@@ -97,30 +99,43 @@ export function useBridge() {
   )
   const calldataBytesLength = hexDataLength(calldataBytes) + 4 // 4 bytes func identifier
   console.log(`Calldata size: ${calldataBytesLength}`)
-  const submissionPriceWei = ref(null)
-  const getTxnSubmissionPrice = async () => {
-    submissionPriceWei.value =
-      await bridge.value.l2Bridge.getTxnSubmissionPrice(calldataBytesLength)
-  }
 
-  const depositRealm = async (lootId) => {
-    /*  if (!account.value) return activate()
-    try {
-      error.depositL1 = null
-      loading.depositL1.value = true
-      loadingModal.value = true
-      const result.deposit = await depositToken(account.value, networkName.value, lootId)
-    } catch (e) {
-      error.depositL1 = e.message
-    } finally {
-      loading.depositL1.value = false
-    } */
+  const depositRealm = async (id) => {
+    // eslint-disable-next-line prefer-const
+    if (!process.server) {
+      console.log('deposting id')
+      const [_submissionPriceWei, nextUpdateTimestamp] =
+        await bridge.value.l2Bridge.getTxnSubmissionPrice(calldataBytesLength)
+      const submissionPriceWei = _submissionPriceWei + 5
+      const timeNow = Math.floor(new Date().getTime() / 1000)
+      const gasPriceBid = await bridge.value.l2Provider.getGasPrice()
+      console.log(submissionPriceWei)
+      console.log(`L2 gas price: ${gasPriceBid.toString()}`)
+
+      // Hardcoded for now
+      const maxGas = 200
+      const callValue = submissionPriceWei + gasPriceBid * maxGas
+
+      console.log(`Call value to L2: ${callValue.toString()}`)
+
+      const lootRealmsLockbox = LootRealmsLockbox__factory.connect(
+        RINKEBY_L1_BRIDGE_ADDRESS,
+        l1Signer
+      )
+      const tx = await lootRealmsLockbox.depositToL2(
+        id,
+        submissionPriceWei,
+        maxGas,
+        gasPriceBid,
+        { value: callValue }
+      )
+      console.log(tx)
+      return tx
+    }
   }
 
   return {
     initBridge,
-    getTxnSubmissionPrice,
-    submissionPriceWei,
     depositRealm,
     error,
     bridge,

@@ -51,7 +51,10 @@
             class="w-8 h-8 self-center mx-2 transform"
           />
           <div class="text-center w-full">
-            <button class="rounded px-4 py-2 bg-gray-700 w-full text-xl">
+            <button
+              class="rounded px-4 py-2 bg-gray-700 w-full text-xl"
+              @click="depositRealm(selectedRealm.token_id)"
+            >
               {{
                 networkChainId === 4
                   ? 'Warp To Arbitrum L2'
@@ -122,14 +125,7 @@ export default defineComponent({
     const { activeNetwork } = useNetwork()
     const { getUsersRealms } = useGraph()
     const { account } = useWeb3()
-    const {
-      initBridge,
-      getTxnSubmissionPrice,
-      submissionPriceWei,
-      deposit,
-      bridge,
-      partnerNetwork,
-    } = useBridge()
+    const { initBridge, depositRealm, bridge, partnerNetwork } = useBridge()
 
     const networkName = computed(() => {
       return activeNetwork.value.name
@@ -154,7 +150,6 @@ export default defineComponent({
 
     onMounted(async () => {
       await initBridge()
-      await getTxnSubmissionPrice()
       if (account.value) {
         console.log(account.value)
         await updateRealms()
@@ -223,9 +218,8 @@ export default defineComponent({
       assetsOnL2,
       assetsOnL1,
       account,
-      deposit,
       bridge,
-      submissionPriceWei,
+      depositRealm,
       partnerNetwork,
       showAssetBox,
       selectRealmForTransfer,
