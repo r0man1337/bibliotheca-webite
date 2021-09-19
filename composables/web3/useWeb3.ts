@@ -1,22 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { providers } from 'ethers'
-import {
-  useWeb3 as UseWeb3Insta,
-  setWeb3LibraryCallback,
-  UnsupportedChainIdError,
-} from '@instadapp/vue-web3'
+import { useWeb3 as UseWeb3Insta } from '@instadapp/vue-web3'
 import { Network } from './useNetwork'
 
-let web3Provider: any
-
-let providerOptions = {}
-
-declare global {
-  interface Window {
-    ethersProviders: any
-  }
-}
 const chains = [
   {
     name: 'mainnet' as Network,
@@ -41,10 +28,6 @@ const chains = [
     displayName: 'Arbitrum',
   },
 ]
-
-export function setProviders(providers: any) {
-  providerOptions = providers
-}
 
 export function useWeb3() {
   const {

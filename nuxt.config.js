@@ -155,8 +155,13 @@ export default {
   serverMiddleware: [{ path: '/api', handler: '~/serverMiddleware/server.js' }],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    /* extend(config) {
-      if (config.resolve.extensions) {
+    extend(config) {
+      config.node = {
+        fs: 'empty',
+      }
+    },
+
+    /* if (config.resolve.extensions) {
         config.resolve.extensions.push('.mjs')
       } else {
         config.resolve.extensions = ['.mjs']

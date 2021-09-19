@@ -15,6 +15,20 @@ export enum Network {
   Arbitrum = 'arbitrum',
   ArbRinkeby = 'arbitrum-rinkeby',
 }
+interface TokenBridge {
+  l1Address: string
+  l2Address: string
+}
+
+const mainnetBridge: TokenBridge = {
+  l1Address: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
+  l2Address: '0x5288c571Fd7aD117beA99bF60FE0846C4E84F933',
+}
+
+const rinkebyBridge: TokenBridge = {
+  l1Address: '0x70C143928eCfFaf9F5b406f7f4fC28Dc43d68380',
+  l2Address: '0x9413AD42910c1eA60c737dB5f58d1C504498a3cD',
+}
 export const networks = []
 if (activeNetworks.includes('mainnet')) {
   networks.push({
@@ -22,6 +36,10 @@ if (activeNetworks.includes('mainnet')) {
     chainId: 1,
     name: 'Ethereum Mainnet',
     icon: MainnetSVG,
+    tokenBridge: mainnetBridge,
+    partnerChainID: 42161,
+    isArbitrum: false,
+    url: process.env.RPC_URL_1 as string,
   })
 }
 if (activeNetworks.includes('rinkeby')) {
@@ -30,6 +48,10 @@ if (activeNetworks.includes('rinkeby')) {
     chainId: 4,
     name: 'Eth Rinkeby',
     icon: MainnetSVG,
+    tokenBridge: rinkebyBridge,
+    partnerChainID: 421611,
+    isArbitrum: false,
+    url: 'https://rinkeby-light.eth.linkpool.io',
   })
 }
 if (activeNetworks.includes('arbitrum')) {
@@ -38,6 +60,10 @@ if (activeNetworks.includes('arbitrum')) {
     chainId: 42161,
     name: 'Arbitrum',
     icon: MainnetSVG,
+    tokenBridge: mainnetBridge,
+    partnerChainID: 1,
+    isArbitrum: true,
+    url: 'ttps://arb1.arbitrum.io/rpc',
   })
 }
 if (activeNetworks.includes('arbitrum-rinkeby')) {
@@ -46,11 +72,12 @@ if (activeNetworks.includes('arbitrum-rinkeby')) {
     chainId: 421611,
     name: 'Arbitrum Rinkeby',
     icon: MainnetSVG,
+    tokenBridge: rinkebyBridge,
+    partnerChainID: 4,
+    isArbitrum: true,
+    url: 'https://rinkeby.arbitrum.io/rpc',
   })
 }
-/* 
-  { id: 'arbitrum', chainId: 42161, name: 'Arbitrum', icon: ArbitrumSVG },
-  { id: 'arbitrum-rinkeby', chainId: 421611, name: 'Arb Rinkeby', icon: ArbitrumSVG } */
 
 export const activeNetworkId = ref<Network>()
 export const activeNetwork = computed(

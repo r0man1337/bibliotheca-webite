@@ -32,7 +32,6 @@
           Connect your wallet
         </h3>
       </div>
-      {{ isMetamask }}
       <div class="mt-8 w-full space-y-4">
         <button
           v-for="(wallet, key) in wallets"

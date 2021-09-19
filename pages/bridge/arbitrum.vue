@@ -108,6 +108,8 @@ import { useNetwork } from '~/composables/web3/useNetwork'
 import { useWeb3 } from '~/composables/web3/useWeb3'
 import { useModal } from '~/composables/useModal'
 import { useGraph } from '~/composables/web3/useGraph'
+import { useBridge } from '~/composables/bridge/useBridge'
+
 export default defineComponent({
   components: {
     ArrowRight,
@@ -120,6 +122,14 @@ export default defineComponent({
     const { activeNetwork } = useNetwork()
     const { getUsersRealms } = useGraph()
     const { account } = useWeb3()
+    const {
+      initBridge,
+      getTxnSubmissionPrice,
+      submissionPriceWei,
+      deposit,
+      bridge,
+      partnerNetwork,
+    } = useBridge()
 
     const networkName = computed(() => {
       return activeNetwork.value.name
@@ -143,6 +153,8 @@ export default defineComponent({
     }
 
     onMounted(async () => {
+      await initBridge()
+      await getTxnSubmissionPrice()
       if (account.value) {
         console.log(account.value)
         await updateRealms()
@@ -211,6 +223,10 @@ export default defineComponent({
       assetsOnL2,
       assetsOnL1,
       account,
+      deposit,
+      bridge,
+      submissionPriceWei,
+      partnerNetwork,
       showAssetBox,
       selectRealmForTransfer,
       selectedRealm,
