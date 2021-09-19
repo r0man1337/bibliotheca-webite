@@ -103,7 +103,7 @@ export function useBridge() {
   const depositRealm = async (id) => {
     // eslint-disable-next-line prefer-const
     if (!process.server) {
-      console.log('deposting id')
+      console.log('deposting id' + id)
       const [_submissionPriceWei, nextUpdateTimestamp] =
         await bridge.value.l2Bridge.getTxnSubmissionPrice(calldataBytesLength)
       const submissionPriceWei = _submissionPriceWei + 5
@@ -113,9 +113,9 @@ export function useBridge() {
       console.log(`L2 gas price: ${gasPriceBid.toString()}`)
 
       // Hardcoded for now
-      const maxGas = 200
-      const callValue = submissionPriceWei + gasPriceBid * maxGas
-
+      const maxGas = 200000000
+      // eslint-disable-next-line prettier/prettier
+      const callValue = (gasPriceBid * maxGas) + parseInt(submissionPriceWei)
       console.log(`Call value to L2: ${callValue.toString()}`)
 
       const lootRealmsLockbox = LootRealmsLockbox__factory.connect(
