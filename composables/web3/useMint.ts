@@ -12,33 +12,13 @@ import { ethers } from 'ethers'
 import { Network } from './useNetwork'
 import { useWeb3 } from './useWeb3'
 import { useBigNumber } from './useBigNumber'
-import realmsABI from './abi/lootRealms.json'
-import { createTokenUtils } from '~/utils/create-token-utils'
+import realmsABI from '~/abi/lootRealms.json'
+import erc721tokens from '~/constant/erc721tokens'
 
 const error = reactive({
   mint: null,
 })
 
-const erc721tokens = {
-  mainnet: createTokenUtils([
-    {
-      key: 'LootRealms',
-      type: 'token',
-      symbol: 'LootRealms',
-      name: 'Realms (for Adventurers)',
-      address: '0x7AFe30cB3E53dba6801aa0EA647A0EcEA7cBe18d',
-    },
-  ]),
-  rinkeby: createTokenUtils([
-    {
-      key: 'LootRealms',
-      type: 'token',
-      symbol: 'LootRealms',
-      name: 'Realms (for Adventurers)',
-      address: '0x6B13F1C319c2DdA7Ae15c04f540671B8A0E2AE9B',
-    },
-  ]),
-}
 const result = reactive({ mint: null })
 
 const tokenIds = ref(null)
@@ -64,7 +44,7 @@ export function useMint() {
   }
 
   const multiMint = async (lootIds) => {
-   // if (!account.value) return activate()
+    // if (!account.value) return activate()
 
     try {
       error.mint = null

@@ -14,9 +14,9 @@ import { Bridge } from 'arb-ts'
 import { useNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
-import realmsLockBoxABI from './abi/realmsLockBox.json'
-// eslint-disable-next-line camelcase
-import { LootRealmsLockbox__factory } from '~/typechain/factories/LootRealmsLockbox__factory'
+import realmsLockBoxABI from '~/abi/realmsLockBox.json'
+import lootRealmsABI from '~/abi/lootRealms.json'
+import erc721tokens from '~/constant/erc721tokens'
 
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
@@ -98,7 +98,7 @@ export function useBridge() {
     // eslint-disable-next-line prefer-const
     if (!process.server) {
       // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
-      console.log(l1Signer)
+      console.log()
       const calldataBytes = ethers.utils.defaultAbiCoder.encode(
         ['address', 'uint256'],
         [l1Signer._address, 1011]
@@ -125,8 +125,20 @@ export function useBridge() {
         realmsLockBoxABI,
         l1Signer
       )
+      const tokensArr = erc721tokens[networkName.value].allTokens
+      const tokensAddrArr = tokensArr.map((a) => a.address)
 
-      console.log(lootRealmsLockbox)
+      const realmsContract = new ethers.Contract(
+        tokensAddrArr[0],
+        lootRealmsABI,
+        l1Signer
+      )
+      const approve = await realmsContract.setApprovalForAll(
+        RINKEBY_L1_BRIDGE_ADDRESS,
+        true
+      )
+      await approve.wait()
+
       const tx = await lootRealmsLockbox.depositToL2(
         id,
         submissionPriceWei,
@@ -135,7 +147,72 @@ export function useBridge() {
         { value: callValue }
       )
       console.log(tx)
-      return tx
+
+      const receipt = await tx.wait()
+
+      const event = receipt.events[receipt.events.length - 1]
+      const ticketId = event.args[0]
+
+      const ticketIdBigNumber = ethers.BigNumber.from(ticketId.toString())
+
+      console.log(`Ticket Id: ${ticketId}`)
+
+      const autoRedeemHash =
+        await bridge.value.calculateRetryableAutoRedeemTxnHash(
+          ticketIdBigNumber
+        )
+      const autoRedeemRec = await arbProvider.getTransactionReceipt(
+        autoRedeemHash
+      )
+      console.log(
+        `AutoRedeem https://rinkeby-explorer.arbitrum.io/tx/${autoRedeemHash}`
+      )
+      console.log(autoRedeemRec)
+
+      const redeemTxnHash =
+        await bridge.value.calculateL2RetryableTransactionHash(
+          ticketIdBigNumber
+        )
+      const redeemTxnRec = await arbProvider.getTransactionReceipt(
+        redeemTxnHash
+      )
+      console.log(
+        `RedeemTxn https://rinkeby-explorer.arbitrum.io/tx/${redeemTxnHash}`
+      )
+      console.log(redeemTxnRec)
+
+      const retryableTicketHash = await bridge.value.calculateL2TransactionHash(
+        ticketIdBigNumber
+      )
+      const retryableTicketRec = await arbProvider.getTransactionReceipt(
+        retryableTicketHash
+      )
+      console.log(
+        `RetryableTicket https://rinkeby-explorer.arbitrum.io/tx/${retryableTicketHash}`
+      )
+      console.log(retryableTicketRec)
+
+      // Arbitrum logic for getting mapping between L1 -> L2 transactions
+      const inboxSeqNums =
+        (await bridge.value.getInboxSeqNumFromContractTransaction(
+          receipt
+        )) as any
+
+      console.log(`Seq: ${inboxSeqNums}`)
+
+      const ourMessagesSequenceNum = inboxSeqNums[0]
+
+      const retryableTxnHash =
+        await bridge.value.calculateL2RetryableTransactionHash(
+          ourMessagesSequenceNum
+        )
+
+      console.log(`Waiting L2 tx: ${retryableTxnHash}`)
+
+      // Wait for L2
+      const retryRec = await arbProvider.waitForTransaction(retryableTxnHash)
+
+      console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`)
     }
   }
 
