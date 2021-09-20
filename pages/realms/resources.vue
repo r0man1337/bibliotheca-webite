@@ -3,7 +3,7 @@
     <div class="w-full text-center">
       <h1>Realms Resource Distribution</h1>
       <p>
-        There are 50 Wonders in scattered throughout the Realms that are not
+        There are 50 Wonders scattered throughout the Realms that are not
         represented in this data.
       </p>
     </div>
