@@ -38,6 +38,7 @@ export function useWeb3() {
     chainId,
     account,
     provider,
+    library,
     error,
   } = UseWeb3Insta()
 
@@ -53,6 +54,7 @@ export function useWeb3() {
     provider,
     providers,
     active,
+    library,
     activate,
     deactivate,
     networkName,

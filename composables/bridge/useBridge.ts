@@ -14,7 +14,7 @@ import { Bridge } from 'arb-ts'
 import { useNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
-import { LootRealmsLockbox } from '~/typechain/LootRealmsLockbox'
+import realmsLockBoxABI from './abi/realmsLockBox.json'
 // eslint-disable-next-line camelcase
 import { LootRealmsLockbox__factory } from '~/typechain/factories/LootRealmsLockbox__factory'
 
@@ -45,7 +45,7 @@ export function useBridge() {
   const loadingModal = ref(false)
 
   const { times, plus, ensureValue } = useBigNumber()
-  const { provider, account, networkName, activate } = useWeb3()
+  const { provider, library, account, networkName, activate } = useWeb3()
   const { activeNetwork, networks } = useNetwork()
 
   const partnerNetwork = computed(() =>
@@ -84,6 +84,7 @@ export function useBridge() {
   const transactionCount = ref(null)
 
   const initBridge = async () => {
+    console.log(library)
     bridge.value = await Bridge.init(
       l1Signer,
       l2Signer,
@@ -92,17 +93,18 @@ export function useBridge() {
     )
     // transactionCount.value = bridge.l2Signer.getTransactionCount()
   }
-  // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
-  const calldataBytes = ethers.utils.defaultAbiCoder.encode(
-    ['address', 'uint256'],
-    [l1Signer._address, 1011]
-  )
-  const calldataBytesLength = hexDataLength(calldataBytes) + 4 // 4 bytes func identifier
-  console.log(`Calldata size: ${calldataBytesLength}`)
 
   const depositRealm = async (id) => {
     // eslint-disable-next-line prefer-const
     if (!process.server) {
+      // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
+      console.log(l1Signer)
+      const calldataBytes = ethers.utils.defaultAbiCoder.encode(
+        ['address', 'uint256'],
+        [l1Signer._address, 1011]
+      )
+      const calldataBytesLength = hexDataLength(calldataBytes) + 4 // 4 bytes func identifier
+      console.log(`Calldata size: ${calldataBytesLength}`)
       console.log('deposting id' + id)
       const [_submissionPriceWei, nextUpdateTimestamp] =
         await bridge.value.l2Bridge.getTxnSubmissionPrice(calldataBytesLength)
@@ -118,10 +120,13 @@ export function useBridge() {
       const callValue = (gasPriceBid * maxGas) + parseInt(submissionPriceWei)
       console.log(`Call value to L2: ${callValue.toString()}`)
 
-      const lootRealmsLockbox = LootRealmsLockbox__factory.connect(
+      const lootRealmsLockbox = new ethers.Contract(
         RINKEBY_L1_BRIDGE_ADDRESS,
+        realmsLockBoxABI,
         l1Signer
       )
+
+      console.log(lootRealmsLockbox)
       const tx = await lootRealmsLockbox.depositToL2(
         id,
         submissionPriceWei,
