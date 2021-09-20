@@ -148,6 +148,10 @@ export default {
         page: '/realms/mint',
         title: 'Mint realms',
       },
+      {
+        page: '/realms/resources',
+        title: 'Realm Resources',
+      },
     ]
 
     const adventureLinks = [

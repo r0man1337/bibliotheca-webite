@@ -1,0 +1,136 @@
+<template>
+  <div class="container mx-auto">
+    <div class="w-full text-center">
+      <h1>Realms Resource Distribution</h1>
+      <p>
+        There are 50 Wonders in scattered throughout the Realms that are not
+        represented in this data.
+      </p>
+    </div>
+    <canvas id="myChart" width="400" height="400"></canvas>
+  </div>
+</template>
+<script>
+import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import {
+  Chart,
+  ArcElement,
+  LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  BubbleController,
+  DoughnutController,
+  LineController,
+  PieController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  RadialLinearScale,
+  TimeScale,
+  TimeSeriesScale,
+  Decimation,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+  SubTitle,
+} from 'chart.js'
+import ResourceData from '~/composables/resource.json'
+
+Chart.register(
+  ArcElement,
+  LineElement,
+  BarElement,
+  PointElement,
+  BarController,
+  BubbleController,
+  DoughnutController,
+  LineController,
+  PieController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  CategoryScale,
+  LinearScale,
+  LogarithmicScale,
+  RadialLinearScale,
+  TimeScale,
+  TimeSeriesScale,
+  Decimation,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+  SubTitle
+)
+export default defineComponent({
+  setup(props, context) {
+    const myChart = ref(null)
+
+    const filteredResources = ResourceData.filter((d) => {
+      return d.Value > 1
+    })
+
+    const sortedResources = filteredResources.sort((a, b) => {
+      return a.Value - b.Value
+    })
+
+    const resources = sortedResources.map((d) => {
+      return d.Value
+    })
+    const traitName = sortedResources.map((d) => {
+      return d.Trait
+    })
+    const colours = sortedResources.map((d) => {
+      return d.colour
+    })
+    const data = {
+      labels: traitName,
+      datasets: [
+        {
+          label: 'My First Dataset',
+          data: resources,
+          backgroundColor: colours,
+          borderColor: '#000',
+          hoverOffset: 20,
+        },
+      ],
+    }
+    onMounted(() => {
+      const ctx = document.getElementById('myChart')
+      console.log(ctx)
+      myChart.value = new Chart(ctx, {
+        type: 'pie',
+        data,
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              backgroundColor: '#fff',
+              bodyColor: '#000',
+            },
+            legend: {
+              position: 'right',
+              labels: {
+                color: '#fff',
+                font: {
+                  size: 16,
+                  family: 'EB Garamond, serif',
+                },
+              },
+            },
+          },
+        },
+      })
+
+      console.log(myChart.value)
+    })
+
+    return { myChart, resources, ResourceData }
+  },
+})
+</script>

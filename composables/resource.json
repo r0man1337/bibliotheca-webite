@@ -1,91 +1,113 @@
 [
     {
         "Trait": "Wood",
-        "Value": 5015
+        "Value": 5015,
+        "colour": "#78350f"
     },
     {
         "Trait": "Coal",
-        "Value": 3833
+        "Value": 3833,
+        "colour": "#757575"
     },
     {
         "Trait": "Stone",
-        "Value": 3941
+        "Value": 3941,
+        "colour": "#e0e0e0"
     },
     {
         "Trait": "Obsidian",
-        "Value": 2216
+        "Value": 2216,
+        "colour": "#000000"
     },
     {
         "Trait": "Gold",
-        "Value": 914
+        "Value": 914,
+        "colour": "#fcd34d"
     },
     {
         "Trait": "Silver",
-        "Value": 1741
+        "Value": 1741,
+        "colour": "#eeeeee"
     },
     {
         "Trait": "Ruby",
-        "Value": 239
+        "Value": 239,
+        "colour": "#dc2626"
     },
     {
         "Trait": "Sapphire",
-        "Value": 247
+        "Value": 247,
+        "colour": "#3b82f6"
     },
     {
         "Trait": "Adamantine",
-        "Value": 55
+        "Value": 55,
+        "colour": "#1e3a8a"
     },
     {
         "Trait": "Mithral",
-        "Value": 37
+        "Value": 37,
+        "colour": "#60a5fa"
     },
     {
         "Trait": "Cold Iron",
-        "Value": 957
+        "Value": 957,
+        "colour": "#fca5a5"
     },
     {
         "Trait": "Diamonds",
-        "Value": 300
+        "Value": 300,
+        "colour": "#ccbcfb"
     },
     {
         "Trait": "Copper",
-        "Value": 2643
+        "Value": 2643,
+        "colour": "#f59e0b"
     },
     {
         "Trait": "Ironwood",
-        "Value": 1179
+        "Value": 1179,
+        "colour": "#b91c1c"
     },
     {
         "Trait": "Twilight Quartz",
-        "Value": 111
+        "Value": 111,
+        "colour": "#6d28d9"
     },
     {
         "Trait": "Hartwood",
-        "Value": 594
+        "Value": 594,
+        "colour": "#fca5a5"
     },
     {
         "Trait": "Ignium",
-        "Value": 172
+        "Value": 172,
+        "colour": "#ef4444"
     },
     {
         "Trait": "Ethereal Silica",
-        "Value": 162
+        "Value": 162,
+        "colour": "#10b981"
     },
     {
         "Trait": "True Ice",
-        "Value": 139
+        "Value": 139,
+        "colour": "#ffffff"
     },
     {
         "Trait": "Alchemical Silver",
-        "Value": 93
+        "Value": 93,
+        "colour": "#bdbdbd"
     },
     {
         "Trait": "Deep Crystal",
-        "Value": 239
+        "Value": 239,
+        "colour": "#93c5fd"
     },
     {
         "Trait": "Dragonhide",
-        "Value": 23
+        "Value": 23,
+        "colour": "#ec4899"
     },
     {
         "Trait": "Cathedral Of Agony",

@@ -20,6 +20,7 @@
     "@portis/web3": "^4.0.5",
     "@walletconnect/web3-provider": "^1.4.1",
     "bignumber.js": "^9.0.1",
+    "chart.js": "^3.5.1",
     "core-js": "^3.15.1",
     "ethers": "^5.4.6",
     "graphql": "^15.5.2",
@@ -32,10 +33,10 @@
     "web3modal": "^1.9.4"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^6.0.0",
     "@babel/eslint-parser": "^7.14.7",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/tailwindcss": "^4.2.0",
