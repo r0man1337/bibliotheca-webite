@@ -2,6 +2,7 @@
   <div
     class="
       bg-black
+      border-4 border-gray-800
       p-4
       rounded-xl
       mr-8

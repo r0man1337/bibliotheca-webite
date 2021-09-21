@@ -15,23 +15,29 @@
       cursor-pointer
       hover:shadow-2xl hover:opacity-70 hover:border
       flex flex-col
+      border-4 border-gray-800
+      shadow-2xl
     "
     @click="navigate"
   >
     <div>
       <h3>{{ shortenHash(adventurer.address) }}</h3>
-      <span>Loots: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
-      <br />
-      <span
-        >Realms: {{ adventurer.realmsHeld ? adventurer.realmsHeld : 0 }}</span
-      >
-      <br />
-      <span
-        >Treasure:
-        {{ adventurer.treasuresHeld ? adventurer.treasuresHeld : 0 }}</span
-      >
-      <br />
-      <span>mLoot: {{ adventurer.mLootHeld ? adventurer.mLootHeld : 0 }}</span>
+      <div class="text-lg">
+        <span>Loots: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
+        <br />
+        <span
+          >Realms: {{ adventurer.realmsHeld ? adventurer.realmsHeld : 0 }}</span
+        >
+        <br />
+        <span
+          >Treasure:
+          {{ adventurer.treasuresHeld ? adventurer.treasuresHeld : 0 }}</span
+        >
+        <br />
+        <span
+          >mLoot: {{ adventurer.mLootHeld ? adventurer.mLootHeld : 0 }}</span
+        >
+      </div>
     </div>
     <div class="mt-auto flex text-gray-300">
       Visit Adventurers Profile <ArrowRight class="ml-4 w-4 h-4 self-center" />

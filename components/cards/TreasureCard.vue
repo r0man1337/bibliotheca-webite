@@ -2,6 +2,7 @@
   <div
     class="
       bg-black
+      border-4 border-gray-800
       p-4
       rounded-xl
       mr-8
@@ -65,7 +66,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 export default defineComponent({
   props: {

@@ -2,6 +2,7 @@
   <div
     class="
       bg-black
+      border-4 border-gray-800
       rounded-xl
       mr-8
       my-4
@@ -47,8 +48,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
-import axios from 'axios'
+import { defineComponent } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 export default defineComponent({
   props: {

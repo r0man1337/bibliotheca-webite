@@ -5,7 +5,7 @@
       <div class="bg-gray-200 bg-white w-full rounded">
         <div
           :style="'width:' + (cities.value / 21) * 100 + '%'"
-          class="rounded px-4 py-2 bg-red-500"
+          class="rounded px-4 py-2 bg-red-400"
         ></div>
       </div>
     </div>

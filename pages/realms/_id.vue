@@ -48,7 +48,7 @@
 
       <img
         v-if="openSeaData.image_url"
-        class="w-full relative"
+        class="w-full relative rounded-2xl"
         :src="openSeaData.image_url"
         alt=""
       />
@@ -64,7 +64,6 @@ import {
   computed,
   defineComponent,
   ref,
-  useContext,
   useFetch,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
@@ -72,7 +71,6 @@ import { useFormatting } from '~/composables/useFormatting'
 import { usePrice } from '~/composables'
 export default defineComponent({
   setup(props, context) {
-    const { $graphql } = useContext()
     const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { id } = context.root.$route.params
