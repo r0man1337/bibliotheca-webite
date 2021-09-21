@@ -14,6 +14,7 @@ import { useWeb3 } from './useWeb3'
 import { useBigNumber } from './useBigNumber'
 import realmsABI from '~/abi/lootRealms.json'
 import erc721tokens from '~/constant/erc721tokens'
+import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 
 const error = reactive({
   mint: null,
@@ -28,9 +29,10 @@ export function useMint() {
   const loadingModal = ref(false)
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, account, networkName, activate } = useWeb3()
+  const { open } = useWeb3Modal()
 
   const mint = async (lootId) => {
-    // if (!account.value) return activate() Open Web3Connect instead?
+    if (!account.value) return open()
     try {
       error.mint = null
       loading.value = true
@@ -44,7 +46,7 @@ export function useMint() {
   }
 
   const multiMint = async (lootIds) => {
-    // if (!account.value) return activate()
+    if (!account.value) return open()
 
     try {
       error.mint = null

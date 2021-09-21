@@ -11,27 +11,28 @@
     <SideBar class="fixed sm:relative w-80 min-h-screen" />
     <div class="w-full">
       <AccountButton />
-      <NetworkSwitcher />
       <Nuxt class="p-3 sm:p-8" />
       <Modal />
     </div>
   </div>
 </template>
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import { useUiState } from '~/composables'
 import { useConnect } from '~/composables/web3/useConnect'
 import Book from '~/assets/img/book-open.svg?inline'
-useConnect()
-export default {
+export default defineComponent({
   components: {
     Book,
   },
   setup() {
     const { toggleSideBar, sideBarOpen } = useUiState()
+    useConnect()
+
     return {
       toggleSideBar,
       sideBarOpen,
     }
   },
-}
+})
 </script>

@@ -28,21 +28,21 @@ interface AppProps {
 interface newProviderClass extends Ref {
   getSigner: () => string
 }
-const error = reactive({
-  depositL1: null,
-  withdrawL2: null,
-})
-
-const loading = reactive({
-  depositL1: null,
-  withdrawL2: null,
-})
-const result = reactive({
-  deposit: null,
-})
 
 export function useBridge() {
   const loadingModal = ref(false)
+  const error = reactive({
+    depositL1: null,
+    withdrawL2: null,
+  })
+
+  const loading = reactive({
+    depositL1: null,
+    withdrawL2: null,
+  })
+  const result = reactive({
+    deposit: null,
+  })
 
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, library, account, networkName, activate } = useWeb3()
@@ -51,8 +51,7 @@ export function useBridge() {
   const partnerNetwork = computed(() =>
     networks.find((n) => n.chainId === activeNetwork.value.partnerChainID)
   )
-  console.log(partnerNetwork)
-  console.log(account.value)
+
   const useL1Network = computed(() => {
     if (!activeNetwork.value.isArbitrum) {
       return activeNetwork
@@ -68,30 +67,30 @@ export function useBridge() {
       return partnerNetwork
     }
   })
-  const ethProvider = !process.server
-    ? new ethers.providers.Web3Provider(window.ethereum)
-    : null
-  const arbProvider = new ethers.providers.JsonRpcProvider(
-    partnerNetwork.value.url
-  )
-  /* const l1NetworkID = useL1Network.value.chainId as string
-    const l2NetworkID = useL2Network.value.chainId as string */
-  // console.log(ethProvider.getSigner())
-  const l1Signer = ethProvider.getSigner(account.value)
-  const l2Signer = arbProvider.getSigner(account.value)
+  const ethProvider = ref(null)
+  const arbProvider = ref(null)
+  const l1Signer = ref(null)
+  const l2Signer = ref(null)
 
   const bridge = ref(null)
   const transactionCount = ref(null)
 
   const initBridge = async () => {
-    console.log(library)
-    bridge.value = await Bridge.init(
-      l1Signer,
-      l2Signer,
-      RINKEBY_L1_BRIDGE_ADDRESS,
-      ARB_RINKEBY_L2_BRIDGE_ADDRESS
-    )
-    // transactionCount.value = bridge.l2Signer.getTransactionCount()
+    if (!process.server) {
+      ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
+      arbProvider.value = new ethers.providers.JsonRpcProvider(
+        partnerNetwork.value.url
+      )
+      l1Signer.value = ethProvider.value.getSigner(account.value)
+      l2Signer.value = arbProvider.value.getSigner(account.value)
+      // console.log(library.getSigner(account.value))
+      bridge.value = await Bridge.init(
+        l1Signer.value,
+        l2Signer.value,
+        RINKEBY_L1_BRIDGE_ADDRESS,
+        ARB_RINKEBY_L2_BRIDGE_ADDRESS
+      )
+    }
   }
 
   const depositRealm = async (id) => {
