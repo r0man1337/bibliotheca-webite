@@ -262,7 +262,7 @@ export default defineComponent({
     })
 
     useFetch(async () => {
-      adventurer.value = await $graphql.default.request(
+      adventurer.value = await $graphql.mainnet.request(
         query.value,
         variables.value
       )

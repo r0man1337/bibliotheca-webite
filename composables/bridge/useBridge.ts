@@ -11,12 +11,14 @@ import {
 import { hexDataLength } from '@ethersproject/bytes'
 import { BigNumber, ethers } from 'ethers'
 import { Bridge } from 'arb-ts'
-import { useNetwork } from '../web3/useNetwork'
+import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
 import realmsLockBoxABI from '~/abi/realmsLockBox.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
+import lootRealmsL2ABI from '~/abi/lootRealmsL2.json'
 import erc721tokens from '~/constant/erc721tokens'
+import { useRealms } from '~/composables/web3/useRealms'
 
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
@@ -30,6 +32,7 @@ interface newProviderClass extends Ref {
 }
 
 export function useBridge() {
+  const { getUserRealms } = useRealms()
   const loadingModal = ref(false)
   const error = reactive({
     depositL1: null,
@@ -41,32 +44,13 @@ export function useBridge() {
     withdrawL2: null,
   })
   const result = reactive({
-    deposit: null,
+    realmsOnL2: null,
   })
 
   const { times, plus, ensureValue } = useBigNumber()
-  const { provider, library, account, networkName, activate } = useWeb3()
-  const { activeNetwork, networks } = useNetwork()
+  const { provider, library, account, activate } = useWeb3()
+  const { networks, partnerNetwork } = useNetwork()
 
-  const partnerNetwork = computed(() =>
-    networks.find((n) => n.chainId === activeNetwork.value.partnerChainID)
-  )
-
-  const useL1Network = computed(() => {
-    if (!activeNetwork.value.isArbitrum) {
-      return activeNetwork
-    } else {
-      return partnerNetwork
-    }
-  })
-
-  const useL2Network = computed(() => {
-    if (activeNetwork.value.isArbitrum) {
-      return activeNetwork
-    } else {
-      return partnerNetwork
-    }
-  })
   const ethProvider = ref(null)
   const arbProvider = ref(null)
   const l1Signer = ref(null)
@@ -77,6 +61,9 @@ export function useBridge() {
 
   const initBridge = async () => {
     if (!process.server) {
+      console.log(partnerNetwork.value)
+      console.log(window.ethereum)
+
       ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
       arbProvider.value = new ethers.providers.JsonRpcProvider(
         partnerNetwork.value.url
@@ -97,10 +84,10 @@ export function useBridge() {
     // eslint-disable-next-line prefer-const
     if (!process.server) {
       // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
-      console.log()
+      console.log(l1Signer.value)
       const calldataBytes = ethers.utils.defaultAbiCoder.encode(
         ['address', 'uint256'],
-        [l1Signer._address, 1011]
+        [bridge.value.l1Bridge.l1Signer._address, 1011]
       )
       const calldataBytesLength = hexDataLength(calldataBytes) + 4 // 4 bytes func identifier
       console.log(`Calldata size: ${calldataBytesLength}`)
@@ -122,15 +109,15 @@ export function useBridge() {
       const lootRealmsLockbox = new ethers.Contract(
         RINKEBY_L1_BRIDGE_ADDRESS,
         realmsLockBoxABI,
-        l1Signer
+        l1Signer.value
       )
-      const tokensArr = erc721tokens[networkName.value].allTokens
+      const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
       const tokensAddrArr = tokensArr.map((a) => a.address)
 
       const realmsContract = new ethers.Contract(
         tokensAddrArr[0],
         lootRealmsABI,
-        l1Signer
+        l1Signer.value
       )
       const approve = await realmsContract.setApprovalForAll(
         RINKEBY_L1_BRIDGE_ADDRESS,
@@ -160,7 +147,7 @@ export function useBridge() {
         await bridge.value.calculateRetryableAutoRedeemTxnHash(
           ticketIdBigNumber
         )
-      const autoRedeemRec = await arbProvider.getTransactionReceipt(
+      const autoRedeemRec = await arbProvider.value.getTransactionReceipt(
         autoRedeemHash
       )
       console.log(
@@ -172,7 +159,7 @@ export function useBridge() {
         await bridge.value.calculateL2RetryableTransactionHash(
           ticketIdBigNumber
         )
-      const redeemTxnRec = await arbProvider.getTransactionReceipt(
+      const redeemTxnRec = await arbProvider.value.getTransactionReceipt(
         redeemTxnHash
       )
       console.log(
@@ -183,7 +170,7 @@ export function useBridge() {
       const retryableTicketHash = await bridge.value.calculateL2TransactionHash(
         ticketIdBigNumber
       )
-      const retryableTicketRec = await arbProvider.getTransactionReceipt(
+      const retryableTicketRec = await arbProvider.value.getTransactionReceipt(
         retryableTicketHash
       )
       console.log(
@@ -209,14 +196,32 @@ export function useBridge() {
       console.log(`Waiting L2 tx: ${retryableTxnHash}`)
 
       // Wait for L2
-      const retryRec = await arbProvider.waitForTransaction(retryableTxnHash)
+      const retryRec = await arbProvider.value.waitForTransaction(
+        retryableTxnHash
+      )
 
       console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`)
+      await getUserRealms('arbRinkeby')
     }
+  }
+
+  const getL2Realms = async () => {
+    console.log('getting l2 realms')
+    const l2RealmsContract = new ethers.Contract(
+      ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+      lootRealmsL2ABI,
+      l2Signer.value
+    )
+    const connect = await l2RealmsContract.connect(arbProvider.value)
+    // console.log(connect)
+    result.realmsOnL2 = await connect.balanceOf(account.value)
+    // console.log(balance)
+    return result.realmsOnL2
   }
 
   return {
     initBridge,
+    getL2Realms,
     depositRealm,
     error,
     bridge,

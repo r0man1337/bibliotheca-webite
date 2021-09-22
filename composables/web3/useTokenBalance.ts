@@ -8,7 +8,7 @@ import {
 } from '@nuxtjs/composition-api'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
-import { Network } from './useNetwork'
+import { activeNetwork } from './useNetwork'
 import { useWeb3 } from './useWeb3'
 import { useBigNumber } from './useBigNumber'
 import balanceABI from '~/abi/balance.json'
@@ -37,16 +37,16 @@ const prices = reactive({
 
 export function useBalances() {
   const { times, plus, ensureValue } = useBigNumber()
-  const { account, networkName } = useWeb3()
+  const { account } = useWeb3()
 
   const fetchBalances = async (refresh = false) => {
-    console.log(networkName.value)
+    console.log(activeNetwork.value.id)
     if (!balances.user || refresh) {
       if (!account.value) return
       balances.user = {
         mainnet:
-          networkName.value === Network.Mainnet
-            ? await getBalances(account.value, Network.Mainnet, ethers)
+          activeNetwork.value.id === 'mainnet'
+            ? await getBalances(account.value, activeNetwork.value.id, ethers)
             : {},
       }
     }
@@ -84,14 +84,9 @@ export function useBalances() {
   }
 }
 
-async function getBalances(
-  owner,
-  network: Network,
-  ethers,
-  additionalTokens = []
-) {
+async function getBalances(owner, networkName, ethers, additionalTokens = []) {
   try {
-    const tokensArr = tokens[network].allTokens
+    const tokensArr = tokens[networkName].allTokens
     console.log(tokensArr)
 
     const tokensAddrArr = tokensArr.map((a) => a.address)

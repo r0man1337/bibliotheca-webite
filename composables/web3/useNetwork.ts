@@ -9,11 +9,23 @@ import MainnetSVG from '~/assets/icons/mainnet.svg?inline'
 import ArbitrumSVG from '~/assets/icons/arbitrum.svg?inline'
 
 const activeNetworks = process.env.ACTIVE_NETWORKS.split(',')
-export enum Network {
+
+export enum NetworkId {
   Mainnet = 'mainnet',
   Rinkeby = 'rinkeby',
   Arbitrum = 'arbitrum',
-  ArbRinkeby = 'arbitrum-rinkeby',
+  ArbRinkeby = 'arbRinkeby',
+}
+
+export type Network = {
+  id: string
+  chainId: number
+  displayName: string
+  icon: any
+  tokenBridge: Record<string, any>
+  partnerChainID: number
+  isArbitrum: boolean
+  url: string
 }
 interface TokenBridge {
   l1Address: string
@@ -29,12 +41,12 @@ const rinkebyBridge: TokenBridge = {
   l1Address: '0x70C143928eCfFaf9F5b406f7f4fC28Dc43d68380',
   l2Address: '0x9413AD42910c1eA60c737dB5f58d1C504498a3cD',
 }
-export const networks = []
+export const networks: Network[] = []
 if (activeNetworks.includes('mainnet')) {
   networks.push({
     id: 'mainnet',
     chainId: 1,
-    name: 'Ethereum Mainnet',
+    displayName: 'Ethereum Mainnet',
     icon: MainnetSVG,
     tokenBridge: mainnetBridge,
     partnerChainID: 42161,
@@ -46,7 +58,7 @@ if (activeNetworks.includes('rinkeby')) {
   networks.push({
     id: 'rinkeby',
     chainId: 4,
-    name: 'Eth Rinkeby',
+    displayName: 'Eth Rinkeby',
     icon: MainnetSVG,
     tokenBridge: rinkebyBridge,
     partnerChainID: 421611,
@@ -58,7 +70,7 @@ if (activeNetworks.includes('arbitrum')) {
   networks.push({
     id: 'arbitrum',
     chainId: 42161,
-    name: 'Arbitrum',
+    displayName: 'Arbitrum',
     icon: MainnetSVG,
     tokenBridge: mainnetBridge,
     partnerChainID: 1,
@@ -66,11 +78,11 @@ if (activeNetworks.includes('arbitrum')) {
     url: 'ttps://arb1.arbitrum.io/rpc',
   })
 }
-if (activeNetworks.includes('arbitrum-rinkeby')) {
+if (activeNetworks.includes('arbitrumRinkeby')) {
   networks.push({
-    id: 'arbitrum-rinkeby',
+    id: 'arbitrumRinkeby',
     chainId: 421611,
-    name: 'Arbitrum Rinkeby',
+    displayName: 'Arbitrum Rinkeby',
     icon: MainnetSVG,
     tokenBridge: rinkebyBridge,
     partnerChainID: 4,
@@ -79,11 +91,11 @@ if (activeNetworks.includes('arbitrum-rinkeby')) {
   })
 }
 
-export const activeNetworkId = ref<Network>()
+export const activeNetworkId = ref<NetworkId>()
 export const activeNetwork = computed(
-  () => networks.find((n) => n.id === activeNetworkId.value) || networks[0]
+  (): Network =>
+    networks.find((n) => n.id === activeNetworkId.value) || networks[0]
 )
-
 export function useNetwork() {
   const { showWarning } = useNotification()
   const { account, chainId } = useWeb3()
@@ -99,7 +111,25 @@ export function useNetwork() {
       showNetworksMismatchDialog()
     }
   }
+  const partnerNetwork = computed(() =>
+    networks.find((n) => n.chainId === activeNetwork.value.partnerChainID)
+  )
 
+  const useL1Network = computed((): Network => {
+    if (!activeNetwork.value.isArbitrum) {
+      return activeNetwork.value
+    } else {
+      return partnerNetwork.value
+    }
+  })
+
+  const useL2Network = computed((): Network => {
+    if (activeNetwork.value.isArbitrum) {
+      return activeNetwork.value
+    } else {
+      return partnerNetwork.value
+    }
+  })
   async function switchToMainnet() {
     if (window.ethereum) {
       const chainData = {
@@ -212,11 +242,11 @@ export function useNetwork() {
   }
   async function switchNetwork() {
     try {
-      if (activeNetworkId.value === 'mainnet') {
+      if (activeNetwork.value.id === 'mainnet') {
         await switchToMainnet()
-      } else if (activeNetworkId.value === 'rinkeby') {
+      } else if (activeNetwork.value.id === 'rinkeby') {
         await switchToRinkeby()
-      } else if (activeNetworkId.value === 'arbitrum-rinkeby') {
+      } else if (activeNetwork.value.id === 'arbitrumRinkeby') {
         await switchToArbRinkeby()
       } else {
         await switchToArbitrum()
@@ -229,7 +259,7 @@ export function useNetwork() {
   }
 
   watch(activeNetworkId, () => {
-    localStorage.setItem('network', activeNetworkId.value)
+    localStorage.setItem('network', activeNetwork.value.id)
   })
 
   onMounted(() => {
@@ -244,9 +274,10 @@ export function useNetwork() {
     networkMismatch,
     networks,
     chainId,
-    activeNetworkId,
-    activeNetwork,
     switchNetwork,
     checkForNetworkMismatch,
+    partnerNetwork,
+    useL1Network,
+    useL2Network,
   }
 }

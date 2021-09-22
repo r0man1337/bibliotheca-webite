@@ -25,18 +25,20 @@
   >
     <div class="mt-3 text-center text-black sm:mt-5">
       <h3 id="modal-headline" class="font-semibold text-19 dark:text-light">
-        Switch to <span class="capitalize">{{ activeNetwork.name }}</span>
+        Switch to
+        <span class="capitalize">{{ activeNetwork.displayName }}</span>
       </h3>
       <!-- eslint-disable-next-line vue/no-v-html -->
       <p class="px-6 mt-6 font-medium">
         Change the wallet network to
-        <span class="capitalize">{{ activeNetwork.name }}</span> to proceed.
+        <span class="capitalize">{{ activeNetwork.displayName }}</span> to
+        proceed.
       </p>
     </div>
 
     <div class="flex justify-center mt-4 sm:mt-6">
       <b-button type="primary" class="px-8" @click="switchAndClose">
-        Switch to {{ activeNetwork.name }}
+        Switch to {{ activeNetwork.displayName }}
       </b-button>
     </div>
   </div>
@@ -45,12 +47,12 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useModal } from '~/composables/useModal'
-import { useNetwork } from '~/composables/web3/useNetwork'
+import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
 
 export default defineComponent({
   setup() {
     const { close } = useModal()
-    const { activeNetwork, switchNetwork } = useNetwork()
+    const { switchNetwork } = useNetwork()
 
     async function switchAndClose() {
       try {

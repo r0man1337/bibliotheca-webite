@@ -31,7 +31,7 @@
       <span class="flex items-center capitalize font-medium text-sm">
         <component :is="activeNetwork.icon" class="w-6 h-6 mr-2" />
 
-        {{ activeNetwork.name }}
+        {{ activeNetwork.displayName }}
       </span>
       <span
         class="
@@ -108,7 +108,7 @@
           <span class="flex items-center text-black">
             <!--<component :is="network.icon" class="w-6 h-6 mr-2 text-primary-blue-dark" />-->
 
-            {{ network.name }}
+            {{ network.displayName }}
           </span>
 
           <!--
@@ -150,7 +150,11 @@
 <script>
 import { defineComponent, nextTick, ref, watch } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
-import { useNetwork } from '~/composables/web3/useNetwork'
+import {
+  useNetwork,
+  activeNetwork,
+  activeNetworkId,
+} from '~/composables/web3/useNetwork'
 import { useModal } from '~/composables/useModal'
 
 // import { useTenderly } from '~/composables/web3/useTenderly';
@@ -159,14 +163,8 @@ export default defineComponent({
   setup() {
     const show = ref(false)
     const { chainId, ethersProviders, account } = useWeb3()
-    const {
-      networks,
-      activeNetworkId,
-      activeNetwork,
-      checkForNetworkMismatch,
-      networkMismatch,
-      networkName,
-    } = useNetwork()
+    const { networks, checkForNetworkMismatch, networkMismatch, networkName } =
+      useNetwork()
     const { showNetworksMismatchDialog } = useModal()
 
     const setActiveNetwork = async (networkId) => {

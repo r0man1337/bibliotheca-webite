@@ -1,5 +1,4 @@
 import { useContext, ref } from '@nuxtjs/composition-api'
-import { usersRealms } from './../graphql/queries'
 import { useWeb3 } from '~/composables/web3/useWeb3'
 export function useGraph() {
   const loading = ref(false)
@@ -10,7 +9,7 @@ export function useGraph() {
   const gqlRequest = async (
     query: any,
     variables: any,
-    network: any = 'default'
+    network: any = 'mainnet'
   ) => {
     loading.value = true
     try {
@@ -22,31 +21,7 @@ export function useGraph() {
     }
   }
 
-  const getUsersRealms = async (network) => {
-    if (account.value) {
-      console.log(network + 'get realms')
-      if (!network) {
-        network = 'default'
-      }
-      let response
-      try {
-        // await activate()
-      } catch (e) {
-        console.log(e)
-      } finally {
-        response = await gqlRequest(
-          usersRealms,
-          { address: account.value.toLowerCase() },
-          network
-        )
-      }
-      return response ? response.realms : []
-    } else {
-      return null
-    }
-  }
-
   return {
-    getUsersRealms,
+    gqlRequest,
   }
 }

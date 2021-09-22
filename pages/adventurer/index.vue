@@ -122,7 +122,7 @@ export default defineComponent({
     }
 
     const { fetch } = useFetch(async () => {
-      const response = await $graphql.default.request(query.value, {
+      const response = await $graphql.mainnet.request(query.value, {
         offset: offset.value,
       })
       adventurers.value = response.wallets
@@ -136,7 +136,7 @@ export default defineComponent({
       offset.value = offset.value + 100
 
       try {
-        const response = await $graphql.default.request(query.value, {
+        const response = await $graphql.mainnet.request(query.value, {
           offset: offset.value,
         })
         adventurers.value = adventurers.value.concat(response.wallets)

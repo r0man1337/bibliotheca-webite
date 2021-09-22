@@ -157,7 +157,7 @@ export default defineComponent({
 
       try {
         const newQuery = getSearchQuery(lootQuery.value.name)
-        const response = await $graphql.default.request(newQuery.value, {
+        const response = await $graphql.mainnet.request(newQuery.value, {
           offset: offset.value,
           search: toSentenceCase(search.value),
         })
@@ -174,7 +174,7 @@ export default defineComponent({
     }
 
     useFetch(async () => {
-      const response = await $graphql.default.request(query.value, {
+      const response = await $graphql.mainnet.request(query.value, {
         offset: offset.value,
       })
       loot.value = response.bags
@@ -186,13 +186,13 @@ export default defineComponent({
       try {
         if (search.value) {
           const newQuery = getSearchQuery(lootQuery.value.name)
-          const response = await $graphql.default.request(newQuery.value, {
+          const response = await $graphql.mainnet.request(newQuery.value, {
             offset: offset.value,
             search: search.value,
           })
           loot.value = loot.value.concat(response.bags)
         } else {
-          const response = await $graphql.default.request(query.value, {
+          const response = await $graphql.mainnet.request(query.value, {
             offset: offset.value,
           })
           loot.value = loot.value.concat(response.bags)

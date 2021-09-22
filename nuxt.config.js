@@ -96,7 +96,7 @@ export default {
   },
   graphql: {
     clients: {
-      default: {
+      mainnet: {
         endpoint: process.env.GRAPH_API
           ? process.env.GRAPH_API
           : 'http://localhost:1337/graphql',
@@ -113,13 +113,13 @@ export default {
           ? process.env.GRAPH_API_RINKEBY
           : 'http://localhost:1337/graphql',
         options: {},
-      },
+      }, */
       arbitrumRinkeby: {
-        endpoint: process.env.GRAPH_API_RINKEBY
-          ? process.env.GRAPH_API_RINKEBY
+        endpoint: process.env.GRAPH_API_ARB_RINKEBY
+          ? process.env.GRAPH_API_ARB_RINKEBY
           : 'http://localhost:1337/graphql',
         options: {},
-      }, */
+      },
       secondClient: {},
     },
     options: {},
