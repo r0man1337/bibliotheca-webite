@@ -19,7 +19,7 @@
     <div class="relative">
       <img
         v-if="realm.image_url"
-        class="rounded-xl p-1"
+        class="rounded-xl p-1 w-full"
         :src="realm.image_url"
       />
       <div

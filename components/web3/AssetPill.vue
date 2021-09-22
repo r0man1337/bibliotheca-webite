@@ -3,7 +3,7 @@
     :disabled="disabled"
     class="
       rounded
-      border border-gray-400
+      border-2 border-gray-700
       px-4
       py-3
       my-4
@@ -14,9 +14,12 @@
       group
     "
   >
-    <span class="self-center">#{{ asset.id }}</span>
+    <span :class="{ 'order-2': inverse }" class="self-center"
+      >#{{ asset.id }}</span
+    >
     <LoadingRings v-if="loading" />
     <ArrowRight
+      :class="{ 'rotate-180': inverse }"
       class="
         w-4
         h-4
@@ -51,6 +54,11 @@ export default defineComponent({
       default: false,
     },
     disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    inverse: {
       type: Boolean,
       required: false,
       default: false,
