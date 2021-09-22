@@ -25,6 +25,7 @@ export type Network = {
   tokenBridge: Record<string, any>
   partnerChainID: number
   isArbitrum: boolean
+  explorerUrl: string
   url: string
 }
 interface TokenBridge {
@@ -51,6 +52,7 @@ if (activeNetworks.includes('mainnet')) {
     tokenBridge: mainnetBridge,
     partnerChainID: 42161,
     isArbitrum: false,
+    explorerUrl: 'https://etherscan.io',
     url: process.env.RPC_URL_1 as string,
   })
 }
@@ -63,6 +65,7 @@ if (activeNetworks.includes('rinkeby')) {
     tokenBridge: rinkebyBridge,
     partnerChainID: 421611,
     isArbitrum: false,
+    explorerUrl: 'https://rinkeby.etherscan.io',
     url: 'https://rinkeby-light.eth.linkpool.io',
   })
 }
@@ -75,6 +78,7 @@ if (activeNetworks.includes('arbitrum')) {
     tokenBridge: mainnetBridge,
     partnerChainID: 1,
     isArbitrum: true,
+    explorerUrl: 'https://arbiscan.io',
     url: 'ttps://arb1.arbitrum.io/rpc',
   })
 }
@@ -87,6 +91,7 @@ if (activeNetworks.includes('arbitrumRinkeby')) {
     tokenBridge: rinkebyBridge,
     partnerChainID: 4,
     isArbitrum: true,
+    explorerUrl: 'https://rinkeby-explorer.arbitrum.io',
     url: 'https://rinkeby.arbitrum.io/rpc',
   })
 }
