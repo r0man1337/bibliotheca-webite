@@ -117,6 +117,7 @@
         </div>
       </div>
     </div>
+    <BridgeTransactionsTable />
   </div>
 </template>
 <script>
