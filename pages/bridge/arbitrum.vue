@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-      <h1>Arbitrum Warp Bridge</h1>
+      <h1>Arbitrum Transfer Bridge</h1>
       <h5 class="text-xl">
         You are currently connected to
         <span class="text-red-400">{{ activeNetwork.displayName }}</span>
@@ -46,10 +46,14 @@
                 rounded
                 px-4
                 py-2
-                bg-red-400
+                bg-gradient-to-r
+                from-yellow-400
+                to-red-700
                 w-full
                 text-xl
-                hover:bg-red-600
+                hover:from-red-700 hover:to-yellow-400
+                transition-all
+                duration-250
               "
               @click="depositRealm(selectedRealm.token_id)"
             >
@@ -61,8 +65,8 @@
                 <span v-if="selectedRealm">
                   {{
                     networkChainId === 4
-                      ? 'Warp To Arbitrum L2'
-                      : 'Warp To Ethereum L1'
+                      ? 'Transfer To Arbitrum L2'
+                      : 'Transfer To Ethereum L1'
                   }}
                 </span>
                 <span v-else>Please Select a Realm </span>

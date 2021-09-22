@@ -1,112 +1,64 @@
 <template>
-  <div class="flex mx-auto flex-col shadow-sm mt-20 lg:w-1/2">
+  <div class="flex mx-auto flex-col shadow-sm mt-20">
     <div class="-my-2 overflow-x-auto">
       <div class="py-2 align-middle inline-block min-w-full">
-        <div class="overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div
+          class="
+            overflow-hidden
+            sm:rounded-lg
+            text-white
+            border-4 border-gray-800
+            rounded-2xl
+          "
+        >
           <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-700">
               <tr>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Action
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-4
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-4 py-3 text-left uppercase tracking-wider"
                 >
                   Status
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-2
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-2 py-3 text-left uppercase tracking-wider"
                 >
                   Redeem
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Estimated Arrival Time
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   transactionid
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-4
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-4 py-3 text-left uppercase tracking-wider"
                 >
                   Asset
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Value
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white text-black divide-y divide-gray-200">
+            <tbody class="bg-gray-600 text-white divide-y divide-gray-200">
               <tr v-for="(transaction, index) in transactions" :key="index">
                 <td
                   class="
@@ -126,7 +78,7 @@
                   }}
                 </td>
                 <td class="px-4 py-6 whitespace-nowrap text-sm">
-                  {{ transaction.status }}
+                  <StatusPill :status="transaction.status" />
                   <!-- <StatusBadge
           variant={
             transaction.status === 'success'
