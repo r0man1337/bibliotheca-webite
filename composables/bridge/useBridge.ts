@@ -49,7 +49,7 @@ export function useBridge() {
 
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork } = useNetwork()
+  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
 
   const ethProvider = ref(null)
   const arbProvider = ref(null)
@@ -61,13 +61,24 @@ export function useBridge() {
 
   const initBridge = async () => {
     if (!process.server) {
-      console.log(partnerNetwork.value)
+      console.log(useL1Network.value.url)
+      console.log(useL2Network.value.url)
       console.log(window.ethereum)
 
-      ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
-      arbProvider.value = new ethers.providers.JsonRpcProvider(
-        partnerNetwork.value.url
-      )
+      if (activeNetwork.value.chainId === 4) {
+        ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
+        arbProvider.value = new ethers.providers.JsonRpcProvider(
+          useL2Network.value.url
+        )
+      } else {
+        ethProvider.value = new ethers.providers.JsonRpcProvider(
+          useL1Network.value.url
+        )
+        arbProvider.value = new ethers.providers.JsonRpcProvider(
+          useL2Network.value.url
+        )
+      }
+
       l1Signer.value = ethProvider.value.getSigner(account.value)
       l2Signer.value = arbProvider.value.getSigner(account.value)
       // console.log(library.getSigner(account.value))
@@ -210,15 +221,154 @@ export function useBridge() {
         )
 
         console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`)
+        await getUserRealms()
       } catch (e) {
         console.log(e)
       } finally {
         loadingBridge.value = false
-        await getUserRealms('arbRinkeby')
       }
     }
   }
+  const withDrawFromL2 = async (id) => {
+    // eslint-disable-next-line prefer-const
+    if (!process.server) {
+      loadingBridge.value = true
+      try {
+        // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
+        console.log(l2Signer.value)
+        const calldataBytes = ethers.utils.defaultAbiCoder.encode(
+          ['address', 'uint256'],
+          [bridge.value.l2Bridge.l2Signer._address, 1011]
+        )
+        const calldataBytesLength = hexDataLength(calldataBytes) + 4 // 4 bytes func identifier
+        console.log(`Calldata size: ${calldataBytesLength}`)
+        console.log('withdrawing id:' + id)
+        const [_submissionPriceWei, nextUpdateTimestamp] =
+          await bridge.value.l2Bridge.getTxnSubmissionPrice(calldataBytesLength)
+        const submissionPriceWei = _submissionPriceWei + 5
 
+        const gasPriceBid = await bridge.value.l2Provider.getGasPrice()
+        console.log(submissionPriceWei)
+        console.log(`L2 gas price: ${gasPriceBid.toString()}`)
+
+        // Hardcoded for now
+        const maxGas = 200000000
+        // eslint-disable-next-line prettier/prettier
+      const callValue = (gasPriceBid * maxGas) + parseInt(submissionPriceWei)
+        console.log(`Call value to L2: ${callValue.toString()}`)
+
+        const lootRealmsLockbox = new ethers.Contract(
+          ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+          realmsLockBoxABI,
+          l2Signer.value
+        )
+        const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
+        const tokensAddrArr = tokensArr.map((a) => a.address)
+
+        const realmsContract = new ethers.Contract(
+          tokensAddrArr[0],
+          lootRealmsABI,
+          l2Signer.value
+        )
+
+        // const checkApproval = await realmsContract.isApprovedForAll(
+        //   ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+        //   account.value
+        // )
+        // console.log(checkApproval)
+
+        // if (!checkApproval) {
+        //   console.log('crash')
+        //   const approve = await realmsContract.setApprovalForAll(
+        //     ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+        //     true
+        //   )
+        //   await approve.wait()
+        //   console.log('crash')
+        // }
+
+        const tx = await lootRealmsLockbox.withdrawFromL2(
+          id,
+          submissionPriceWei,
+          maxGas,
+          gasPriceBid,
+          { value: callValue }
+        )
+        console.log(tx)
+
+        const receipt = await tx.wait()
+
+        const event = receipt.events[receipt.events.length - 1]
+        const ticketId = event.args[0]
+
+        const ticketIdBigNumber = ethers.BigNumber.from(ticketId.toString())
+
+        console.log(`Ticket Id: ${ticketId}`)
+
+        const autoRedeemHash =
+          await bridge.value.calculateRetryableAutoRedeemTxnHash(
+            ticketIdBigNumber
+          )
+        const autoRedeemRec = await arbProvider.value.getTransactionReceipt(
+          autoRedeemHash
+        )
+        console.log(
+          `AutoRedeem https://rinkeby-explorer.arbitrum.io/tx/${autoRedeemHash}`
+        )
+        console.log(autoRedeemRec)
+
+        const redeemTxnHash =
+          await bridge.value.calculateL2RetryableTransactionHash(
+            ticketIdBigNumber
+          )
+        const redeemTxnRec = await arbProvider.value.getTransactionReceipt(
+          redeemTxnHash
+        )
+        console.log(
+          `RedeemTxn https://rinkeby-explorer.arbitrum.io/tx/${redeemTxnHash}`
+        )
+        console.log(redeemTxnRec)
+
+        const retryableTicketHash =
+          await bridge.value.calculateL2TransactionHash(ticketIdBigNumber)
+        const retryableTicketRec =
+          await arbProvider.value.getTransactionReceipt(retryableTicketHash)
+        console.log(
+          `RetryableTicket https://rinkeby-explorer.arbitrum.io/tx/${retryableTicketHash}`
+        )
+        console.log(retryableTicketRec)
+
+        // Arbitrum logic for getting mapping between L1 -> L2 transactions
+        const inboxSeqNums =
+          (await bridge.value.getInboxSeqNumFromContractTransaction(
+            receipt
+          )) as any
+
+        console.log(`Seq: ${inboxSeqNums}`)
+
+        const ourMessagesSequenceNum = inboxSeqNums[0]
+
+        const retryableTxnHash =
+          await bridge.value.calculateL2RetryableTransactionHash(
+            ourMessagesSequenceNum
+          )
+
+        console.log(`Waiting L2 tx: ${retryableTxnHash}`)
+
+        // Wait for L2
+        const retryRec = await arbProvider.value.waitForTransaction(
+          retryableTxnHash
+        )
+
+        console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`)
+        await getUserRealms()
+      } catch (e) {
+        console.log(e)
+      } finally {
+        loadingBridge.value = false
+      }
+    }
+  }
   const getL2Realms = async () => {
     console.log('getting l2 realms')
     const l2RealmsContract = new ethers.Contract(
@@ -237,6 +387,7 @@ export function useBridge() {
     initBridge,
     getL2Realms,
     depositRealm,
+    withDrawFromL2,
     error,
     bridge,
     result,

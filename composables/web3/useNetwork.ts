@@ -79,7 +79,7 @@ if (activeNetworks.includes('arbitrum')) {
     partnerChainID: 1,
     isArbitrum: true,
     explorerUrl: 'https://arbiscan.io',
-    url: 'ttps://arb1.arbitrum.io/rpc',
+    url: 'https://arb1.arbitrum.io/rpc',
   })
 }
 if (activeNetworks.includes('arbitrumRinkeby')) {

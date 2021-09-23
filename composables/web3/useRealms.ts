@@ -36,7 +36,7 @@ export function useRealms() {
     return realms
   }
 
-  const getUserRealms = async (network) => {
+  const getUserRealms = async (network?) => {
     console.log(account.value)
     if (account.value) {
       try {

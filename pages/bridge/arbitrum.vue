@@ -59,7 +59,7 @@
                 transition-all
                 duration-250
               "
-              @click="depositRealm(selectedRealm.token_id)"
+              @click="l2Function"
             >
               <span v-if="loadingBridge" class="flex justify-around">
                 <LoadingRings />
@@ -162,6 +162,7 @@ export default defineComponent({
     const {
       initBridge,
       depositRealm,
+      withDrawFromL2,
       bridge,
       partnerNetwork,
       result,
@@ -183,6 +184,14 @@ export default defineComponent({
       await initBridge()
       await getUserRealms()
     })
+
+    const l2Function = () => {
+      if (networkChainId.value === 4) {
+        depositRealm(selectedRealm.value.token_id)
+      } else {
+        withDrawFromL2(selectedRealm.value.token_id)
+      }
+    }
 
     watch(
       account,
@@ -248,6 +257,7 @@ export default defineComponent({
       selectedRealm,
       loading,
       loadingBridge,
+      l2Function,
     }
   },
 })
