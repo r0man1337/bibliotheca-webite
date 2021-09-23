@@ -1,15 +1,7 @@
 /* eslint-disable max-depth */
-import {
-  computed,
-  reactive,
-  onMounted,
-  useContext,
-  ref,
-  watch,
-  Ref,
-} from '@nuxtjs/composition-api'
+import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 import { Bridge } from 'arb-ts'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
@@ -81,7 +73,8 @@ export function useBridge() {
 
       l1Signer.value = ethProvider.value.getSigner(account.value)
       l2Signer.value = arbProvider.value.getSigner(account.value)
-      // console.log(library.getSigner(account.value))
+      console.log(l1Signer.value)
+      console.log(l2Signer.value)
       bridge.value = await Bridge.init(
         l1Signer.value,
         l2Signer.value,
@@ -287,13 +280,7 @@ export function useBridge() {
         //   console.log('crash')
         // }
 
-        const tx = await lootRealmsLockbox.withdrawFromL2(
-          id,
-          submissionPriceWei,
-          maxGas,
-          gasPriceBid,
-          { value: callValue }
-        )
+        const tx = await lootRealmsLockbox.withdrawFromL2(id)
         console.log(tx)
 
         const receipt = await tx.wait()
