@@ -264,21 +264,19 @@ export function useBridge() {
           l2Signer.value
         )
 
-        // const checkApproval = await realmsContract.isApprovedForAll(
-        //   ARB_RINKEBY_L2_BRIDGE_ADDRESS,
-        //   account.value
-        // )
-        // console.log(checkApproval)
+        const checkApproval = await realmsContract.isApprovedForAll(
+          ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+          account.value
+        )
+        console.log(checkApproval)
 
-        // if (!checkApproval) {
-        //   console.log('crash')
-        //   const approve = await realmsContract.setApprovalForAll(
-        //     ARB_RINKEBY_L2_BRIDGE_ADDRESS,
-        //     true
-        //   )
-        //   await approve.wait()
-        //   console.log('crash')
-        // }
+        if (!checkApproval) {
+          const approve = await realmsContract.setApprovalForAll(
+            ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+            true
+          )
+          await approve.wait()
+        }
 
         const tx = await lootRealmsLockbox.withdrawFromL2(id)
         console.log(tx)
