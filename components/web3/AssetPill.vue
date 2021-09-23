@@ -1,25 +1,31 @@
 <template>
   <button
     :disabled="disabled"
+    :class="{ 'bg-gray-400 text-black': selected }"
     class="
-      rounded
-      border-2 border-gray-700
+      rounded-xl
+      border border-gray-600
       px-4
       py-3
       my-4
       flex
       justify-between
       w-full
-      hover:bg-gray-600
+      hover:bg-gray-400 hover:text-black
+      duration-150
+      transition
       group
+      shadow-2xl
     "
   >
-    <span :class="{ 'order-2': inverse }" class="self-center"
-      >#{{ asset.id }}</span
-    >
-    <LoadingRings v-if="loading" />
+    <span :class="{ 'order-2': inverse }" class="self-center text-lg"
+      >#{{ asset.id }}
+    </span>
+    <slot />
+    <LoadingRings v-if="loading && selected" />
     <ArrowRight
-      :class="{ 'rotate-180': inverse }"
+      v-if="!loading"
+      :class="{ 'rotate-180': inverse, 'opacity-100': selected }"
       class="
         w-4
         h-4
@@ -29,6 +35,7 @@
         group-hover:opacity-100
         opacity-0
         duration-150
+        text-black
         transition
       "
     />
@@ -59,6 +66,11 @@ export default defineComponent({
       default: false,
     },
     inverse: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    selected: {
       type: Boolean,
       required: false,
       default: false,

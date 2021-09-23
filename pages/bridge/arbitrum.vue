@@ -18,14 +18,18 @@
             :class="{
               'opacity-75 bg-gray-200 text-black': networkChainId === 421611,
             }"
-            class="bg-black rounded-2xl p-4 w-80 border-4 border-gray-700"
+            class="bg-gray-800 rounded-2xl p-4 w-80 shadow-2xl"
           >
-            <h4 class="mb-4">Realms</h4>
+            <h3 class="mb-4">Your Realms</h3>
             <AssetPill
               v-for="(asset, index) in userRealms.l1"
               :key="index"
               :asset="asset"
+              :selected="
+                selectedRealm ? selectedRealm.token_id === asset.id : false
+              "
               :disabled="networkChainId === 421611"
+              :loading="loadingBridge"
               @click.native="selectRealmForTransfer(asset)"
             />
           </div>
@@ -86,6 +90,7 @@
           <h3>
             <span v-if="selectedRealm">Selected</span
             ><span v-else>Select</span> Realm
+            <span v-if="selectedRealm">#{{ selectedRealm.token_id }}</span>
           </h3>
           <div v-if="selectedRealm">
             <RealmCard
@@ -120,8 +125,8 @@
           </div>
         </div>
       </div>
+      <BridgeTransactionsTable />
     </div>
-    <BridgeTransactionsTable />
   </div>
 </template>
 <script>
