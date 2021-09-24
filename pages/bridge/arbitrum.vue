@@ -16,22 +16,29 @@
           </h4>
           <div
             :class="{
-              'opacity-75 bg-gray-200 text-black': networkChainId === 421611,
+              'opacity-75 bg-gray-800': networkChainId === 421611,
+              'bg-gradient-to-b from-gray-800': networkChainId !== 421611,
             }"
-            class="bg-gray-800 rounded-2xl p-4 w-80 shadow-2xl"
+            class="rounded-2xl w-80 shadow-2xl relative"
           >
-            <h3 class="mb-4">Your Realms</h3>
-            <AssetPill
-              v-for="(asset, index) in userRealms.l1"
-              :key="index"
-              :asset="asset"
-              :selected="
-                selectedRealm ? selectedRealm.token_id === asset.id : false
-              "
-              :disabled="networkChainId === 421611"
-              :loading="loadingBridge"
-              @click.native="selectRealmForTransfer(asset)"
-            />
+            <div
+              v-if="networkChainId === 421611"
+              class="absolute bg-black z-20 h-full w-full rounded-xl opacity-25"
+            ></div>
+            <div class="p-6">
+              <h3 class="mb-4">Your Realms</h3>
+              <AssetPill
+                v-for="(asset, index) in userRealms.l1"
+                :key="index"
+                :asset="asset"
+                :selected="
+                  selectedRealm ? selectedRealm.token_id === asset.id : false
+                "
+                :disabled="networkChainId === 421611"
+                :loading="loadingBridge"
+                @click.native="selectRealmForTransfer(asset)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -47,15 +54,15 @@
             <button
               :disabled="selectedRealm == null"
               class="
-                rounded
+                rounded-xl
                 px-4
                 py-2
                 bg-gradient-to-r
-                from-yellow-400
+                from-gray-800
                 to-red-700
                 w-full
                 text-xl
-                hover:from-red-700 hover:to-yellow-400
+                hover:from-red-700 hover:to-gray-800
                 transition-all
                 duration-250
               "
@@ -84,9 +91,7 @@
             class="w-8 h-8 self-center mx-2 transform"
           />
         </div>
-        <div
-          class="bg-black w-full p-4 rounded-xl my-4 border-4 border-gray-800"
-        >
+        <div class="bg-gray-900 w-full p-4 rounded-xl my-4">
           <h3>
             <span v-if="selectedRealm">Selected</span
             ><span v-else>Select</span> Realm
@@ -109,19 +114,30 @@
           </h4>
           <div
             :class="{
-              'opacity-75 bg-gray-200 text-black': networkChainId === 4,
+              'opacity-75 bg-gray-800': networkChainId === 4,
+              ' bg-gradient-to-b from-gray-800': networkChainId !== 4,
             }"
-            class="bg-black rounded-2xl p-4 w-80 border-4 border-gray-700"
+            class="rounded-xl w-80 shadow-2xl relative"
           >
-            <h4 class="mb-4">Realms</h4>
-            <AssetPill
-              v-for="(asset, index) in userRealms.l2"
-              :key="index"
-              inverse
-              :disabled="networkChainId === 4"
-              :asset="asset"
-              @click.native="selectRealmForTransfer(asset)"
-            />
+            <div
+              v-if="networkChainId === 4"
+              class="absolute bg-black z-20 h-full w-full rounded-xl opacity-25"
+            ></div>
+            <div class="p-6">
+              <h3 class="mb-4 text-white">Your Realms</h3>
+              <AssetPill
+                v-for="(asset, index) in userRealms.l2"
+                :key="index"
+                inverse
+                :disabled="networkChainId === 4"
+                :selected="
+                  selectedRealm ? selectedRealm.token_id === asset.id : false
+                "
+                :loading="loadingBridge"
+                :asset="asset"
+                @click.native="selectRealmForTransfer(asset)"
+              />
+            </div>
           </div>
         </div>
       </div>

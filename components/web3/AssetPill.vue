@@ -1,21 +1,25 @@
 <template>
   <button
     :disabled="disabled"
-    :class="{ 'bg-gray-400 text-black': selected }"
+    :class="{
+      'bg-gray-300 -translate-y-1 shadow-xl text-black': selected,
+      'bg-gray-600': !selected,
+    }"
     class="
-      rounded-xl
-      border border-gray-600
+      rounded
       px-4
       py-3
       my-4
       flex
       justify-between
       w-full
-      hover:bg-gray-400 hover:text-black
-      duration-150
+      hover:text-black hover:shadow-xl hover:-translate-y-1 hover:bg-gray-200
+      transform
       transition
+      duration-300
+      ease-in-out
       group
-      shadow-2xl
+      shadow-inner
     "
   >
     <span :class="{ 'order-2': inverse }" class="self-center text-lg"
@@ -32,7 +36,7 @@
         self-center
         mx-2
         transform
-        group-hover:opacity-100
+        group-hover:opacity-100 group-hover:-translate-y-1
         opacity-0
         duration-150
         text-black
