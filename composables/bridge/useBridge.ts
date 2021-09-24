@@ -57,7 +57,8 @@ export function useBridge() {
       console.log(useL2Network.value.url)
       console.log(window.ethereum)
 
-      if (activeNetwork.value.chainId === 4) {
+      if (!activeNetwork.value.isArbitrum) {
+        console.log('not arb')
         ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
         arbProvider.value = new ethers.providers.JsonRpcProvider(
           useL2Network.value.url
@@ -66,9 +67,8 @@ export function useBridge() {
         ethProvider.value = new ethers.providers.JsonRpcProvider(
           useL1Network.value.url
         )
-        arbProvider.value = new ethers.providers.JsonRpcProvider(
-          useL2Network.value.url
-        )
+        console.log(provider.value)
+        arbProvider.value = new ethers.providers.Web3Provider(provider.value)
       }
 
       l1Signer.value = ethProvider.value.getSigner(account.value)
@@ -250,35 +250,29 @@ export function useBridge() {
       const callValue = (gasPriceBid * maxGas) + parseInt(submissionPriceWei)
         console.log(`Call value to L2: ${callValue.toString()}`)
 
-        const lootRealmsLockbox = new ethers.Contract(
+        const lootRealmsL2 = new ethers.Contract(
           ARB_RINKEBY_L2_BRIDGE_ADDRESS,
-          realmsLockBoxABI,
-          l2Signer.value
-        )
-        const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
-        const tokensAddrArr = tokensArr.map((a) => a.address)
-
-        const realmsContract = new ethers.Contract(
-          tokensAddrArr[0],
-          lootRealmsABI,
+          lootRealmsL2ABI,
           l2Signer.value
         )
 
-        const checkApproval = await realmsContract.isApprovedForAll(
+        const checkApproval = await lootRealmsL2.isApprovedForAll(
           ARB_RINKEBY_L2_BRIDGE_ADDRESS,
           account.value
         )
         console.log(checkApproval)
 
         if (!checkApproval) {
-          const approve = await realmsContract.setApprovalForAll(
+          console.log('approving')
+          const approve = await lootRealmsL2.setApprovalForAll(
             ARB_RINKEBY_L2_BRIDGE_ADDRESS,
             true
           )
           await approve.wait()
         }
+        console.log(lootRealmsL2)
 
-        const tx = await lootRealmsLockbox.withdrawFromL2(id)
+        const tx = await lootRealmsL2.withdrawToL1(id)
         console.log(tx)
 
         const receipt = await tx.wait()
