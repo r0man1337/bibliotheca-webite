@@ -150,7 +150,7 @@
 import {
   defineComponent,
   computed,
-  // onMounted,
+  onMounted,
   ref,
   watch,
 } from '@nuxtjs/composition-api'
@@ -163,6 +163,7 @@ import { useWeb3 } from '~/composables/web3/useWeb3'
 import { useModal } from '~/composables/useModal'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useBridge } from '~/composables/bridge/useBridge'
+import { useTransactions } from '~/composables/bridge/useTransactions'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
   components: {
@@ -176,10 +177,11 @@ export default defineComponent({
     const { showAssetBox } = useModal()
     const { getUserRealms, userRealms } = useRealms()
     const { account /*, active */ } = useWeb3()
+    const { setInitialPendingWithdrawals } = useTransactions()
     const {
       initBridge,
       depositRealm,
-      withDrawFromL2,
+      withdrawToL1,
       bridge,
       partnerNetwork,
       result,
@@ -201,10 +203,17 @@ export default defineComponent({
       if (!activeNetwork.value.isArbitrum) {
         await depositRealm(selectedRealm.value.token_id)
       } else {
-        await withDrawFromL2(selectedRealm.value.token_id)
+        await withdrawToL1(selectedRealm.value.token_id)
       }
     }
-
+    onMounted(async () => {
+      if (account.value) {
+        await initBridge()
+        await setInitialPendingWithdrawals(bridge, {
+          fromBlock: 4832019,
+        })
+      }
+    })
     watch(
       account,
       async (val) => {
@@ -228,7 +237,6 @@ export default defineComponent({
         immediate: true,
       }
     )
-
     const selectedRealm = ref()
     const loading = ref(false)
 
