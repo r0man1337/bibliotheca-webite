@@ -12,17 +12,17 @@
         <div class="">
           <h4 class="mb-4 flex">
             Ethereum Layer 1
-            <Lock v-if="networkChainId === 421611" class="ml-4" />
+            <Lock v-if="activeNetwork.isArbitrum" class="ml-4" />
           </h4>
           <div
             :class="{
-              'opacity-75 bg-gray-800': networkChainId === 421611,
-              'bg-gradient-to-b from-gray-800': networkChainId !== 421611,
+              'opacity-75 bg-gray-800': activeNetwork.isArbitrum,
+              'bg-gradient-to-b from-gray-800': !activeNetwork.isArbitrum,
             }"
             class="rounded-2xl w-80 shadow-2xl relative"
           >
             <div
-              v-if="networkChainId === 421611"
+              v-if="activeNetwork.isArbitrum"
               class="absolute bg-black z-20 h-full w-full rounded-xl opacity-25"
             ></div>
             <div class="p-6">
@@ -34,7 +34,7 @@
                 :selected="
                   selectedRealm ? selectedRealm.token_id === asset.id : false
                 "
-                :disabled="networkChainId === 421611"
+                :disabled="activeNetwork.isArbitrum"
                 :loading="loadingBridge"
                 @click.native="selectRealmForTransfer(asset)"
               />
@@ -46,7 +46,7 @@
         <div class="flex">
           <ArrowLeft
             :class="{
-              'rotate-180': networkChainId === 4,
+              'rotate-180': !activeNetwork.isArbitrum,
             }"
             class="w-8 h-8 self-center mx-2 transform"
           />
@@ -75,7 +75,7 @@
               <span v-else>
                 <span v-if="selectedRealm">
                   {{
-                    networkChainId === 4
+                    !activeNetwork.isArbitrum
                       ? 'Transfer To Arbitrum L2'
                       : 'Transfer To Ethereum L1'
                   }}
@@ -86,7 +86,7 @@
           </div>
           <ArrowRight
             :class="{
-              'rotate-180': networkChainId === 421611,
+              'rotate-180': activeNetwork.isArbitrum,
             }"
             class="w-8 h-8 self-center mx-2 transform"
           />
@@ -110,17 +110,18 @@
       <div class="sm:w-4/12 flex justify-around sticky top-50 h-full">
         <div>
           <h4 class="mb-4 flex">
-            Arbitrum Layer 2 <Lock v-if="networkChainId === 4" class="ml-4" />
+            Arbitrum Layer 2
+            <Lock v-if="!activeNetwork.isArbitrum" class="ml-4" />
           </h4>
           <div
             :class="{
-              'opacity-75 bg-gray-800': networkChainId === 4,
-              ' bg-gradient-to-b from-gray-800': networkChainId !== 4,
+              'opacity-75 bg-gray-800': !activeNetwork.isArbitrum,
+              ' bg-gradient-to-b from-gray-800': activeNetwork.isArbitrum,
             }"
             class="rounded-xl w-80 shadow-2xl relative"
           >
             <div
-              v-if="networkChainId === 4"
+              v-if="!activeNetwork.isArbitrum"
               class="absolute bg-black z-20 h-full w-full rounded-xl opacity-25"
             ></div>
             <div class="p-6">
@@ -129,7 +130,7 @@
                 v-for="(asset, index) in userRealms.l2"
                 :key="index"
                 inverse
-                :disabled="networkChainId === 4"
+                :disabled="!activeNetwork.isArbitrum"
                 :selected="
                   selectedRealm ? selectedRealm.token_id === asset.id : false
                 "
@@ -149,7 +150,7 @@
 import {
   defineComponent,
   computed,
-  onMounted,
+  // onMounted,
   ref,
   watch,
 } from '@nuxtjs/composition-api'
@@ -183,29 +184,24 @@ export default defineComponent({
       partnerNetwork,
       result,
       loadingBridge,
+      l2TransactionCount,
     } = useBridge()
 
     const networkName = computed(() => {
       return activeNetwork.value.name
     })
 
-    const networkChainId = computed(() => {
-      return activeNetwork.value.chainId
-    })
-
     const assetsOnL1 = ref()
     const assetsOnL2 = ref()
 
-    onMounted(async () => {
-      await initBridge()
-      await getUserRealms()
-    })
-
-    const l2Function = () => {
-      if (networkChainId.value === 4) {
-        depositRealm(selectedRealm.value.token_id)
+    const l2Function = async () => {
+      if (!bridge.value) {
+        await initBridge()
+      }
+      if (!activeNetwork.value.isArbitrum) {
+        await depositRealm(selectedRealm.value.token_id)
       } else {
-        withDrawFromL2(selectedRealm.value.token_id)
+        await withDrawFromL2(selectedRealm.value.token_id)
       }
     }
 
@@ -214,7 +210,6 @@ export default defineComponent({
       async (val) => {
         if (val) {
           await getUserRealms()
-          console.log('watch account')
         }
       },
       {
@@ -222,10 +217,10 @@ export default defineComponent({
       }
     )
     watch(
-      networkChainId,
+      activeNetwork,
       async (val) => {
         if (val) {
-          await getUserRealms()
+          await initBridge()
           console.log('watch chain id')
         }
       },
@@ -250,15 +245,18 @@ export default defineComponent({
     }
 
     const fetchRealmMetaData = async (id) => {
-      return await axios.get(
-        'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-          id
-      )
+      try {
+        return await axios.get(
+          'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
+            id
+        )
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     return {
       activeNetwork,
-      networkChainId,
       networkName,
       assetsOnL2,
       assetsOnL1,
@@ -266,6 +264,7 @@ export default defineComponent({
       bridge,
       result,
       userRealms,
+      l2TransactionCount,
       depositRealm,
       partnerNetwork,
       showAssetBox,

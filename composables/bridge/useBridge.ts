@@ -47,18 +47,12 @@ export function useBridge() {
   const arbProvider = ref(null)
   const l1Signer = ref(null)
   const l2Signer = ref(null)
-
+  const l2TransactionCount = ref(null)
   const bridge = ref(null)
-  const transactionCount = ref(null)
 
   const initBridge = async () => {
-    if (!process.server) {
-      console.log(useL1Network.value.url)
-      console.log(useL2Network.value.url)
-      console.log(window.ethereum)
-
+    if (!process.server && account.value) {
       if (!activeNetwork.value.isArbitrum) {
-        console.log('not arb')
         ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
         arbProvider.value = new ethers.providers.JsonRpcProvider(
           useL2Network.value.url
@@ -67,20 +61,25 @@ export function useBridge() {
         ethProvider.value = new ethers.providers.JsonRpcProvider(
           useL1Network.value.url
         )
-        console.log(provider.value)
         arbProvider.value = new ethers.providers.Web3Provider(provider.value)
       }
 
       l1Signer.value = ethProvider.value.getSigner(account.value)
       l2Signer.value = arbProvider.value.getSigner(account.value)
-      console.log(l1Signer.value)
-      console.log(l2Signer.value)
-      bridge.value = await Bridge.init(
-        l1Signer.value,
-        l2Signer.value,
-        RINKEBY_L1_BRIDGE_ADDRESS,
-        ARB_RINKEBY_L2_BRIDGE_ADDRESS
-      )
+
+      try {
+        bridge.value = await Bridge.init(
+          l1Signer.value,
+          l2Signer.value,
+          RINKEBY_L1_BRIDGE_ADDRESS,
+          ARB_RINKEBY_L2_BRIDGE_ADDRESS
+        )
+        l2TransactionCount.value =
+          await bridge.value.l2Signer.getTransactionCount()
+        return bridge
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
@@ -127,8 +126,8 @@ export function useBridge() {
         )
 
         const checkApproval = await realmsContract.isApprovedForAll(
-          RINKEBY_L1_BRIDGE_ADDRESS,
-          account.value
+          account.value,
+          RINKEBY_L1_BRIDGE_ADDRESS
         )
         console.log(checkApproval)
 
@@ -257,8 +256,8 @@ export function useBridge() {
         )
 
         const checkApproval = await lootRealmsL2.isApprovedForAll(
-          ARB_RINKEBY_L2_BRIDGE_ADDRESS,
-          account.value
+          account.value,
+          ARB_RINKEBY_L2_BRIDGE_ADDRESS
         )
         console.log(checkApproval)
 
@@ -367,6 +366,7 @@ export function useBridge() {
     getL2Realms,
     depositRealm,
     withDrawFromL2,
+    l2TransactionCount,
     error,
     bridge,
     result,

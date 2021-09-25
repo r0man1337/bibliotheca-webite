@@ -18,7 +18,7 @@ export function useRealms() {
   const error = reactive({
     getUserRealms: null,
   })
-  const { provider, account, activate } = useWeb3()
+  const { account } = useWeb3()
   const { gqlRequest } = useGraph()
   const { useL1Network, useL2Network } = useNetwork()
   const { open } = useWeb3Modal()
@@ -37,7 +37,6 @@ export function useRealms() {
   }
 
   const getUserRealms = async (network?) => {
-    console.log(account.value)
     if (account.value) {
       try {
         error.getUserRealms = null

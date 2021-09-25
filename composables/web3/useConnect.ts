@@ -7,15 +7,17 @@ export function useConnect() {
   const tried = ref(false)
 
   onMounted(() => {
-    injected.isAuthorized().then((isAuthorized: boolean) => {
-      if (isAuthorized) {
-        activate(injected, undefined, true).catch(() => {
+    if (!active.value && !tried.value) {
+      injected.isAuthorized().then((isAuthorized: boolean) => {
+        if (isAuthorized) {
+          activate(injected, undefined, true).catch(() => {
+            tried.value = true
+          })
+        } else {
           tried.value = true
-        })
-      } else {
-        tried.value = true
-      }
-    })
+        }
+      })
+    }
   })
 
   // if the connection worked, wait until we get confirmation of that to flip the flag

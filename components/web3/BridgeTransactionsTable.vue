@@ -252,11 +252,13 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
+    const showRedeemRetryableButton = ref()
     return {
+      showRedeemRetryableButton,
       transactions: [
         {
           direction: 'deposit-l1',
