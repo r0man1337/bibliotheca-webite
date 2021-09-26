@@ -114,6 +114,7 @@
           <button
             v-for="(id, index) in availableTokenIds"
             :key="index"
+            :disabled="multiMintIds.find((a) => a === id)"
             :class="{ 'bg-gray-600': multiMintIds.find((a) => a === id) }"
             class="bg-black px-2 py-1 hover:bg-gray-800 rounded-xl"
             @click="addIds(id)"
@@ -331,10 +332,13 @@ export default defineComponent({
       }
     }
 
+    const random = (max) => {
+      return Math.floor(Math.random() * max)
+    }
+
     const mintRealms = () => {
       if (singleMint.value === 1) {
         mint(availableTokenIds.value[0])
-        console.log(availableTokenIds.value[0])
       } else {
         const ids = availableTokenIds.value.slice(0, singleMint.value - 1)
         console.log(ids)
@@ -361,10 +365,7 @@ export default defineComponent({
 
     const selectedRealm = ref()
     const cycleIds = () => {
-      function getRandomInt(max) {
-        return Math.floor(Math.random() * max)
-      }
-      const num = getRandomInt(49)
+      const num = random(49)
       selectedRealm.value = openSeaData.value[num]
     }
 
