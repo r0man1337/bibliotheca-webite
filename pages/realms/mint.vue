@@ -31,8 +31,8 @@
         </h1>
         <h4>0.1 ETH per Realm</h4>
         <p>
-          Realm IDs are selected at random based on the timestamp of when you
-          visited this page to reduce chance of failed transaction fees
+          Realm IDs are selected at random to reduce chance of failed
+          transaction fees
         </p>
         <div class="my-12 text-center">
           <h3>Mint Realm</h3>
