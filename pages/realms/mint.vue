@@ -13,7 +13,9 @@
           rounded-xl
         "
       >
-        <div class="self-center text-center">Fetching Available Ids...</div>
+        <div class="self-center text-center">
+          <Loader class="w-24 h-24" /> Fetching Available Ids...
+        </div>
       </div>
       <div class="p-6 bg-black rounded-xl">
         <h5>
@@ -260,7 +262,6 @@ import {
   computed,
   defineComponent,
   ref,
-  useFetch,
   onMounted,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
@@ -342,6 +343,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
+      await getAvailableTokenIds()
       const response = await axios.get(baseAssetAddress)
       openSeaData.value = response.data.assets
       cycleIds()
@@ -355,10 +357,6 @@ export default defineComponent({
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
     const id = ref()
-    useFetch(async () => {
-      const response = await getAvailableTokenIds()
-      id.value = response
-    })
 
     const selectedRealm = ref()
     const cycleIds = () => {
