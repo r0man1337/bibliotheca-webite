@@ -24,6 +24,7 @@
       ]
     },
     "types": [
+      "nuxt-graphql-request",
       "@types/node",
       "@nuxt/types",
       "nuxt-i18n",

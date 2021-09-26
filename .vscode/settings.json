@@ -1,5 +1,10 @@
 {
-    "editor.fontSize": 15,
+    "[css]": {
+
+        "editor.suggest.insertMode": "replace"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.fontLigatures": null,
     "editor.formatOnSave": true,
     "eslint.format.enable": true,
     "eslint.lintTask.enable": true

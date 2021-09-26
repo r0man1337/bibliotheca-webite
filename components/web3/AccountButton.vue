@@ -1,5 +1,6 @@
 <template>
   <div class="hidden sm:flex justify-end px-4 py-4">
+    <NetworkSwitcher />
     <div v-if="active" v-click-outside="hide" class="flex">
       <div class="px-4 self-center">
         <NuxtLink
@@ -77,7 +78,7 @@
         </ul>
       </div> -->
     </div>
-    <BButton v-else type="primary" @click="activate">
+    <BButton v-else type="primary" @click="open">
       Connect to the LootVerse
     </BButton>
   </div>
@@ -85,10 +86,10 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-// import { useDSA } from '~/composables/useDSA';
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useFormatting } from '~/composables/useFormatting'
-import { useWeb3 } from '~/composables/web3'
 import Helm from '~/assets/img/helm.svg?inline'
+import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 
 export default defineComponent({
   components: {
@@ -96,9 +97,9 @@ export default defineComponent({
   },
   setup() {
     // const { activeAccount } = useDSA();
-    const { account, active, deactivate, activate } = useWeb3()
+    const { account, active, deactivate } = useWeb3()
     const { shortenHash } = useFormatting()
-
+    const { open } = useWeb3Modal()
     const show = ref(false)
 
     const hide = () => {
@@ -109,9 +110,9 @@ export default defineComponent({
       hide,
       show,
       account,
+      open,
       // activeAccount,
       active,
-      activate,
       deactivate,
       shortenHash,
     }

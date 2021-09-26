@@ -1,10 +1,11 @@
+import EventEmitter from 'events'
 const type = 'website'
 const url = 'https://bibliotheca.com'
 const title = 'Bibliotheca (for Loot)'
 const description = 'Graphing the Lootverse to allow adventurers to explore.'
 const mainImage =
-  '"https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
-
+  'https://i.ibb.co/fMq60gr/Screenshot-from-2021-09-11-11-45-23.png'
+EventEmitter.defaultMaxListeners = 20
 const meta = [
   {
     hid: 'description',
@@ -96,9 +97,27 @@ export default {
   },
   graphql: {
     clients: {
-      default: {
-        endpoint: process.env.API
-          ? process.env.API
+      mainnet: {
+        endpoint: process.env.GRAPH_API
+          ? process.env.GRAPH_API
+          : 'http://localhost:1337/graphql',
+        options: {},
+      },
+      rinkeby: {
+        endpoint: process.env.GRAPH_API_RINKEBY
+          ? process.env.GRAPH_API_RINKEBY
+          : 'http://localhost:1337/graphql',
+        options: {},
+      },
+      /* arbitrum: {
+        endpoint: process.env.GRAPH_API_RINKEBY
+          ? process.env.GRAPH_API_RINKEBY
+          : 'http://localhost:1337/graphql',
+        options: {},
+      }, */
+      arbitrumRinkeby: {
+        endpoint: process.env.GRAPH_API_ARB_RINKEBY
+          ? process.env.GRAPH_API_ARB_RINKEBY
           : 'http://localhost:1337/graphql',
         options: {},
       },
@@ -111,7 +130,6 @@ export default {
   plugins: [
     '~/plugins/vue-formulate',
     '~/plugins/analytics.js',
-    '~/plugins/web3modal.js',
     '~/plugins/v-click-outside.js',
   ],
   components: [
@@ -138,8 +156,13 @@ export default {
   serverMiddleware: [{ path: '/api', handler: '~/serverMiddleware/server.js' }],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    /* extend(config) {
-      if (config.resolve.extensions) {
+    extend(config) {
+      config.node = {
+        fs: 'empty',
+      }
+    },
+
+    /* if (config.resolve.extensions) {
         config.resolve.extensions.push('.mjs')
       } else {
         config.resolve.extensions = ['.mjs']
