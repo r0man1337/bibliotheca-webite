@@ -12,30 +12,28 @@
         and come say hi on our
         <a href="https://discord.gg/GHrrTNkuwa" target="_blank">Discord</a>
       </p>
-      <div class="py-8">
-        <div class="bg-gray-800 mx-auto rounded-xl shadow-2xl text-white p-8">
-          <h2>Design philosophy and process</h2>
-          <p class="text-2xl">
-            Early development is steered by the Bibliotheca & Realms Team - but
-            will be transitioned into DAO guidance in the future. Major
-            functionality will be deployed on the Rinkeby testnet for the
-            Adventurer community to test and give feedback before mainnet
-            deployment.
-          </p>
-          <div class="text-2xl my-8">
-            <span class="text-red-800 bg-red-400 rounded p-2 px-4"
-              >Open Beta</span
-            >
-            <span class="mx-4">testing then</span>
-            <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
-              >Production</span
-            >
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="flex flex-col space-y-8">
+      <div
+        class="
+          text-2xl
+          w-1/2
+          p-4
+          bg-gray-800
+          mx-auto
+          rounded-xl
+          my-8
+          flex flex-wrap
+          justify-around
+        "
+      >
+        <span class="text-red-800 bg-red-400 rounded p-2 px-4">Open Beta</span>
+        <span class="mx-4">testing</span>
+        <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
+          >Production</span
+        >
+      </div>
       <div
         v-for="(stage, index) in mapStages"
         :key="index"
@@ -92,19 +90,12 @@
       <div class="bg-gray-800 mx-auto rounded-xl shadow-2xl text-white p-8">
         <h2>Design philosophy and process</h2>
         <p class="text-2xl">
-          All contracts will be deployed on Rinkby for testing and allow for all
-          Adventurers to use them and give feedback on the game before
-          production is deployed.
+          Early development is steered by the Bibliotheca & Realms Team - but
+          will be transitioned into DAO guidance in the future. Major
+          functionality will be deployed on the Rinkeby testnet for the
+          Adventurer community to test and give feedback before mainnet
+          deployment.
         </p>
-        <div class="text-2xl my-8 flex flex-wrap justify-around">
-          <span class="text-red-800 bg-red-400 rounded p-2 px-4"
-            >Open Beta</span
-          >
-          <span class="mx-4">testing</span>
-          <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
-            >Production</span
-          >
-        </div>
       </div>
     </div>
   </section>
