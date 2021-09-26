@@ -252,18 +252,20 @@
         <p class="text-xl mb-4">
           These resources are spread out throughout the 8000 Realms.
         </p>
-        <div class="flex flex-col space-y-2">
-          <ResourceChip
+        <div class="flex flex-col">
+          <div
             v-for="(resource, index) in remappedResources"
             :key="index"
-            class="text-xl py-2"
-            :resource="resource"
+            class="my-3"
           >
-            <span class="ml-8 px-2 py-1 bg-gray-50 bg-opacity-25 my-1 rounded">
-              {{ resource.amount }} -
-              {{ ((resource.amount / 8000) * 100).toFixed(2) }} %</span
+            <ResourceChip class="text-xl py-2" :resource="resource">
+            </ResourceChip>
+            <span class="ml-4 px-2 py-1 my-1 rounded">
+              {{ resource.amount }} units @
+              {{ ((resource.amount / 8000) * 100).toFixed(2) }} % total
+              supply</span
             >
-          </ResourceChip>
+          </div>
         </div>
       </div>
     </div>

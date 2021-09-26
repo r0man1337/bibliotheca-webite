@@ -89,21 +89,22 @@ export default defineComponent({
       },
       {
         time: 'Late October',
-        title: 'Resources Automated Market Maker Beta',
+        title:
+          'Resources Automated Market Maker Beta & Construction on your Realms',
         description:
-          'The AMM for the resources will be deployed shortly after the beta production is live. This will give all game testers the ability to trade the resources and give.',
+          'The AMM for the resources will be deployed shortly after the beta production is live. This will give all game testers the ability to trade the resources.',
         active: 'true',
       },
       {
         time: 'November',
-        title: 'Staking Live',
+        title: 'Staking Live, Construction Live, AMM Live',
         description:
           'Production staking will go live once there has been sufficent testing on the platform by the community.',
         active: 'true',
       },
       {
         time: 'December',
-        title: 'PvP',
+        title: 'PvP Contracts',
         description: 'Bridge',
         active: 'true',
       },

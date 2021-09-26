@@ -1,58 +1,81 @@
 <template>
   <section>
-    <div v-if="!$fetchState.pending">
-      <RealmRarity class="mb-8 text-xl" :traits="openSeaData.traits" />
-      <h1>{{ openSeaData.name }}</h1>
-      <a
-        class="pb-1"
-        :href="
-          'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-          openSeaData.token_id
-        "
-        target="_blank"
-        >View Realm on Open Sea</a
-      >
-      <hr />
-      <h3 class="mt-3">
-        Realm lord:
-        <NuxtLink
-          class="hover:underline"
-          :to="'/adventurer/' + openSeaData.owner.address"
-          >{{ shortenHash(openSeaData.owner.address) }}</NuxtLink
+    <div v-if="!$fetchState.pending" class="flex flex-wrap">
+      <div class="sm:w-1/2 sm:p-8">
+        <a
+          class="pb-1"
+          :href="
+            'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
+            openSeaData.token_id
+          "
+          target="_blank"
+          >View Realm on Open Sea</a
         >
-      </h3>
+        <RealmRarity class="mb-8 text-xl" :traits="openSeaData.traits" />
+        <h3 class="mt-3">
+          👑
+          <NuxtLink
+            class="hover:underline"
+            :to="'/adventurer/' + openSeaData.owner.address"
+            >{{ shortenHash(openSeaData.owner.address) }}</NuxtLink
+          >
+        </h3>
+        <h1 class="sm:text-6xl">
+          {{ openSeaData.name }} - #{{ openSeaData.token_id }}
+        </h1>
+        <div class="flex">
+          <div
+            v-if="wonder(openSeaData.traits)"
+            class="
+              px-8
+              text-center text-white
+              bg-gradient-to-r
+              from-purple-200
+              via-pink-200
+              to-red-300
+              text-red-500
+              rounded
+              py-1
+              mb-2
+            "
+          >
+            {{ wonder(openSeaData.traits).value }}
+          </div>
+        </div>
 
-      <div>
-        <h4>Sales: {{ openSeaData.num_sales }}</h4>
-      </div>
-
-      <div v-if="resources" class="my-4">
-        <h3>Resources</h3>
-        <div class="flex my-2 flex-wrap">
-          <ResourceChip
-            v-for="(resource, index) in resources"
-            :key="index"
-            :resource="resource"
+        <div v-if="resources" class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
+          <h2>Realm Resources</h2>
+          <div class="flex my-2 flex-wrap">
+            <ResourceChip
+              v-for="(resource, index) in resources"
+              :key="index"
+              class="text-xl"
+              :resource="resource"
+            />
+          </div>
+        </div>
+        <div v-if="cities" class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
+          <h2>Realm Traits</h2>
+          <Levels
+            :cities="cities"
+            :harbours="harbours"
+            :regions="regions"
+            :rivers="rivers"
           />
         </div>
+        <div class="my-6 bg-black p-4 sm:p-6 rounded-2xl">
+          <h2>Realm Sales: {{ openSeaData.num_sales }}</h2>
+        </div>
       </div>
-      <div v-if="cities" class="my-4">
-        <h3>Traits</h3>
-        <Levels
-          :cities="cities"
-          :harbours="harbours"
-          :regions="regions"
-          :rivers="rivers"
+      <div class="sm:w-1/2">
+        <img
+          v-if="openSeaData.image_url"
+          class="w-full relative rounded-2xl"
+          :src="openSeaData.image_url"
+          alt=""
         />
+        <h4 v-else class="my-5">No image yet</h4>
       </div>
-
-      <img
-        v-if="openSeaData.image_url"
-        class="w-full relative rounded-2xl"
-        :src="openSeaData.image_url"
-        alt=""
-      />
-      <h4 v-else class="my-5">No image yet</h4>
     </div>
     <div v-else>
       <Loader />
@@ -120,7 +143,11 @@ export default defineComponent({
           )
         : null
     })
-
+    const wonder = (traits) => {
+      return traits.find(
+        (resource) => resource.trait_type === 'Wonder (translated)'
+      )
+    }
     return {
       adventurer,
       shortenHash,
@@ -131,6 +158,7 @@ export default defineComponent({
       harbours,
       regions,
       rivers,
+      wonder,
     }
   },
 })

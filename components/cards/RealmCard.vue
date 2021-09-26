@@ -51,7 +51,19 @@
     </div>
     <div
       v-if="wonder(realm.traits)"
-      class="px-2 text-center border-white rounded py-1 border mx-2 mb-2"
+      class="
+        px-2
+        text-center text-white
+        bg-gradient-to-r
+        from-purple-200
+        via-pink-200
+        to-red-300
+        text-red-500
+        rounded
+        py-1
+        mx-2
+        mb-2
+      "
     >
       {{ wonder(realm.traits).value }}
     </div>

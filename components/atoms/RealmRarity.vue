@@ -2,7 +2,7 @@
   <div class="pt-2 pr-2">
     <span
       :class="getColour(checkRealmRarity(traits).toFixed(2))"
-      class="bg-white rounded px-2 py-1 shadow-2xl"
+      class="bg-white rounded-xl px-3 py-1"
       >Rarity: {{ checkRealmRarity(traits).toFixed(2) }}</span
     >
   </div>
@@ -22,7 +22,7 @@ export default defineComponent({
 
     const getColour = (rarity) => {
       if (rarity > 8000) {
-        return 'bg-gradient-to-r from-purple-300 via-pink-400 to-red-400'
+        return 'bg-gradient-to-r from-purple-200 via-pink-400 to-red-400'
       } else if (rarity > 200) {
         return 'bg-red-800 text-white'
       } else if (rarity > 100) {

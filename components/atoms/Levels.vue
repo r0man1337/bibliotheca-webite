@@ -1,38 +1,44 @@
 <template>
-  <div class="my-2 w-80">
+  <div class="my-2 w-80 text-xl">
     <div class="my-2">
       Cities: {{ cities.value }} / 21
-      <div class="bg-gray-200 bg-white w-full rounded">
+      <div class="bg-gray-200 bg-white w-full rounded bg-opacity-90">
         <div
           :style="'width:' + (cities.value / 21) * 100 + '%'"
-          class="rounded px-4 py-2 bg-red-400"
+          class="rounded px-4 py-2 bg-red-400 bg-opacity-75"
         ></div>
       </div>
     </div>
     <div class="my-2">
       Harbours: {{ harbours.value }} / 35
-      <div class="bg-gray-200 bg-white w-full rounded">
+      <div class="bg-gray-200 bg-white w-full rounded bg-opacity-90">
         <div
           :style="'width:' + (harbours.value / 35) * 100 + '%'"
-          class="rounded px-4 py-2 bg-gray-500"
+          class="rounded px-4 py-2 bg-gray-500 bg-opacity-75"
         ></div>
       </div>
     </div>
     <div class="my-2">
       Regions: {{ regions.value }} / 7
-      <div class="bg-gray-200 w-full rounded">
+      <div class="bg-gray-200 w-full rounded bg-opacity-90">
         <div
           :style="'width:' + (regions.value / 7) * 100 + '%'"
-          class="rounded px-4 py-2 bg-yellow-300"
+          class="rounded px-4 py-2 bg-yellow-300 bg-opacity-75"
         ></div>
       </div>
     </div>
     <div class="my-2">
       Rivers: {{ rivers.value }} / 60
-      <div class="bg-gray-200 bg-white w-full rounded">
+      <div class="bg-gray-200 bg-white w-full rounded bg-opacity-90">
         <div
           :style="'width:' + (rivers.value / 60) * 100 + '%'"
-          class="rounded px-4 py-2 bg-blue-300"
+          class="
+            rounded
+            px-4
+            py-2
+            bg-blue-300 bg-opacity-75
+            border-blue-300 border
+          "
         ></div>
       </div>
     </div>
