@@ -40,7 +40,7 @@
           transaction fees
         </p>
         <div class="my-12 text-center">
-          <h3>Mint Realm</h3>
+          <h3>Mint Realm(s)</h3>
           <div class="flex w-1/2 justify-around mx-auto">
             <button class="mx-4" @click="singleMint--">-</button>
             <input
@@ -82,9 +82,11 @@
                 type="primary"
                 @click="mintRealms"
               >
-                {{ loading.mint ? 'loading...' : 'Mint Realm' }}
+                {{ loading.mint ? 'loading...' : 'Mint Realm(s)' }}
               </BButton>
-              <span class="self-center ml-2">{{ singleMint * 0.1 }} ETH</span>
+              <span class="self-center ml-2"
+                >{{ (singleMint * 0.1).toFixed(1) }} ETH</span
+              >
             </div>
           </div>
         </div>
