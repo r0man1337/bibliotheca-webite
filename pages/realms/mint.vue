@@ -273,7 +273,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, onMounted } from '@vue/composition-api'
 import { useMint } from '~/composables/web3/useMint'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
@@ -289,8 +289,16 @@ export default defineComponent({
     const singleMint = ref()
     const multiMintIds = ref([])
     const multiMintId = ref(null)
-    const { mint, result, error, loading, multiMint, loadingModal, ids } =
-      useMint()
+    const {
+      mint,
+      result,
+      error,
+      loading,
+      multiMint,
+      loadingModal,
+      ids,
+      mintedRealmIds,
+    } = useMint()
 
     const etherSingleMintCost = computed(() => {
       if (singleMint.value) {
@@ -338,9 +346,9 @@ export default defineComponent({
       }
     })
 
-    // onMounted(async () => {
-    //   await ids()
-    // })
+    onMounted(async () => {
+      await ids()
+    })
 
     return {
       etherSingleMintCost,
@@ -358,6 +366,7 @@ export default defineComponent({
       limitLength,
       loadingModal,
       account,
+      mintedRealmIds,
       ids,
       remappedResources,
     }

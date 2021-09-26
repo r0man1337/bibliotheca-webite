@@ -11,7 +11,9 @@ import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useNetwork, activeNetwork } from './useNetwork'
 import { useWeb3 } from './useWeb3'
+import { useGraph } from './useGraph'
 import { useBigNumber } from './useBigNumber'
+import { mintedRealmsQuery } from './../graphql/queries'
 import realmsABI from '~/abi/lootRealms.json'
 import erc721tokens from '~/constant/erc721tokens'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
@@ -30,6 +32,37 @@ export function useMint() {
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, account, activate } = useWeb3()
   const { open } = useWeb3Modal()
+  const { gqlRequest } = useGraph()
+  const mintedRealmIds = ref([])
+
+  const flatObject = (arr) => {
+    const flatArray = []
+    for (let i = 0; i < arr.length; i++) {
+      flatArray[i] = arr[i].id
+    }
+    return flatArray
+  }
+
+  const checkTokenMint = async () => {
+    let lastFetchedId = '0'
+    let mintedRealms = []
+    for (let i = 0; i < 8; i++) {
+      try {
+        const { realms } = await gqlRequest(
+          mintedRealmsQuery,
+          { lastID: lastFetchedId },
+          activeNetwork.value.id
+        )
+        lastFetchedId = realms[realms.length - 1].id
+        mintedRealms = [...mintedRealms, ...realms]
+      } catch (e) {
+        console.log('all fetched')
+      }
+    }
+    return flatObject(mintedRealms).sort(function (a, b) {
+      return a - b
+    })
+  }
 
   const { useL1Network, useL2Network } = useNetwork()
   const mint = async (lootId) => {
@@ -74,11 +107,12 @@ export function useMint() {
     if (!account.value) return
     console.log('2')
     try {
+      loading.value = true
       error.mint = null
-      tokenIds.value = await checkTokenMint(activeNetwork.value)
+      tokenIds.value = await checkTokenMint()
       console.log(tokenIds)
     } catch (e) {
-      error.mint = e.parse()
+      error.mint = e
       console.log(e)
     } finally {
       loading.value = false
@@ -92,6 +126,7 @@ export function useMint() {
     result,
     loading,
     loadingModal,
+    mintedRealmIds,
     ids,
   }
 }
@@ -135,7 +170,7 @@ async function multiMintToken(owner, network, lootIds) {
   return mint
 }
 
-function checkTokenMint(network) {
+/* function checkTokenMint(network) {
   try {
     const provider = new ethers.providers.JsonRpcProvider(network.url)
     console.log(provider)
@@ -165,4 +200,4 @@ function checkTokenMint(network) {
   } catch (e) {
     error.mint = e
   }
-}
+} */

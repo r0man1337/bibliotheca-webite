@@ -13,4 +13,16 @@ const usersRealms = gql`
     }
   }
 `
-export { usersRealms }
+const mintedRealmsQuery = gql`
+  query mintedRealmsQuery($lastID: String) {
+    realms(
+      first: 1000
+      where: { id_gt: $lastID }
+      orderBy: id
+      orderDirection: asc
+    ) {
+      id
+    }
+  }
+`
+export { usersRealms, mintedRealmsQuery }

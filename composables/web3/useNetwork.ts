@@ -66,7 +66,7 @@ if (activeNetworks.includes('rinkeby')) {
     partnerChainID: 421611,
     isArbitrum: false,
     explorerUrl: 'https://rinkeby.etherscan.io',
-    url: 'https://rinkeby-light.eth.linkpool.io',
+    url: `https://rinkeby.infura.io/v3/${process.env.infuraId}`,
   })
 }
 if (activeNetworks.includes('arbitrum')) {
