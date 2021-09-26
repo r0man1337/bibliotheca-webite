@@ -340,14 +340,12 @@ export default defineComponent({
       if (singleMint.value === 1) {
         const id = random(availableTokenIds.value.length)
         mint(availableTokenIds.value[id])
-        console.log(id)
       } else {
         const randomIds = []
 
         for (let step = 0; step < singleMint.value; step++) {
           randomIds.push(random(availableTokenIds.value.length))
         }
-        console.log(randomIds)
         multiMint(randomIds)
       }
     }

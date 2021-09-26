@@ -18,10 +18,6 @@ import realmsABI from '~/abi/lootRealms.json'
 import erc721tokens from '~/constant/erc721tokens'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 
-const error = reactive({
-  mint: null,
-})
-
 const result = reactive({ mint: null })
 
 const availableTokenIds = ref(null)
@@ -31,6 +27,11 @@ export function useMint() {
     mint: false,
     getAvailableTokenIds: false,
   })
+  const error = reactive({
+    mint: null,
+    getAvailableTokenIds: null,
+  })
+
   const loadingModal = ref(false)
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, account, activate } = useWeb3()
@@ -41,7 +42,6 @@ export function useMint() {
   const flatObject = (arr) => {
     const flatArray = []
     for (let i = 0; i < arr.length; i++) {
-      console.log(typeof arr[i].id)
       flatArray[i] = parseInt(arr[i].id)
     }
     return flatArray
@@ -61,6 +61,7 @@ export function useMint() {
         mintedRealms = [...mintedRealms, ...realms]
       } catch (e) {
         console.log('all fetched')
+        break
       }
     }
     return flatObject(mintedRealms).sort(function (a, b) {
@@ -68,7 +69,6 @@ export function useMint() {
     })
   }
 
-  const { useL1Network, useL2Network } = useNetwork()
   const mint = async (lootId) => {
     if (!account.value) return open()
     try {
@@ -101,7 +101,6 @@ export function useMint() {
         lootIds
       )
     } catch (e) {
-      console.log(e)
       error.mint = e.message
     } finally {
       loading.mint = false
@@ -123,15 +122,13 @@ export function useMint() {
   }
 
   const getAvailableTokenIds = async () => {
-    console.log('2')
     try {
       loading.getAvailableTokenIds = true
-      error.mint = null
+      error.getAvailableTokenIds = null
       const mintedTokens = await checkTokenMint()
       availableTokenIds.value = findMissing(mintedTokens)
     } catch (e) {
-      error.mint = e
-      console.log(e)
+      error.getAvailableTokenIds = e.message
     } finally {
       loading.getAvailableTokenIds = false
     }
@@ -158,8 +155,6 @@ async function mintToken(owner, network, lootId) {
   const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer)
-  console.log(tokensAddrArr)
-  console.log(owner)
   const overrides = {
     // To convert Ether to Wei:
     value: ethers.utils.parseEther('0.1'),
@@ -183,41 +178,8 @@ async function multiMintToken(owner, network, lootIds) {
     // To convert Ether to Wei:
     value: ethers.utils.parseEther(wei.toString()),
   }
-  console.log()
   const mint = await tokenContract.multiMint(lootIds, overrides)
   await mint.wait()
 
   return mint
 }
-
-/* function checkTokenMint(network) {
-  try {
-    const provider = new ethers.providers.JsonRpcProvider(network.url)
-    console.log(provider)
-    const tokensArr = erc721tokens[network.id].allTokens
-    const signer = provider.getSigner()
-    const tokensAddrArr = tokensArr.map((a) => a.address)
-    const tokenContract = new ethers.Contract(
-      tokensAddrArr[0],
-      realmsABI,
-      signer
-    )
-    const ids = []
-    Promise.all(
-      Array.from(Array(8000)).map(async (_, i) => {
-        try {
-          const owner = await tokenContract.ownerOf(i)
-          if (owner) {
-            ids.push(i)
-          }
-        } catch (e) {}
-      })
-    ).then((values) => {
-      console.log(ids)
-      console.log('promise all ends')
-      return ids
-    })
-  } catch (e) {
-    error.mint = e
-  }
-} */
