@@ -1,6 +1,9 @@
 <template>
   <section class="flex flex-wrap">
-    <div class="sm:w-1/2 text-center self-center relative">
+    <div
+      v-if="!$fetchState.pending"
+      class="sm:w-1/2 text-center self-center relative"
+    >
       <div
         v-if="loading.getAvailableTokenIds"
         class="
@@ -239,8 +242,14 @@
         </div>
       </div>
     </div>
+    <div v-else class="flex justify-around h-screen w-full">
+      <div class="self-center mx-auto">
+        <h4 class="text-center">Loading Mintable Realms...</h4>
+        <Loader class="w-24 h-24 mx-auto" />
+      </div>
+    </div>
 
-    <!-- <div class="sm:w-1/2">
+    <div v-if="!$fetchState.pending" class="sm:w-1/2">
       <div class="p-8">
         <h2>Join our Lords & Ladies with their already minted Realms below</h2>
         <div>
@@ -251,7 +260,7 @@
           />
         </div>
       </div>
-    </div> -->
+    </div>
   </section>
 </template>
 
@@ -341,9 +350,7 @@ export default defineComponent({
       }
     }
 
-    onMounted(async () => {
-      const response = await axios.get(baseAssetAddress)
-      openSeaData.value = response.data.assets
+    onMounted(() => {
       cycleIds()
       window.setInterval(() => {
         cycleIds()
@@ -351,23 +358,23 @@ export default defineComponent({
     })
 
     const openSeaData = ref()
+    const selectedRealm = ref()
     const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
-    const id = ref()
     useFetch(async () => {
-      const response = await getAvailableTokenIds()
-      id.value = response
+      await getAvailableTokenIds()
+      const response = await axios.get(baseAssetAddress)
+      openSeaData.value = response.data.assets
+      selectedRealm.value = openSeaData.value[0]
     })
 
-    const selectedRealm = ref()
     const cycleIds = () => {
       const num = random(49)
-      selectedRealm.value = openSeaData.value[num]
+      selectedRealm.value = openSeaData.value ? openSeaData.value[num] : null
     }
 
     return {
-      id,
       etherSingleMintCost,
       multiMintIds,
       addIds,
