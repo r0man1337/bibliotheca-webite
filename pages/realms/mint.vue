@@ -252,10 +252,7 @@
     </div>
     <div class="sm:w-1/2">
       <div class="p-8">
-        <h2>Realms</h2>
-        <p class="text-xl mb-4">
-          These resources are spread out throughout the 8000 Realms.
-        </p>
+        <h2>The Realms</h2>
         <div v-if="!$fetchState.pending">
           <RealmCard
             v-if="selectedRealm"
