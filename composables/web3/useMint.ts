@@ -136,6 +136,7 @@ export function useMint() {
     } finally {
       loading.getAvailableTokenIds = false
     }
+    return availableTokenIds.value
   }
 
   return {

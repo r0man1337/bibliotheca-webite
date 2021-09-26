@@ -18,7 +18,7 @@
       <div
         class="
           text-2xl
-          w-1/2
+          sm:w-1/2
           p-4
           bg-gray-800
           mx-auto
@@ -43,7 +43,7 @@
           p-8
           rounded-xl
           shadow-xl
-          w-1/2
+          sm:w-1/2
           hover:border-red
           transform
           hover:-translate-y-2 hover:bg-red-500

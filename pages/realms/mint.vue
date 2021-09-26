@@ -1,6 +1,9 @@
 <template>
   <section class="flex flex-wrap">
-    <div class="sm:w-1/2 text-center self-center relative">
+    <div
+      v-if="!$fetchState.pending"
+      class="sm:w-1/2 text-center self-center relative"
+    >
       <div
         v-if="loading.getAvailableTokenIds"
         class="
@@ -27,7 +30,7 @@
         </h5>
         <h1 class="mt-8">
           Mint Realms -
-          {{ availableTokenIds ? availableTokenIds.length : '' }} left
+          {{ availableTokenIds ? availableTokenIds.length : '' }} / 8000 left
         </h1>
         <h4>0.1 ETH per Realm</h4>
         <p>
@@ -84,8 +87,9 @@
           </div>
         </div>
       </div>
+      <div class="text-center my-8 text-2xl">or</div>
 
-      <div class="my-8 p-6 bg-black rounded-xl">
+      <div class="p-6 bg-black rounded-xl">
         <h2>Advanced Mint - Select Realms</h2>
         <div class="flex mt-3">
           <button
@@ -207,26 +211,10 @@
                         : false
                     "
                   >
-                    This Realm has already been minted
+                    This Realm has already been minted. Please refresh and try
+                    again.
                   </strong>
-                  <strong
-                    v-if="
-                      error.mint
-                        ? error.mint.includes(
-                            'One of these tokens have already been minted'
-                          )
-                        : false
-                    "
-                  >
-                    One of these realms have already been minted. Check here for
-                    full list of available Ids.
-                    <a
-                      target="blank_"
-                      class="hover:text-white"
-                      href="https://www.crudefingers.com/tracker/realms"
-                      >https://www.crudefingers.com/tracker/realms</a
-                    >
-                  </strong>
+
                   <strong
                     v-if="
                       error.mint
@@ -237,7 +225,7 @@
                     Insufficient funds for gas</strong
                   >
                 </div>
-                <div v-if="loading">
+                <div v-if="loading.mint">
                   <Loader class="w-24 h-24" />
                 </div>
                 <div v-else-if="!error.mint" class="my-8">
@@ -254,10 +242,13 @@
         </div>
       </div>
     </div>
-    <div class="sm:w-1/2">
+    <div v-else>
+      <Loader class="w-24 h-24" />
+    </div>
+    <!-- <div class="sm:w-1/2">
       <div class="p-8">
-        <h2>The Realms</h2>
-        <div v-if="!$fetchState.pending">
+        <h2>Join our Lords & Ladies with their already minted Realms below</h2>
+        <div>
           <RealmCard
             v-if="selectedRealm"
             :id="selectedRealm.token_id"
@@ -265,7 +256,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 
@@ -274,8 +265,8 @@ import {
   computed,
   defineComponent,
   ref,
-  onMounted,
   useFetch,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useMint } from '~/composables/web3/useMint'
@@ -356,7 +347,8 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      await getAvailableTokenIds()
+      const response = await axios.get(baseAssetAddress)
+      openSeaData.value = response.data.assets
       cycleIds()
       window.setInterval(() => {
         cycleIds()
@@ -367,9 +359,10 @@ export default defineComponent({
     const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
+    const id = ref()
     useFetch(async () => {
-      const response = await axios.get(baseAssetAddress)
-      openSeaData.value = response.data.assets
+      const response = await getAvailableTokenIds()
+      id.value = response
     })
 
     const selectedRealm = ref()
@@ -379,6 +372,7 @@ export default defineComponent({
     }
 
     return {
+      id,
       etherSingleMintCost,
       multiMintIds,
       addIds,
