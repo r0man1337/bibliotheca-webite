@@ -1,6 +1,11 @@
 <template>
   <section class="flex flex-wrap">
     <div class="sm:w-1/2 bg-gray-800 rounded-xl p-6">
+      {{
+        loading.getAvailableTokenIds
+          ? 'Loading Available Tokens'
+          : availableTokenIds
+      }}
       <h1>Mint remaining Realms - 0.1 ETH each</h1>
       <h5>Contract address: 0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</h5>
       <a
@@ -53,7 +58,7 @@
             type="primary"
             @click="mint(singleMint)"
           >
-            {{ loading ? 'loading...' : 'Mint Realm' }}
+            {{ loading.mint ? 'loading...' : 'Mint Realm' }}
           </BButton>
           <span class="self-center ml-2">{{ etherSingleMintCost }} ETH</span>
         </div>
@@ -107,7 +112,7 @@
             :disabled="!multiMintIds.length"
             type="primary"
             @click="multiMint(multiMintIds)"
-            >{{ loading ? 'loading...' : 'Mint Realms' }}</BButton
+            >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
           >
 
           <span class="self-center ml-2">
@@ -273,7 +278,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref, onMounted } from '@vue/composition-api'
 import { useMint } from '~/composables/web3/useMint'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
@@ -289,8 +294,16 @@ export default defineComponent({
     const singleMint = ref()
     const multiMintIds = ref([])
     const multiMintId = ref(null)
-    const { mint, result, error, loading, multiMint, loadingModal, ids } =
-      useMint()
+    const {
+      mint,
+      result,
+      error,
+      loading,
+      multiMint,
+      loadingModal,
+      getAvailableTokenIds,
+      availableTokenIds,
+    } = useMint()
 
     const etherSingleMintCost = computed(() => {
       if (singleMint.value) {
@@ -338,9 +351,9 @@ export default defineComponent({
       }
     })
 
-    // onMounted(async () => {
-    //   await ids()
-    // })
+    onMounted(async () => {
+      await getAvailableTokenIds()
+    })
 
     return {
       etherSingleMintCost,
@@ -358,7 +371,7 @@ export default defineComponent({
       limitLength,
       loadingModal,
       account,
-      ids,
+      availableTokenIds,
       remappedResources,
     }
   },
