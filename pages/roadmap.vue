@@ -1,15 +1,39 @@
 <template>
   <section class="w-full">
     <div class="text-center sm:w-1/2 mx-auto">
-      <h1>Realms P2E Roadmap</h1>
-      <p class="my-4 text-xl">
-        We are designing this game in the open, and all contracts and UI will be
-        open source for the community to freely contribute. This roadmap is just
-        an outline and may change course with feedback from the community.
+      <h1>Realms P2E Resource Staking Roadmap</h1>
+      <p class="my-4 text-2xl">
+        The Realms adventure is about to begin, and we are excited for you to
+        join us on our Open Source development journey to a functioning Realms
+        Metaverse. If you would like to contibute - check out our
+        <a href="https://github.com/BibliothecaForAdventurers" target="_blank"
+          >GitHub Repos</a
+        >
+        and come say hi on our
+        <a href="https://discord.gg/GHrrTNkuwa" target="_blank">Discord</a>
       </p>
     </div>
 
     <div class="flex flex-col space-y-8">
+      <div
+        class="
+          text-2xl
+          w-1/2
+          p-4
+          bg-gray-800
+          mx-auto
+          rounded-xl
+          my-8
+          flex flex-wrap
+          justify-around
+        "
+      >
+        <span class="text-red-800 bg-red-400 rounded p-2 px-4">Open Beta</span>
+        <span class="mx-4">testing</span>
+        <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
+          >Production</span
+        >
+      </div>
       <div
         v-for="(stage, index) in mapStages"
         :key="index"
@@ -29,17 +53,33 @@
           cursor-pointer
         "
       >
-        <h5
-          class="
-            uppercase
-            group-hover:text-white
-            text-red-400
-            mb-1
-            tracking-widest
-          "
-        >
-          {{ stage.time }}
-        </h5>
+        <div class="flex">
+          <h5
+            v-if="stage.betaTime"
+            class="
+              uppercase
+              group-hover:text-white
+              text-red-400
+              mb-1
+              tracking-widest
+              mr-6
+            "
+          >
+            {{ stage.betaTime }}
+          </h5>
+          <h5
+            class="
+              uppercase
+              group-hover:text-white
+              text-blue-400
+              mb-1
+              tracking-widest
+              flex
+            "
+          >
+            {{ stage.prodTime }}
+          </h5>
+        </div>
         <h2>{{ stage.title }}</h2>
         <p class="text-2xl group-hover:text-white text-gray-400">
           {{ stage.description }}
@@ -50,19 +90,12 @@
       <div class="bg-gray-800 mx-auto rounded-xl shadow-2xl text-white p-8">
         <h2>Design philosophy and process</h2>
         <p class="text-2xl">
-          All contracts will be deployed on Rinkby for testing and allow for all
-          Adventurers to use them and give feedback on the game before
-          production is deployed.
+          Early development is steered by the Bibliotheca & Realms Team - but
+          will be transitioned into DAO guidance in the future. Major
+          functionality will be deployed on the Rinkeby testnet for the
+          Adventurer community to test and give feedback before mainnet
+          deployment.
         </p>
-        <div class="text-2xl my-8 flex flex-wrap justify-around">
-          <span class="text-red-800 bg-red-400 rounded p-2 px-4"
-            >Open Beta</span
-          >
-          <span class="mx-4">testing</span>
-          <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
-            >Production</span
-          >
-        </div>
       </div>
     </div>
   </section>
@@ -74,38 +107,58 @@ export default defineComponent({
   setup() {
     const mapStages = [
       {
-        time: 'Late September - Early October',
-        title: 'The Arbitrum Beta Bridge',
+        betaTime: 'Late September - Early October',
+        prodTime: 'Mid-late October',
+        title: 'The Arbitrum Bridge',
         description:
-          'The first step in this adventure is the bridge into Arbitrum. Arbitrum will allow the Realms P2E universe to florish with very cheap & fast transactions.',
+          'The journey commences with a bridge to the Layer 2 network - Arbitrum - a mythical land of fast and cheap transactions.',
         active: 'true',
       },
       {
-        time: 'Mid-late October',
-        title: 'Staking Beta & Arbitrum Bridge Production',
+        betaTime: 'Mid-late October',
+        prodTime: 'November',
+        title: 'Staking Realms to Earn Resources',
         description:
-          'Whilst the Arbitrum bridge is in beta, the staking contracts and associated contracts are being developed and tested. These will be deployed on Rinkeby in Mid October for user testing.',
+          'Realm holders begin to generate resources and $LORDS tokens after the development of staking contracts on Arbitrum ',
         active: 'true',
       },
       {
-        time: 'Late October - Early November',
-        title:
-          'Resources Automated Market Maker (AMM) Beta & Construction on your Realms',
+        betaTime: 'Late October',
+        prodTime: 'November',
+        title: 'Build upgrades on your Realms',
         description:
-          'The AMM for the resources will be deployed shortly after the beta production is live. This will give all beta testers the ability to trade the resources and build up their Realms in a testing enviroment.',
+          "Construct various structures to upgrade a Realms' resource generation and manage its health, defense and more.",
         active: 'true',
       },
       {
-        time: 'November',
-        title: 'Staking Live, Construction Live, AMM Live',
+        betaTime: 'Late October',
+        prodTime: 'November',
+        title: 'Resources Automated Market Maker',
         description:
-          'Production staking will go live once there has been sufficent testing on all the contracts platform by the community.',
+          'The Resouces AMM provides the vital functionality for Adventurers to be able to trade for missing materials for upgrades - such as Wood, Diamonds and Dragonhide',
         active: 'true',
       },
       {
-        time: 'December',
+        betaTime: '',
+        prodTime: 'November',
+        title: 'V1 Platform live',
+        description:
+          'Full Version 1 production launch of user frontend to enable staking, trading resources, and building upgrades',
+        active: 'true',
+      },
+      {
+        betaTime: 'December',
+        prodTime: 'January',
         title: 'PvP Contracts',
-        description: 'Bridge',
+        description:
+          "Fight your way to resource supremacy by raiding other adventurers' Realms, and participate in other creative PvP experiences using Loot derivatives",
+        active: 'true',
+      },
+      {
+        betaTime: 'Beyond',
+        title: 'Much, much more',
+        description:
+          'Functionality will continue to be added based on community feedback and engagement.',
         active: 'true',
       },
     ]
