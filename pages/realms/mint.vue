@@ -30,7 +30,10 @@
           {{ availableTokenIds ? availableTokenIds.length : '' }} left
         </h1>
         <h4>0.1 ETH per Realm</h4>
-
+        <p>
+          Realm IDs are selected at random based on the timestamp of when you
+          visited this page to reduce chance of failed transaction fees
+        </p>
         <div class="my-12 text-center">
           <h3>Mint Realm</h3>
           <div class="flex w-1/2 justify-around mx-auto">
@@ -338,11 +341,17 @@ export default defineComponent({
 
     const mintRealms = () => {
       if (singleMint.value === 1) {
-        mint(availableTokenIds.value[0])
+        const id = random(availableTokenIds.value.length)
+        mint(availableTokenIds.value[id])
+        console.log(id)
       } else {
-        const ids = availableTokenIds.value.slice(0, singleMint.value - 1)
-        console.log(ids)
-        multiMint(ids)
+        const randomIds = []
+
+        for (let step = 0; step < singleMint.value; step++) {
+          randomIds.push(random(availableTokenIds.value.length))
+        }
+        console.log(randomIds)
+        multiMint(randomIds)
       }
     }
 
