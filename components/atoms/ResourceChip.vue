@@ -1,7 +1,17 @@
 <template>
   <span
     :class="getColour(resource.value)"
-    class="px-4 py-1 rounded text-sm mb-1 mr-2 bg-opacity-75 shadow-2xl border"
+    class="
+      px-4
+      py-1
+      rounded-lg
+      text-sm
+      mb-1
+      mr-2
+      bg-opacity-75
+      shadow-2xl
+      border
+    "
     >{{ resource.value }}
     <slot />
   </span>
@@ -40,7 +50,7 @@ export default defineComponent({
       },
       {
         value: 'Silver',
-        colour: 'bg-gray-200 text-gray-700 border-gray-200',
+        colour: 'bg-gray-300 text-gray-50 border-gray-500',
       },
       {
         value: 'Ironwood',

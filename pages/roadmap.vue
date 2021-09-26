@@ -1,31 +1,12 @@
 <template>
   <section class="w-full">
     <div class="text-center sm:w-1/2 mx-auto">
-      <h1>Realms P2E Resource Staking Roadmap</h1>
-      <p class="my-4 text-3xl">
+      <h1>Realms P2E Roadmap</h1>
+      <p class="my-4 text-xl">
         We are designing this game in the open, and all contracts and UI will be
         open source for the community to freely contribute. This roadmap is just
         an outline and may change course with feedback from the community.
       </p>
-      <div class="py-8">
-        <div class="bg-gray-800 mx-auto rounded-xl shadow-2xl text-white p-8">
-          <h2>Design philosophy and process</h2>
-          <p class="text-2xl">
-            All contracts will be deployed on Rinkby for testing and allow for
-            all Adventurers to use them and give feedback on the game before
-            production is deployed.
-          </p>
-          <div class="text-2xl my-8">
-            <span class="text-red-800 bg-red-400 rounded p-2 px-4"
-              >Open Beta</span
-            >
-            <span class="mx-4">testing then</span>
-            <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
-              >Production</span
-            >
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="flex flex-col space-y-8">
@@ -65,6 +46,25 @@
         </p>
       </div>
     </div>
+    <div class="py-8 sm:w-1/2 mx-auto">
+      <div class="bg-gray-800 mx-auto rounded-xl shadow-2xl text-white p-8">
+        <h2>Design philosophy and process</h2>
+        <p class="text-2xl">
+          All contracts will be deployed on Rinkby for testing and allow for all
+          Adventurers to use them and give feedback on the game before
+          production is deployed.
+        </p>
+        <div class="text-2xl my-8 flex flex-wrap justify-around">
+          <span class="text-red-800 bg-red-400 rounded p-2 px-4"
+            >Open Beta</span
+          >
+          <span class="mx-4">testing</span>
+          <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
+            >Production</span
+          >
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 <script>
@@ -84,22 +84,22 @@ export default defineComponent({
         time: 'Mid-late October',
         title: 'Staking Beta & Arbitrum Bridge Production',
         description:
-          'Whilst the Arbitrum bridge is in beta, the staking contracts and associated contracts are being developed and tested. These will be deployed on Rinkeby after feedback from the community.',
+          'Whilst the Arbitrum bridge is in beta, the staking contracts and associated contracts are being developed and tested. These will be deployed on Rinkeby in Mid October for user testing.',
         active: 'true',
       },
       {
-        time: 'Late October',
+        time: 'Late October - Early November',
         title:
-          'Resources Automated Market Maker Beta & Construction on your Realms',
+          'Resources Automated Market Maker (AMM) Beta & Construction on your Realms',
         description:
-          'The AMM for the resources will be deployed shortly after the beta production is live. This will give all game testers the ability to trade the resources.',
+          'The AMM for the resources will be deployed shortly after the beta production is live. This will give all beta testers the ability to trade the resources and build up their Realms in a testing enviroment.',
         active: 'true',
       },
       {
         time: 'November',
         title: 'Staking Live, Construction Live, AMM Live',
         description:
-          'Production staking will go live once there has been sufficent testing on the platform by the community.',
+          'Production staking will go live once there has been sufficent testing on all the contracts platform by the community.',
         active: 'true',
       },
       {

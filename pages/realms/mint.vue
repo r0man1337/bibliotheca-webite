@@ -260,11 +260,11 @@
           >
             <ResourceChip class="text-xl py-2" :resource="resource">
             </ResourceChip>
-            <span class="ml-4 px-2 py-1 my-1 rounded">
-              {{ resource.amount }} units @
-              {{ ((resource.amount / 8000) * 100).toFixed(2) }} % total
-              supply</span
-            >
+            <span class="ml-4 px-2 py-1 my-1 rounded text-lg">
+              {{ resource.amount }} units (
+              {{ ((resource.amount / 8000) * 100).toFixed(2) }} % Total
+              Supply</span
+            >)
           </div>
         </div>
       </div>
