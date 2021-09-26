@@ -21,8 +21,8 @@ const useRarity = () => {
         score = score + add
       } else {
         for (let i = 0; i < resource.length; i++) {
-          if (attribute[e].value === resource[i].Trait) {
-            const add = 1 / (resource[i].Value / 8000)
+          if (attribute[e].value === resource[i].trait) {
+            const add = 1 / (resource[i].value / 8000)
             score = score + add
           }
         }

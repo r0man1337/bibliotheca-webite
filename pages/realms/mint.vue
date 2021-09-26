@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <div class="sm:w-1/2">
+  <section class="flex flex-wrap">
+    <div class="sm:w-1/2 bg-gray-800 rounded-xl p-6">
       <h1>Mint remaining Realms - 0.1 ETH each</h1>
       <h5>Contract address: 0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</h5>
       <a
@@ -246,6 +246,27 @@
         <button @click="ids">get ids</button>
       </div> -->
     </div>
+    <div class="sm:w-1/2">
+      <div class="p-8">
+        <h2>Realms Resources</h2>
+        <p class="text-xl mb-4">
+          These resources are spread out throughout the 8000 Realms.
+        </p>
+        <div class="flex flex-col space-y-2">
+          <ResourceChip
+            v-for="(resource, index) in remappedResources"
+            :key="index"
+            class="text-xl py-2"
+            :resource="resource"
+          >
+            <span class="ml-8 px-2 py-1 bg-gray-50 bg-opacity-25 my-1 rounded">
+              {{ resource.amount }} -
+              {{ ((resource.amount / 8000) * 100).toFixed(2) }} %</span
+            >
+          </ResourceChip>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -255,6 +276,7 @@ import { useMint } from '~/composables/web3/useMint'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
 import { useWeb3 } from '~/composables/web3'
+import ResourceData from '~/composables/resource.json'
 export default defineComponent({
   components: {
     Loader,
@@ -299,6 +321,20 @@ export default defineComponent({
         singleMint.value = value.slice(0, 4)
       }
     }
+    const filteredResources = ResourceData.filter((d) => {
+      return d.value > 1
+    })
+
+    const sortedResources = filteredResources.sort((a, b) => {
+      return a.value - b.value
+    })
+
+    const remappedResources = sortedResources.map((a) => {
+      return {
+        value: a.trait,
+        amount: a.value,
+      }
+    })
 
     // onMounted(async () => {
     //   await ids()
@@ -321,6 +357,7 @@ export default defineComponent({
       loadingModal,
       account,
       ids,
+      remappedResources,
     }
   },
 })

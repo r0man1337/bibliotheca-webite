@@ -72,18 +72,18 @@ export default defineComponent({
     const myChart = ref(null)
 
     const filteredResources = ResourceData.filter((d) => {
-      return d.Value > 1
+      return d.value > 1
     })
 
     const sortedResources = filteredResources.sort((a, b) => {
-      return a.Value - b.Value
+      return a.value - b.value
     })
 
     const resources = sortedResources.map((d) => {
-      return d.Value
+      return d.value
     })
     const traitName = sortedResources.map((d) => {
-      return d.Trait
+      return d.trait
     })
     const colours = sortedResources.map((d) => {
       return d.colour

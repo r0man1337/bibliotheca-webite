@@ -2,8 +2,9 @@
   <span
     :class="getColour(resource.value)"
     class="px-4 py-1 rounded text-sm mb-1 mr-2"
-    >{{ resource.value }}</span
-  >
+    >{{ resource.value }}
+    <slot />
+  </span>
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'

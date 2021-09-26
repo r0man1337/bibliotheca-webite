@@ -152,6 +152,10 @@ export default {
         page: '/realms/resources',
         title: 'Realm Resources',
       },
+      {
+        page: '/roadmap',
+        title: 'Staking Roadmap',
+      },
     ]
 
     const adventureLinks = [

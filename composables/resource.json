@@ -1,312 +1,312 @@
 [
     {
-        "Trait": "Wood",
-        "Value": 5015,
+        "trait": "Wood",
+        "value": 5015,
         "colour": "#78350f"
     },
     {
-        "Trait": "Coal",
-        "Value": 3833,
+        "trait": "Coal",
+        "value": 3833,
         "colour": "#757575"
     },
     {
-        "Trait": "Stone",
-        "Value": 3941,
+        "trait": "Stone",
+        "value": 3941,
         "colour": "#e0e0e0"
     },
     {
-        "Trait": "Obsidian",
-        "Value": 2216,
+        "trait": "Obsidian",
+        "value": 2216,
         "colour": "#000000"
     },
     {
-        "Trait": "Gold",
-        "Value": 914,
+        "trait": "Gold",
+        "value": 914,
         "colour": "#fcd34d"
     },
     {
-        "Trait": "Silver",
-        "Value": 1741,
+        "trait": "Silver",
+        "value": 1741,
         "colour": "#eeeeee"
     },
     {
-        "Trait": "Ruby",
-        "Value": 239,
+        "trait": "Ruby",
+        "value": 239,
         "colour": "#dc2626"
     },
     {
-        "Trait": "Sapphire",
-        "Value": 247,
+        "trait": "Sapphire",
+        "value": 247,
         "colour": "#3b82f6"
     },
     {
-        "Trait": "Adamantine",
-        "Value": 55,
+        "trait": "Adamantine",
+        "value": 55,
         "colour": "#1e3a8a"
     },
     {
-        "Trait": "Mithral",
-        "Value": 37,
+        "trait": "Mithral",
+        "value": 37,
         "colour": "#60a5fa"
     },
     {
-        "Trait": "Cold Iron",
-        "Value": 957,
+        "trait": "Cold Iron",
+        "value": 957,
         "colour": "#fca5a5"
     },
     {
-        "Trait": "Diamonds",
-        "Value": 300,
+        "trait": "Diamonds",
+        "value": 300,
         "colour": "#ccbcfb"
     },
     {
-        "Trait": "Copper",
-        "Value": 2643,
+        "trait": "Copper",
+        "value": 2643,
         "colour": "#f59e0b"
     },
     {
-        "Trait": "Ironwood",
-        "Value": 1179,
+        "trait": "Ironwood",
+        "value": 1179,
         "colour": "#b91c1c"
     },
     {
-        "Trait": "Twilight Quartz",
-        "Value": 111,
+        "trait": "Twilight Quartz",
+        "value": 111,
         "colour": "#6d28d9"
     },
     {
-        "Trait": "Hartwood",
-        "Value": 594,
+        "trait": "Hartwood",
+        "value": 594,
         "colour": "#fca5a5"
     },
     {
-        "Trait": "Ignium",
-        "Value": 172,
+        "trait": "Ignium",
+        "value": 172,
         "colour": "#ef4444"
     },
     {
-        "Trait": "Ethereal Silica",
-        "Value": 162,
+        "trait": "Ethereal Silica",
+        "value": 162,
         "colour": "#10b981"
     },
     {
-        "Trait": "True Ice",
-        "Value": 139,
+        "trait": "True Ice",
+        "value": 139,
         "colour": "#ffffff"
     },
     {
-        "Trait": "Alchemical Silver",
-        "Value": 93,
+        "trait": "Alchemical Silver",
+        "value": 93,
         "colour": "#bdbdbd"
     },
     {
-        "Trait": "Deep Crystal",
-        "Value": 239,
+        "trait": "Deep Crystal",
+        "value": 239,
         "colour": "#93c5fd"
     },
     {
-        "Trait": "Dragonhide",
-        "Value": 23,
+        "trait": "Dragonhide",
+        "value": 23,
         "colour": "#ec4899"
     },
     {
-        "Trait": "Cathedral Of Agony",
-        "Value": 1
+        "trait": "Cathedral Of Agony",
+        "value": 1
     },
     {
-        "Trait": "Sanctum Of Purpose",
-        "Value": 1
+        "trait": "Sanctum Of Purpose",
+        "value": 1
     },
     {
-        "Trait": "The Ancestral Willow",
-        "Value": 1
+        "trait": "The Ancestral Willow",
+        "value": 1
     },
     {
-        "Trait": "The Crying Oak",
-        "Value": 1
+        "trait": "The Crying Oak",
+        "value": 1
     },
     {
-        "Trait": "The Immortal Hot Spring",
-        "Value": 1
+        "trait": "The Immortal Hot Spring",
+        "value": 1
     },
     {
-        "Trait": "Pantheon Of Chaos",
-        "Value": 1
+        "trait": "Pantheon Of Chaos",
+        "value": 1
     },
     {
-        "Trait": "The Solemn Catacombs",
-        "Value": 1
+        "trait": "The Solemn Catacombs",
+        "value": 1
     },
     {
-        "Trait": "The Exalted Geyser",
-        "Value": 1
+        "trait": "The Exalted Geyser",
+        "value": 1
     },
     {
-        "Trait": "The Devout Summit",
-        "Value": 1
+        "trait": "The Devout Summit",
+        "value": 1
     },
     {
-        "Trait": "The Mother Grove",
-        "Value": 1
+        "trait": "The Mother Grove",
+        "value": 1
     },
     {
-        "Trait": "Synagogue Of Collapse",
-        "Value": 1
+        "trait": "Synagogue Of Collapse",
+        "value": 1
     },
     {
-        "Trait": "Sanctuary Of The Ancients",
-        "Value": 1
+        "trait": "Sanctuary Of The Ancients",
+        "value": 1
     },
     {
-        "Trait": "The Weeping Willow",
-        "Value": 1
+        "trait": "The Weeping Willow",
+        "value": 1
     },
     {
-        "Trait": "The Exalted Maple",
-        "Value": 1
+        "trait": "The Exalted Maple",
+        "value": 1
     },
     {
-        "Trait": "Altar Of The Void",
-        "Value": 1
+        "trait": "Altar Of The Void",
+        "value": 1
     },
     {
-        "Trait": "The Pure Stone",
-        "Value": 1
+        "trait": "The Pure Stone",
+        "value": 1
     },
     {
-        "Trait": "The Celestial Vertex",
-        "Value": 1
+        "trait": "The Celestial Vertex",
+        "value": 1
     },
     {
-        "Trait": "The Eternal Orchard",
-        "Value": 1
+        "trait": "The Eternal Orchard",
+        "value": 1
     },
     {
-        "Trait": "The Amaranthine Rock",
-        "Value": 1
+        "trait": "The Amaranthine Rock",
+        "value": 1
     },
     {
-        "Trait": "The Pearl Summit",
-        "Value": 1
+        "trait": "The Pearl Summit",
+        "value": 1
     },
     {
-        "Trait": "Mosque Of Mercy",
-        "Value": 1
+        "trait": "Mosque Of Mercy",
+        "value": 1
     },
     {
-        "Trait": "The Mirror Grotto",
-        "Value": 1
+        "trait": "The Mirror Grotto",
+        "value": 1
     },
     {
-        "Trait": "The Glowing Geyser",
-        "Value": 1
+        "trait": "The Glowing Geyser",
+        "value": 1
     },
     {
-        "Trait": "Altar Of Perfection",
-        "Value": 1
+        "trait": "Altar Of Perfection",
+        "value": 1
     },
     {
-        "Trait": "The Cerulean Chamber",
-        "Value": 1
+        "trait": "The Cerulean Chamber",
+        "value": 1
     },
     {
-        "Trait": "The Mythic Trees",
-        "Value": 1
+        "trait": "The Mythic Trees",
+        "value": 1
     },
     {
-        "Trait": "The Perpetual Ridge",
-        "Value": 1
+        "trait": "The Perpetual Ridge",
+        "value": 1
     },
     {
-        "Trait": "The Fading Yew",
-        "Value": 1
+        "trait": "The Fading Yew",
+        "value": 1
     },
     {
-        "Trait": "The Origin Oasis",
-        "Value": 1
+        "trait": "The Origin Oasis",
+        "value": 1
     },
     {
-        "Trait": "The Sanctified Fjord",
-        "Value": 1
+        "trait": "The Sanctified Fjord",
+        "value": 1
     },
     {
-        "Trait": "The Pale Pillar",
-        "Value": 1
+        "trait": "The Pale Pillar",
+        "value": 1
     },
     {
-        "Trait": "Sanctum Of The Oracle",
-        "Value": 1
+        "trait": "Sanctum Of The Oracle",
+        "value": 1
     },
     {
-        "Trait": "The Ethereal Isle",
-        "Value": 1
+        "trait": "The Ethereal Isle",
+        "value": 1
     },
     {
-        "Trait": "The Omen Graves",
-        "Value": 1
+        "trait": "The Omen Graves",
+        "value": 1
     },
     {
-        "Trait": "The Pale Vertex",
-        "Value": 1
+        "trait": "The Pale Vertex",
+        "value": 1
     },
     {
-        "Trait": "The Glowing Pinnacle",
-        "Value": 1
+        "trait": "The Glowing Pinnacle",
+        "value": 1
     },
     {
-        "Trait": "The Azure Lake",
-        "Value": 1
+        "trait": "The Azure Lake",
+        "value": 1
     },
     {
-        "Trait": "The Argent Catacombs",
-        "Value": 1
+        "trait": "The Argent Catacombs",
+        "value": 1
     },
     {
-        "Trait": "The Dark Mountain",
-        "Value": 1
+        "trait": "The Dark Mountain",
+        "value": 1
     },
     {
-        "Trait": "Sky Mast",
-        "Value": 1
+        "trait": "Sky Mast",
+        "value": 1
     },
     {
-        "Trait": "Infinity Spire",
-        "Value": 1
+        "trait": "Infinity Spire",
+        "value": 1
     },
     {
-        "Trait": "The Exalted Basin",
-        "Value": 1
+        "trait": "The Exalted Basin",
+        "value": 1
     },
     {
-        "Trait": "The Ancestral Trees",
-        "Value": 1
+        "trait": "The Ancestral Trees",
+        "value": 1
     },
     {
-        "Trait": "The Perpetual Fjord",
-        "Value": 1
+        "trait": "The Perpetual Fjord",
+        "value": 1
     },
     {
-        "Trait": "The Ancient Lagoon",
-        "Value": 1
+        "trait": "The Ancient Lagoon",
+        "value": 1
     },
     {
-        "Trait": "The Pearl River",
-        "Value": 1
+        "trait": "The Pearl River",
+        "value": 1
     },
     {
-        "Trait": "The Cerulean Reliquary",
-        "Value": 1
+        "trait": "The Cerulean Reliquary",
+        "value": 1
     },
     {
-        "Trait": "Altar Of Divine Will",
-        "Value": 1
+        "trait": "Altar Of Divine Will",
+        "value": 1
     },
     {
-        "Trait": "Pagoda Of Fortune",
-        "Value": 1
+        "trait": "Pagoda Of Fortune",
+        "value": 1
     },
     {
-        "Trait": "The Oracle Pool",
-        "Value": 1
+        "trait": "The Oracle Pool",
+        "value": 1
     }
 ]
