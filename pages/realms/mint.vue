@@ -346,7 +346,9 @@ export default defineComponent({
         const randomIds = []
 
         for (let step = 0; step < singleMint.value; step++) {
-          randomIds.push(random(availableTokenIds.value.length))
+          randomIds.push(
+            availableTokenIds.value[random(availableTokenIds.value.length)]
+          )
         }
         multiMint(randomIds)
       }
