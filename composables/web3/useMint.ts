@@ -84,6 +84,7 @@ export function useMint() {
       error.mint = e.message
     } finally {
       loading.mint = false
+      await getAvailableTokenIds()
     }
   }
 
@@ -104,6 +105,7 @@ export function useMint() {
       error.mint = e.message
     } finally {
       loading.mint = false
+      await getAvailableTokenIds()
     }
   }
   const findMissing = (num) => {

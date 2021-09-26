@@ -1,123 +1,131 @@
 <template>
   <section class="flex flex-wrap">
-    <div class="sm:w-1/2 bg-gray-800 rounded-xl p-6">
-      {{
-        loading.getAvailableTokenIds
-          ? 'Loading Available Tokens'
-          : availableTokenIds
-      }}
-      <h1>Mint remaining Realms - 0.1 ETH each</h1>
-      <h5>Contract address: 0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</h5>
-      <a
-        class="hover:underline my-4"
-        href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d#code"
-        >Etherscan</a
+    <div class="sm:w-1/2 text-center self-center relative">
+      <div
+        v-if="loading.getAvailableTokenIds"
+        class="
+          absolute
+          bg-black bg-opacity-75
+          h-full
+          w-full
+          flex
+          justify-around
+          rounded-xl
+        "
       >
-
-      <div class="py-10">
-        <h4>Find Available Realm IDS Here:</h4>
-        <a
-          target="blank_"
-          class="hover:text-white text-lg"
-          href="https://www.crudefingers.com/tracker/realms"
-          >https://www.crudefingers.com/tracker/realms</a
-        >
+        <div class="self-center text-center">Fetching Available Ids...</div>
       </div>
-
-      <div class="my-8">
-        <h3>Mint Realm</h3>
-        <input
-          id="mintId"
-          v-model="singleMint"
-          class="
-            appearance-none
-            rounded-md
-            shadow-sm
-            text-white
-            mb-1
-            leading-tight
-            focus:ring-primary focus:border-primary
-            w-full
-            px-4
-            py-4
-            text-lg
-            transition-all
-            duration-150
-            font-semibold
-            tracking-wide
-            bg-black
-          "
-          type="number"
-          label="Realm Id"
-          placeholder="Enter Realm Id to mint"
-          @input="limitLength(singleMint)"
-        />
-        <div class="my-4 flex">
-          <BButton
-            :disabled="!singleMint"
-            type="primary"
-            @click="mint(singleMint)"
+      <div class="p-6 bg-black rounded-xl">
+        <h5>
+          Contract address:
+          <a
+            class="hover:underline my-4"
+            href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d#code"
           >
-            {{ loading.mint ? 'loading...' : 'Mint Realm' }}
-          </BButton>
-          <span class="self-center ml-2">{{ etherSingleMintCost }} ETH</span>
+            0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</a
+          >
+        </h5>
+        <h1 class="mt-8">
+          Mint Realms -
+          {{ availableTokenIds ? availableTokenIds.length : '' }} left
+        </h1>
+        <h4>0.1 ETH per Realm</h4>
+
+        <div class="my-12 text-center">
+          <h3>Mint Realm</h3>
+          <div class="flex w-1/2 justify-around mx-auto">
+            <button class="mx-4" @click="singleMint--">-</button>
+            <input
+              id="mintId"
+              v-model="singleMint"
+              min="1"
+              class="
+                text-center
+                appearance-none
+                rounded-md
+                shadow-sm
+                text-white
+                mb-1
+                leading-tight
+                focus:ring-primary focus:border-primary
+                w-full
+                px-4
+                py-4
+                text-lg
+                transition-all
+                duration-150
+                font-semibold
+                tracking-wide
+                bg-gray-900
+              "
+              type="number"
+              label="Realm Id"
+              placeholder="Enter Realm Id to mint"
+              @input="limitLength(singleMint)"
+            />
+            <button class="mx-4" @click="singleMint++">+</button>
+          </div>
+
+          <div class="my-4 flex justify-around">
+            <div class="flex">
+              <BButton
+                class="bg-gray-900"
+                :disabled="singleMint <= 0"
+                type="primary"
+                @click="mintRealms"
+              >
+                {{ loading.mint ? 'loading...' : 'Mint Realm' }}
+              </BButton>
+              <span class="self-center ml-2">{{ singleMint * 0.1 }} ETH</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="text-center">
-        <h1>or</h1>
-      </div>
-      <div class="my-8">
-        <h3>Mint Multiple Realms</h3>
-        <form class="flex" @submit.prevent="addIds">
-          <input
-            id="mintIds"
-            v-model="multiMintId"
-            type="number"
-            class="
-              appearance-none
-              rounded-md
-              shadow-sm
-              text-white
-              mb-1
-              leading-tight
-              focus:ring-primary focus:border-primary
-              w-full
-              px-4
-              py-4
-              text-lg
-              transition-all
-              duration-150
-              font-semibold
-              tracking-wide
-              bg-black
-            "
-            label="Multimint Realm Ids"
-            placeholder="Enter Realm Id and press enter"
-            @input="limitMultiLength(multiMintId)"
-          />
-          <!-- <button class="px-4 h-full self-center" type="submit"> add</button> -->
-        </form>
+
+      <div class="my-8 p-6 bg-black rounded-xl">
+        <h2>Advanced Mint - Select Realms</h2>
         <div class="flex mt-3">
           <button
             v-for="(id, index) in multiMintIds"
             :key="index"
-            class="hover:bg-red-400 px-2 py-1 bg-black mr-2 rounded"
+            class="hover:bg-red-400 px-2 py-1 bg-gray-900 mr-2 rounded"
             @click="removeIds(id)"
           >
             {{ id }} <span class="ml-2">X</span>
           </button>
         </div>
-        <div class="my-4 flex">
-          <BButton
-            :disabled="!multiMintIds.length"
-            type="primary"
-            @click="multiMint(multiMintIds)"
-            >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
-          >
+        <div class="my-4 flex justify-around">
+          <div class="flex">
+            <BButton
+              :disabled="!multiMintIds.length"
+              type="primary"
+              class="bg-gray-900"
+              @click="multiMint(multiMintIds)"
+              >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
+            >
 
-          <span class="self-center ml-2">
-            {{ (multiMintIds.length * 0.1).toFixed(1) }} ETH</span
+            <span class="self-center ml-2">
+              {{ (multiMintIds.length * 0.1).toFixed(1) }} ETH</span
+            >
+          </div>
+        </div>
+        <h4>Select Realm ids to mint</h4>
+        <div class="flex flex-wrap">
+          <button
+            v-for="(id, index) in availableTokenIds"
+            :key="index"
+            :class="{ 'bg-gray-600': multiMintIds.find((a) => a === id) }"
+            class="bg-black px-2 py-1 hover:bg-gray-800 rounded-xl"
+            @click="addIds(id)"
           >
+            {{ id }}
+          </button>
+        </div>
+        <div class="my-4 p-6">
+          READ: Please take note that this is a beta version feature and is
+          provided on an "as is" and "as available" basis. Bibliotheca does not
+          give any warranties and will not be liable for any loss, direct or
+          indirect through continued use of this feature.
         </div>
       </div>
       <div
@@ -241,36 +249,19 @@
           </div>
         </div>
       </div>
-      <div class="my-4">
-        READ: Please take note that this is a beta version feature and is
-        provided on an "as is" and "as available" basis. Bibliotheca does not
-        give any warranties and will not be liable for any loss, direct or
-        indirect through continued use of this feature.
-      </div>
-      <!-- <div>
-        <button @click="ids">get ids</button>
-      </div> -->
     </div>
     <div class="sm:w-1/2">
       <div class="p-8">
-        <h2>Realms Resources</h2>
+        <h2>Realms</h2>
         <p class="text-xl mb-4">
           These resources are spread out throughout the 8000 Realms.
         </p>
-        <div class="flex flex-col">
-          <div
-            v-for="(resource, index) in remappedResources"
-            :key="index"
-            class="my-3"
-          >
-            <ResourceChip class="text-xl py-2" :resource="resource">
-            </ResourceChip>
-            <span class="ml-4 px-2 py-1 my-1 rounded text-lg">
-              {{ resource.amount }} units (
-              {{ ((resource.amount / 8000) * 100).toFixed(2) }} % Total
-              Supply</span
-            >)
-          </div>
+        <div v-if="!$fetchState.pending">
+          <RealmCard
+            v-if="selectedRealm"
+            :id="selectedRealm.token_id"
+            :realm="selectedRealm"
+          />
         </div>
       </div>
     </div>
@@ -278,12 +269,19 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, onMounted } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  onMounted,
+  useFetch,
+} from '@nuxtjs/composition-api'
+import axios from 'axios'
 import { useMint } from '~/composables/web3/useMint'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
 import { useWeb3 } from '~/composables/web3'
-import ResourceData from '~/composables/resource.json'
+
 export default defineComponent({
   components: {
     Loader,
@@ -291,7 +289,7 @@ export default defineComponent({
   },
   setup() {
     const { account } = useWeb3()
-    const singleMint = ref()
+    const singleMint = ref(1)
     const multiMintIds = ref([])
     const multiMintId = ref(null)
     const {
@@ -313,9 +311,8 @@ export default defineComponent({
       }
     })
 
-    const addIds = () => {
-      multiMintIds.value.push(multiMintId.value)
-      multiMintId.value = ''
+    const addIds = (id) => {
+      multiMintIds.value.push(id)
     }
 
     const removeIds = (value) => {
@@ -336,24 +333,43 @@ export default defineComponent({
         singleMint.value = value.slice(0, 4)
       }
     }
-    const filteredResources = ResourceData.filter((d) => {
-      return d.value > 1
-    })
 
-    const sortedResources = filteredResources.sort((a, b) => {
-      return a.value - b.value
-    })
-
-    const remappedResources = sortedResources.map((a) => {
-      return {
-        value: a.trait,
-        amount: a.value,
+    const mintRealms = () => {
+      if (singleMint.value === 1) {
+        mint(availableTokenIds.value[0])
+        console.log(availableTokenIds.value[0])
+      } else {
+        const ids = availableTokenIds.value.slice(0, singleMint.value - 1)
+        console.log(ids)
+        multiMint(ids)
       }
-    })
+    }
 
     onMounted(async () => {
       await getAvailableTokenIds()
+      cycleIds()
+      window.setInterval(() => {
+        cycleIds()
+      }, 3000)
     })
+
+    const openSeaData = ref()
+    const baseAssetAddress =
+      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
+
+    useFetch(async () => {
+      const response = await axios.get(baseAssetAddress)
+      openSeaData.value = response.data.assets
+    })
+
+    const selectedRealm = ref()
+    const cycleIds = () => {
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max)
+      }
+      const num = getRandomInt(49)
+      selectedRealm.value = openSeaData.value[num]
+    }
 
     return {
       etherSingleMintCost,
@@ -372,7 +388,10 @@ export default defineComponent({
       loadingModal,
       account,
       availableTokenIds,
-      remappedResources,
+      openSeaData,
+      cycleIds,
+      selectedRealm,
+      mintRealms,
     }
   },
 })
