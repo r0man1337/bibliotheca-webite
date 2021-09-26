@@ -1,9 +1,6 @@
 <template>
   <section class="flex flex-wrap">
-    <div
-      v-if="!$fetchState.pending"
-      class="sm:w-1/2 text-center self-center relative"
-    >
+    <div class="sm:w-1/2 text-center self-center relative">
       <div
         v-if="loading.getAvailableTokenIds"
         class="
@@ -242,9 +239,7 @@
         </div>
       </div>
     </div>
-    <div v-else>
-      <Loader class="w-24 h-24" />
-    </div>
+
     <!-- <div class="sm:w-1/2">
       <div class="p-8">
         <h2>Join our Lords & Ladies with their already minted Realms below</h2>

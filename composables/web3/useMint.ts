@@ -123,7 +123,6 @@ export function useMint() {
   }
 
   const getAvailableTokenIds = async () => {
-    if (!account.value) return
     console.log('2')
     try {
       loading.getAvailableTokenIds = true
