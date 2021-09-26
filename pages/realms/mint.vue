@@ -1,6 +1,11 @@
 <template>
   <section class="flex flex-wrap">
     <div class="sm:w-1/2 bg-gray-800 rounded-xl p-6">
+      {{
+        loading.getAvailableTokenIds
+          ? 'Loading Available Tokens'
+          : availableTokenIds
+      }}
       <h1>Mint remaining Realms - 0.1 ETH each</h1>
       <h5>Contract address: 0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</h5>
       <a
@@ -53,7 +58,7 @@
             type="primary"
             @click="mint(singleMint)"
           >
-            {{ loading ? 'loading...' : 'Mint Realm' }}
+            {{ loading.mint ? 'loading...' : 'Mint Realm' }}
           </BButton>
           <span class="self-center ml-2">{{ etherSingleMintCost }} ETH</span>
         </div>
@@ -107,7 +112,7 @@
             :disabled="!multiMintIds.length"
             type="primary"
             @click="multiMint(multiMintIds)"
-            >{{ loading ? 'loading...' : 'Mint Realms' }}</BButton
+            >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
           >
 
           <span class="self-center ml-2">
@@ -296,8 +301,8 @@ export default defineComponent({
       loading,
       multiMint,
       loadingModal,
-      ids,
-      mintedRealmIds,
+      getAvailableTokenIds,
+      availableTokenIds,
     } = useMint()
 
     const etherSingleMintCost = computed(() => {
@@ -347,7 +352,7 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      await ids()
+      await getAvailableTokenIds()
     })
 
     return {
@@ -366,8 +371,7 @@ export default defineComponent({
       limitLength,
       loadingModal,
       account,
-      mintedRealmIds,
-      ids,
+      availableTokenIds,
       remappedResources,
     }
   },

@@ -24,10 +24,13 @@ const error = reactive({
 
 const result = reactive({ mint: null })
 
-const tokenIds = ref(null)
+const availableTokenIds = ref(null)
 
 export function useMint() {
-  const loading = ref(false)
+  const loading = reactive({
+    mint: false,
+    getAvailableTokenIds: false,
+  })
   const loadingModal = ref(false)
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, account, activate } = useWeb3()
@@ -38,7 +41,8 @@ export function useMint() {
   const flatObject = (arr) => {
     const flatArray = []
     for (let i = 0; i < arr.length; i++) {
-      flatArray[i] = arr[i].id
+      console.log(typeof arr[i].id)
+      flatArray[i] = parseInt(arr[i].id)
     }
     return flatArray
   }
@@ -69,7 +73,7 @@ export function useMint() {
     if (!account.value) return open()
     try {
       error.mint = null
-      loading.value = true
+      loading.mint = true
       loadingModal.value = true
       result.mint = await mintToken(
         account.value,
@@ -79,7 +83,7 @@ export function useMint() {
     } catch (e) {
       error.mint = e.message
     } finally {
-      loading.value = false
+      loading.mint = false
     }
   }
 
@@ -89,7 +93,7 @@ export function useMint() {
     try {
       error.mint = null
       loadingModal.value = true
-      loading.value = true
+      loading.mint = true
       result.mint = await multiMintToken(
         account.value,
         activeNetwork.value.id,
@@ -99,23 +103,36 @@ export function useMint() {
       console.log(e)
       error.mint = e.message
     } finally {
-      loading.value = false
+      loading.mint = false
     }
   }
+  const findMissing = (num) => {
+    const max = Math.max(...num) // Will find highest number
+    const min = Math.min(...num) // Will find lowest number
+    const missing = []
 
-  const ids = async () => {
+    for (let i = min; i <= max; i++) {
+      if (!num.includes(i)) {
+        // Checking whether i(current value) present in num(argument)
+        missing.push(i) // Adding numbers which are not in num(argument) array
+      }
+    }
+    return missing
+  }
+
+  const getAvailableTokenIds = async () => {
     if (!account.value) return
     console.log('2')
     try {
-      loading.value = true
+      loading.getAvailableTokenIds = true
       error.mint = null
-      tokenIds.value = await checkTokenMint()
-      console.log(tokenIds)
+      const mintedTokens = await checkTokenMint()
+      availableTokenIds.value = findMissing(mintedTokens)
     } catch (e) {
       error.mint = e
       console.log(e)
     } finally {
-      loading.value = false
+      loading.getAvailableTokenIds = false
     }
   }
 
@@ -127,7 +144,8 @@ export function useMint() {
     loading,
     loadingModal,
     mintedRealmIds,
-    ids,
+    availableTokenIds,
+    getAvailableTokenIds,
   }
 }
 
