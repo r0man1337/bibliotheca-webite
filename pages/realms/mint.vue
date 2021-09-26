@@ -16,7 +16,9 @@
           rounded-xl
         "
       >
-        <div class="self-center text-center">Fetching Available Ids...</div>
+        <div class="self-center text-center">
+          <Loader class="w-24 h-24" /> Fetching Available Ids...
+        </div>
       </div>
       <div class="p-6 bg-black rounded-xl">
         <h5>
@@ -269,8 +271,8 @@ import {
   computed,
   defineComponent,
   ref,
-  useFetch,
   onMounted,
+  useFetch,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useMint } from '~/composables/web3/useMint'
