@@ -6,7 +6,7 @@ import WALLETCONNECT_ICON_URL from '~/assets/icons/wallet-connect.svg?inline'
 import PORTIS_ICON_URL from '~/assets/icons/portis.svg?inline'
 import LEDGER_ICON_URL from '~/assets/icons/ledger.svg?inline'
 
-interface WalletInfo {
+export interface WalletInfo {
   connector?: AbstractConnector
   name: string
   iconURL: string

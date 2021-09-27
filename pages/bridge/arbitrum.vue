@@ -6,6 +6,7 @@
         You are currently connected to
         <span class="text-red-400">{{ activeNetwork.displayName }}</span>
       </h5>
+      <button @click="withdrawFromL2(343)">withdraw pending</button>
     </div>
     <div class="flex mt-8 flex-wrap">
       <div class="sm:w-4/12 flex justify-around top-50">
@@ -182,6 +183,7 @@ export default defineComponent({
       initBridge,
       depositRealm,
       withdrawToL1,
+      withdrawFromL2,
       bridge,
       partnerNetwork,
       result,
@@ -208,10 +210,13 @@ export default defineComponent({
     }
     onMounted(async () => {
       if (account.value) {
+        console.log('mounted init bridge')
         await initBridge()
-        await setInitialPendingWithdrawals(bridge, {
-          fromBlock: 4832019,
-        })
+        console.log(bridge.value)
+
+        /* await setInitialPendingWithdrawals(bridge, {
+          fromBlock: 4951250,
+        }) */
       }
     })
     watch(
@@ -228,7 +233,7 @@ export default defineComponent({
     watch(
       activeNetwork,
       async (val) => {
-        if (val) {
+        if (val && !bridge.value) {
           await initBridge()
           console.log('watch chain id')
         }
@@ -245,6 +250,9 @@ export default defineComponent({
       try {
         const response = await fetchRealmMetaData(realm.id)
         selectedRealm.value = response.data
+        await setInitialPendingWithdrawals(bridge, {
+          fromBlock: 4951250,
+        })
       } catch (e) {
         console.log(e)
       } finally {
@@ -266,6 +274,7 @@ export default defineComponent({
     return {
       activeNetwork,
       networkName,
+      withdrawFromL2,
       assetsOnL2,
       assetsOnL1,
       account,

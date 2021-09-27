@@ -51,7 +51,7 @@ export function useBridge() {
   const bridge = ref(null)
 
   const initBridge = async () => {
-    if (!process.server && account.value) {
+    if (account.value) {
       if (!activeNetwork.value.isArbitrum) {
         ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
         arbProvider.value = new ethers.providers.JsonRpcProvider(
@@ -286,6 +286,33 @@ export function useBridge() {
       }
     }
   }
+  const withdrawFromL2 = async (id) => {
+    // eslint-disable-next-line prefer-const
+    if (!process.server) {
+      loadingBridge.value = true
+      // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
+      const lootRealmsLockbox = new ethers.Contract(
+        RINKEBY_L1_BRIDGE_ADDRESS,
+        realmsLockBoxABI,
+        l1Signer.value
+      )
+      console.log(l1Signer.value)
+      console.log(id)
+
+      const tx = await lootRealmsLockbox.withdrawFromL2(id)
+
+      try {
+        const receipt = await tx.wait()
+        // updateTransaction(receipt, tx)
+
+        return receipt
+      } catch (err) {
+        console.warn('withdraw token err', err)
+      } finally {
+        loadingBridge.value = false
+      }
+    }
+  }
   const getL2Realms = async () => {
     console.log('getting l2 realms')
     const l2RealmsContract = new ethers.Contract(
@@ -305,6 +332,7 @@ export function useBridge() {
     getL2Realms,
     depositRealm,
     withdrawToL1,
+    withdrawFromL2,
     l2TransactionCount,
     error,
     bridge,

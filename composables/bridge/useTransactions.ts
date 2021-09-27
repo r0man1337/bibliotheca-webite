@@ -124,7 +124,7 @@ export function useTransactions() {
 
     const recentTokenWithdrawals = await getTokenWithdrawals(
       bridge,
-      ['0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'],
+      ['0x195C107F3F75c4C93Eba7d9a1312F19305d6375f'],
       {
         fromBlock: 4832020,
       }

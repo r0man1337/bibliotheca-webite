@@ -156,6 +156,10 @@ export default {
         page: '/roadmap',
         title: 'Staking Roadmap',
       },
+      {
+        page: '/bridge/arbitrum',
+        title: 'Arbitrum Bridge',
+      },
     ]
 
     const adventureLinks = [

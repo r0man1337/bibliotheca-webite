@@ -53,7 +53,7 @@ if (activeNetworks.includes('mainnet')) {
     partnerChainID: 42161,
     isArbitrum: false,
     explorerUrl: 'https://etherscan.io',
-    url: process.env.RPC_URL_1 as string,
+    url: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
   })
 }
 if (activeNetworks.includes('rinkeby')) {
@@ -66,7 +66,7 @@ if (activeNetworks.includes('rinkeby')) {
     partnerChainID: 421611,
     isArbitrum: false,
     explorerUrl: 'https://rinkeby.etherscan.io',
-    url: `https://rinkeby.infura.io/v3/${process.env.infuraId}`,
+    url: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
   })
 }
 if (activeNetworks.includes('arbitrum')) {
