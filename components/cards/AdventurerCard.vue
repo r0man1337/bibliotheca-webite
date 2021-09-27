@@ -15,7 +15,7 @@
       cursor-pointer
       hover:shadow-2xl hover:opacity-70 hover:border
       flex flex-col
-      border-4 border-gray-800
+      border-2 border-gray-800
       shadow-2xl
     "
     @click="navigate"

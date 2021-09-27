@@ -2,7 +2,7 @@
   <div
     class="
       bg-black
-      border-4 border-gray-800
+      border-2 border-gray-800
       rounded-xl
       mr-8
       my-4

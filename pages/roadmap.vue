@@ -20,7 +20,7 @@
           text-2xl
           sm:w-1/2
           p-4
-          bg-gray-800
+          bg-black
           mx-auto
           rounded-xl
           my-8
@@ -29,7 +29,6 @@
         "
       >
         <span class="text-red-800 bg-red-400 rounded p-2 px-4">Open Beta</span>
-        <span class="mx-4">testing</span>
         <span class="text-blue-800 bg-blue-400 rounded p-2 px-4"
           >Production</span
         >
