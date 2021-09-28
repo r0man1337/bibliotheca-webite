@@ -26,9 +26,7 @@
       <div class="text-lg">
         <span>Loots: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
         <br />
-        <span
-          >Manas: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span
-        >
+        <span>Mana: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span>
         <br />
         <span
           >Realms: {{ adventurer.realmsHeld ? adventurer.realmsHeld : 0 }}</span
