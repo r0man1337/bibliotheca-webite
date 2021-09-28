@@ -105,10 +105,19 @@ export default defineComponent({
             '&offset=' +
             offset.value +
             '&order_by=' +
-            orderBy.value
+            orderBy.value,
+          {
+            headers: {
+              'X-API-KEY': process.env.OPENSEA,
+            },
+          }
         )
       } else {
-        return await axios.get(baseAssetAddress + '&offset=' + offset.value)
+        return await axios.get(baseAssetAddress + '&offset=' + offset.value, {
+          headers: {
+            'X-API-KEY': process.env.OPENSEA,
+          },
+        })
       }
     }
 

@@ -1,5 +1,15 @@
 <template>
   <div
-    class="animate-pulse flex space-x-4 bg-gray-700 h-64 rounded-xl w-64"
+    class="
+      animate-pulse
+      flex
+      space-x-4
+      bg-gray-800
+      h-64
+      rounded-xl
+      w-64
+      mr-10
+      mb-10
+    "
   ></div>
 </template>

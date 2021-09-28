@@ -138,6 +138,10 @@ export default {
         title: 'Realms',
       },
       {
+        page: '/manas',
+        title: 'Genesis Mana',
+      },
+      {
         page: '/treasure',
         title: 'Treasure',
       },

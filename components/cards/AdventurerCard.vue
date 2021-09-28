@@ -13,17 +13,22 @@
       duration-150
       h-80
       cursor-pointer
-      hover:shadow-2xl hover:opacity-70 hover:border
+      hover:shadow-2xl
       flex flex-col
       border-2 border-gray-800
       shadow-2xl
+      group
     "
     @click="navigate"
   >
-    <div>
+    <div class="group-hover:text-red-400">
       <h3>{{ shortenHash(adventurer.address) }}</h3>
       <div class="text-lg">
         <span>Loots: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
+        <br />
+        <span
+          >Manas: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span
+        >
         <br />
         <span
           >Realms: {{ adventurer.realmsHeld ? adventurer.realmsHeld : 0 }}</span

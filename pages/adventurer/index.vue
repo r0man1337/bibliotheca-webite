@@ -82,6 +82,7 @@ export default defineComponent({
             realmsHeld
             bagsHeld
             treasuresHeld
+            manasHeld
             mLootHeld
           }
         }
@@ -112,6 +113,10 @@ export default defineComponent({
       {
         label: 'Treasure',
         data: 'treasuresHeld',
+      },
+      {
+        label: 'Mana',
+        data: 'manasHeld',
       },
     ]
 

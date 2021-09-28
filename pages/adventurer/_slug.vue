@@ -33,7 +33,7 @@
           px-4
           py-2
           space-x-6
-          border-white
+          border-gray-500
           w-auto
           border
         "
@@ -49,6 +49,12 @@
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#realms"
           >Realms: {{ adventurer.wallet.realmsHeld }}</a
+        >
+        <a
+          v-if="adventurer.wallet.manasHeld"
+          class="hover:bg-gray-900 px-2 py-1 rounded"
+          href="#mana"
+          >manas: {{ adventurer.wallet.manasHeld }}</a
         >
         <a
           v-if="adventurer.wallet.treasuresHeld"
@@ -71,29 +77,7 @@
             :key="index"
             class="w-80"
           >
-            <LootCard is-o-g :loot="loot">
-              <div class="flex">
-                Score:
-                <span v-if="rariety" class="ml-auto">{{
-                  lootRariety(loot.id).score
-                }}</span>
-                <div
-                  v-else
-                  class="h-6 w-10 bg-white rounded animate-pulse ml-2"
-                ></div>
-              </div>
-              <div class="flex">
-                <span>Rank: </span>
-
-                <span v-if="rariety" class="ml-auto">{{
-                  lootRariety(loot.id).rarest
-                }}</span>
-                <div
-                  v-else
-                  class="h-6 w-10 bg-white rounded animate-pulse ml-2"
-                ></div>
-              </div>
-            </LootCard>
+            <LootCard is-o-g :loot="loot" />
           </div>
         </div>
       </div>
@@ -110,6 +94,19 @@
         </div>
         <div v-else class="flex flex-wrap mt-4">
           <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
+        </div>
+      </div>
+      <div v-if="adventurer.manas.length" id="mana">
+        <hr />
+        <h3 class="mt-8">Mana: {{ adventurer.manas.length }}</h3>
+        <div class="flex flex-wrap w-full">
+          <div
+            v-for="(mana, index) in adventurer.manas"
+            :key="index"
+            class="w-80"
+          >
+            <ManaCard :mana="mana" />
+          </div>
         </div>
       </div>
       <div v-if="adventurer.treasures.length" id="treasure">
@@ -173,8 +170,23 @@ export default defineComponent({
           bagsHeld
           treasuresHeld
           mLootHeld
+          manasHeld
         }
-        realms(first: 30, where: { currentOwner: $slug }) {
+        manas(first: 15, where: { currentOwner: $slug }) {
+          id
+          lootTokenId {
+            id
+          }
+          itemName
+          suffixId
+          inventoryId
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
+        realms(first: 15, where: { currentOwner: $slug }) {
           id
           tokenURI
           currentOwner {
@@ -183,7 +195,7 @@ export default defineComponent({
             joined
           }
         }
-        treasures(first: 30, where: { currentOwner: $slug }) {
+        treasures(first: 15, where: { currentOwner: $slug }) {
           id
           asset1
           asset2
@@ -199,7 +211,7 @@ export default defineComponent({
             joined
           }
         }
-        bags(first: 30, where: { currentOwner: $slug }) {
+        bags(first: 15, where: { currentOwner: $slug }) {
           id
           head
           neck
@@ -209,13 +221,22 @@ export default defineComponent({
           weapon
           waist
           foot
+          chestSuffixId
+          footSuffixId
+          handSuffixId
+          headSuffixId
+          neckSuffixId
+          ringSuffixId
+          waistSuffixId
+          weaponSuffixId
+          manasClaimed
           currentOwner {
             address
             bagsHeld
             joined
           }
         }
-        mloots(first: 30, where: { currentOwner: $slug }) {
+        mloots(first: 15, where: { currentOwner: $slug }) {
           id
           head
           neck
@@ -257,8 +278,6 @@ export default defineComponent({
       if (adventurer.value) {
         openSeaFetch()
       }
-
-      rarietyFetch()
     })
 
     useFetch(async () => {
@@ -281,7 +300,12 @@ export default defineComponent({
             'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&owner=' +
               slug +
               '&offset=' +
-              page * 50
+              page * 50,
+            {
+              headers: {
+                'X-API-KEY': process.env.OPENSEA,
+              },
+            }
           )
           openSeaData.value = openSeaData.value.concat(response.data.assets)
         } catch (e) {
@@ -297,26 +321,6 @@ export default defineComponent({
     }
 
     const rariety = ref(null)
-
-    const rarietyFetch = async () => {
-      const idString = adventurer.value
-        ? adventurer.value.bags
-            .map((bag) => {
-              return 'id=' + bag.id + '&'
-            })
-            .join('')
-            .slice(0, -1)
-        : ''
-
-      if (idString !== '') {
-        try {
-          const response = await axios.get('/api/rare?' + idString)
-          rariety.value = response.data
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    }
 
     const lootRariety = (id) => {
       return rariety.value.find((loot) => loot.id.toString() === id)

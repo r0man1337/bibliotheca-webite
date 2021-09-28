@@ -17,14 +17,38 @@
       hover:shadow-2xl
       flex flex-col
       group
+      hover:border-green-300
     "
     @click="navigate"
   >
     <div class="mb-4 flex justify-between">
-      #{{ loot.id }}
-      <slot> </slot>
+      <div class="flex flex-col">
+        <span class="text-2xl">#{{ loot.id }}</span>
+        <span v-if="isOG">Rarity: {{ getRarity.rarest }}</span>
+        <span v-if="isOG">Score: {{ getRarity.score }}</span>
+      </div>
+      <hr />
+      <div>
+        <div
+          v-if="isOG"
+          :class="{
+            'bg-green-600': loot.manasClaimed == totalManasAvailable(loot),
+          }"
+          class="
+            px-2
+            py-1
+            rounded-xl
+            text-green-200
+            border-green-400 border
+            bg-opacity-75
+          "
+        >
+          Manas: {{ loot.manasClaimed }} / {{ totalManasAvailable(loot) }}
+        </div>
+      </div>
     </div>
-    <div>
+
+    <div class="text-xl">
       <span :style="'color:' + rarityColor(loot.weapon)">{{
         loot.weapon
       }}</span>
@@ -61,9 +85,10 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import { useLootRarity } from '~/composables/useLootRarity'
+import db from '~/serverMiddleware/db.json'
 export default defineComponent({
   props: {
     loot: {
@@ -89,10 +114,47 @@ export default defineComponent({
       )
     }
 
+    const getRarity = computed(() => {
+      return props.isOG
+        ? db.rare.find((a) => a.id === parseInt(props.loot.id))
+        : null
+    })
+
+    const totalManasAvailable = (loot) => {
+      const totalManas = []
+      if (props.loot.chestSuffixId > 0) {
+        totalManas.push(props.loot.chestSuffixId)
+      }
+      if (props.loot.footSuffixId > 0) {
+        totalManas.push(props.loot.footSuffixId)
+      }
+      if (props.loot.handSuffixId > 0) {
+        totalManas.push(props.loot.handSuffixId)
+      }
+      if (props.loot.headSuffixId > 0) {
+        totalManas.push(props.loot.headSuffixId)
+      }
+      if (props.loot.neckSuffixId > 0) {
+        totalManas.push(props.loot.neckSuffixId)
+      }
+      if (props.loot.ringSuffixId > 0) {
+        totalManas.push(props.loot.ringSuffixId)
+      }
+      if (props.loot.waistSuffixId > 0) {
+        totalManas.push(props.loot.waistSuffixId)
+      }
+      if (props.loot.weaponSuffixId > 0) {
+        totalManas.push(props.loot.weaponSuffixId)
+      }
+      return totalManas.length
+    }
+
     return {
       shortenHash,
       navigate,
       rarityColor,
+      totalManasAvailable,
+      getRarity,
     }
   },
 })

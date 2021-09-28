@@ -184,5 +184,6 @@ export default {
     NEXT_PUBLIC_ALCHEMY_API_KEY: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
     ETHER_SCAN: process.env.ETHER_SCAN,
     ACTIVE_NETWORKS: process.env.ACTIVE_NETWORKS,
+    OPENSEA: process.env.OPENSEA,
   },
 }

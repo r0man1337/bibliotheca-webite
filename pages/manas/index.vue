@@ -1,0 +1,104 @@
+<template>
+  <section>
+    <h1>
+      Manas <a href="https://genesisproject.xyz/">(The Genesis Project)</a>
+    </h1>
+    <p class="text-2xl">
+      Genesis Mana is claimed from any bag that contains items "of" one of the
+      original 16 Orders of Loot. Players who assemble a perfect set of 8 items
+      of the same Order unlock the ability to resurrect a Genesis Adventurer, an
+      ancient and powerful being.
+    </p>
+    <div v-if="!$fetchState.pending" class="mt-8">
+      <div class="flex flex-wrap">
+        <div v-for="(mana, index) in manas" :key="index" class="w-80">
+          <ManaCard :mana="mana" />
+        </div>
+      </div>
+      <BButton :loading="loading" type="primary" @click.native="fetchMore"
+        >Load more</BButton
+      >
+    </div>
+    <div v-else class="mt-8">
+      <Loader />
+    </div>
+  </section>
+</template>
+
+<script>
+import { gql } from 'nuxt-graphql-request'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useFetch,
+} from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup(props, context) {
+    const { $graphql } = useContext()
+    const search = ref()
+    const offset = ref(1)
+    const query = ref(gql`
+      query manaQuery($offset: Int!) {
+        manas(first: 100, skip: $offset) {
+          id
+          # lootTokenId {
+          #   id
+          # }
+          itemName
+          suffixId
+          inventoryId
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
+      }
+    `)
+
+    const manas = ref(null)
+
+    const submitSearch = () => {
+      if (search.value.length === 42) {
+        context.root.$router.push(`/adventurer/${search.value}`)
+      }
+    }
+
+    useFetch(async () => {
+      const response = await $graphql.mainnet.request(query.value, {
+        offset: offset.value,
+      })
+      manas.value = response.manas
+    })
+
+    const loading = ref(false)
+
+    const fetchMore = async () => {
+      loading.value = true
+
+      offset.value = offset.value + 100
+
+      try {
+        const response = await $graphql.mainnet.request(query.value, {
+          offset: offset.value,
+        })
+        manas.value = manas.value.concat(response.manas)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        loading.value = false
+      }
+    }
+
+    return {
+      manas,
+      search,
+      submitSearch,
+      fetchMore,
+      loading,
+    }
+  },
+})
+</script>
