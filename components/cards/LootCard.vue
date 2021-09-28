@@ -43,7 +43,7 @@
             bg-opacity-75
           "
         >
-          Manas: {{ loot.manasClaimed }} / {{ totalManasAvailable(loot) }}
+          Mana: {{ loot.manasClaimed }} / {{ totalManasAvailable(loot) }}
         </div>
       </div>
     </div>

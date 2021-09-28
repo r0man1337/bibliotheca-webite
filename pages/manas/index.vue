@@ -1,14 +1,24 @@
 <template>
   <section>
     <h1>
-      Manas <a href="https://genesisproject.xyz/">(The Genesis Project)</a>
+      Mana <a href="https://genesisproject.xyz/">(The Genesis Project)</a>
     </h1>
-    <p class="text-2xl">
+
+    <p class="sm:text-2xl">
       Genesis Mana is claimed from any bag that contains items "of" one of the
       original 16 Orders of Loot. Players who assemble a perfect set of 8 items
       of the same Order unlock the ability to resurrect a Genesis Adventurer, an
       ancient and powerful being.
     </p>
+    <div class="mt-4">
+      <a
+        class="px-5 py-2 rounded-xl bg-black hover:bg-gray-800"
+        target="_blank"
+        href="https://genesisproject.xyz"
+        >Claim Here (Free)</a
+      >
+    </div>
+
     <div v-if="!$fetchState.pending" class="mt-8">
       <div class="flex flex-wrap">
         <div v-for="(mana, index) in manas" :key="index" class="w-80">
