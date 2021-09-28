@@ -54,7 +54,7 @@
           v-if="adventurer.wallet.manasHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mana"
-          >manas: {{ adventurer.wallet.manasHeld }}</a
+          >mana: {{ adventurer.wallet.manasHeld }}</a
         >
         <a
           v-if="adventurer.wallet.treasuresHeld"
@@ -172,7 +172,7 @@ export default defineComponent({
           mLootHeld
           manasHeld
         }
-        manas(first: 15, where: { currentOwner: $slug }) {
+        manas(first: 30, where: { currentOwner: $slug }) {
           id
           lootTokenId {
             id
@@ -186,7 +186,7 @@ export default defineComponent({
             joined
           }
         }
-        realms(first: 15, where: { currentOwner: $slug }) {
+        realms(first: 30, where: { currentOwner: $slug }) {
           id
           tokenURI
           currentOwner {
@@ -195,7 +195,7 @@ export default defineComponent({
             joined
           }
         }
-        treasures(first: 15, where: { currentOwner: $slug }) {
+        treasures(first: 30, where: { currentOwner: $slug }) {
           id
           asset1
           asset2
@@ -211,7 +211,7 @@ export default defineComponent({
             joined
           }
         }
-        bags(first: 15, where: { currentOwner: $slug }) {
+        bags(first: 30, where: { currentOwner: $slug }) {
           id
           head
           neck
@@ -236,7 +236,7 @@ export default defineComponent({
             joined
           }
         }
-        mloots(first: 15, where: { currentOwner: $slug }) {
+        mloots(first: 30, where: { currentOwner: $slug }) {
           id
           head
           neck
