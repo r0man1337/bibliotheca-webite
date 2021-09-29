@@ -177,7 +177,7 @@ export default {
     }, */
   },
   router: {
-    linkExactActiveClass: '',
+    linkExactActiveClass: 'bg-black text-red-400',
   },
   env: {
     INFURA_ID: process.env.INFURA_ID,
