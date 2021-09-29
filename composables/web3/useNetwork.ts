@@ -95,6 +95,19 @@ if (activeNetworks.includes('arbitrumRinkeby')) {
     url: 'https://rinkeby.arbitrum.io/rpc',
   })
 }
+if (activeNetworks.includes('localDevelopment')) {
+  networks.push({
+    id: 'localDevelopment',
+    chainId: 1337,
+    displayName: 'Local Hardhat',
+    icon: MainnetSVG,
+    tokenBridge: rinkebyBridge,
+    partnerChainID: null,
+    isArbitrum: false,
+    explorerUrl: 'http://127.0.0.1:8545/',
+    url: 'http://127.0.0.1:8545/',
+  })
+}
 
 export const activeNetworkId = ref<NetworkId>()
 export const activeNetwork = computed(
