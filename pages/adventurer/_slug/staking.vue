@@ -1,9 +1,14 @@
 <template>
   <div class="container">
     <div>
-      <h3>Select A Realm to Stake</h3>
+      <h3>Select Realm to Stake</h3>
     </div>
-    <div></div>
+    <div class="flex flex-wrap">
+      <div class="bg-black rounded-xl p-5 w-80">
+        <h3>#1</h3>
+        <button class="bg-gray-900 rounded w-full p-4">Stake Realm</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>

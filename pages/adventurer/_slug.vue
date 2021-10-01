@@ -5,7 +5,7 @@
       <NuxtLink
         v-for="(link, index) in menuLinks"
         :key="index"
-        class="text-xl rounded-xl px-4 py-3"
+        class="text-xl rounded-xl px-4 py-3 hover:bg-black hover:text-red-400"
         :to="'/adventurer/' + slug + '/' + link.slug"
         >{{ link.title }}</NuxtLink
       >
