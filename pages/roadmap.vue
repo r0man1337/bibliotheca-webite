@@ -134,7 +134,7 @@ export default defineComponent({
         prodTime: 'November',
         title: 'Resources Automated Market Maker',
         description:
-          'The Resouces AMM provides the vital functionality for Adventurers to be able to trade for missing materials for upgrades - such as Wood, Diamonds and Dragonhide',
+          'The Resources AMM provides the vital functionality for Adventurers to be able to trade for missing materials for upgrades - such as Wood, Diamonds and Dragonhide',
         active: 'true',
       },
       {

@@ -24,7 +24,11 @@ export default defineComponent({
 
     const menuLinks = [
       {
-        title: 'Assets',
+        title: 'Empire',
+        slug: 'empire',
+      },
+      {
+        title: 'Your Assets',
         slug: '',
       },
       {
