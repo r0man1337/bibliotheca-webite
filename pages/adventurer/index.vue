@@ -83,7 +83,7 @@ export default defineComponent({
             bagsHeld
             treasuresHeld
             manasHeld
-            mLootHeld
+            # mLootHeld
           }
         }
       `)
