@@ -2,112 +2,134 @@
     {
         "trait": "Wood",
         "value": 5015,
-        "colour": "#78350f"
+        "colour": "#78350f",
+        "id": 1
     },
     {
         "trait": "Coal",
         "value": 3833,
-        "colour": "#757575"
+        "colour": "#757575",
+        "id": 3
     },
     {
         "trait": "Stone",
         "value": 3941,
-        "colour": "#e0e0e0"
+        "colour": "#e0e0e0",
+        "id": 2
     },
     {
         "trait": "Obsidian",
         "value": 2216,
-        "colour": "#000000"
+        "colour": "#000000",
+        "id": 4
     },
     {
         "trait": "Gold",
         "value": 914,
-        "colour": "#fcd34d"
+        "colour": "#fcd34d",
+        "id": 6
     },
     {
         "trait": "Silver",
         "value": 1741,
-        "colour": "#eeeeee"
+        "colour": "#eeeeee",
+        "id": 5
     },
     {
         "trait": "Ruby",
         "value": 239,
-        "colour": "#dc2626"
+        "colour": "#dc2626",
+        "id": 14
     },
     {
         "trait": "Sapphire",
         "value": 247,
-        "colour": "#3b82f6"
+        "colour": "#3b82f6",
+        "id": 12
     },
     {
         "trait": "Adamantine",
         "value": 55,
-        "colour": "#1e3a8a"
+        "colour": "#1e3a8a",
+        "id": 20
     },
     {
         "trait": "Mithral",
         "value": 37,
-        "colour": "#60a5fa"
+        "colour": "#60a5fa",
+        "id": 21
     },
     {
         "trait": "Cold Iron",
         "value": 957,
-        "colour": "#fca5a5"
+        "colour": "#fca5a5",
+        "id": 8
     },
     {
         "trait": "Diamonds",
         "value": 300,
-        "colour": "#ccbcfb"
+        "colour": "#ccbcfb",
+        "id": 11
     },
     {
         "trait": "Copper",
         "value": 2643,
-        "colour": "#f59e0b"
+        "colour": "#f59e0b",
+        "id": 4
     },
     {
         "trait": "Ironwood",
         "value": 1179,
-        "colour": "#b91c1c"
+        "colour": "#b91c1c",
+        "id": 7
     },
     {
         "trait": "Twilight Quartz",
         "value": 111,
-        "colour": "#6d28d9"
+        "colour": "#6d28d9",
+        "id": 18
     },
     {
         "trait": "Hartwood",
         "value": 594,
-        "colour": "#fca5a5"
+        "colour": "#fca5a5",
+        "id": 10
     },
     {
         "trait": "Ignium",
         "value": 172,
-        "colour": "#ef4444"
+        "colour": "#ef4444",
+        "id": 15
     },
     {
         "trait": "Ethereal Silica",
         "value": 162,
-        "colour": "#10b981"
+        "colour": "#10b981",
+        "id": 16
     },
     {
         "trait": "True Ice",
         "value": 139,
-        "colour": "#ffffff"
+        "colour": "#ffffff",
+        "id": 17
     },
     {
         "trait": "Alchemical Silver",
         "value": 93,
-        "colour": "#bdbdbd"
+        "colour": "#bdbdbd",
+        "id": 19
     },
     {
         "trait": "Deep Crystal",
         "value": 239,
-        "colour": "#93c5fd"
+        "colour": "#93c5fd",
+        "id": 13
     },
     {
         "trait": "Dragonhide",
         "value": 23,
-        "colour": "#ec4899"
+        "colour": "#ec4899",
+        "id": 22
     },
     {
         "trait": "Cathedral Of Agony",
