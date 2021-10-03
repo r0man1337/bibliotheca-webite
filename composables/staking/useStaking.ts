@@ -56,7 +56,7 @@ export function useStaking() {
       claimBalance.value = await claim(activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
-      error.stake = e.message
+      error.stake = e.data.message
     } finally {
       loading.stake = false
     }

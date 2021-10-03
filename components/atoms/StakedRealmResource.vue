@@ -1,9 +1,11 @@
 <template>
-  <div class="text-xl">{{ resource.name }}</div>
+  <div class="text-xl my-1">
+    <span>{{ findResources.trait }}</span>
+  </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import ResourceData from '~/composables/resource.json'
 export default defineComponent({
   props: {
     resource: {
@@ -11,6 +13,13 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {},
+  setup(props) {
+    const findResources = computed(() => {
+      return ResourceData.find((a) => a.id === parseInt(props.resource))
+    })
+    return {
+      findResources,
+    }
+  },
 })
 </script>

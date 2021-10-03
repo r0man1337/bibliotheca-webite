@@ -21,19 +21,19 @@
         "trait": "Obsidian",
         "value": 2216,
         "colour": "#000000",
-        "id": 4
+        "id": 5
     },
     {
         "trait": "Gold",
         "value": 914,
         "colour": "#fcd34d",
-        "id": 6
+        "id": 9
     },
     {
         "trait": "Silver",
         "value": 1741,
         "colour": "#eeeeee",
-        "id": 5
+        "id": 6
     },
     {
         "trait": "Ruby",

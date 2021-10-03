@@ -28,7 +28,7 @@
     <div class="my-3">
       <span class="uppercase text-red-400">Resources</span> <br />
       <StakedRealmResource
-        v-for="(resource, index) in realm.resources"
+        v-for="(resource, index) in ids"
         :key="index"
         :resource="resource"
       />
@@ -39,6 +39,12 @@
     >
       Claim Resources
     </button>
+    <div
+      v-if="error.stake"
+      class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
+    >
+      {{ error.stake }}
+    </div>
   </div>
 </template>
 <script>

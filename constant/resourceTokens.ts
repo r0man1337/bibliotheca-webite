@@ -7,7 +7,7 @@ export default {
       type: 'erc1155',
       symbol: 'resourceTokens',
       name: 'Realms Resource Tokens',
-      address: '0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e',
+      address: '0x45eB443aa016422Ab25903205ABBF809CF06455e',
     },
   ]),
   localDevelopment: createTokenUtils([

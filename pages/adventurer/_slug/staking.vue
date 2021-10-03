@@ -3,29 +3,25 @@
     <div>
       <h3>Select Realm to Stake</h3>
     </div>
-    <div class="flex flex-wrap">
-      <div class="bg-black rounded-xl p-5 w-80">
-        <h3>#1</h3>
-        <button class="bg-gray-900 rounded w-full p-4" @click="stakeRealm(1)">
-          Stake Realm
-        </button>
-      </div>
-      <div class="bg-black rounded-xl p-5 w-80">
-        <h3>#2</h3>
-        <button class="bg-gray-900 rounded w-full p-4" @click="stakeRealm(2)">
-          Stake Realm
-        </button>
+    <div v-if="!realmsLoading" class="flex flex-wrap">
+      <div
+        v-for="(realm, index) in userRealms.l2"
+        :key="index"
+        class="p-2 w-80"
+      >
+        <div class="mx-2 bg-black rounded-xl p-4">
+          <h3>#{{ realm.id }}</h3>
+          <button
+            class="bg-gray-900 rounded w-full px-4 py-2"
+            @click="stakeRealm(realm.id)"
+          >
+            Stake Realm
+          </button>
+        </div>
       </div>
     </div>
-    <div class="mt-8">
-      <h3>Staked Realms</h3>
-    </div>
-    <div class="flex flex-wrap">
-      <StakedRealm
-        v-for="realm in stakedRealms"
-        :key="realm.id"
-        :realm="realm"
-      />
+    <div v-else>
+      <Loader />
     </div>
   </div>
 </template>
@@ -35,10 +31,9 @@ import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
   setup() {
-    const { getUserRealms, userRealms } = useRealms()
+    const { getUserRealms, userRealms, loading: realmsLoading } = useRealms()
     const {
       stakeRealm,
-      getRealmsResourceBalance,
       claimResources,
       claimBalance,
       realmBalance,
@@ -49,7 +44,6 @@ export default defineComponent({
 
     onMounted(() => {
       getUserRealms()
-      getRealmsResourceBalance(1)
     })
 
     const stakedRealms = [
@@ -72,13 +66,13 @@ export default defineComponent({
       userRealms,
       stakedRealms,
       stakeRealm,
-      getRealmsResourceBalance,
       claimResources,
       claimBalance,
       realmBalance,
       loading,
       error,
       result,
+      realmsLoading,
     }
   },
 })
