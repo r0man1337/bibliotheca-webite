@@ -49,6 +49,15 @@ export default defineComponent({
           weapon
           waist
           foot
+          chestSuffixId
+          footSuffixId
+          handSuffixId
+          headSuffixId
+          neckSuffixId
+          ringSuffixId
+          waistSuffixId
+          weaponSuffixId
+          manasClaimed
           currentOwner {
             address
             bagsHeld
