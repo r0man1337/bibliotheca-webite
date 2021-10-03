@@ -62,12 +62,12 @@
           href="#treasure"
           >Treasure: {{ adventurer.wallet.treasuresHeld }}</a
         >
-        <!-- <a
-          v-if="adventurer.wallet.mLootHeld"
+        <a
+          v-if="adventurer.wallet.mLootsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mloot"
-          >mLoot: {{ adventurer.wallet.mLootHeld }}</a
-        > -->
+          >mLoot: {{ adventurer.wallet.mLootsHeld }}</a
+        >
       </div>
       <div v-if="adventurer.bags.length" id="loot">
         <h3 class="mt-8">Loot: {{ adventurer.wallet.bagsHeld }}</h3>
@@ -122,15 +122,15 @@
           </div>
         </div>
       </div>
-      <!-- <div v-if="adventurer.mloots.length" id="mloot">
+      <div v-if="adventurer.mloots.length" id="mloot">
         <hr />
-        <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootHeld }}</h3>
+        <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootsHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div v-for="loot in adventurer.mloots" :key="loot.id" class="w-80">
             <LootCard :loot="loot" />
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
     <Loader v-else />
   </section>
@@ -169,7 +169,7 @@ export default defineComponent({
           realmsHeld
           bagsHeld
           treasuresHeld
-          # mLootHeld
+          mLootsHeld
           manasHeld
         }
         manas(first: 30, where: { currentOwner: $slug }) {
@@ -236,22 +236,22 @@ export default defineComponent({
             joined
           }
         }
-        # mloots(first: 30, where: { currentOwner: $slug }) {
-        #   id
-        #   head
-        #   neck
-        #   chest
-        #   hand
-        #   ring
-        #   weapon
-        #   waist
-        #   foot
-        #   currentOwner {
-        #     address
-        #     bagsHeld
-        #     joined
-        #   }
-        # }
+        mloots(first: 30, where: { currentOwner: $slug }) {
+          id
+          head
+          neck
+          chest
+          hand
+          ring
+          weapon
+          waist
+          foot
+          currentOwner {
+            address
+            bagsHeld
+            joined
+          }
+        }
       }
     `)
 
