@@ -10,11 +10,7 @@
       <h2>Staked Realms</h2>
     </div>
     <div class="flex flex-wrap">
-      <StakedRealm
-        v-for="realm in stakedRealms"
-        :key="realm.id"
-        :realm="realm"
-      />
+      <StakedRealm v-for="realm in sRealms" :key="realm.id" :realm="realm" />
     </div>
   </div>
 </template>
@@ -24,7 +20,7 @@ import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
   setup() {
-    const { getUserRealms, userRealms } = useRealms()
+    const { getUserSRealms, sRealms } = useRealms()
     const {
       stakeRealm,
       claimResources,
@@ -36,27 +32,24 @@ export default defineComponent({
     } = useStaking()
 
     onMounted(() => {
-      getUserRealms()
+      getUserSRealms()
     })
 
     const stakedRealms = [
       {
         name: 'Solumn',
         id: '1',
-        resources: [
-          {
-            name: 'Dragonhide',
-            level: '2',
-          },
-          {
-            name: 'Wood',
-            level: '3',
-          },
-        ],
+      },
+      {
+        name: 'Solumn',
+        id: '3333',
+      },
+      {
+        name: 'Solumn',
+        id: '2151',
       },
     ]
     return {
-      userRealms,
       stakedRealms,
       stakeRealm,
       claimResources,
@@ -65,6 +58,7 @@ export default defineComponent({
       loading,
       error,
       result,
+      sRealms,
     }
   },
 })

@@ -49,7 +49,7 @@ export default defineComponent({
     const stakedRealms = [
       {
         name: 'Solumn',
-        id: '1',
+        id: '22',
         resources: [
           {
             name: 'Dragonhide',

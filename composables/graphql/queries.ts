@@ -1,5 +1,13 @@
 import { gql } from 'graphql-request'
 
+const usersSRealms = gql`
+  query usersSRealms($address: String!) {
+    srealms(first: 100, where: { currentOwner: $address }) {
+      id
+    }
+  }
+`
+
 const usersRealms = gql`
   query usersRealms($address: String!) {
     realms(first: 100, where: { currentOwner: $address }) {
@@ -7,7 +15,6 @@ const usersRealms = gql`
       tokenURI
       currentOwner {
         address
-        bagsHeld
         joined
       }
     }
@@ -25,4 +32,4 @@ const mintedRealmsQuery = gql`
     }
   }
 `
-export { usersRealms, mintedRealmsQuery }
+export { usersRealms, mintedRealmsQuery, usersSRealms }

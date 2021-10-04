@@ -9,7 +9,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { useNetwork, activeNetwork, Network } from './useNetwork'
 import { useWeb3 } from './useWeb3'
-import { usersRealms } from './../graphql/queries'
+import { usersRealms, usersSRealms } from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
 
@@ -26,6 +26,7 @@ export function useRealms() {
     l1: null,
     l2: null,
   })
+  const sRealms = ref()
 
   const fetchUserRealms = async (account, network) => {
     const { realms } = await gqlRequest(
@@ -63,10 +64,39 @@ export function useRealms() {
     }
   }
 
+  const fetchUserSRealms = async (account, network) => {
+    const { srealms } = await gqlRequest(
+      usersSRealms,
+      { address: account.toLowerCase() },
+      network
+    )
+    return srealms
+  }
+
+  const getUserSRealms = async (network?) => {
+    if (account.value) {
+      try {
+        error.getUserRealms = null
+        loading.value = true
+        console.log(useL2Network.value.id)
+        sRealms.value = await fetchUserSRealms(
+          account.value,
+          useL2Network.value.id
+        )
+      } catch (e) {
+        console.log(e)
+      } finally {
+        loading.value = false
+      }
+    }
+  }
+
   return {
     getUserRealms,
+    getUserSRealms,
     error,
     loading,
     userRealms,
+    sRealms,
   }
 }
