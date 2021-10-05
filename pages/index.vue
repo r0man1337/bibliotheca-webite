@@ -107,12 +107,25 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onMounted } from '@vue/composition-api'
+import { useAdventurer } from '~/composables/useAdventurer'
+import { useWeb3 } from '~/composables/web3/useWeb3'
+
 import Book from '~/assets/img/book-open.svg?inline'
 export default defineComponent({
   components: {
     Book,
   },
-  setup() {},
+  setup() {
+    const { getAdventurer, adventurer } = useAdventurer()
+    const { account } = useWeb3()
+    onMounted(async () => {
+      await getAdventurer(account.value)
+    })
+
+    return {
+      adventurer,
+    }
+  },
 })
 </script>
