@@ -28,11 +28,11 @@ export default defineComponent({
         slug: 'empire',
       },
       {
-        title: 'Your Assets',
+        title: 'Loot Assets',
         slug: '',
       },
       {
-        title: 'Staked Realms',
+        title: 'Realm Staking',
         slug: 'staking',
       },
       {

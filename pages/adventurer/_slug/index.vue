@@ -2,10 +2,10 @@
   <section>
     <h4 class="text-gray-400">adventurer</h4>
     <h1>{{ shortenHash(slug) }}</h1>
-    <div v-if="!$fetchState.pending && !adventurer.wallet">
+    <div v-if="!$fetchState.pending && !adventurer.l1.id">
       No Loot or Derivatives for this adventurer... yet.
     </div>
-    <div v-else-if="!$fetchState.pending && adventurer.wallet">
+    <div v-else-if="!$fetchState.pending && adventurer.l1.bags">
       <h3>
         <span class="text-2xl">
           <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
@@ -38,42 +38,43 @@
           border
         "
       >
+        <h3>Ethereum Assets</h3>
         <a
-          v-if="adventurer.wallet.bagsHeld"
+          v-if="adventurer.l1.bagsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#loot"
-          >Loot: {{ adventurer.wallet.bagsHeld }}
+          >Loot: {{ adventurer.l1.bagsHeld }}
         </a>
         <a
-          v-if="adventurer.wallet.realmsHeld"
+          v-if="adventurer.l1.realmsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#realms"
-          >Realms: {{ adventurer.wallet.realmsHeld }}</a
+          >Realms: {{ adventurer.l1.realmsHeld }}</a
         >
         <a
-          v-if="adventurer.wallet.manasHeld"
+          v-if="adventurer.l1.manasHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mana"
-          >mana: {{ adventurer.wallet.manasHeld }}</a
+          >mana: {{ adventurer.l1.manasHeld }}</a
         >
         <a
-          v-if="adventurer.wallet.treasuresHeld"
+          v-if="adventurer.l1.treasuresHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#treasure"
-          >Treasure: {{ adventurer.wallet.treasuresHeld }}</a
+          >Treasure: {{ adventurer.l1.treasuresHeld }}</a
         >
         <!-- <a
-          v-if="adventurer.wallet.mLootHeld"
+          v-if="l1Adventurer.wallet.mLootHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mloot"
-          >mLoot: {{ adventurer.wallet.mLootHeld }}</a
+          >mLoot: {{ l1Adventurer.wallet.mLootHeld }}</a
         > -->
       </div>
-      <div v-if="adventurer.bags.length" id="loot">
-        <h3 class="mt-8">Loot: {{ adventurer.wallet.bagsHeld }}</h3>
+      <div v-if="adventurer.l1.bags.length" id="loot">
+        <h3 class="mt-8">Loot: {{ adventurer.l1.bagsHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div
-            v-for="(loot, index) in adventurer.bags"
+            v-for="(loot, index) in adventurer.l1.bags"
             :key="index"
             class="w-80"
           >
@@ -82,10 +83,10 @@
         </div>
       </div>
 
-      <div v-if="adventurer.realms.length" id="realms">
+      <div v-if="adventurer.l1.realms.length" id="realms">
         <hr />
         <div v-if="openSeaData.length">
-          <h3 class="mt-8">Realms: {{ adventurer.wallet.realmsHeld }}</h3>
+          <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
           <div class="flex flex-wrap w-full">
             <div v-for="realm in sortedRealms" :key="realm.id" class="w-80">
               <RealmCard :id="realm.token_id" :realm="realm" />
@@ -96,12 +97,12 @@
           <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
         </div>
       </div>
-      <div v-if="adventurer.manas.length" id="mana">
+      <div v-if="adventurer.l1.manas.length" id="mana">
         <hr />
-        <h3 class="mt-8">Mana: {{ adventurer.manas.length }}</h3>
+        <h3 class="mt-8">Mana: {{ adventurer.l1.manas.length }}</h3>
         <div class="flex flex-wrap w-full">
           <div
-            v-for="(mana, index) in adventurer.manas"
+            v-for="(mana, index) in adventurer.l1.manas"
             :key="index"
             class="w-80"
           >
@@ -109,12 +110,12 @@
           </div>
         </div>
       </div>
-      <div v-if="adventurer.treasures.length" id="treasure">
+      <div v-if="adventurer.l1.treasures.length" id="treasure">
         <hr />
-        <h3 class="mt-8">Treasure: {{ adventurer.wallet.treasuresHeld }}</h3>
+        <h3 class="mt-8">Treasure: {{ adventurer.l1.treasuresHeld }}</h3>
         <div class="flex flex-wrap w-full">
           <div
-            v-for="treasure in adventurer.treasures"
+            v-for="treasure in adventurer.l1.treasures"
             :key="treasure.id"
             class="w-80"
           >
@@ -122,7 +123,7 @@
           </div>
         </div>
       </div>
-      <!-- <div v-if="adventurer.mloots.length" id="mloot">
+      <!-- <div v-if="l1Adventurer.mloots.length" id="mloot">
         <hr />
         <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootHeld }}</h3>
         <div class="flex flex-wrap w-full">
@@ -137,12 +138,10 @@
 </template>
 
 <script>
-import { gql } from 'nuxt-graphql-request'
 import {
   defineComponent,
   onMounted,
   ref,
-  useContext,
   useFetch,
   computed,
 } from '@nuxtjs/composition-api'
@@ -150,110 +149,20 @@ import axios from 'axios'
 import { Contract, ethers } from 'ethers'
 import { useFormatting } from '~/composables/useFormatting'
 import GoldAbi from '~/abi/gold.json'
+import { useAdventurer } from '~/composables/useAdventurer'
+
 import { usePrice, useRarity } from '~/composables'
 export default defineComponent({
   setup(props, context) {
-    const { $graphql } = useContext()
     const { checkRealmRarity } = useRarity()
     const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
-    const variables = ref({ slug: slug.toLowerCase() })
-    const adventurer = ref(null)
+
+    const { getAdventurer, adventurer } = useAdventurer()
+
     const usersGold = ref(null)
     const goldTokenAddress = '0x32353A6C91143bfd6C7d363B546e62a9A2489A20'
-
-    const query = ref(gql`
-      query userSlug($slug: String!) {
-        wallet(id: $slug) {
-          realmsHeld
-          bagsHeld
-          treasuresHeld
-          # mLootHeld
-          manasHeld
-        }
-        manas(first: 30, where: { currentOwner: $slug }) {
-          id
-          lootTokenId {
-            id
-          }
-          itemName
-          suffixId
-          inventoryId
-          currentOwner {
-            address
-            bagsHeld
-            joined
-          }
-        }
-        realms(first: 30, where: { currentOwner: $slug }) {
-          id
-          tokenURI
-          currentOwner {
-            address
-            bagsHeld
-            joined
-          }
-        }
-        treasures(first: 30, where: { currentOwner: $slug }) {
-          id
-          asset1
-          asset2
-          asset3
-          asset4
-          asset5
-          asset6
-          asset7
-          asset8
-          currentOwner {
-            address
-            bagsHeld
-            joined
-          }
-        }
-        bags(first: 30, where: { currentOwner: $slug }) {
-          id
-          head
-          neck
-          chest
-          hand
-          ring
-          weapon
-          waist
-          foot
-          chestSuffixId
-          footSuffixId
-          handSuffixId
-          headSuffixId
-          neckSuffixId
-          ringSuffixId
-          waistSuffixId
-          weaponSuffixId
-          manasClaimed
-          currentOwner {
-            address
-            bagsHeld
-            joined
-          }
-        }
-        # mloots(first: 30, where: { currentOwner: $slug }) {
-        #   id
-        #   head
-        #   neck
-        #   chest
-        #   hand
-        #   ring
-        #   weapon
-        #   waist
-        #   foot
-        #   currentOwner {
-        #     address
-        #     bagsHeld
-        #     joined
-        #   }
-        # }
-      }
-    `)
 
     // eslint-disable-next-line
     const provider = new ethers.getDefaultProvider('mainnet', {
@@ -275,16 +184,13 @@ export default defineComponent({
 
     onMounted(async () => {
       usersGold.value = await getBalance(options)
-      if (adventurer.value) {
+      if (adventurer.value.l1) {
         openSeaFetch()
       }
     })
 
     useFetch(async () => {
-      adventurer.value = await $graphql.mainnet.request(
-        query.value,
-        variables.value
-      )
+      await getAdventurer(slug.toLowerCase())
     })
 
     const openSeaData = ref([])
@@ -292,7 +198,7 @@ export default defineComponent({
     const offset = ref(0)
     const openSeaFetch = async (off) => {
       loading.value = true
-      const numPages = Math.ceil(adventurer.value.wallet.realmsHeld / 50)
+      const numPages = Math.ceil(adventurer.value.l1.realmsHeld / 50)
 
       for (let page = 0; page < numPages; page++) {
         try {
