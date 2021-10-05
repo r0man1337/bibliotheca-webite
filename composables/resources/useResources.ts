@@ -54,7 +54,7 @@ async function resource(owner, network, resourceId) {
   )
 
   return await resources.balanceOf(
-    '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+    '0xc5629B92458883a2D02502E282f1C3fD71E3f802',
     resourceId
   )
 }

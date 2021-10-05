@@ -201,7 +201,7 @@ export default defineComponent({
         await initBridge()
       }
       if (!activeNetwork.value.isArbitrum) {
-        await depositRealm(selectedRealm.value.token_id)
+        await depositRealm(1858)
       } else {
         await withdrawToL1(selectedRealm.value.token_id)
       }
