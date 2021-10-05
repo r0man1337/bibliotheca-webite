@@ -73,6 +73,18 @@ export function useStaking() {
       loading.stake = false
     }
   }
+  const withdraw = async (realmId) => {
+    try {
+      error.stake = null
+      loading.stake = true
+      return await unStakeAndExit(activeNetwork.value.id, realmId)
+    } catch (e) {
+      console.log(e)
+      error.stake = e.message
+    } finally {
+      loading.stake = false
+    }
+  }
   return {
     stakeRealm,
     getRealmsResourceIds,
@@ -83,6 +95,7 @@ export function useStaking() {
     error,
     loading,
     result,
+    withdraw,
   }
 }
 
@@ -97,7 +110,7 @@ async function stake(owner, network, realmId) {
     ResourceStakingFacet.abi,
     signer
   )
-
+  console.log(resourceStakingFacet)
   const stake = await resourceStakingFacet.stakeRealm(realmId, true)
   await stake.wait()
 
@@ -177,4 +190,23 @@ async function getResourceIds(network, realmId) {
   )
 
   return await resourceStakingFacet.getResourceIds(realmId)
+}
+
+async function unStakeAndExit(network, realmId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+
+  const resourceStakingFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    ResourceStakingFacet.abi,
+    signer
+  )
+  console.log(resourceStakingFacet)
+  const withdraw = await resourceStakingFacet.unstakeAndExit(realmId)
+
+  await withdraw.wait()
+
+  return withdraw
 }

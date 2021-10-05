@@ -46,22 +46,21 @@ export default defineComponent({
       getUserRealms()
     })
 
-    const stakedRealms = [
-      {
-        name: 'Solumn',
-        id: '22',
-        resources: [
-          {
-            name: 'Dragonhide',
-            level: '2',
-          },
-          {
-            name: 'Wood',
-            level: '3',
-          },
-        ],
-      },
-    ]
+    const stakedRealms = {
+      name: 'Solumn',
+      id: '1',
+      resources: [
+        {
+          name: 'Dragonhide',
+          level: '2',
+        },
+        {
+          name: 'Wood',
+          level: '3',
+        },
+      ],
+    }
+
     return {
       userRealms,
       stakedRealms,

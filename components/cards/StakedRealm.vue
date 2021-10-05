@@ -42,6 +42,12 @@
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
         <span v-else>Claim Resources</span>
       </button>
+      <button
+        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
+        @click="withdraw(realm.id)"
+      >
+        unstake
+      </button>
       <div
         v-if="error.stake"
         class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
@@ -75,6 +81,7 @@ export default defineComponent({
       loading,
       error,
       result,
+      withdraw,
     } = useStaking()
 
     const balance = ref()
@@ -109,6 +116,7 @@ export default defineComponent({
       result,
       ids,
       metaData,
+      withdraw,
     }
   },
 })
