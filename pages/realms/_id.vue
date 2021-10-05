@@ -26,7 +26,16 @@
         <div v-if="order(openSeaData.traits)" class="py-4">
           <OrderChip class="text-xl" :order="order(openSeaData.traits).value" />
         </div>
-        <div class="flex">
+        <div v-else>
+          <span class="bg-gray-800 px-2 py-1 rounded">
+            No Order Discovered yet. Check back soon.
+          </span>
+        </div>
+        <div
+          v-if="wonder(openSeaData.traits)"
+          class="my-6 bg-black p-4 sm:p-6 rounded-2xl"
+        >
+          <h2>Realm Wonder</h2>
           <div
             v-if="wonder(openSeaData.traits)"
             class="
@@ -40,6 +49,7 @@
               rounded
               py-1
               mb-2
+              text-2xl
             "
           >
             {{ wonder(openSeaData.traits).value }}
