@@ -17,10 +17,13 @@
       group
     "
   >
+    <div v-if="order(realm.traits)" class="flex text-center p-1">
+      <OrderChip class="w-full rounded-xl" :order="order(realm.traits).value" />
+    </div>
     <div class="relative">
       <img
         v-if="realm.image_url"
-        class="rounded-xl p-1 w-full"
+        class="rounded-xl px-1 w-full"
         :src="realm.image_url"
       />
       <div
@@ -40,6 +43,18 @@
         no image yet
       </div>
       <RealmRarity class="absolute top-10 right-10" :traits="realm.traits" />
+    </div>
+    <div class="p-4">
+      <div class="flex justify-between">
+        <h3>{{ realm.name }}</h3>
+        <h3>#{{ realm.token_id }}</h3>
+      </div>
+
+      <h6 class="text-gray-500">Realm sales: {{ realm.num_sales }}</h6>
+      <h6 v-if="realm.last_sale" class="text-gray-500">
+        Last sale price:
+        {{ intRoundFloor(realm.last_sale.total_price) / 10 ** 18 }} ETH
+      </h6>
     </div>
     <div class="p-2 flex flex-wrap text-xs">
       <ResourceChip
@@ -67,15 +82,7 @@
     >
       {{ wonder(realm.traits).value }}
     </div>
-    <div class="px-4">
-      <h4>{{ realm.name }} - #{{ realm.token_id }}</h4>
-      <h6 class="text-gray-500">Realm sales: {{ realm.num_sales }}</h6>
-      <h6 v-if="realm.last_sale" class="text-gray-500">
-        Last sale price:
-        {{ intRoundFloor(realm.last_sale.total_price) / 10 ** 18 }} ETH
-      </h6>
-    </div>
-    <slot> </slot>
+
     <div class="mt-auto p-4 flex justify-between">
       <span
         class="
@@ -138,12 +145,15 @@ export default defineComponent({
         (resource) => resource.trait_type === 'Wonder (translated)'
       )
     }
+    const order = (traits) => {
+      return traits.find((resource) => resource.trait_type === 'Order')
+    }
     return {
       shortenHash,
       navigate,
       resources,
       wonder,
-
+      order,
       intRoundFloor,
     }
   },

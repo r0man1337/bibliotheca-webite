@@ -23,6 +23,9 @@
         <h1 class="sm:text-6xl">
           {{ openSeaData.name }} - #{{ openSeaData.token_id }}
         </h1>
+        <div v-if="order(openSeaData.traits)" class="py-4">
+          <OrderChip class="text-xl" :order="order(openSeaData.traits).value" />
+        </div>
         <div class="flex">
           <div
             v-if="wonder(openSeaData.traits)"
@@ -100,7 +103,8 @@ export default defineComponent({
     useFetch(async () => {
       const response = await axios.get(
         'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-          id
+          id +
+          '/?force_update=true'
       )
       openSeaData.value = response.data
     })
@@ -148,6 +152,9 @@ export default defineComponent({
         (resource) => resource.trait_type === 'Wonder (translated)'
       )
     }
+    const order = (traits) => {
+      return traits.find((resource) => resource.trait_type === 'Order')
+    }
     return {
       adventurer,
       shortenHash,
@@ -159,6 +166,7 @@ export default defineComponent({
       regions,
       rivers,
       wonder,
+      order,
     }
   },
 })
