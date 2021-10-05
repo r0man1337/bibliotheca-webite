@@ -45,6 +45,22 @@
       <RealmRarity class="absolute top-10 right-10" :traits="realm.traits" />
     </div>
     <div class="p-4">
+      <div
+        v-if="wonder(realm.traits)"
+        class="
+          text-center text-white
+          bg-gradient-to-r
+          from-purple-200
+          via-pink-200
+          to-red-300
+          text-red-500
+          rounded
+          py-1
+          mb-2
+        "
+      >
+        {{ wonder(realm.traits).value }}
+      </div>
       <div class="flex justify-between">
         <h3>{{ realm.name }}</h3>
         <h3>#{{ realm.token_id }}</h3>
@@ -63,24 +79,6 @@
         class="mr-2 my-1"
         :resource="resource"
       />
-    </div>
-    <div
-      v-if="wonder(realm.traits)"
-      class="
-        px-2
-        text-center text-white
-        bg-gradient-to-r
-        from-purple-200
-        via-pink-200
-        to-red-300
-        text-red-500
-        rounded
-        py-1
-        mx-2
-        mb-2
-      "
-    >
-      {{ wonder(realm.traits).value }}
     </div>
 
     <div class="mt-auto p-4 flex justify-between">
