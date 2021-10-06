@@ -6,9 +6,11 @@ import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
 import ResourceStakingFacet from '~/abi/ResourceStakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
+import SRealmTokenABI from '~/abi/SRealmToken.json'
 import diamondAddress from '~/constant/diamondAddress'
 
 import erc721tokens from '~/constant/erc721tokens'
+import sRealmsTokens from '~/constant/sRealmsTokens'
 export function useStaking() {
   const { provider, library, account, activate } = useWeb3()
   const { intRoundFloor } = useBigNumber()
@@ -77,6 +79,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
+      await setApprovalForAllSRealms(activeNetwork.value.id)
       return await unStakeAndExit(activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
@@ -116,7 +119,7 @@ async function stake(owner, network, realmId) {
 
   return stake
 }
-
+// TODO: make generic
 async function setApprovalForAll(network) {
   const tokensArr = diamondAddress[network].allTokens
   const tokensAddrArr = tokensArr.map((a) => a.address)
@@ -130,18 +133,26 @@ async function setApprovalForAll(network) {
     lootRealmsABI,
     signer
   )
-
-  // const checkApproval = await realmsContract.isApprovedForAll(
-  //   account.value,
-  //   RINKEBY_L1_BRIDGE_ADDRESS
-  // )
-  // console.log(checkApproval)
-
-  // if (!checkApproval) {
   const approve = await realmsContract.setApprovalForAll(tokensAddrArr[0], true)
   await approve.wait()
-  // }
+  return approve
+}
+// TODO: make generic
+async function setApprovalForAllSRealms(network) {
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
 
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const sRealmTokenArr = sRealmsTokens[network].allTokens
+  const signer = provider.getSigner()
+  const sRealmsTokensAddrArr = sRealmTokenArr.map((a) => a.address)
+  const realmsContract = new ethers.Contract(
+    sRealmsTokensAddrArr[0],
+    SRealmTokenABI.abi,
+    signer
+  )
+  const approve = await realmsContract.setApprovalForAll(tokensAddrArr[0], true)
+  await approve.wait()
   return approve
 }
 
