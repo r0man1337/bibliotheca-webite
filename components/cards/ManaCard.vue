@@ -29,7 +29,6 @@
       >{{ mana.itemName }}</span
     >
     <div class="mt-auto">
-      <!-- <span>Distilled from Loot bag #{{ mana.lootTokenId.id }}</span> -->
       <div
         class="px-3 py-1 w-full rounded text-xl"
         :style="'background:' + orderGA.colour"
@@ -63,7 +62,7 @@ export default defineComponent({
     }
 
     const orderGA = computed(() => {
-      return gaOrders[props.mana.suffixId]
+      return gaOrders[props.mana.suffixId - 1]
     })
 
     return {
