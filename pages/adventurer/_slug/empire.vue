@@ -9,13 +9,14 @@
     <div class="mt-8">
       <h2>Staked Realms</h2>
     </div>
-    <div class="flex flex-wrap">
+    <div v-if="!$fetchState.pending" class="flex flex-wrap">
       <StakedRealm v-for="realm in sRealms" :key="realm.id" :realm="realm" />
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
+import { useFetch } from '@nuxtjs/composition-api'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
@@ -31,8 +32,8 @@ export default defineComponent({
       result,
     } = useStaking()
 
-    onMounted(() => {
-      getUserSRealms()
+    useFetch(async () => {
+      await getUserSRealms()
     })
 
     const stakedRealms = [

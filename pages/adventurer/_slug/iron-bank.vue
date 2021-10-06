@@ -1,6 +1,6 @@
 <template>
   <div class="container flex">
-    <div class="bg-black p-6 rounded-2xl w-1/2">
+    <div class="bg-black p-6 rounded-2xl w-1/2 shadow-2xl">
       <h2 class="uppercase text-red-400 text-center">The Iron Bank</h2>
       <table class="table-fixed w-full">
         <thead>
