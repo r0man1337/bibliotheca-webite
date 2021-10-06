@@ -174,9 +174,6 @@ export default defineComponent({
         }
         manas(first: 30, where: { currentOwner: $slug }) {
           id
-          lootTokenId {
-            id
-          }
           itemName
           suffixId
           inventoryId
