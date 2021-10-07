@@ -29,7 +29,6 @@
       >{{ mana.itemName }}</span
     >
     <div class="mt-auto">
-      <!-- <span>Distilled from Loot bag #{{ mana.lootTokenId.id }}</span> -->
       <div
         class="px-3 py-1 w-full rounded text-xl"
         :style="'background:' + orderGA.colour"
@@ -43,6 +42,7 @@
 import { defineComponent, computed } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import { useLootRarity } from '~/composables/useLootRarity'
+import { gaOrders, suffixArray } from '~/composables/ordersData'
 export default defineComponent({
   props: {
     mana: {
@@ -60,99 +60,9 @@ export default defineComponent({
         '_blank'
       )
     }
-    const suffixArray = [
-      '',
-      'Power',
-      'Giants',
-      'Titans',
-      'Skill',
-      'Perfection',
-      'Brilliance',
-      'Enlightenment',
-      'Protection',
-      'Anger',
-      'Rage',
-      'Fury',
-      'Vitriol',
-      'the Fox',
-      'Detection',
-      'Reflection',
-      'the Twins',
-    ]
-
-    const gaOrders = [
-      {
-        order: '',
-        colour: '',
-      },
-      {
-        order: 'Power',
-        colour: '#191d7e',
-      },
-      {
-        order: 'Giants',
-        colour: '#dac931',
-      },
-      {
-        order: 'Titans',
-        colour: '#b45fbb',
-      },
-      {
-        order: 'Skill',
-        colour: '#1fad94',
-      },
-      {
-        order: 'Perfection',
-        colour: '#2c1a72',
-      },
-      {
-        order: 'Brilliance',
-        colour: '#36662a',
-      },
-      {
-        order: 'Enlightenment',
-        colour: '#78365e',
-      },
-      {
-        order: 'Protection',
-        colour: '#4f4b4b',
-      },
-      {
-        order: 'Anger',
-        colour: '#9b1414',
-      },
-      {
-        order: 'Rage',
-        colour: '#77ce58',
-      },
-      {
-        order: 'Fury',
-        colour: '#c07a28',
-      },
-      {
-        order: 'Vitriol',
-        colour: '#511d71',
-      },
-      {
-        order: 'the Fox',
-        colour: '#949494',
-      },
-      {
-        order: 'Detection',
-        colour: '#db8f8b',
-      },
-      {
-        order: 'Reflection',
-        colour: '#318c9f',
-      },
-      {
-        order: 'the Twins',
-        colour: '#00ae3b',
-      },
-    ]
 
     const orderGA = computed(() => {
-      return gaOrders[props.mana.suffixId]
+      return gaOrders[props.mana.suffixId - 1]
     })
 
     return {

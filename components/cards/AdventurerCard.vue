@@ -38,7 +38,7 @@
         >
         <br />
         <span
-          >mLoot: {{ adventurer.mLootHeld ? adventurer.mLootHeld : 0 }}</span
+          >mLoot: {{ adventurer.mLootsHeld ? adventurer.mLootsHeld : 0 }}</span
         >
       </div>
     </div>

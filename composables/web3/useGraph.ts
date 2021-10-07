@@ -13,6 +13,8 @@ export function useGraph() {
   ) => {
     loading.value = true
     try {
+      console.log('rtying')
+      console.log(network)
       return await $graphql[network].request(query, variables)
     } catch (e) {
       console.log(e)
