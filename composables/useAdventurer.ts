@@ -8,8 +8,8 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import {
-  l1AdventurerQuery,
-  l2AdventurerQuery,
+  getl1Adventurer,
+  getl2Adventurer,
   usersSRealms,
 } from './graphql/queries'
 import { useWeb3 } from '~/composables/web3/useWeb3'
@@ -35,7 +35,7 @@ export function useAdventurer() {
   })
 
   const fetchAdventurer = async (account, network) => {
-    const query = network.isArbitrum ? l2AdventurerQuery : l1AdventurerQuery
+    const query = network.isArbitrum ? getl2Adventurer : getl1Adventurer
     const { wallet } = await gqlRequest(
       query,
       { address: account.toLowerCase() },
@@ -59,6 +59,7 @@ export function useAdventurer() {
             useL2Network.value
           )),
         ])
+        console.log(adventurer.value)
       } else {
         await fetchAdventurer(account, network)
       }

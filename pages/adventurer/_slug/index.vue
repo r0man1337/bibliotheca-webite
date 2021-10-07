@@ -2,9 +2,10 @@
   <section>
     <h4 class="text-gray-400">adventurer</h4>
     <h1>{{ shortenHash(slug) }}</h1>
-    <!-- <div v-if="!$fetchState.pending && !adventurer.l1.id">
+    <div v-if="!$fetchState.pending && !adventurer.l1">
       No Loot or Derivatives for this adventurer... yet.
-    </div> -->
+    </div>
+    -->
     <!-- <div v-if="!$fetchState.pending">
       <h3>
         <span class="text-2xl">

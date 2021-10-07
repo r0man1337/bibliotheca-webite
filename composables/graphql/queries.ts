@@ -26,7 +26,7 @@ const usersRealms = gql`
     }
   }
 `
-const l1AdventurerQuery = gql`
+const getl1Adventurer = gql`
   ${WalletFragment}
   ${RealmFragment}
   ${BagFragment}
@@ -35,7 +35,7 @@ const l1AdventurerQuery = gql`
   ${ManaFragment}
   ${GAdventurerFragment}
 
-  query adventurer($address: String!) {
+  query getAdventurer($address: String!) {
     wallet(id: $address) {
       id
       realmsHeld
@@ -64,7 +64,7 @@ const l1AdventurerQuery = gql`
     }
   }
 `
-const l2AdventurerQuery = gql`
+const getl2Adventurer = gql`
   ${RealmFragment}
   query adventurer($address: String!) {
     wallet(id: $address) {
@@ -93,6 +93,6 @@ export {
   usersRealms,
   mintedRealmsQuery,
   usersSRealms,
-  l1AdventurerQuery,
-  l2AdventurerQuery,
+  getl1Adventurer,
+  getl2Adventurer,
 }
