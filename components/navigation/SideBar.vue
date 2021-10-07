@@ -149,6 +149,10 @@ export default {
 
     const utilLinks = [
       {
+        page: '/bridge/arbitrum',
+        title: 'Arbitrum Bridge',
+      },
+      {
         page: '/realms/mint',
         title: 'Mint realms',
       },
