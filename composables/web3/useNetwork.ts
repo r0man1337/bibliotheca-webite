@@ -290,6 +290,7 @@ export function useNetwork() {
 
   return {
     networkMismatch,
+    activeNetworkId,
     networks,
     chainId,
     switchNetwork,
