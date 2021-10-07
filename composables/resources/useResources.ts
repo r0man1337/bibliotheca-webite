@@ -25,12 +25,12 @@ export function useResources() {
 
   const result = reactive({ resources: null })
 
-  const fetchResource = async (resourceId) => {
+  const fetchResource = async (account, resourceId) => {
     try {
       error.resources = null
       loading.resources = true
       return await getResourceBalance(
-        account.value,
+        account,
         activeNetwork.value.id,
         resourceId
       )
@@ -103,10 +103,7 @@ async function getResourceBalance(owner, network, resourceId) {
     signer
   )
 
-  return await resources.balanceOf(
-    '0xc5629B92458883a2D02502E282f1C3fD71E3f802',
-    resourceId
-  )
+  return await resources.balanceOf(owner, resourceId)
 }
 
 async function resourceProductionOutput(owner, network, realmId, resourceId) {

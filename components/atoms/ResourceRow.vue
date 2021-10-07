@@ -18,11 +18,12 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, context) {
+    const { slug } = context.root.$route.params
     const { fetchResource } = useResources()
     const balance = ref()
     onMounted(async () => {
-      balance.value = await fetchResource(props.resource.id)
+      balance.value = await fetchResource(slug, props.resource.id)
     })
     return {
       fetchResource,

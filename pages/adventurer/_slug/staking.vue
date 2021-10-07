@@ -30,7 +30,8 @@ import { defineComponent, onMounted } from '@vue/composition-api'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
-  setup() {
+  setup(props, context) {
+    const { slug } = context.root.$route.params
     const { getUserRealms, userRealms, loading: realmsLoading } = useRealms()
     const {
       stakeRealm,
@@ -42,8 +43,8 @@ export default defineComponent({
       result,
     } = useStaking()
 
-    onMounted(() => {
-      getUserRealms()
+    onMounted(async () => {
+      await getUserRealms(slug, 'arbitrumRinkeby')
     })
 
     const stakedRealms = {

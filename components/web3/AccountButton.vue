@@ -5,7 +5,16 @@
       <div class="px-4 self-center">
         <NuxtLink
           :to="'/adventurer/' + account"
-          class="w-full items-center text-white flex hover:text-red-500"
+          class="
+            w-full
+            items-center
+            text-white
+            flex
+            hover:text-red-500
+            rounded
+            px-5
+            py-1
+          "
         >
           <Helm class="w-10 h-10 stroke-current fill-current self-center" /> My
           Adventure

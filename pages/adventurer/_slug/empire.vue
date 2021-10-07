@@ -9,18 +9,22 @@
     <div class="mt-8">
       <h2>Staked Realms</h2>
     </div>
-    <div v-if="!$fetchState.pending" class="flex flex-wrap">
+    <div v-if="sRealms" class="flex flex-wrap">
       <StakedRealm v-for="realm in sRealms" :key="realm.id" :realm="realm" />
+    </div>
+    <div v-else>
+      <Loader />
     </div>
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { useFetch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted } from '@vue/composition-api'
+
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
-  setup() {
+  setup(props, context) {
+    const { slug } = context.root.$route.params
     const { getUserSRealms, sRealms } = useRealms()
     const {
       stakeRealm,
@@ -32,26 +36,11 @@ export default defineComponent({
       result,
     } = useStaking()
 
-    useFetch(async () => {
-      await getUserSRealms()
+    onMounted(async () => {
+      await getUserSRealms(slug, 'arbitrumRinkeby')
     })
 
-    const stakedRealms = [
-      {
-        name: 'Solumn',
-        id: '1',
-      },
-      {
-        name: 'Solumn',
-        id: '3333',
-      },
-      {
-        name: 'Solumn',
-        id: '2151',
-      },
-    ]
     return {
-      stakedRealms,
       stakeRealm,
       claimResources,
       claimBalance,
