@@ -88,6 +88,7 @@ export function useBridge() {
     // eslint-disable-next-line prefer-const
     if (!process.server) {
       loadingBridge.value = true
+      loading.depositL1 = true
       try {
         // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
         console.log(l1Signer.value)
@@ -157,7 +158,8 @@ export function useBridge() {
         const ticketIdBigNumber = ethers.BigNumber.from(ticketId.toString())
 
         console.log(`Ticket Id: ${ticketId}`)
-
+        loading.depositL1 = false
+        await getUserRealms()
         const autoRedeemHash =
           await bridge.value.calculateRetryableAutoRedeemTxnHash(
             ticketIdBigNumber
@@ -219,6 +221,7 @@ export function useBridge() {
         console.log(e)
       } finally {
         loadingBridge.value = false
+        loading.depositL1 = false
       }
     }
   }

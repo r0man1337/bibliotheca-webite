@@ -173,7 +173,8 @@ async function multiMintToken(owner, network, lootIds) {
 
   const tokenContract = new ethers.Contract(tokensAddrArr[0], realmsABI, signer)
 
-  const wei = 0.1 * lootIds.length
+  const wei =
+    network === 'rinkeby' ? 0.0 * lootIds.length : 0.1 * lootIds.length
   const overrides = {
     // To convert Ether to Wei:
     value: ethers.utils.parseEther(wei.toString()),

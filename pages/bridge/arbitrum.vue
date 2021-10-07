@@ -35,7 +35,7 @@
                   selectedRealm ? selectedRealm.token_id === asset.id : false
                 "
                 :disabled="activeNetwork.isArbitrum"
-                :loading="loadingBridge"
+                :loading="loading.depositL1"
                 @click.native="selectRealmForTransfer(asset)"
               />
             </div>
@@ -51,6 +51,10 @@
             class="w-8 h-8 self-center mx-2 transform"
           />
           <div class="text-center w-full">
+            <div v-if="loadingBridge">
+              Bridging.... You can que multiple Realms. This message will go
+              away once all Realms are processed.
+            </div>
             <button
               :disabled="selectedRealm == null"
               class="
@@ -68,7 +72,7 @@
               "
               @click="l2Function"
             >
-              <span v-if="loadingBridge" class="flex justify-around">
+              <span v-if="loading.depositL1" class="flex justify-around">
                 <LoadingRings />
               </span>
 
@@ -99,7 +103,7 @@
           </h3>
           <div v-if="selectedRealm">
             <RealmCard
-              v-if="!loading"
+              v-if="!loadingMeta"
               :id="selectedRealm.token_id"
               :realm="selectedRealm"
             />
@@ -187,6 +191,7 @@ export default defineComponent({
       result,
       loadingBridge,
       l2TransactionCount,
+      loading,
     } = useBridge()
 
     const networkName = computed(() => {
@@ -238,17 +243,17 @@ export default defineComponent({
       }
     )
     const selectedRealm = ref()
-    const loading = ref(false)
+    const loadingMeta = ref(false)
 
     const selectRealmForTransfer = async (realm) => {
-      loading.value = true
+      loadingMeta.value = true
       try {
         const response = await fetchRealmMetaData(realm.id)
         selectedRealm.value = response.data
       } catch (e) {
         console.log(e)
       } finally {
-        loading.value = false
+        loadingMeta.value = false
       }
     }
 
@@ -278,6 +283,7 @@ export default defineComponent({
       showAssetBox,
       selectRealmForTransfer,
       selectedRealm,
+      loadingMeta,
       loading,
       loadingBridge,
       l2Function,

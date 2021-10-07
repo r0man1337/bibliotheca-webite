@@ -135,37 +135,37 @@ export function useTransactions() {
     return recentTokenWithdrawals
   }
 
-  const getTokenWithdrawals = async (
+  const getTokenWithdrawals = (
     bridge,
     gatewayAddresses: string[],
     filter?: ethers.providers.Filter
   ) => {
     const t = new Date().getTime()
 
-    const gateWayWithdrawalsResultsNested =
-      await bridge.value.getGatewayWithdrawEventData(
-        gatewayAddresses[0],
-        account.value,
-        filter
-      )
+    // const gateWayWithdrawalsResultsNested =
+    //   await bridge.value.getGatewayWithdrawEventData(
+    //     gatewayAddresses[0],
+    //     account.value,
+    //     filter
+    //   )
 
-    console.log(gateWayWithdrawalsResultsNested)
+    // console.log(gateWayWithdrawalsResultsNested)
 
-    console.log(
-      `*** got token gateway event data in ${
-        (new Date().getTime() - t) / 1000
-      } seconds *** `
-    )
+    // console.log(
+    //   `*** got token gateway event data in ${
+    //     (new Date().getTime() - t) / 1000
+    //   } seconds *** `
+    // )
 
-    const gateWayWithdrawalsResults = gateWayWithdrawalsResultsNested.flat()
+    // const gateWayWithdrawalsResults = gateWayWithdrawalsResultsNested.flat()
 
-    const l2Txns = await Promise.all(
-      gateWayWithdrawalsResults.map((withdrawEventData) =>
-        bridge.value.getL2Transaction(withdrawEventData.txHash)
-      )
-    )
-    console.log(l2Txns)
-    return l2Txns
+    // const l2Txns = await Promise.all(
+    //   gateWayWithdrawalsResults.map((withdrawEventData) =>
+    //     bridge.value.getL2Transaction(withdrawEventData.txHash)
+    //   )
+    // )
+    // console.log(l2Txns)
+    // return l2Txns
     /* const outgoingMessageStates = await Promise.all(
       gateWayWithdrawalsResults.map((withdrawEventData, i) => {
         const eventDataArr = bridge.getWithdrawalsInL2Transaction(l2Txns[i])
