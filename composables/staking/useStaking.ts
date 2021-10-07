@@ -4,7 +4,7 @@ import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
-import ResourceStakingFacet from '~/abi/ResourceStakingFacet.json'
+import StakingFacetAbi from '~/abi/StakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import SRealmTokenABI from '~/abi/SRealmToken.json'
 import diamondAddress from '~/constant/diamondAddress'
@@ -110,7 +110,7 @@ async function stake(owner, network, realmId) {
 
   const resourceStakingFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ResourceStakingFacet.abi,
+    StakingFacetAbi.abi,
     signer
   )
   console.log(resourceStakingFacet)
@@ -164,7 +164,7 @@ async function getBalance(network, realmId) {
 
   const resourceStakingFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ResourceStakingFacet.abi,
+    StakingFacetAbi.abi,
     signer
   )
   return await resourceStakingFacet.getVestingTime(realmId)
@@ -178,7 +178,7 @@ async function claim(network, realmId) {
 
   const resourceStakingFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ResourceStakingFacet.abi,
+    StakingFacetAbi.abi,
     signer
   )
 
@@ -196,7 +196,7 @@ async function getResourceIds(network, realmId) {
 
   const resourceStakingFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ResourceStakingFacet.abi,
+    StakingFacetAbi.abi,
     signer
   )
 
@@ -211,7 +211,7 @@ async function unStakeAndExit(network, realmId) {
 
   const resourceStakingFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ResourceStakingFacet.abi,
+    StakingFacetAbi.abi,
     signer
   )
   console.log(resourceStakingFacet)

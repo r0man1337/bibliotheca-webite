@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 
-import ConstructionFaucetAbi from '~/abi/ConstructionFaucet.json'
+import TraitConstructionFacetAbi from '~/abi/TraitConstructionFacet.json'
 
 import diamondAddress from '~/constant/diamondAddress'
 import erc721tokens from '~/constant/erc721tokens'
@@ -74,7 +74,7 @@ async function getBuilding(owner, network, realmId) {
   const signer = provider.getSigner()
   const constructionFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ConstructionFaucetAbi.abi,
+    TraitConstructionFacetAbi.abi,
     signer
   )
 
@@ -95,7 +95,7 @@ async function construct(
   const signer = provider.getSigner()
   const constructionFacet = new ethers.Contract(
     tokensAddrArr[0],
-    ConstructionFaucetAbi.abi,
+    TraitConstructionFacetAbi.abi,
     signer
   )
 

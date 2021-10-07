@@ -3,10 +3,13 @@ import { ethers } from 'ethers'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 
+// ABI
+import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import ResourceTokensAbi from '~/abi/ResourceTokens.json'
-import resourceTokens from '~/constant/resourceTokens'
 
-import erc721tokens from '~/constant/erc721tokens'
+// ADDRESS CONSTS
+import resourceTokens from '~/constant/resourceTokens'
+import diamondAddress from '~/constant/diamondAddress'
 
 export function useResources() {
   const { provider, library, account, activate } = useWeb3()
@@ -34,8 +37,26 @@ export function useResources() {
       loading.resources = false
     }
   }
+  const fetchProductionOutput = async (realmId, resourceId) => {
+    try {
+      error.resources = null
+      loading.resources = true
+      return await resourceProductionOutput(
+        account.value,
+        activeNetwork.value.id,
+        realmId,
+        resourceId
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      loading.resources = false
+    }
+  }
   return {
     fetchResource,
+    fetchProductionOutput,
     error,
     loading,
     result,
@@ -57,4 +78,18 @@ async function resource(owner, network, resourceId) {
     '0xc5629B92458883a2D02502E282f1C3fD71E3f802',
     resourceId
   )
+}
+
+async function resourceProductionOutput(owner, network, realmId, resourceId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const signer = provider.getSigner()
+  const resources = new ethers.Contract(
+    tokensAddrArr[0],
+    ResourceConstructionFacetAbi.abi,
+    signer
+  )
+
+  return await resources.getProductionOutput(realmId, resourceId)
 }

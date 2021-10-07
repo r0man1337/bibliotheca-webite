@@ -33,6 +33,7 @@
           v-for="(resource, index) in ids"
           :key="index"
           :resource="resource"
+          :realm-id="realm.id"
         />
       </div>
       <div class="my-3">

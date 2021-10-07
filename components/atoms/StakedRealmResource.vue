@@ -12,6 +12,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    realmId: {
+      type: Number,
+      required: true,
+    },
   },
   setup(props) {
     const findResources = computed(() => {
