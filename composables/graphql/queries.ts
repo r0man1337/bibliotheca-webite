@@ -50,8 +50,17 @@ const getl1Adventurer = gql`
       treasures(first: 30) {
         ...TreasureData
       }
+      mLootsHeld
       mLoot(first: 30) {
-        ...DefaultBagData
+        id
+        head
+        neck
+        chest
+        hand
+        ring
+        weapon
+        waist
+        foot
       }
       manasHeld
       manas(first: 30) {

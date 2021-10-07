@@ -50,16 +50,12 @@ export function useAdventurer() {
       loading.value = true
       if (!network) {
         Promise.all([
-          (adventurer.value.l1 = await fetchAdventurer(
-            account,
-            useL1Network.value
-          )),
-          (adventurer.value.l2 = await fetchAdventurer(
+          (adventurer.value.l1 = await fetchAdventurer(account, 'mainnet')),
+          /* (adventurer.value.l2 = await fetchAdventurer(
             account,
             useL2Network.value
-          )),
+          )), */
         ])
-        console.log(adventurer.value)
       } else {
         await fetchAdventurer(account, network)
       }

@@ -6,7 +6,7 @@
       No Loot or Derivatives for this adventurer... yet.
     </div>
 
-    <div v-if="!$fetchState.pending && adventurer">
+    <div v-else-if="!$fetchState.pending && adventurer.l1">
       <h3>
         <span class="text-2xl">
           <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
