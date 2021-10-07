@@ -34,7 +34,7 @@
         <div class="text-2xl">No Loot found - Try adjusting your query.</div>
       </div>
       <BButton
-        v-if="loot.length"
+        v-if="loot.length > 1"
         :disabled="queryLoading"
         :loading="loading"
         type="primary"
@@ -92,6 +92,37 @@ export default defineComponent({
         }
       }
     `)
+    const getSearchQueryById = (param) => {
+      return ref(gql`
+        query bagsQuery($id: String) {
+          bags(where: { id: $id }) {
+            id
+            head
+            neck
+            chest
+            hand
+            ring
+            weapon
+            waist
+            foot
+            chestSuffixId
+            footSuffixId
+            handSuffixId
+            headSuffixId
+            neckSuffixId
+            ringSuffixId
+            waistSuffixId
+            weaponSuffixId
+            manasClaimed
+            currentOwner {
+              address
+              bagsHeld
+              joined
+            }
+          }
+        }
+      `)
+    }
 
     const getSearchQuery = (param) => {
       return ref(gql`
@@ -128,6 +159,9 @@ export default defineComponent({
     const loot = ref(null)
 
     const lootFeatures = [
+      {
+        name: 'id',
+      },
       {
         name: 'head',
       },
@@ -174,12 +208,20 @@ export default defineComponent({
       queryLoading.value = true
 
       try {
-        const newQuery = getSearchQuery(lootQuery.value.name)
-        const response = await $graphql.mainnet.request(newQuery.value, {
-          offset: offset.value,
-          search: toSentenceCase(search.value),
-        })
-        loot.value = response.bags
+        if (lootQuery.value.name === 'id') {
+          const newQuery = getSearchQueryById(lootQuery.value.name)
+          const response = await $graphql.mainnet.request(newQuery.value, {
+            id: search.value,
+          })
+          loot.value = response.bags
+        } else {
+          const newQuery = getSearchQuery(lootQuery.value.name)
+          const response = await $graphql.mainnet.request(newQuery.value, {
+            offset: offset.value,
+            search: toSentenceCase(search.value),
+          })
+          loot.value = response.bags
+        }
       } catch (e) {
         console.log(e)
       } finally {
