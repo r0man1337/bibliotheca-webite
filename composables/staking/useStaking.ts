@@ -167,7 +167,15 @@ async function getBalance(network, realmId) {
     StakingFacetAbi.abi,
     signer
   )
-  return await resourceStakingFacet.getVestingTime(realmId)
+  const day = await resourceStakingFacet.getVestingTime(realmId)
+  const month = await resourceStakingFacet.get30DayVestingTime(realmId)
+  const name = await resourceStakingFacet.getName(realmId)
+  const resources = {
+    day,
+    month,
+    name,
+  }
+  return resources
 }
 
 async function claim(network, realmId) {
