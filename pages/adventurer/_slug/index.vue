@@ -5,8 +5,8 @@
     <div v-if="!$fetchState.pending && !adventurer.l1">
       No Loot or Derivatives for this adventurer... yet.
     </div>
-    -->
-    <!-- <div v-if="!$fetchState.pending">
+
+    <div v-if="!$fetchState.pending && adventurer">
       <h3>
         <span class="text-2xl">
           <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
@@ -65,10 +65,10 @@
           >Treasure: {{ adventurer.l1.treasuresHeld }}</a
         >
         <a
-          v-if="l1Adventurer.wallet.mLootHeld"
+          v-if="adventurer.l1.mLootsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mloot"
-          >mLoot: {{ l1Adventurer.wallet.mLootHeld }}</a
+          >mLoot: {{ adventurer.l1.mLootsHeld }}</a
         >
       </div>
       <div v-if="adventurer.l1.bags.length" id="loot">
@@ -124,17 +124,17 @@
           </div>
         </div>
       </div>
-      <div v-if="l1Adventurer.mloots.length" id="mloot">
+      <div v-if="adventurer.l1.mLoot.length" id="mloot">
         <hr />
-        <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootHeld }}</h3>
+        <h3 class="mt-8">mLoot: {{ adventurer.l1.mLootsHeld }}</h3>
         <div class="flex flex-wrap w-full">
-          <div v-for="loot in adventurer.mloots" :key="loot.id" class="w-80">
+          <div v-for="loot in adventurer.l1.mLoot" :key="loot.id" class="w-80">
             <LootCard :loot="loot" />
           </div>
         </div>
       </div>
     </div>
-    <Loader v-else /> -->
+    <Loader v-else />
   </section>
 </template>
 
