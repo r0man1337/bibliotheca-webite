@@ -29,7 +29,11 @@ export function useResources() {
     try {
       error.resources = null
       loading.resources = true
-      return await resource(account.value, activeNetwork.value.id, resourceId)
+      return await getResourceBalance(
+        account.value,
+        activeNetwork.value.id,
+        resourceId
+      )
     } catch (e) {
       console.log(e)
       error.resources = e.message
@@ -54,16 +58,41 @@ export function useResources() {
       loading.resources = false
     }
   }
+  const upgradeResource = async (
+    realmId,
+    resourceId,
+    upgradeResourceIds,
+    upgradeResourceValues
+  ) => {
+    try {
+      error.resources = null
+      loading.resources = true
+      return await upgradeResourceProduction(
+        account.value,
+        activeNetwork.value.id,
+        realmId,
+        resourceId,
+        upgradeResourceIds,
+        upgradeResourceValues
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      loading.resources = false
+    }
+  }
   return {
     fetchResource,
     fetchProductionOutput,
+    upgradeResource,
     error,
     loading,
     result,
   }
 }
 
-async function resource(owner, network, resourceId) {
+async function getResourceBalance(owner, network, resourceId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokensArr = resourceTokens[network].allTokens
   const signer = provider.getSigner()
@@ -85,11 +114,41 @@ async function resourceProductionOutput(owner, network, realmId, resourceId) {
   const tokensArr = diamondAddress[network].allTokens
   const tokensAddrArr = tokensArr.map((a) => a.address)
   const signer = provider.getSigner()
-  const resources = new ethers.Contract(
+  const resourceConstructionFacet = new ethers.Contract(
     tokensAddrArr[0],
     ResourceConstructionFacetAbi.abi,
     signer
   )
 
-  return await resources.getProductionOutput(realmId, resourceId)
+  return await resourceConstructionFacet.getProductionOutput(
+    realmId,
+    resourceId
+  )
+}
+
+async function upgradeResourceProduction(
+  owner,
+  network,
+  realmId,
+  resourceId,
+  upgradeResourceIds,
+  upgradeResourceValues
+) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const signer = provider.getSigner()
+  const resourceConstructionFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    ResourceConstructionFacetAbi.abi,
+    signer
+  )
+  const construct = await resourceConstructionFacet.upgradeResource(
+    realmId,
+    resourceId,
+    upgradeResourceIds,
+    upgradeResourceValues
+  )
+  await construct.wait()
+  return construct
 }
