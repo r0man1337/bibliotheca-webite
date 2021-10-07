@@ -18,35 +18,97 @@
       w-80
     "
   >
-    <img v-if="metaData" class="rounded-xl" :src="metaData.image_url" alt="" />
-    <Loader v-else />
-    <div class="p-2">
-      <h4>#{{ realm.id }}</h4>
-      <!-- <h2>{{ realm.name }}</h2> -->
-      <div class="my-3">
-        <span class="uppercase text-red-400">days unclaimed</span> <br />
-        <span>{{ balance / 86400 }} </span>
-      </div>
-      <div class="my-3">
-        <span class="uppercase text-red-400">Resources</span> <br />
-        <StakedRealmResource
-          v-for="(resource, index) in ids"
-          :key="index"
-          :resource="resource"
-          :realm-id="realm.id"
+    <div
+      class="group flex flex-col h-full"
+      :class="{ 'bg-white hidden': active }"
+    >
+      <div class="relative">
+        <div
+          class="
+            absolute
+            right-10
+            opacity-0
+            top-10
+            group-hover:opacity-100
+            transition-all
+            duration-250
+          "
+        >
+          <button
+            class="bg-gray-900 rounded p-2 ml-auto"
+            @click="active = true"
+          >
+            Flip
+          </button>
+        </div>
+        <img
+          v-if="metaData"
+          class="rounded-xl"
+          :src="metaData.image_url"
+          alt=""
         />
+        <Loader v-else class="w-full" />
       </div>
-      <div class="my-3">
-        <span class="uppercase text-red-400">Buildings</span> <br />
-        <span>Aquaducts: {{ aquaducts }}</span>
+
+      <div class="p-2 flex flex-col">
+        <h4></h4>
+        <h1 v-if="balance" class="flex justify-between">
+          <span>{{ balance.name }}</span> <span>#{{ realm.id }}</span>
+        </h1>
+        <div class="my-3">
+          <span class="uppercase text-red-400 font-display"
+            >days unclaimed</span
+          >
+          <br />
+          <span
+            >Day:
+            <span v-if="balance">{{ (balance.day / 86400).toFixed(4) }} </span>
+          </span>
+          <br />
+          <span
+            >Month:
+            <span v-if="balance"
+              >{{ (balance.month / 2592000).toFixed(4) }}
+            </span>
+          </span>
+        </div>
+        <div class="my-3">
+          <span class="uppercase text-red-400 font-display">Resources</span>
+          <br />
+          <StakedRealmResource
+            v-for="(resource, index) in ids"
+            :key="index"
+            :resource="resource"
+            :realm-id="realm.id"
+          />
+        </div>
+        <div class="my-3">
+          <span class="uppercase text-red-400 font-display">Buildings</span>
+          <br />
+          <span>Aquaducts: {{ aquaducts }}</span>
+        </div>
       </div>
       <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
+        class="bg-gray-900 rounded w-full px-4 py-2 mt-auto"
         @click="claimResources(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
         <span v-else>Claim Resources</span>
       </button>
+      <div
+        v-if="error.stake"
+        class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
+      >
+        {{ error.stake }}
+      </div>
+    </div>
+    <div class="h-full w-full" :class="{ 'bg-white hidden': !active }">
+      <div class="flex p-3">
+        <button class="bg-gray-900 rounded p-2 ml-auto" @click="active = false">
+          Flip
+        </button>
+      </div>
+
       <button
         class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
         @click="withdraw(realm.id)"
@@ -61,12 +123,6 @@
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
         <span v-else>Build Aquaduct</span>
       </button>
-      <div
-        v-if="error.stake"
-        class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
-      >
-        {{ error.stake }}
-      </div>
     </div>
   </div>
 </template>
@@ -130,6 +186,8 @@ export default defineComponent({
       }
     }
 
+    const active = ref(false)
+
     return {
       claimResources,
       getRealmsResourceBalance,
@@ -147,6 +205,7 @@ export default defineComponent({
       constructBuilding,
       getAquaducts,
       aquaducts,
+      active,
     }
   },
 })

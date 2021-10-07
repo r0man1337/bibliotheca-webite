@@ -1,14 +1,23 @@
 <template>
-  <div class="text-xl my-1">
+  <div class="my-1 flex justify-between">
     <span
       >{{ findResources.trait }}: {{ output }}
-      <button
-        class="bg-gray-800 px-2 py-1"
-        @click="upgradeResource(realmId, resource, [1, 2, 3], [2, 2, 2])"
-      >
-        Upgrade
-      </button></span
+      <span class="text-gray-600">p/day</span>
+    </span>
+    <button
+      class="
+        border border-gray-600
+        rounded
+        px-2
+        py-1
+        text-sm
+        hover:bg-gray-600
+        font-body
+      "
+      @click="upgradeResource(realmId, resource, [1, 2, 3], [1, 1, 1])"
     >
+      Upgrade
+    </button>
   </div>
 </template>
 <script>
@@ -27,7 +36,7 @@ export default defineComponent({
       required: true,
     },
     realmId: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
