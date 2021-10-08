@@ -58,7 +58,10 @@
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-gray-600 text-white divide-y divide-gray-200">
+            <tbody
+              v-if="transactions"
+              class="bg-gray-600 text-white divide-y divide-gray-200"
+            >
               <tr v-for="(transaction, index) in transactions" :key="index">
                 <td
                   class="
@@ -72,10 +75,11 @@
                   "
                 >
                   {{
-                    transaction.direction === 'outbox'
+                    transaction.type === 'outbox'
                       ? 'redeem from outbox'
-                      : transaction.direction
+                      : transaction.type
                   }}
+                  {{ transaction }}
                 </td>
                 <td class="px-4 py-6 whitespace-nowrap text-sm">
                   <StatusPill :status="transaction.status" />
@@ -103,7 +107,7 @@
                     text-gray-500
                   "
                 >
-                  <div
+                  <!--<div
                     v-if="
                       transaction.isWithdrawal &&
                       transaction.status.toLowerCase() === 'confirmed'
@@ -132,7 +136,7 @@
                     <Tooltip v-if="!isDepositMode"
                       >Must be on l1 network to claim withdrawal.</Tooltip
                     >
-                  </div>
+                  </div>-->
 
                   <div v-if="showRedeemRetryableButton" class="relative group">
                     <button
@@ -159,14 +163,14 @@
               </Tooltip>-->
                   </div>
 
-                  <div
+                  <!--<div
                     v-if="
                       transaction.isWithdrawal &&
                       transaction.status === 'Executed'
                     "
                   >
                     Already claimed
-                  </div>
+                  </div>-->
                 </td>
                 <td
                   class="
@@ -211,8 +215,8 @@
 
                   <ExplorerLink
                     v-else
-                    :hash="transaction.transactionId"
-                    :type="transaction.direction"
+                    :hash="transaction.txID"
+                    :type="transaction.type"
                   />
                 </td>
                 <td
@@ -227,7 +231,7 @@
                   "
                 >
                   <span class="bg-tokenPill rounded-lg py-1 px-3">{{
-                    transaction.asset
+                    transaction.assetName
                   }}</span>
                 </td>
                 <td
@@ -253,30 +257,19 @@
 </template>
 <script>
 import { defineComponent, ref } from '@vue/composition-api'
+import { useTransactions } from '~/composables/bridge/useTransactions'
 
 export default defineComponent({
   setup() {
+    const { transactions } = useTransactions()
+
     const showRedeemRetryableButton = ref()
+    const isDepositMode = ref(true)
+
     return {
       showRedeemRetryableButton,
-      transactions: [
-        {
-          direction: 'deposit-l1',
-          status: 'success',
-          createdAtTime: 42422,
-          createdAt: 42422,
-          resolvedAt: 42422,
-          transactionId:
-            '0x1a3991bb5c63225e9a58612843cca36a088fa702c57c3762974a054f8768b313',
-          asset: 'LootRealm',
-          value: '',
-          uniqueId: null,
-          isWithdrawal: false,
-          blockNum: 404554,
-          tokenAddress: '0x2a8Bd12936BD5fC260314a80D51937E497523FCC',
-          seqNum: 1,
-        },
-      ],
+      isDepositMode,
+      transactions,
     }
   },
 })

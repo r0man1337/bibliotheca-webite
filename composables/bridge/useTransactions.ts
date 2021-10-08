@@ -1,6 +1,7 @@
 /* eslint-disable max-depth */
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
+import { TransactionReceipt } from '@ethersproject/abstract-provider'
 import { ethers } from 'ethers'
 import {
   // Bridge,
@@ -8,9 +9,8 @@ import {
   L2ToL1EventResult,
   OutgoingMessageState,
 } from 'arb-ts'
-import { useNetwork, activeNetwork } from '../web3/useNetwork'
+import { useNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
-import { useBridge } from './useBridge'
 
 export enum AssetType {
   ERC20 = 'ERC20',
@@ -33,20 +33,169 @@ const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
   '0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'
 
-interface newProviderClass extends Ref {
-  getSigner: () => string
+export type TxnStatus = 'pending' | 'success' | 'failure' | 'confirmed'
+export type TxnType =
+  | 'deposit'
+  | 'deposit-l1'
+  | 'deposit-l2'
+  | 'withdraw'
+  | 'outbox'
+  | 'approve'
+  | 'connext-deposit'
+  | 'connext-withdraw'
+  | 'deposit-l2-auto-redeem'
+  | 'deposit-l2-ticket-created'
+
+type TransactionBase = {
+  type: TxnType
+  status: TxnStatus
+  value: string | null
+  txID?: string
+  assetName: string
+  assetType: AssetType
+  sender: string
+  blockNumber?: number
+  l1NetworkID: string
+  timestampResolved?: string // time when its status was changed
+  timestampCreated?: string // time when this transaction is first added to the list
+  seqNum?: number // for l1-initiati
+}
+export interface NewTransaction extends TransactionBase {
+  status: 'pending'
+}
+export interface Transaction extends TransactionBase {
+  txID: string
 }
 
+const transactions = ref([])
+
 export function useTransactions() {
-  const { account } = useWeb3()
-  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
-  const { bridge: bridgeRef } = useBridge()
-  const loadingBridge = ref(false)
   const error = reactive({
     depositL1: null,
   })
-  const { l2CustomGateway } = networks[useL1Network.value.chainId].tokenBridge
-  console.log(l2CustomGateway)
+  const addTransaction = (transaction) => {
+    console.log('adding transaction')
+    if (!transaction.txID) {
+      console.warn(' Cannot add transaction: TxID not included (???)')
+      return
+    }
+    const tx = {
+      ...transaction,
+      timestampCreated: new Date().toISOString(),
+    }
+    console.log(tx)
+    transactions.value.push(tx)
+    console.log(transactions.value)
+  }
+
+  const addTransactions = (newTransactions) => {
+    const timestampedTransactions = newTransactions.map((txn) => {
+      return {
+        ...txn,
+        timestampCreated: new Date().toISOString(),
+      }
+    })
+    transactions.value = transactions.value.concat(timestampedTransactions)
+  }
+
+  const updateTransaction = (
+    txReceipt: TransactionReceipt,
+    tx?: ethers.ContractTransaction,
+    seqNum?: number
+  ) => {
+    if (!txReceipt.transactionHash) {
+      return console.warn(
+        '*** TransactionHash not included in transaction receipt (???) *** '
+      )
+    }
+    switch (txReceipt.status) {
+      case 0: {
+        setTransactionFailure(txReceipt.transactionHash)
+        break
+      }
+      case 1: {
+        console.log('transaction success')
+        setTransactionSuccess(txReceipt.transactionHash, seqNum)
+        break
+      }
+      default:
+        console.warn('*** Status not included in transaction receipt *** ')
+        break
+    }
+    console.log('TX for update', tx)
+    if (tx?.blockNumber) {
+      setTransactionBlock(txReceipt.transactionHash, tx.blockNumber)
+    }
+    if (tx) {
+      setResolvedTimestamp(txReceipt.transactionHash, new Date().toISOString())
+    }
+  }
+
+  function updateStatusAndSeqNum(
+    status: TxnStatus,
+    txID: string,
+    seqNum?: number
+  ) {
+    const index = transactions.value.findIndex((txn) => txn.txID === txID)
+    if (index === -1) {
+      console.warn('transaction not found', txID)
+      return
+    }
+    const newTxn = {
+      ...transactions.value[index],
+      status,
+    }
+    console.log(newTxn)
+    if (seqNum) {
+      newTxn.seqNum = seqNum
+    }
+    transactions.value[index] = newTxn
+  }
+
+  function updateBlockNumber(txID: string, blockNumber?: number) {
+    const index = transactions.value.findIndex((txn) => txn.txID === txID)
+    if (index === -1) {
+      console.warn('transaction not found', txID)
+      return
+    }
+    transactions.value[index] = {
+      ...transactions.value[index],
+      blockNumber,
+    }
+  }
+
+  function updateResolvedTimestamp(txID: string, timestamp?: string) {
+    const index = transactions.value.findIndex((txn) => txn.txID === txID)
+    if (index === -1) {
+      console.warn('transaction not found', txID)
+      return
+    }
+    transactions.value[index] = {
+      ...transactions.value[index],
+      timestampResolved: timestamp,
+    }
+  }
+  const removeTransaction = (txID: string) => {
+    return transactions.value.filter((txn) => txn.txID !== txID)
+  }
+
+  const setTransactionSuccess = (txID: string, seqNum?: number) => {
+    return updateStatusAndSeqNum('success', txID)
+  }
+  const setTransactionBlock = (txID: string, blockNumber?: number) => {
+    return updateBlockNumber(txID, blockNumber)
+  }
+  const setResolvedTimestamp = (txID: string, timestamp?: string) => {
+    return updateResolvedTimestamp(txID, timestamp)
+  }
+  const setTransactionFailure = (txID?: string) => {
+    if (!txID) {
+      console.warn(' Cannot set transaction failure: TxID not included (???)')
+      return
+    }
+    return updateStatusAndSeqNum('failure', txID)
+  }
+
   const getTokenWithdrawalsV2 = async (
     bridge,
     filter?: ethers.providers.Filter
@@ -218,7 +367,6 @@ export function useTransactions() {
     bridge,
     filter?: ethers.providers.Filter
   ) => {
-    console.log(bridgeRef)
     const pendingWithdrawals: PendingWithdrawalsMap = {}
     const t = new Date().getTime()
     console.log('*** Getting initial pending withdrawal data ***')
@@ -298,14 +446,13 @@ export function useTransactions() {
   }
 
   return {
-    /* transactions: {
-      transactions,
-      clearPendingTransactions,
-      setTransactionConfirmed,
-      updateTransaction,
-      addTransaction,
-      addTransactions,
-    }, */
+    transactions,
+    /* clearPendingTransactions,
+      setTransactionConfirmed, */
+    updateTransaction,
+    addTransaction,
+    addTransactions,
+
     setInitialPendingWithdrawals,
   }
 }

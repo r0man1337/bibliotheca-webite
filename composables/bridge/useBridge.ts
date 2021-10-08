@@ -11,16 +11,15 @@ import lootRealmsABI from '~/abi/lootRealms.json'
 import lootRealmsL2ABI from '~/abi/lootRealmsL2.json'
 import erc721tokens from '~/constant/erc721tokens'
 import { useRealms } from '~/composables/web3/useRealms'
-
+import {
+  useTransactions,
+  AssetType,
+} from '~/composables/bridge/useTransactions'
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
   '0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'
 interface AppProps {
   bridge: Bridge
-}
-
-interface newProviderClass extends Ref {
-  getSigner: () => string
 }
 
 export function useBridge() {
@@ -42,6 +41,7 @@ export function useBridge() {
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, library, account, activate } = useWeb3()
   const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { transactions, addTransaction, updateTransaction } = useTransactions()
 
   const ethProvider = ref(null)
   const arbProvider = ref(null)
@@ -134,11 +134,22 @@ export function useBridge() {
         console.log(checkApproval)
 
         if (!checkApproval) {
-          const approve = await realmsContract.setApprovalForAll(
+          const tx = await realmsContract.setApprovalForAll(
             RINKEBY_L1_BRIDGE_ADDRESS,
             true
           )
-          await approve.wait()
+          addTransaction({
+            type: 'approve',
+            status: 'pending',
+            value: null,
+            txID: tx.hash,
+            assetName: 'Realms',
+            assetType: AssetType.ERC20,
+            sender: account.value,
+            l1NetworkID: '4', // TODO: make dynamiuc
+          })
+          const receipt = await tx.wait()
+          updateTransaction(receipt, tx)
         }
 
         const tx = await lootRealmsLockbox.depositToL2(
@@ -148,17 +159,38 @@ export function useBridge() {
           gasPriceBid,
           { value: callValue }
         )
-        console.log(tx)
+        // const network = await bridge.l1Bridge.l1Provider.getNetwork()
+        // const networkID = await network.chainId.toString()
+        console.log(l1Signer._address)
+        addTransaction({
+          type: 'deposit-l1',
+          status: 'pending',
+          value: id,
+          txID: tx.hash,
+          assetName: 'Realms',
+          assetType: AssetType.ERC721,
+          sender: account.value,
+          l1NetworkID: '4',
+        })
 
-        const receipt = await tx.wait()
+        try {
+          const receipt = await tx.wait()
+          const seqNums =
+            await bridge.value.getInboxSeqNumFromContractTransaction(receipt)
+          const seqNum = seqNums[0].toNumber()
+          updateTransaction(receipt, tx, seqNum)
+          loading.depositL1 = false
+        } catch (err) {
+          console.warn('deposit token failure', err)
+          throw err
+        }
 
-        const event = receipt.events[receipt.events.length - 1]
+        /* const event = receipt.events[receipt.events.length - 1]
         const ticketId = event.args[0]
 
         const ticketIdBigNumber = ethers.BigNumber.from(ticketId.toString())
 
         console.log(`Ticket Id: ${ticketId}`)
-        loading.depositL1 = false
         await getUserRealms()
         const autoRedeemHash =
           await bridge.value.calculateRetryableAutoRedeemTxnHash(
@@ -193,15 +225,7 @@ export function useBridge() {
         )
         console.log(retryableTicketRec)
 
-        // Arbitrum logic for getting mapping between L1 -> L2 transactions
-        const inboxSeqNums =
-          (await bridge.value.getInboxSeqNumFromContractTransaction(
-            receipt
-          )) as any
-
-        console.log(`Seq: ${inboxSeqNums}`)
-
-        const ourMessagesSequenceNum = inboxSeqNums[0]
+        const ourMessagesSequenceNum = seqNums[0]
 
         const retryableTxnHash =
           await bridge.value.calculateL2RetryableTransactionHash(
@@ -213,9 +237,9 @@ export function useBridge() {
         // Wait for L2
         const retryRec = await arbProvider.value.waitForTransaction(
           retryableTxnHash
-        )
+        ) 
 
-        console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`)
+        console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`) */
         await getUserRealms()
       } catch (e) {
         console.log(e)

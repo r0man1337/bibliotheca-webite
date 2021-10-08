@@ -167,7 +167,6 @@ import { useWeb3 } from '~/composables/web3/useWeb3'
 import { useModal } from '~/composables/useModal'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useBridge } from '~/composables/bridge/useBridge'
-import { useTransactions } from '~/composables/bridge/useTransactions'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
   components: {
@@ -181,7 +180,6 @@ export default defineComponent({
     const { showAssetBox } = useModal()
     const { getUserRealms, userRealms } = useRealms()
     const { account /*, active */ } = useWeb3()
-    const { setInitialPendingWithdrawals } = useTransactions()
     const {
       initBridge,
       depositRealm,
@@ -214,9 +212,9 @@ export default defineComponent({
     onMounted(async () => {
       if (account.value) {
         await initBridge()
-        await setInitialPendingWithdrawals(bridge, {
+        /* await setInitialPendingWithdrawals(bridge, {
           fromBlock: 4832019,
-        })
+        }) */
       }
     })
     watch(
