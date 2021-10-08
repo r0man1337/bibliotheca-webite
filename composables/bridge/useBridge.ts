@@ -1,7 +1,13 @@
 /* eslint-disable max-depth */
-import { reactive, ref, Ref } from '@nuxtjs/composition-api'
+import {
+  reactive,
+  ref,
+  Ref,
+  onMounted,
+  onBeforeUnmount,
+} from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import { Bridge } from 'arb-ts'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
@@ -41,7 +47,14 @@ export function useBridge() {
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, library, account, activate } = useWeb3()
   const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
-  const { transactions, addTransaction, updateTransaction } = useTransactions()
+  const {
+    transactions,
+    successfulL1Deposits,
+    sortedTransactions,
+    addTransaction,
+    addTransactions,
+    updateTransaction,
+  } = useTransactions()
 
   const ethProvider = ref(null)
   const arbProvider = ref(null)
@@ -74,7 +87,6 @@ export function useBridge() {
           RINKEBY_L1_BRIDGE_ADDRESS,
           ARB_RINKEBY_L2_BRIDGE_ADDRESS
         )
-        console.log(bridge.value)
         l2TransactionCount.value =
           await bridge.value.l2Signer.getTransactionCount()
         return bridge.value
@@ -133,7 +145,10 @@ export function useBridge() {
         )
         console.log(checkApproval)
 
-        if (!checkApproval) {
+        const network = await bridge.value.l1Bridge.l1Provider.getNetwork()
+        const networkID = await network.chainId.toString()
+
+        if (checkApproval) {
           const tx = await realmsContract.setApprovalForAll(
             RINKEBY_L1_BRIDGE_ADDRESS,
             true
@@ -146,7 +161,7 @@ export function useBridge() {
             assetName: 'Realms',
             assetType: AssetType.ERC20,
             sender: account.value,
-            l1NetworkID: '4', // TODO: make dynamiuc
+            l1NetworkID: networkID, // TODO: make dynamiuc
           })
           const receipt = await tx.wait()
           updateTransaction(receipt, tx)
@@ -159,8 +174,7 @@ export function useBridge() {
           gasPriceBid,
           { value: callValue }
         )
-        // const network = await bridge.l1Bridge.l1Provider.getNetwork()
-        // const networkID = await network.chainId.toString()
+
         console.log(l1Signer._address)
         addTransaction({
           type: 'deposit-l1',
@@ -170,7 +184,7 @@ export function useBridge() {
           assetName: 'Realms',
           assetType: AssetType.ERC721,
           sender: account.value,
-          l1NetworkID: '4',
+          l1NetworkID: networkID,
         })
 
         try {
@@ -313,6 +327,114 @@ export function useBridge() {
       }
     }
   }
+  const getL2TxnHashes = async (depositTxn) => {
+    let seqNum: BigNumber
+    if (depositTxn.seqNum) {
+      seqNum = BigNumber.from(depositTxn.seqNum)
+    } else {
+      // for backwards compatibility, add seqNum to cached old deposits
+      const rec = await bridge.value.l1Provider.getTransactionReceipt(
+        depositTxn.txID
+      )
+      const seqNumArray =
+        await bridge.value.getInboxSeqNumFromContractTransaction(rec)
+      if (!seqNumArray || seqNumArray.length === 0) {
+        return null
+      }
+      ;[seqNum] = seqNumArray
+    }
+
+    const l2ChainID = BigNumber.from(useL2Network.value.chainId)
+    const retryableTicketHash = await bridge.value.calculateL2TransactionHash(
+      seqNum,
+      l2ChainID
+    )
+    const autoRedeemHash =
+      await bridge.value.calculateRetryableAutoRedeemTxnHash(seqNum, l2ChainID)
+    const userTxnHash = await bridge.value.calculateL2RetryableTransactionHash(
+      seqNum,
+      l2ChainID
+    )
+    return {
+      retryableTicketHash,
+      autoRedeemHash,
+      userTxnHash,
+      seqNum,
+    }
+  }
+  const checkAndAddL2DepositTxns = () => {
+    console.log('checking' + successfulL1Deposits.value)
+    Promise.all(successfulL1Deposits.value.map(getL2TxnHashes))
+      .then((txnHashesArr) => {
+        let transactionsToAdd = []
+        console.log(sortedTransactions.value)
+        const txIdsSet = new Set([
+          ...sortedTransactions.value.map((tx) => tx.txID),
+        ])
+        console.log(txIdsSet)
+        successfulL1Deposits.value.forEach((depositTxn, i: number) => {
+          const txnHashes = txnHashesArr[i]
+          if (txnHashes === null) {
+            console.log('Could not find seqNum for', depositTxn.txID)
+            return
+          }
+          console.log(txnHashes)
+          const { retryableTicketHash, autoRedeemHash, userTxnHash } = txnHashes
+          const seqNum = txnHashes.seqNum.toNumber()
+          // add ticket creation if not yet included
+          if (!txIdsSet.has(retryableTicketHash)) {
+            transactionsToAdd.push({
+              ...depositTxn,
+              ...{
+                status: 'pending',
+                type:
+                  depositTxn.assetType === 'ETH'
+                    ? 'deposit-l2'
+                    : 'deposit-l2-ticket-created',
+                txID: retryableTicketHash,
+                seqNum,
+                blockNumber: undefined,
+              },
+            })
+          }
+
+          if (depositTxn.assetType === AssetType.ERC721) {
+            // add autoredeem if not yet included (tokens only)
+            if (!txIdsSet.has(autoRedeemHash)) {
+              transactionsToAdd.push({
+                ...depositTxn,
+                ...{
+                  status: 'pending',
+                  type: 'deposit-l2-auto-redeem',
+                  txID: autoRedeemHash,
+                  seqNum,
+                  blockNumber: undefined,
+                },
+              })
+            }
+            // add user-txn if not yet included (tokens only)
+            if (!txIdsSet.has(userTxnHash)) {
+              transactionsToAdd.push({
+                ...depositTxn,
+                ...{
+                  status: 'pending',
+                  type: 'deposit-l2',
+                  txID: userTxnHash,
+                  seqNum,
+                  blockNumber: undefined,
+                },
+              })
+            }
+          }
+        })
+        addTransactions(transactionsToAdd)
+        transactionsToAdd = []
+      })
+      .catch((err) => {
+        console.warn('Errors checking to retryable txns to add', err)
+      })
+  }
+
   const getL2Realms = async () => {
     console.log('getting l2 realms')
     const l2RealmsContract = new ethers.Contract(
@@ -326,12 +448,19 @@ export function useBridge() {
     // console.log(balance)
     return result.realmsOnL2
   }
-
+  const interval = ref()
+  onMounted(() => {
+    interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+  })
+  onBeforeUnmount(() => {
+    clearInterval(interval.value)
+  })
   return {
     initBridge,
     getL2Realms,
     depositRealm,
     withdrawToL1,
+    getL2TxnHashes,
     l2TransactionCount,
     error,
     bridge,

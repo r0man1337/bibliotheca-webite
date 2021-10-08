@@ -1,5 +1,5 @@
 /* eslint-disable max-depth */
-import { reactive, ref, Ref } from '@nuxtjs/composition-api'
+import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
 import { TransactionReceipt } from '@ethersproject/abstract-provider'
 import { ethers } from 'ethers'
@@ -70,6 +70,9 @@ export interface Transaction extends TransactionBase {
 const transactions = ref([])
 
 export function useTransactions() {
+  const { provider, library, account, activate } = useWeb3()
+  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+
   const error = reactive({
     depositL1: null,
   })
@@ -195,6 +198,27 @@ export function useTransactions() {
     }
     return updateStatusAndSeqNum('failure', txID)
   }
+  const successfulL1Deposits = computed(() => {
+    // check 'deposit' and 'deposit-l1' for backwards compatibility with old client side cache
+    return transactions.value.filter(
+      (txn: Transaction) =>
+        (txn.type === 'deposit' || txn.type === 'deposit-l1') &&
+        txn.status === 'success'
+    )
+  })
+  const sortedTransactions = computed(() => {
+    return [...transactions.value]
+      .filter((tx) => tx.sender === account.value)
+      .filter(
+        (tx) =>
+          !tx.l1NetworkID ||
+          tx.l1NetworkID === useL1Network.value.chainId.toString()
+      )
+      .reverse()
+  })
+  const pendingTransactions = computed(() => {
+    return sortedTransactions.value.filter((tx) => tx.status === 'pending')
+  })
 
   const getTokenWithdrawalsV2 = async (
     bridge,
@@ -452,7 +476,8 @@ export function useTransactions() {
     updateTransaction,
     addTransaction,
     addTransactions,
-
+    successfulL1Deposits,
+    sortedTransactions,
     setInitialPendingWithdrawals,
   }
 }
