@@ -131,6 +131,7 @@ export default {
     '~/plugins/vue-formulate',
     '~/plugins/analytics.js',
     '~/plugins/v-click-outside.js',
+    '~/plugins/vue-awesome-countdown.js',
   ],
   components: [
     '~/components/web3',

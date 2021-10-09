@@ -54,7 +54,7 @@
                   scope="col"
                   class="px-6 py-3 text-left uppercase tracking-wider"
                 >
-                  Value
+                  Token ID
                 </th>
               </tr>
             </thead>
@@ -185,20 +185,32 @@
                     text-gray-500
                   "
                 >
-                  <!--{!transaction.isWithdrawal && (
-          <>
-            {transaction.createdAt && transaction.status === 'pending' ? (
-              <PendingCountdown transaction={transaction} />
-            ) : (
-              <span>{transaction.resolvedAt ?? transaction.createdAt ?? 'N/A'}</span>
-            )}
-          </>
-        )}
-        {transaction.isWithdrawal && transaction.status === 'Unconfirmed' && (
-          <>
-            <span>Unconfirmed: ETA: {calcEtaDisplay()}</span>
-          </>
-        )}-->
+                  <div v-if="!transaction.isWithdrawal">
+                    <span
+                      v-if="
+                        transaction.createdAt &&
+                        transaction.status === 'pending'
+                      "
+                    >
+                      <PendingCountdown :transaction="transaction" />
+                    </span>
+                    <span v-else>
+                      <span v-if="transaction.resolvedAt">{{
+                        transaction.resolvedAt
+                      }}</span>
+                      <span v-else>{{
+                        transaction.createdAt ? transaction.createdAt : 'N/A'
+                      }}</span>
+                    </span>
+                  </div>
+                  <div
+                    v-if="
+                      transaction.isWithdrawal &&
+                      transaction.status === 'Unconfirmed'
+                    "
+                  >
+                    <span>Unconfirmed: ETA: calcEtaDisplay()</span>
+                  </div>
                 </td>
                 <td
                   class="
