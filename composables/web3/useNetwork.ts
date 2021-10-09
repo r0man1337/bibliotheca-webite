@@ -91,7 +91,7 @@ if (activeNetworks.includes('arbitrumRinkeby')) {
     tokenBridge: rinkebyBridge,
     partnerChainID: 4,
     isArbitrum: true,
-    explorerUrl: 'https://rinkeby-explorer.arbitrum.io',
+    explorerUrl: 'https://testnet.arbiscan.io',
     url: 'https://rinkeby.arbitrum.io/rpc',
   })
 }
