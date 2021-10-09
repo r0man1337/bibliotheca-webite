@@ -62,7 +62,10 @@
               v-if="transactions"
               class="bg-gray-600 text-white divide-y divide-gray-200"
             >
-              <tr v-for="(transaction, index) in transactions" :key="index">
+              <tr
+                v-for="(transaction, index) in mergedTransactionsToShow"
+                :key="index"
+              >
                 <td
                   class="
                     px-6
@@ -75,9 +78,9 @@
                   "
                 >
                   {{
-                    transaction.type === 'outbox'
+                    transaction.direction === 'outbox'
                       ? 'redeem from outbox'
-                      : transaction.type
+                      : transaction.direction
                   }}
                 </td>
                 <td class="px-4 py-6 whitespace-nowrap text-sm">
@@ -214,8 +217,8 @@
 
                   <ExplorerLink
                     v-else
-                    :hash="transaction.txID"
-                    :type="transaction.type"
+                    :hash="transaction.txId"
+                    :type="transaction.direction"
                   />
                 </td>
                 <td
@@ -230,7 +233,7 @@
                   "
                 >
                   <span class="bg-tokenPill rounded-lg py-1 px-3">{{
-                    transaction.assetName
+                    transaction.asset
                   }}</span>
                 </td>
                 <td
@@ -260,7 +263,14 @@ import { useTransactions } from '~/composables/bridge/useTransactions'
 
 export default defineComponent({
   setup() {
-    const { transactions } = useTransactions()
+    const {
+      transactions,
+      mergedTransactionsToShow,
+      mergedTransactions,
+      pendingTransactions,
+      seqNumToAutoRedeems,
+      depositsTransformed,
+    } = useTransactions()
 
     const showRedeemRetryableButton = ref()
     const isDepositMode = ref(true)
@@ -269,6 +279,11 @@ export default defineComponent({
       showRedeemRetryableButton,
       isDepositMode,
       transactions,
+      mergedTransactionsToShow,
+      mergedTransactions,
+      pendingTransactions,
+      seqNumToAutoRedeems,
+      depositsTransformed,
     }
   },
 })

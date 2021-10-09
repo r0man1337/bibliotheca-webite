@@ -7,6 +7,7 @@ import {
   onBeforeUnmount,
 } from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
+import { TransactionReceipt } from '@ethersproject/abstract-provider'
 import { ethers, BigNumber } from 'ethers'
 import { Bridge } from 'arb-ts'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
@@ -20,12 +21,41 @@ import { useRealms } from '~/composables/web3/useRealms'
 import {
   useTransactions,
   AssetType,
+  Transaction,
 } from '~/composables/bridge/useTransactions'
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
   '0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'
 interface AppProps {
   bridge: Bridge
+}
+export type TxnType =
+  | 'deposit'
+  | 'deposit-l1'
+  | 'deposit-l2'
+  | 'withdraw'
+  | 'outbox'
+  | 'approve'
+  | 'connext-deposit'
+  | 'connext-withdraw'
+  | 'deposit-l2-auto-redeem'
+  | 'deposit-l2-ticket-created'
+
+export const txnTypeToLayer = (txnType: TxnType): 1 | 2 => {
+  switch (txnType) {
+    case 'deposit':
+    case 'deposit-l1':
+    case 'outbox':
+    case 'approve':
+    case 'connext-deposit':
+      return 1
+    case 'deposit-l2':
+    case 'withdraw':
+    case 'connext-withdraw':
+    case 'deposit-l2-auto-redeem':
+    case 'deposit-l2-ticket-created':
+      return 2
+  }
 }
 
 export function useBridge() {
@@ -54,6 +84,7 @@ export function useBridge() {
     addTransaction,
     addTransactions,
     updateTransaction,
+    pendingTransactions,
   } = useTransactions()
 
   const ethProvider = ref(null)
@@ -148,7 +179,7 @@ export function useBridge() {
         const network = await bridge.value.l1Bridge.l1Provider.getNetwork()
         const networkID = await network.chainId.toString()
 
-        if (checkApproval) {
+        if (!checkApproval) {
           const tx = await realmsContract.setApprovalForAll(
             RINKEBY_L1_BRIDGE_ADDRESS,
             true
@@ -159,7 +190,7 @@ export function useBridge() {
             value: null,
             txID: tx.hash,
             assetName: 'Realms',
-            assetType: AssetType.ERC20,
+            assetType: AssetType.ERC721,
             sender: account.value,
             l1NetworkID: networkID, // TODO: make dynamiuc
           })
@@ -363,22 +394,18 @@ export function useBridge() {
     }
   }
   const checkAndAddL2DepositTxns = () => {
-    console.log('checking' + successfulL1Deposits.value)
     Promise.all(successfulL1Deposits.value.map(getL2TxnHashes))
       .then((txnHashesArr) => {
         let transactionsToAdd = []
-        console.log(sortedTransactions.value)
         const txIdsSet = new Set([
           ...sortedTransactions.value.map((tx) => tx.txID),
         ])
-        console.log(txIdsSet)
         successfulL1Deposits.value.forEach((depositTxn, i: number) => {
           const txnHashes = txnHashesArr[i]
           if (txnHashes === null) {
             console.log('Could not find seqNum for', depositTxn.txID)
             return
           }
-          console.log(txnHashes)
           const { retryableTicketHash, autoRedeemHash, userTxnHash } = txnHashes
           const seqNum = txnHashes.seqNum.toNumber()
           // add ticket creation if not yet included
@@ -434,7 +461,35 @@ export function useBridge() {
         console.warn('Errors checking to retryable txns to add', err)
       })
   }
+  const checkAndUpdatePendingTransactions = () => {
+    if (pendingTransactions.value.length) {
+      console.info(
+        `Checking and updating ${pendingTransactions.value.length} pending transactions' statuses`
+      )
 
+      // eslint-disable-next-line consistent-return
+      return Promise.all(
+        pendingTransactions.value.map((tx: Transaction) => {
+          const provider =
+            txnTypeToLayer(tx.type) === 2
+              ? bridge?.value.l2Provider
+              : bridge?.value.l1Provider
+          return provider?.getTransactionReceipt(tx.txID)
+        })
+      ).then((txReceipts: TransactionReceipt[]) => {
+        txReceipts.forEach((txReceipt: TransactionReceipt, i) => {
+          if (!txReceipt) {
+            console.info(
+              'Transaction receipt not yet found:',
+              pendingTransactions[i].txID
+            )
+          } else {
+            updateTransaction(txReceipt)
+          }
+        })
+      })
+    }
+  }
   const getL2Realms = async () => {
     console.log('getting l2 realms')
     const l2RealmsContract = new ethers.Contract(
@@ -448,12 +503,19 @@ export function useBridge() {
     // console.log(balance)
     return result.realmsOnL2
   }
-  const interval = ref()
+  const addL2Interval = ref()
+  const checkPendingInterval = ref()
+
   onMounted(() => {
-    interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+    addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+    checkPendingInterval.value = setInterval(
+      checkAndUpdatePendingTransactions,
+      4000
+    )
   })
   onBeforeUnmount(() => {
-    clearInterval(interval.value)
+    clearInterval(addL2Interval.value)
+    clearInterval(checkPendingInterval.value)
   })
   return {
     initBridge,

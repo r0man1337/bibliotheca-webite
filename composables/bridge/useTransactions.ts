@@ -1,8 +1,9 @@
 /* eslint-disable max-depth */
 import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
+import dayjs from 'dayjs'
 import { hexDataLength } from '@ethersproject/bytes'
 import { TransactionReceipt } from '@ethersproject/abstract-provider'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import {
   // Bridge,
   networks,
@@ -23,6 +24,7 @@ export interface L2ToL1EventResultPlus extends L2ToL1EventResult {
   tokenAddress?: string
   outgoingMessageState: OutgoingMessageState
   tokenId: number
+  symbol?: string
 }
 
 export interface PendingWithdrawalsMap {
@@ -67,6 +69,30 @@ export interface Transaction extends TransactionBase {
   txID: string
 }
 
+export interface MergedTransaction {
+  direction: TxnType
+  status: string
+  createdAtTime: number | null
+  createdAt: string | null
+  resolvedAt: string | null
+  txId: string
+  asset: string
+  value: string | null
+  uniqueId: BigNumber | null
+  isWithdrawal: boolean
+  blockNum: number | null
+  tokenAddress: string | null
+  seqNum?: number
+}
+interface SeqNumToTxn {
+  [seqNum: number]: MergedTransaction
+}
+const outgoungStateToString = {
+  [OutgoingMessageState.NOT_FOUND]: 'Unconfirmed',
+  [OutgoingMessageState.UNCONFIRMED]: 'Unconfirmed',
+  [OutgoingMessageState.CONFIRMED]: 'Confirmed',
+  [OutgoingMessageState.EXECUTED]: 'Executed',
+}
 const transactions = ref([])
 
 export function useTransactions() {
@@ -198,6 +224,7 @@ export function useTransactions() {
     }
     return updateStatusAndSeqNum('failure', txID)
   }
+
   const successfulL1Deposits = computed(() => {
     // check 'deposit' and 'deposit-l1' for backwards compatibility with old client side cache
     return transactions.value.filter(
@@ -219,6 +246,123 @@ export function useTransactions() {
   const pendingTransactions = computed(() => {
     return sortedTransactions.value.filter((tx) => tx.status === 'pending')
   })
+  const depositsTransformed = computed(() => {
+    const deposits: MergedTransaction[] = sortedTransactions.value.map((tx) => {
+      return {
+        direction: tx.type,
+        status: tx.status,
+        createdAt: tx.timestampCreated
+          ? dayjs(tx.timestampCreated).format('HH:mm:ss MM/DD/YYYY')
+          : null,
+        createdAtTime: tx.timestampCreated
+          ? dayjs(tx.timestampCreated).toDate().getTime()
+          : null,
+        resolvedAt: tx.timestampResolved
+          ? dayjs(new Date(tx.timestampResolved)).format('HH:mm:ss MM/DD/YYYY')
+          : null,
+        txId: tx.txID,
+        asset: tx.assetName?.toLowerCase(),
+        value: tx.value,
+        uniqueId: null, // not needed
+        isWithdrawal: false,
+        blockNum: tx.blockNumber || null,
+        tokenAddress: null, // not needed
+        seqNum: tx.seqNum,
+      }
+    })
+    return deposits
+  })
+  /* const withdrawalsTransformed = computed(() => {
+    const withdrawals: MergedTransaction[] = (
+      Object.values(
+        s.arbTokenBridge?.pendingWithdrawalsMap || []
+      ) as L2ToL1EventResultPlus[]
+    ).map((tx) => {
+      return {
+        direction: tx.uniqueId ? 'outbox' : 'withdraw',
+        status: outgoungStateToString[tx.outgoingMessageState],
+        createdAt: dayjs(
+          new Date(BigNumber.from(tx.timestamp).toNumber() * 1000)
+        ).format('HH:mm:ss MM/DD/YYYY'),
+        createdAtTime:
+          BigNumber.from(tx.timestamp).toNumber() * 1000 +
+          (tx.uniqueId ? 1000 : 0), // adding 60s for the sort function so that it comes before l2 action
+        resolvedAt: null,
+        txId: tx.uniqueId?.toString(),
+        asset: tx.symbol?.toLocaleLowerCase(),
+        value: ethers.utils.formatUnits(tx.value?.toString(), tx.decimals),
+        uniqueId: tx.uniqueId,
+        isWithdrawal: true,
+        blockNum: tx.ethBlockNum.toNumber(),
+        tokenAddress: tx.tokenAddress || null,
+      }
+    })
+    return withdrawals
+  }) */
+  const mergedTransactions = computed(() => {
+    // return _reverse(
+
+    const filtered = [
+      ...depositsTransformed.value /*, ...s.withdrawalsTransformed */,
+    ].filter((item) => !!item.createdAt)
+    return filtered
+      .sort((a, b): any => {
+        return a.createdAt > b.createdAt
+          ? 1
+          : b.createdAt > a.createdAt || !!a.createdAt
+          ? -1
+          : 0
+      })
+      .reverse()
+  })
+  const mergedTransactionsToShow = computed(() => {
+    // group ticket-created by seqNum so we can match thyarnem with deposit-l2 txns later
+    const seqNumToTicketCreation: SeqNumToTxn = {}
+
+    mergedTransactions.value.forEach((txn) => {
+      const { seqNum, direction } = txn
+      if (direction === 'deposit-l2-ticket-created' && seqNum) {
+        seqNumToTicketCreation[seqNum as number] = txn
+      }
+    })
+    return mergedTransactions.value.filter((txn: MergedTransaction) => {
+      const { status, seqNum } = txn
+      // I don't like having to string check here; I'd like to bring over the AssetType enum into mergedtransaction
+      if (txn.asset !== 'eth') {
+        switch (txn.direction) {
+          case 'deposit-l2-ticket-created': {
+            // show only if it fails
+            return status === 'failure'
+          }
+          case 'deposit-l2-auto-redeem': {
+            // show only if it fails
+            return status === 'failure'
+          }
+          case 'deposit-l2': {
+            // show unless the ticket creation failed
+            const ticketCreatedTxn = seqNumToTicketCreation[seqNum as number]
+            return !(ticketCreatedTxn && ticketCreatedTxn.status === 'failure')
+          }
+
+          default:
+            break
+        }
+      }
+      return true
+    })
+  })
+  const seqNumToAutoRedeems = computed(() => {
+    const seqNumToTicketCreation: SeqNumToTxn = {}
+
+    mergedTransactions.value.forEach((txn) => {
+      const { seqNum, direction } = txn
+      if (direction === 'deposit-l2-auto-redeem' && seqNum) {
+        seqNumToTicketCreation[seqNum as number] = txn
+      }
+    })
+    return seqNumToTicketCreation
+  })
+  const currentL1BlockNumber = ref(0)
 
   const getTokenWithdrawalsV2 = async (
     bridge,
@@ -479,5 +623,10 @@ export function useTransactions() {
     successfulL1Deposits,
     sortedTransactions,
     setInitialPendingWithdrawals,
+    mergedTransactionsToShow,
+    mergedTransactions,
+    pendingTransactions,
+    seqNumToAutoRedeems,
+    depositsTransformed,
   }
 }
