@@ -37,29 +37,33 @@
     </div>
 
     <div class="flex justify-center mt-4 sm:mt-6">
-      <b-button type="primary" class="px-8" @click="switchAndClose">
+      <BButton type="primary" class="px-8" @click="switchAndClose">
         Switch to {{ activeNetwork.displayName }}
-      </b-button>
+      </BButton>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
 
 export default defineComponent({
-  setup() {
+  setup(props, context) {
     const { close } = useModal()
     const { switchNetwork } = useNetwork()
+    const { $nuxt } = useContext()
 
     async function switchAndClose() {
       try {
         await switchNetwork()
 
         close()
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        $nuxt.refresh()
+      }
     }
 
     return { switchAndClose, activeNetwork }

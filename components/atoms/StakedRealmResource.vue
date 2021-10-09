@@ -1,22 +1,27 @@
 <template>
   <div class="my-1 flex justify-between">
-    <span
-      >{{ findResources.trait }}: {{ output }}
-      <span class="text-gray-600">p/day</span>
+    <span>
+      <span v-if="output" class="border border-gray-800 rounded p-1 text-xs">{{
+        output[0]
+      }}</span>
+      <span
+        >{{ findResources.trait }}: <span v-if="output">{{ output[1] }}</span>
+      </span>
     </span>
+
     <button
       class="
-        border border-gray-600
+        border border-gray-800
         rounded
         px-2
         py-1
-        text-sm
-        hover:bg-gray-600
+        text-xs
+        hover:bg-gray-800 hover:shadow
         font-body
       "
-      @click="upgradeResource(realmId, resource, [1, 2, 3], [1, 1, 1])"
+      @click="upgradeResource(realmId, resource, output[0])"
     >
-      Upgrade
+      {{ loading.resources ? 'Upgrading..' : 'Upgrade' }}
     </button>
   </div>
 </template>
@@ -24,8 +29,8 @@
 import {
   defineComponent,
   computed,
-  onMounted,
   ref,
+  useFetch,
 } from '@nuxtjs/composition-api'
 import ResourceData from '~/composables/resource.json'
 import { useResources } from '~/composables/resources/useResources'
@@ -41,21 +46,23 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchProductionOutput, upgradeResource } = useResources()
+    const { fetchProductionOutput, upgradeResource, loading } = useResources()
     const findResources = computed(() => {
       return ResourceData.find((a) => a.id === parseInt(props.resource))
     })
 
     const output = ref()
 
-    onMounted(async () => {
+    useFetch(async () => {
       output.value = await fetchProductionOutput(props.realmId, props.resource)
     })
+
     return {
       findResources,
       fetchProductionOutput,
       upgradeResource,
       output,
+      loading,
     }
   },
 })

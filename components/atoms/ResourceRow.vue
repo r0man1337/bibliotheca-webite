@@ -3,14 +3,21 @@
     <td class="p-2">
       {{ resource.trait }}
     </td>
-    <td class="p-2">{{ balance }}</td>
+    <td class="p-2">
+      <span v-if="loading.resources"><LoadingDots class="w-8 h-2" /></span
+      ><span v-else>{{ balance }}</span>
+    </td>
     <td class="p-2">0</td>
   </tr>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { useFetch, defineComponent, ref } from '@nuxtjs/composition-api'
 import { useResources } from '~/composables/resources/useResources'
+import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
+  components: {
+    LoadingDots,
+  },
   props: {
     resource: {
       type: Object,
@@ -20,14 +27,15 @@ export default defineComponent({
 
   setup(props, context) {
     const { slug } = context.root.$route.params
-    const { fetchResource } = useResources()
+    const { fetchResource, loading } = useResources()
     const balance = ref()
-    onMounted(async () => {
+    useFetch(async () => {
       balance.value = await fetchResource(slug, props.resource.id)
     })
     return {
       fetchResource,
       balance,
+      loading,
     }
   },
 })

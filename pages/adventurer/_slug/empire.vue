@@ -3,7 +3,9 @@
     <div class="flex flex-wrap">
       <DataCard>
         <h5 class="uppercase text-red-400">Total Staked Realms</h5>
-        <div class="text-4xl p-4 text-center">3</div>
+        <div v-if="sRealms" class="text-4xl p-4 text-center">
+          {{ sRealms.length }}
+        </div>
       </DataCard>
     </div>
     <div class="mt-8">
@@ -23,14 +25,15 @@ import { defineComponent, onMounted } from '@vue/composition-api'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
-import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
+// import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useWeb3 } from '~/composables/web3/useWeb3'
 export default defineComponent({
   setup(props, context) {
     const { slug } = context.root.$route.params
     const { getUserSRealms, sRealms } = useRealms()
-    const { activeNetworkId, checkForNetworkMismatch } = useNetwork()
-    const { open } = useWeb3Modal()
+    const { activeNetworkId, checkForNetworkMismatch, networkMismatch } =
+      useNetwork()
+    // const { open } = useWeb3Modal()
     const { account } = useWeb3()
 
     const {
@@ -44,13 +47,14 @@ export default defineComponent({
     } = useStaking()
 
     onMounted(async () => {
-      if (!account.value) {
-        await open()
-      }
       await getUserSRealms(slug, 'arbitrumRinkeby')
       activeNetworkId.value = 'arbitrumRinkeby'
       if (account.value) {
-        checkForNetworkMismatch()
+        if (networkMismatch.value) {
+          checkForNetworkMismatch()
+        } else {
+          await getUserSRealms(slug, 'arbitrumRinkeby')
+        }
       }
     })
 

@@ -47,7 +47,7 @@ export function useConstruction() {
     }
   }
 
-  const getAquaducts = async (realmId) => {
+  const getBuildings = async (realmId) => {
     try {
       error.building = null
       loading.building = true
@@ -61,7 +61,7 @@ export function useConstruction() {
   }
   return {
     constructBuilding,
-    getAquaducts,
+    getBuildings,
     error,
     loading,
     result,
@@ -78,7 +78,7 @@ async function getBuilding(owner, network, realmId) {
     signer
   )
 
-  return await constructionFacet.getAquaducts(realmId)
+  return await constructionFacet.getBuildings(realmId)
 }
 
 async function construct(

@@ -53,7 +53,8 @@
       <div class="p-2 flex flex-col">
         <h4></h4>
         <h1 v-if="balance" class="flex justify-between">
-          <span>{{ balance.name }}</span> <span>#{{ realm.id }}</span>
+          <span>{{ balance.name }}</span>
+          <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
         </h1>
         <div class="my-3">
           <span class="uppercase text-red-400 font-display"
@@ -62,19 +63,21 @@
           <br />
           <span
             >Day:
-            <span v-if="balance">{{ (balance.day / 86400).toFixed(4) }} </span>
+            <span v-if="balance">{{ (balance.day / 3600).toFixed(4) }} </span>
           </span>
           <br />
           <span
             >Month:
             <span v-if="balance"
-              >{{ (balance.month / 2592000).toFixed(4) }}
+              >{{ (balance.month / (3600 * 30)).toFixed(4) }}
             </span>
           </span>
         </div>
         <div class="my-3">
           <span class="uppercase text-red-400 font-display">Resources</span>
-          <br />
+          <div class="text-xs">
+            <span class="uppercase">LVL Resource p/day</span>
+          </div>
           <StakedRealmResource
             v-for="(resource, index) in ids"
             :key="index"
@@ -82,14 +85,27 @@
             :realm-id="realm.id"
           />
         </div>
-        <div class="my-3">
+        <div v-if="buildings" class="my-3">
           <span class="uppercase text-red-400 font-display">Buildings</span>
           <br />
-          <span>Aquaducts: {{ aquaducts }}</span>
+          <div>Markets: {{ buildings[0] }}</div>
+          <div>Aquaducts: {{ buildings[1] }}</div>
+          <div>Castles: {{ buildings[2] }}</div>
+          <div>Ports: {{ buildings[3] }}</div>
         </div>
       </div>
       <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-auto"
+        class="
+          bg-gray-900
+          rounded
+          w-full
+          px-4
+          py-2
+          mt-auto
+          hover:bg-gray-600
+          transition-all
+          duration-300
+        "
         @click="claimResources(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
@@ -127,8 +143,9 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import axios from 'axios'
+import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
@@ -156,7 +173,7 @@ export default defineComponent({
 
     const {
       constructBuilding,
-      getAquaducts,
+      getBuildings,
       loading: loadingConstruction,
       error: errorConstruction,
       result: resultConstruction,
@@ -165,14 +182,14 @@ export default defineComponent({
     const balance = ref()
     const ids = ref()
     const metaData = ref()
-    const aquaducts = ref()
+    const buildings = ref()
 
-    onMounted(async () => {
+    useFetch(async () => {
       balance.value = await getRealmsResourceBalance(props.realm.id)
       ids.value = await getRealmsResourceIds(props.realm.id)
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
-      aquaducts.value = await getAquaducts(props.realm.id)
+      buildings.value = await getBuildings(props.realm.id)
     })
 
     const fetchRealmMetaData = async (id) => {
@@ -203,8 +220,8 @@ export default defineComponent({
       errorConstruction,
       resultConstruction,
       constructBuilding,
-      getAquaducts,
-      aquaducts,
+      getBuildings,
+      buildings,
       active,
     }
   },

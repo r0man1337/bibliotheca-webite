@@ -58,22 +58,37 @@ export function useResources() {
       loading.resources = false
     }
   }
-  const upgradeResource = async (
-    realmId,
-    resourceId,
-    upgradeResourceIds,
-    upgradeResourceValues
-  ) => {
+
+  const fetchUpgradeCost = async (resourceId, level) => {
     try {
       error.resources = null
       loading.resources = true
-      return await upgradeResourceProduction(
+      return await upgradeCost(
+        account.value,
+        activeNetwork.value.id,
+        resourceId,
+        level
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      loading.resources = false
+    }
+  }
+  const upgradeResource = async (realmId, resourceId, level) => {
+    try {
+      error.resources = null
+      loading.resources = true
+      const cost = await fetchUpgradeCost(resourceId, level)
+      console.log(cost)
+      await upgradeResourceProduction(
         account.value,
         activeNetwork.value.id,
         realmId,
         resourceId,
-        upgradeResourceIds,
-        upgradeResourceValues
+        cost[1],
+        cost[0]
       )
     } catch (e) {
       console.log(e)
@@ -86,6 +101,7 @@ export function useResources() {
     fetchResource,
     fetchProductionOutput,
     upgradeResource,
+    fetchUpgradeCost,
     error,
     loading,
     result,
@@ -117,7 +133,7 @@ async function resourceProductionOutput(owner, network, realmId, resourceId) {
     signer
   )
 
-  return await resourceConstructionFacet.getProductionOutput(
+  return await resourceConstructionFacet.getProductionDetails(
     realmId,
     resourceId
   )
@@ -148,4 +164,17 @@ async function upgradeResourceProduction(
   )
   await construct.wait()
   return construct
+}
+
+async function upgradeCost(owner, network, resourceId, level) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const signer = provider.getSigner()
+  const resourceConstructionFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    ResourceConstructionFacetAbi.abi,
+    signer
+  )
+  return await resourceConstructionFacet.getCosts(resourceId, level)
 }
