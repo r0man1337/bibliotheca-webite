@@ -481,7 +481,7 @@ export function useBridge() {
           if (!txReceipt) {
             console.info(
               'Transaction receipt not yet found:',
-              pendingTransactions[i].txID
+              pendingTransactions.value[i].txID
             )
           } else {
             updateTransaction(txReceipt)
