@@ -32,7 +32,7 @@ export default defineComponent({
         slug: '',
       },
       {
-        title: 'Realm Staking',
+        title: 'Realm Settling',
         slug: 'staking',
       },
       {

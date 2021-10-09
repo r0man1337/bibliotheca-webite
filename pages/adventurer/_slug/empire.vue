@@ -2,14 +2,14 @@
   <div class="container">
     <div class="flex flex-wrap">
       <DataCard>
-        <h5 class="uppercase text-red-400">Total Staked Realms</h5>
+        <h5 class="text-red-400">Total Realms Settled</h5>
         <div v-if="sRealms" class="text-4xl p-4 text-center">
           {{ sRealms.length }}
         </div>
       </DataCard>
     </div>
     <div class="mt-8">
-      <h2>Staked Realms</h2>
+      <h2>Settled Realms</h2>
     </div>
     <div v-if="sRealms" class="flex flex-wrap">
       <StakedRealm v-for="realm in sRealms" :key="realm.id" :realm="realm" />
