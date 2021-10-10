@@ -2,38 +2,41 @@
   <section>
     <div>
       <h2>All Claims</h2>
-
-      <div v-for="(claim, index) in claimsList" :key="claim.title">
-        <NuxtLink
+      <div class="flex">
+        <div
+          v-for="(claim, index) in claimsList"
           :key="index"
-          class="text-xl rounded-xl px-4 py-3 hover:bg-black hover:text-red-400"
-          :to="'/claim/' + claim.slug"
+          class="
+            bg-black
+            p-8
+            rounded-xl
+            w-80
+            h-80
+            mt-10
+            cursor-pointer
+            transform
+            hover:-translate-y-2
+            transition
+            duration-150
+            flex flex-col
+            hover:bg-gray-1000
+            sm:mr-4
+          "
+          @click="$router.push('/claim/' + claim.slug)"
         >
-          <div
-            class="
-              bg-black
-              p-4
-              rounded-xl
-              mr-8
-              my-4
-              text-white
-              transform
-              hover:-translate-y-2
-              transition
-              duration-150
-              h-80
-              cursor-pointer
-              hover:shadow-2xl
-              flex flex-col
-              border-2 border-gray-800
-              shadow-2xl
-              group
-            "
-            @click="navigate"
-          >
-            {{ claim.title }}
+          <h2>{{ claim.title }}</h2>
+          <div class="flex flex-col text-xl">
+            <span>Status: {{ claim.status }}</span>
+            <span
+              >Requirements:
+              <span
+                v-for="(requirement, index) in claim.requirements"
+                :key="index"
+                >{{ requirement }}</span
+              >
+            </span>
           </div>
-        </NuxtLink>
+        </div>
       </div>
     </div>
   </section>
@@ -43,7 +46,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useClaims } from '~/composables/useClaims'
 export default defineComponent({
-  setup(props, context) {
+  setup() {
     const { claimsList } = useClaims()
     return {
       claimsList,
