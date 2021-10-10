@@ -45,25 +45,21 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { useModal } from '~/composables/useModal'
 import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
 
 export default defineComponent({
-  setup(props, context) {
+  setup() {
     const { close } = useModal()
     const { switchNetwork } = useNetwork()
-    const { $nuxt } = useContext()
 
     async function switchAndClose() {
       try {
         await switchNetwork()
 
         close()
-      } catch (error) {
-      } finally {
-        $nuxt.refresh()
-      }
+      } catch (error) {}
     }
 
     return { switchAndClose, activeNetwork }

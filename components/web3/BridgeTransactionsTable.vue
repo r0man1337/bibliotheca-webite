@@ -185,7 +185,7 @@
                     text-gray-500
                   "
                 >
-                  <div v-if="!transaction.isWithdrawal">
+                  <div v-if="!transaction.isWithdrawal" class="text-white">
                     <span
                       v-if="
                         transaction.createdAt &&

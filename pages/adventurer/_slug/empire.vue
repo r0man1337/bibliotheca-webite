@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap space-x-4">
       <DataCard>
         <h5 class="text-red-400">Total Realms Settled</h5>
         <div v-if="sRealms" class="text-4xl p-4 text-center">

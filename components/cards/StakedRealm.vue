@@ -52,10 +52,13 @@
 
       <div class="p-2 flex flex-col">
         <h4></h4>
-        <h1 v-if="balance" class="flex justify-between">
-          <span>{{ balance.name }}</span>
-          <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
+        <h1 v-if="metaData" class="flex justify-between">
+          <span>{{ metaData.name }}</span>
+          <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
         </h1>
+        <div v-if="metaData && order(metaData.traits)" class="py-4">
+          <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+        </div>
         <div class="my-3">
           <span class="uppercase text-red-400 font-display"
             >days unclaimed</span
@@ -124,13 +127,21 @@
           Flip
         </button>
       </div>
-
+      <div v-if="metaData" class="px-2">
+        <Levels
+          flex
+          :cities="cities"
+          :harbours="harbours"
+          :regions="regions"
+          :rivers="rivers"
+        />
+      </div>
       <button
         class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
         @click="withdraw(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Unstake</span>
+        <span v-else>Unsettle</span>
       </button>
       <button
         class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
@@ -143,7 +154,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref, computed } from '@vue/composition-api'
 import axios from 'axios'
 import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
@@ -205,6 +216,42 @@ export default defineComponent({
 
     const active = ref(false)
 
+    const cities = computed(() => {
+      return metaData.value.traits.length
+        ? metaData.value.traits.find(
+            (resource) => resource.trait_type === 'Cities'
+          )
+        : null
+    })
+    const harbours = computed(() => {
+      return metaData.value.traits.length
+        ? metaData.value.traits.find(
+            (resource) => resource.trait_type === 'Harbors'
+          )
+        : null
+    })
+    const regions = computed(() => {
+      return metaData.value.traits.length
+        ? metaData.value.traits.find(
+            (resource) => resource.trait_type === 'Regions'
+          )
+        : null
+    })
+    const rivers = computed(() => {
+      return metaData.value.traits.length
+        ? metaData.value.traits.find(
+            (resource) => resource.trait_type === 'Rivers'
+          )
+        : null
+    })
+    const wonder = (traits) => {
+      return traits.find(
+        (resource) => resource.trait_type === 'Wonder (translated)'
+      )
+    }
+    const order = (traits) => {
+      return traits.find((resource) => resource.trait_type === 'Order')
+    }
     return {
       claimResources,
       getRealmsResourceBalance,
@@ -223,6 +270,12 @@ export default defineComponent({
       getBuildings,
       buildings,
       active,
+      cities,
+      harbours,
+      regions,
+      rivers,
+      wonder,
+      order,
     }
   },
 })

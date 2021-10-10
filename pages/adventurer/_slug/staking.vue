@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h3>Select Realm to Stake</h3>
+      <h2>Select Realm to Settle</h2>
     </div>
     <div v-if="!realmsLoading" class="flex flex-wrap">
       <div
@@ -15,7 +15,7 @@
             class="bg-gray-900 rounded w-full px-4 py-2"
             @click="stakeRealm(realm.id)"
           >
-            Stake Realm
+            Settle Realm
           </button>
         </div>
       </div>
