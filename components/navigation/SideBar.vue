@@ -149,8 +149,8 @@ export default {
 
     const utilLinks = [
       {
-        page: '/realms/mint',
-        title: 'Mint realms',
+        page: '/claim',
+        title: 'Claims & Mints',
       },
       {
         page: '/realms/resources',

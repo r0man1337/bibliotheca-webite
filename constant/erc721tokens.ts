@@ -9,6 +9,13 @@ export default {
       name: 'Realms (for Adventurers)',
       address: '0x7AFe30cB3E53dba6801aa0EA647A0EcEA7cBe18d',
     },
+    {
+      key: 'ATIME',
+      type: 'token',
+      symbol: 'ATIME',
+      name: 'Adventure Time (for Adventurers)',
+      address: '0x810F86eb43CcAacd401EF50DFab87945A514F9CF',
+    },
   ]),
   rinkeby: createTokenUtils([
     {
@@ -17,6 +24,13 @@ export default {
       symbol: 'LootRealms',
       name: 'Realms (for Adventurers)',
       address: '0x6B13F1C319c2DdA7Ae15c04f540671B8A0E2AE9B',
+    },
+    {
+      key: 'ATIME',
+      type: 'token',
+      symbol: 'ATIME',
+      name: 'Adventure Time (for Adventurers)',
+      address: '0x7D99D9c39CacCFb9EA9598030b328630d8957b36',
     },
   ]),
   arbitrumRinkeby: createTokenUtils([
