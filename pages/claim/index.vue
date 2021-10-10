@@ -1,7 +1,6 @@
 <template>
   <section>
     <div>
-      <h2>All Claims</h2>
       <div class="flex">
         <div
           v-for="(claim, index) in claimsList"
