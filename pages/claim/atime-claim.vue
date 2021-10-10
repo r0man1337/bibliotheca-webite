@@ -1,84 +1,86 @@
 <template>
-  <section class="flex flex-wrap">
-    <div
-      v-if="!$fetchState.pending"
-      class="sm:w-1/2 text-center self-center relative"
-    >
-      <div
-        v-if="loading.getAvailableTokenIds"
-        class="
-          absolute
-          bg-black bg-opacity-75
-          h-full
-          w-full
-          flex
-          justify-around
-          rounded-xl
-        "
-      >
-        <div class="self-center text-center">
-          <Loader class="w-24 h-24" /> Fetching Available Ids...
-        </div>
-      </div>
-      <div class="p-6 bg-black rounded-xl">
-        <h5>
-          Contract address:
+  <section class="flex flex-wrap justify-center">
+    <div class="sm:w-1/2 text-center self-center relative">
+      <div class="mb-8">
+        <h1>Season 1: $ATIME</h1>
+        <p class="text-2xl">
+          Before claiming please read about the dynamics of $ATIME
           <a
-            class="hover:underline my-4"
-            href="https://etherscan.io/address/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d#code"
+            class="text-red-500 underline"
+            href="https://genesisproject.notion.site/Adventure-Time-ATIME-cdc3ff41deb747dd9a04bd1bfc35cb3e"
+            >here</a
           >
-            0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d</a
-          >
-        </h5>
-        <h1 class="mt-8">Mint $ATIME with a Realm</h1>
-        <h4>100 $ATIME per Realm</h4>
+        </p>
+      </div>
+      <div class="p-6 bg-black rounded-xl shadow-lg">
+        <h2>100 $ATIME per Realm</h2>
 
         <div class="my-12 text-center">
-          <h3>Claim All</h3>
           <div class="my-4 flex justify-around">
             <div class="flex">
               <BButton
-                class="bg-gray-900"
-                :disabled="!availableTokenIds || availableTokenIds.length <= 0"
+                class="bg-gray-900 text-2xl"
                 type="primary"
                 @click="claimAllForOwner"
               >
-                {{ loading.mint ? 'loading...' : 'Mint Realm(s)' }}
+                {{ loading.mint ? 'loading...' : 'Claim all $ATIME' }}
               </BButton>
             </div>
           </div>
         </div>
+        <h5>
+          Contract address:
+          <a
+            class="hover:underline my-4"
+            href="https://etherscan.io/token/0x810f86eb43ccaacd401ef50dfab87945a514f9cf#writeContract"
+          >
+            0x810f86eb43ccaacd401ef50dfab87945a514f9cf</a
+          >
+        </h5>
       </div>
       <div class="text-center my-8 text-2xl">or</div>
 
       <div class="p-6 bg-black rounded-xl">
-        <h2>Claim For Each Realm ID</h2>
-        <div class="flex mt-3">
-          <button
-            v-for="(id, index) in multiMintIds"
-            :key="index"
-            class="hover:bg-red-400 px-2 py-1 bg-gray-900 mr-2 rounded"
-            @click="removeIds(id)"
-          >
-            {{ id }} <span class="ml-2">X</span>
-          </button>
-        </div>
+        <h2>Claim For Each Realm</h2>
+        <input
+          id="mintId"
+          v-model="singleMint"
+          min="1"
+          class="
+            text-center
+            appearance-none
+            rounded-md
+            shadow-sm
+            text-white
+            mb-1
+            leading-tight
+            focus:ring-primary focus:border-primary
+            w-full
+            px-4
+            py-4
+            text-lg
+            transition-all
+            duration-150
+            font-semibold
+            tracking-wide
+            bg-gray-900
+          "
+          type="number"
+          label="Realm Id"
+          placeholder="Enter Realm Id to mint"
+        />
         <div class="my-4 flex justify-around">
           <div class="flex">
             <BButton
-              :disabled="!multiMintIds.length"
+              :disabled="!singleMint"
               type="primary"
               class="bg-gray-900"
-              @click="multiMint(multiMintIds)"
-              >{{ loading.mint ? 'loading...' : 'Mint Realms' }}</BButton
-            >
-
-            <span class="self-center ml-2">
-              {{ (multiMintIds.length * 0.1).toFixed(1) }} ETH</span
+              @click="claimById(singleMint)"
+              >{{ loading.mint ? 'loading...' : 'Claim Id' }}</BButton
             >
           </div>
         </div>
-        <h4>Select Realm ids to mint</h4>
+        <!-- <h4>Select Realm ids to mint</h4>
         <div class="flex flex-wrap">
           <button
             v-for="(id, index) in availableTokenIds"
@@ -88,9 +90,9 @@
             class="bg-black px-2 py-1 hover:bg-gray-800 rounded-xl"
             @click="addIds(id)"
           >
-            {{ id }}
+            {{ id.id }}
           </button>
-        </div>
+        </div> -->
         <div class="my-4 p-6">
           READ: Please take note that this is a beta version feature and is
           provided on an "as is" and "as available" basis. Bibliotheca does not
@@ -149,9 +151,9 @@
                 </button>
               </div>
               <div>
-                <h2>Minting Realms</h2>
+                <h2>Claiming $ATIME</h2>
                 <div
-                  v-if="error.mint"
+                  v-if="error.claim"
                   class="
                     border border-red-400
                     text-red-400
@@ -166,31 +168,36 @@
                 >
                   <strong
                     v-if="
-                      error.mint
-                        ? error.mint.includes(
-                            'This token has already been minted'
-                          )
+                      error.claim
+                        ? error.claim.includes('ALL_TOKENS_CLAIMED')
                         : false
                     "
                   >
-                    This Realm has already been minted. Please refresh and try
-                    again.
+                    All $ATIME Claimed already
                   </strong>
-
                   <strong
                     v-if="
-                      error.mint
-                        ? error.mint.includes('insufficient funds for gas')
+                      error.claim
+                        ? error.claim.includes('MUST_OWN_TOKEN_ID')
+                        : false
+                    "
+                  >
+                    You do not own this Realm
+                  </strong>
+                  <strong
+                    v-if="
+                      error.claim
+                        ? error.claim.includes('insufficient funds for gas')
                         : false
                     "
                   >
                     Insufficient funds for gas</strong
                   >
                 </div>
-                <div v-if="loading.mint">
+                <div v-if="loading.claim">
                   <Loader class="w-24 h-24" />
                 </div>
-                <div v-else-if="!error.mint" class="my-8">
+                <div v-else-if="!error.claim" class="my-8">
                   <BButton
                     type="primary"
                     class="text-2xl"
@@ -204,37 +211,12 @@
         </div>
       </div>
     </div>
-    <div v-else class="flex justify-around h-screen w-full">
-      <div class="self-center mx-auto">
-        <h4 class="text-center">Loading Mintable Realms...</h4>
-        <Loader class="w-24 h-24 mx-auto" />
-      </div>
-    </div>
-
-    <div v-if="!$fetchState.pending" class="sm:w-1/2">
-      <div class="p-8">
-        <h2>Join our Lords & Ladies with their already minted Realms below</h2>
-        <div>
-          <RealmCard
-            v-if="selectedRealm"
-            :id="selectedRealm.token_id"
-            :realm="selectedRealm"
-          />
-        </div>
-      </div>
-    </div>
   </section>
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  onMounted,
-  useFetch,
-} from '@nuxtjs/composition-api'
-import axios from 'axios'
+import { defineComponent, ref, onMounted } from '@nuxtjs/composition-api'
+
 import { useAtime } from '~/composables/web3/useAtime'
 import Loader from '~/assets/img/loadingRings.svg?inline'
 import Cross from '~/assets/img/x-square.svg?inline'
@@ -247,9 +229,9 @@ export default defineComponent({
   },
   setup() {
     const { account } = useWeb3()
-    const singleMint = ref(1)
     const multiMintIds = ref([])
     const multiMintId = ref(null)
+    const singleMint = ref()
     const {
       claimById,
       claimAllForOwner,
@@ -261,47 +243,18 @@ export default defineComponent({
       availableTokenIds,
     } = useAtime()
 
-    const etherSingleMintCost = computed(() => {
-      if (singleMint.value) {
-        return 0.1
-      } else {
-        return 0
-      }
-    })
-
-    const random = (max) => {
-      return Math.floor(Math.random() * max)
-    }
-
     onMounted(async () => {
       if (!account.value) return open()
       await getAvailableTokenIds()
-
-      cycleIds()
-      window.setInterval(() => {
-        cycleIds()
-      }, 3000)
     })
-
-    const openSeaData = ref()
-    const selectedRealm = ref()
-    const baseAssetAddress =
-      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
-
-    useFetch(async () => {
-      const response = await axios.get(baseAssetAddress)
-      openSeaData.value = response.data.assets
-      selectedRealm.value = openSeaData.value[0]
-    })
-
-    const cycleIds = () => {
-      const num = random(49)
-      selectedRealm.value = openSeaData.value ? openSeaData.value[num] : null
+    const addIds = (id) => {
+      multiMintIds.value.push(id)
     }
 
     return {
-      etherSingleMintCost,
       multiMintIds,
+      singleMint,
+      addIds,
       claimById,
       claimAllForOwner,
       error,
@@ -311,8 +264,6 @@ export default defineComponent({
       loadingModal,
       account,
       availableTokenIds,
-      openSeaData,
-      selectedRealm,
     }
   },
 })
