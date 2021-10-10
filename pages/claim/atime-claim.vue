@@ -244,7 +244,6 @@ export default defineComponent({
     } = useAtime()
 
     onMounted(async () => {
-      if (!account.value) return open()
       await getAvailableTokenIds()
     })
     const addIds = (id) => {
