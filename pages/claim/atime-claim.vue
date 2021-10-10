@@ -187,6 +187,15 @@
                   <strong
                     v-if="
                       error.claim
+                        ? error.claim.includes('NO_TOKENS_OWNED')
+                        : false
+                    "
+                  >
+                    You do own any Realms
+                  </strong>
+                  <strong
+                    v-if="
+                      error.claim
                         ? error.claim.includes('insufficient funds for gas')
                         : false
                     "
