@@ -207,12 +207,14 @@
                   <Loader class="w-24 h-24" />
                 </div>
                 <div v-else-if="!error.claim" class="my-8">
+                  <p>Add $ATIME to your wallet to see your balance</p>
+                  <p>0x810f86eb43ccaacd401ef50dfab87945a514f9cf</p>
                   <BButton
                     type="primary"
                     class="text-2xl"
                     :to="'/adventurer/' + account"
-                    >See My Realms</BButton
-                  >
+                    >Successful!
+                  </BButton>
                 </div>
               </div>
             </div>
