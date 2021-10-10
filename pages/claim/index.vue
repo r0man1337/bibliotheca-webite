@@ -22,7 +22,6 @@
             hover:bg-gray-1000
             sm:mr-4
           "
-          @click="$router.push('/claim/' + claim.slug)"
         >
           <h2>{{ claim.title }}</h2>
           <div class="flex flex-col text-xl">
@@ -36,6 +35,9 @@
               >
             </span>
           </div>
+          <BButton type="primary" class="mt-auto" :to="'/claim/' + claim.slug"
+            >Claim</BButton
+          >
         </div>
       </div>
     </div>
