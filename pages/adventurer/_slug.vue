@@ -33,7 +33,7 @@ export default defineComponent({
       },
       {
         title: 'Realm Settling',
-        slug: 'staking',
+        slug: 'settling',
       },
       {
         title: 'Iron Bank',

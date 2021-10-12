@@ -81,7 +81,7 @@
       />
     </div>
 
-    <div class="mt-auto p-4 flex justify-between">
+    <div v-if="!stake" class="mt-auto p-4 flex justify-between">
       <span
         class="
           group-hover:text-white
@@ -108,12 +108,24 @@
         See detail
       </NuxtLink>
     </div>
+    <div v-else>
+      <div class="p-2">
+        <button
+          class="bg-red-500 rounded w-full px-4 py-2"
+          @click="stakeRealm(id)"
+        >
+          <span v-if="loading.stake">Settling....</span>
+          <span v-else>Settle Realm</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import { useBigNumber } from '~/composables/web3/useBigNumber'
+import { useStaking } from '~/composables/staking/useStaking'
 export default defineComponent({
   props: {
     realm: {
@@ -124,10 +136,24 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    stake: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, context) {
     const { shortenHash } = useFormatting()
     const { intRoundFloor } = useBigNumber()
+    const {
+      stakeRealm,
+      claimResources,
+      claimBalance,
+      realmBalance,
+      loading,
+      error,
+      result,
+    } = useStaking()
     const navigate = () => {
       window.open(
         'https://opensea.io/assets/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
@@ -153,6 +179,13 @@ export default defineComponent({
       wonder,
       order,
       intRoundFloor,
+      stakeRealm,
+      claimResources,
+      claimBalance,
+      realmBalance,
+      loading,
+      error,
+      result,
     }
   },
 })

@@ -1,6 +1,6 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
-import { BigNumber, ethers } from 'ethers'
-import { useNetwork, activeNetwork } from '../web3/useNetwork'
+import { ethers } from 'ethers'
+import { activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
@@ -12,9 +12,7 @@ import diamondAddress from '~/constant/diamondAddress'
 import erc721tokens from '~/constant/erc721tokens'
 import sRealmsTokens from '~/constant/sRealmsTokens'
 export function useStaking() {
-  const { provider, library, account, activate } = useWeb3()
-  const { intRoundFloor } = useBigNumber()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { account } = useWeb3()
   const error = reactive({
     stake: null,
   })
@@ -23,7 +21,7 @@ export function useStaking() {
     stake: null,
   })
   const result = reactive({ stake: null })
-  const realmBalance = ref()
+  const balance = ref()
   const claimBalance = ref()
   const stakeRealm = async (realmId) => {
     try {
@@ -42,7 +40,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      return await getBalance(activeNetwork.value.id, realmId)
+      balance.value = await getBalance(activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
       error.stake = e.message
@@ -60,6 +58,7 @@ export function useStaking() {
       console.log(e)
       error.stake = e.data.message
     } finally {
+      await getRealmsResourceBalance(realmId)
       loading.stake = false
     }
   }
@@ -94,7 +93,7 @@ export function useStaking() {
     getRealmsResourceBalance,
     claimResources,
     claimBalance,
-    realmBalance,
+    balance,
     error,
     loading,
     result,

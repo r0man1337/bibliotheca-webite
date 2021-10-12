@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      border-r border-black
+      border-r border-gray-700
       p-4
       bg-gray-1000
       transform
@@ -52,7 +52,7 @@
             {{ link.title }}</span
           >
         </NuxtLink>
-        <hr class="my-2" />
+        <hr class="my-2 border-gray-700" />
         <NuxtLink
           v-for="link in assetLinks"
           :key="link.title"
@@ -61,7 +61,7 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</NuxtLink
         >
-        <hr class="my-2" />
+        <hr class="my-2 border-gray-700" />
         <NuxtLink
           v-for="link in utilLinks"
           :key="link.title"

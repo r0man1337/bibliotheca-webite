@@ -175,7 +175,7 @@ export default defineComponent({
       getRealmsResourceBalance,
       getRealmsResourceIds,
       claimResources,
-      claimBalance,
+      balance,
       loading,
       error,
       result,
@@ -185,22 +185,21 @@ export default defineComponent({
     const {
       constructBuilding,
       getBuildings,
+      buildings,
       loading: loadingConstruction,
       error: errorConstruction,
       result: resultConstruction,
     } = useConstruction()
 
-    const balance = ref()
     const ids = ref()
     const metaData = ref()
-    const buildings = ref()
 
     useFetch(async () => {
-      balance.value = await getRealmsResourceBalance(props.realm.id)
+      await getRealmsResourceBalance(props.realm.id)
       ids.value = await getRealmsResourceIds(props.realm.id)
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
-      buildings.value = await getBuildings(props.realm.id)
+      await getBuildings(props.realm.id)
     })
 
     const fetchRealmMetaData = async (id) => {
@@ -255,7 +254,6 @@ export default defineComponent({
     return {
       claimResources,
       getRealmsResourceBalance,
-      claimBalance,
       balance,
       loading,
       error,

@@ -1,0 +1,86 @@
+<template>
+  <div class="container">
+    <div>
+      <h2>Select Realm to Settle</h2>
+    </div>
+    <div v-if="!realmsLoading" class="flex flex-wrap">
+      <RealmCard
+        v-for="realm in metaData"
+        :id="realm.token_id"
+        :key="realm.id"
+        :realm="realm"
+        stake
+      />
+    </div>
+    <div v-else>
+      <Loader />
+    </div>
+  </div>
+</template>
+<script>
+import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import axios from 'axios'
+import { useRealms } from '~/composables/web3/useRealms'
+import { useStaking } from '~/composables/staking/useStaking'
+export default defineComponent({
+  setup(props, context) {
+    const { slug } = context.root.$route.params
+    const { getUserRealms, userRealms, loading: realmsLoading } = useRealms()
+    const {
+      stakeRealm,
+      claimResources,
+      claimBalance,
+      realmBalance,
+      loading,
+      error,
+      result,
+    } = useStaking()
+
+    const metaData = ref()
+
+    onMounted(async () => {
+      try {
+        await getUserRealms(slug, 'arbitrumRinkeby')
+      } catch (e) {
+        console.log(e)
+      } finally {
+        const response = await getOSData(userRealms.value.l2)
+        metaData.value = response.data.assets
+      }
+    })
+
+    const baseAssetAddress =
+      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&'
+
+    const getOSData = async (ids) => {
+      const mapped = ids
+        .map((bag) => {
+          return 'token_ids=' + bag.id + '&'
+        })
+        .join('')
+        .slice(0, -1)
+
+      console.log(mapped)
+
+      return await axios.get(baseAssetAddress + mapped, {
+        headers: {
+          'X-API-KEY': process.env.OPENSEA,
+        },
+      })
+    }
+
+    return {
+      userRealms,
+      stakeRealm,
+      claimResources,
+      claimBalance,
+      realmBalance,
+      loading,
+      error,
+      result,
+      realmsLoading,
+      metaData,
+    }
+  },
+})
+</script>

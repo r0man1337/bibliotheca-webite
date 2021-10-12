@@ -22,6 +22,8 @@ export function useConstruction() {
 
   const result = reactive({ resources: null })
 
+  const buildings = ref()
+
   const constructBuilding = async (
     realmId,
     buildingId,
@@ -43,6 +45,7 @@ export function useConstruction() {
       console.log(e)
       error.building = e.message
     } finally {
+      await getBuildings(realmId)
       loading.building = false
     }
   }
@@ -51,7 +54,11 @@ export function useConstruction() {
     try {
       error.building = null
       loading.building = true
-      return await getBuilding(account.value, activeNetwork.value.id, realmId)
+      buildings.value = await getBuilding(
+        account.value,
+        activeNetwork.value.id,
+        realmId
+      )
     } catch (e) {
       console.log(e)
       error.building = e.message
@@ -62,6 +69,7 @@ export function useConstruction() {
   return {
     constructBuilding,
     getBuildings,
+    buildings,
     error,
     loading,
     result,

@@ -1,11 +1,18 @@
 <template>
   <div class="my-1 flex justify-between">
-    <span>
-      <span v-if="output" class="border border-gray-800 rounded p-1 text-xs">{{
-        output[0]
-      }}</span>
+    <span class="flex">
       <span
-        >{{ findResources.trait }}: <span v-if="output">{{ output[1] }}</span>
+        v-if="output"
+        class="border border-gray-800 rounded p-1 text-xs mr-2"
+        >{{ output[0] }}</span
+      >
+      <span class="self-center">
+        <span v-if="output && !loading.resources"
+          >{{ findResources.trait }}: {{ output[1] }}</span
+        >
+        <span v-else class="flex"
+          >{{ findResources.trait }}: <LoadingDots class="w-5"
+        /></span>
       </span>
     </span>
 
@@ -26,15 +33,14 @@
   </div>
 </template>
 <script>
-import {
-  defineComponent,
-  computed,
-  ref,
-  useFetch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, computed, useFetch } from '@nuxtjs/composition-api'
 import ResourceData from '~/composables/resource.json'
 import { useResources } from '~/composables/resources/useResources'
+import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
+  components: {
+    LoadingDots,
+  },
   props: {
     resource: {
       type: Object,
@@ -46,23 +52,22 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { fetchProductionOutput, upgradeResource, loading } = useResources()
+    const { fetchProductionOutput, upgradeResource, loading, output } =
+      useResources()
     const findResources = computed(() => {
       return ResourceData.find((a) => a.id === parseInt(props.resource))
     })
 
-    const output = ref()
-
     useFetch(async () => {
-      output.value = await fetchProductionOutput(props.realmId, props.resource)
+      await fetchProductionOutput(props.realmId, props.resource)
     })
 
     return {
       findResources,
       fetchProductionOutput,
       upgradeResource,
-      output,
       loading,
+      output,
     }
   },
 })

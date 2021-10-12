@@ -20,15 +20,16 @@ export function useResources() {
   })
 
   const loading = reactive({
-    resources: null,
+    resources: false,
   })
 
   const result = reactive({ resources: null })
+  const output = ref()
 
   const fetchResource = async (account, resourceId) => {
     try {
       error.resources = null
-      loading.resources = true
+      // loading.resources = true
       return await getResourceBalance(
         account,
         activeNetwork.value.id,
@@ -38,14 +39,14 @@ export function useResources() {
       console.log(e)
       error.resources = e.message
     } finally {
-      loading.resources = false
+      // loading.resources = false
     }
   }
   const fetchProductionOutput = async (realmId, resourceId) => {
     try {
       error.resources = null
-      loading.resources = true
-      return await resourceProductionOutput(
+      // loading.resources = true
+      output.value = await resourceProductionOutput(
         account.value,
         activeNetwork.value.id,
         realmId,
@@ -55,14 +56,14 @@ export function useResources() {
       console.log(e)
       error.resources = e.message
     } finally {
-      loading.resources = false
+      // loading.resources = false
     }
   }
 
   const fetchUpgradeCost = async (resourceId, level) => {
     try {
       error.resources = null
-      loading.resources = true
+      // loading.resources = true
       return await upgradeCost(
         account.value,
         activeNetwork.value.id,
@@ -73,16 +74,17 @@ export function useResources() {
       console.log(e)
       error.resources = e.message
     } finally {
-      loading.resources = false
+      // loading.resources = false
     }
   }
   const upgradeResource = async (realmId, resourceId, level) => {
+    loading.resources = true
     try {
       error.resources = null
       loading.resources = true
       const cost = await fetchUpgradeCost(resourceId, level)
       console.log(cost)
-      await upgradeResourceProduction(
+      const response = await upgradeResourceProduction(
         account.value,
         activeNetwork.value.id,
         realmId,
@@ -90,11 +92,13 @@ export function useResources() {
         cost[1],
         cost[0]
       )
+      console.log(response)
     } catch (e) {
       console.log(e)
       error.resources = e.message
     } finally {
       loading.resources = false
+      await fetchProductionOutput(realmId, resourceId)
     }
   }
   return {
@@ -105,6 +109,7 @@ export function useResources() {
     error,
     loading,
     result,
+    output,
   }
 }
 
