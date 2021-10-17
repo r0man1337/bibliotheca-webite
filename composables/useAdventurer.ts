@@ -7,12 +7,12 @@ import {
   ref,
   watch,
 } from '@nuxtjs/composition-api'
+import { useWeb3 } from '@instadapp/vue-web3'
 import {
   getl1Adventurer,
   getl2Adventurer,
   usersSRealms,
 } from './graphql/queries'
-import { useWeb3 } from '~/composables/web3/useWeb3'
 import {
   useNetwork,
   activeNetwork,

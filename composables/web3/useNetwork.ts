@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 
 import { useModal } from '../useModal'
 import { useNotification } from '../useNotification'
-import { useWeb3 } from './useWeb3'
+import { useWeb3 } from '@instadapp/vue-web3'
 
 import MainnetSVG from '~/assets/icons/mainnet.svg?inline'
 import ArbitrumSVG from '~/assets/icons/arbitrum.svg?inline'

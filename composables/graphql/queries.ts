@@ -98,10 +98,57 @@ const mintedRealmsQuery = gql`
     }
   }
 `
+const lastOutboxEntryQuery = gql`
+  query lastOutboxEntry {
+    outboxEntries(orderBy: outboxEntryIndex, orderDirection: desc, first: 1) {
+      outboxEntryIndex
+    }
+  }
+`
+const getWithdrawalsQuery = gql`
+  query getWithdrawalsQuery(
+    $callerAddress: String
+    $fromBlock: Int
+    $toBlock: Int
+  ) {
+    l2ToL1Transactions(
+      where: {
+        caller: $callerAddress
+        arbBlockNum_gte: $fromBlock
+        arbBlockNum_lt: $toBlock
+      }
+    ) {
+      destination
+      timestamp
+      data
+      caller
+      id
+      uniqueId
+      batchNumber
+      indexInBatch
+      arbBlockNum
+      ethBlockNum
+      callvalue
+    }
+  }
+`
+const messageHasExecutedQuery = gql`
+  query messageHasExecutedQuery(
+    $path: Int
+    batchHexString: String
+  ) {
+    outboxOutputs(where: {path: $path, outboxEntry: $batchHexString, spent:true }) {
+      id,
+    }
+  }
+`
 export {
   usersRealms,
   mintedRealmsQuery,
   usersSRealms,
   getl1Adventurer,
   getl2Adventurer,
+  lastOutboxEntryQuery,
+  getWithdrawalsQuery,
+  messageHasExecutedQuery,
 }

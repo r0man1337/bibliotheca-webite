@@ -1,17 +1,27 @@
 /* eslint-disable max-depth */
-import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
+import { reactive, ref, Ref, ssrRef, computed } from '@nuxtjs/composition-api'
 import dayjs from 'dayjs'
 import { hexDataLength } from '@ethersproject/bytes'
 import { TransactionReceipt } from '@ethersproject/abstract-provider'
-import { ethers, BigNumber } from 'ethers'
+import { ethers, BigNumber, utils } from 'ethers'
+import axios from 'axios'
+
 import {
   // Bridge,
   networks,
   L2ToL1EventResult,
   OutgoingMessageState,
 } from 'arb-ts'
+
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork } from '../web3/useNetwork'
-import { useWeb3 } from '../web3/useWeb3'
+
+import {
+  lastOutboxEntryQuery,
+  getWithdrawalsQuery,
+  messageHasExecutedQuery,
+} from '~/composables/graphql/queries'
+import { useGraph } from '~/composables/web3/useGraph'
 
 export enum AssetType {
   ERC20 = 'ERC20',
@@ -21,6 +31,7 @@ export enum AssetType {
 
 export interface L2ToL1EventResultPlus extends L2ToL1EventResult {
   type: AssetType
+  value: BigNumber
   tokenAddress?: string
   outgoingMessageState: OutgoingMessageState
   tokenId: number
@@ -33,7 +44,7 @@ export interface PendingWithdrawalsMap {
 
 const RINKEBY_L1_BRIDGE_ADDRESS = '0x2a8Bd12936BD5fC260314a80D51937E497523FCC'
 const ARB_RINKEBY_L2_BRIDGE_ADDRESS =
-  '0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'
+  '0x5fae6b0be396b9541d5cc8d50a98168b790d0d7e'
 
 export type TxnStatus = 'pending' | 'success' | 'failure' | 'confirmed'
 export type TxnType =
@@ -98,6 +109,8 @@ const transactions = ref([])
 export function useTransactions() {
   const { provider, library, account, activate } = useWeb3()
   const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { gqlRequest } = useGraph()
+  const pendingWithdrawalsMap = ref({})
 
   const error = reactive({
     depositL1: null,
@@ -225,6 +238,291 @@ export function useTransactions() {
     return updateStatusAndSeqNum('failure', txID)
   }
 
+  const setInitialPendingWithdrawals = async (
+    bridge,
+    filter?: ethers.providers.Filter
+  ) => {
+    const pendingWithdrawals: PendingWithdrawalsMap = {}
+    const t = new Date().getTime()
+    console.log('*** Getting initial pending withdrawal data ***')
+    const l2ToL1Txns = (
+      await Promise.all([getEthWithdrawalsV2(bridge, filter)])
+    ).flat()
+
+    console.log(
+      `*** done getting pending withdrawals, took ${
+        Math.round(new Date().getTime() - t) / 1000
+      } seconds`
+    )
+
+    for (const l2ToL1Thing of l2ToL1Txns) {
+      console.log(l2ToL1Thing)
+      pendingWithdrawals[l2ToL1Thing.uniqueId.toString()] = l2ToL1Thing
+    }
+    pendingWithdrawalsMap.value = pendingWithdrawals
+  }
+
+  const getEthWithdrawalsV2 = async (
+    bridge,
+    filter?: ethers.providers.Filter
+  ) => {
+    console.log('bridge is')
+    console.log(bridge)
+    const networkID = useL1Network.value.chainId
+    const address = account.value
+    const startBlock =
+      (filter && filter.fromBlock && +filter.fromBlock.toString()) || 0
+
+    const latestGraphBlockNumber = await getBuiltInsGraphLatestBlockNumber(
+      useL1Network.value.chainId
+    )
+    const pivotBlock = Math.max(latestGraphBlockNumber, startBlock)
+
+    console.log(
+      `*** L2 gateway graph block number: ${latestGraphBlockNumber} ***`
+    )
+
+    const oldEthWithdrawalEventData = await getETHWithdrawals(
+      ARB_RINKEBY_L2_BRIDGE_ADDRESS,
+      startBlock,
+      pivotBlock,
+      networkID
+    )
+    const recentETHWithdrawalData = await bridge.value.getL2ToL1EventData(
+      address,
+      {
+        fromBlock: pivotBlock,
+      }
+    )
+    const ethWithdrawalEventData = oldEthWithdrawalEventData.concat(
+      recentETHWithdrawalData
+    )
+    console.log(ethWithdrawalEventData)
+    const lastOutboxEntryIndexDec = await getLatestOutboxEntryIndex(networkID)
+
+    console.log(
+      `*** Last Outbox Entry Batch Number: ${lastOutboxEntryIndexDec} ***`
+    )
+
+    const ethWithdrawalData: L2ToL1EventResultPlus[] = []
+    for (const eventData of ethWithdrawalEventData) {
+      const {
+        destination,
+        timestamp,
+        data,
+        caller,
+        uniqueId,
+        batchNumber,
+        indexInBatch,
+        arbBlockNum,
+        ethBlockNum,
+        callvalue,
+      } = eventData
+      const batchNumberDec = batchNumber.toNumber()
+      const outgoingMessageState =
+        batchNumberDec > lastOutboxEntryIndexDec
+          ? OutgoingMessageState.UNCONFIRMED
+          : await getOutGoingMessageStateV2(bridge, batchNumber, indexInBatch)
+
+      const allWithdrawalData: L2ToL1EventResultPlus = {
+        caller,
+        destination,
+        uniqueId,
+        batchNumber,
+        indexInBatch,
+        arbBlockNum,
+        ethBlockNum,
+        timestamp,
+        callvalue,
+        data,
+        type: AssetType.ETH,
+        value: callvalue,
+        symbol: 'REALMS',
+        tokenId: 1,
+        outgoingMessageState,
+      }
+      ethWithdrawalData.push(allWithdrawalData)
+    }
+    return ethWithdrawalData
+  }
+
+  const networkIDAndLayerToClient = (networkID: number, layer: 1 | 2) => {
+    switch (networkID) {
+      case 1:
+        return layer === 1 ? 'L1Mainnetlient' : 'L2Mainnetlient'
+      case 4:
+        return layer === 1 ? 'L1RinkebyClient' : 'L2RinkebyClient'
+      default:
+        throw new Error('Unsupported network')
+    }
+  }
+
+  const getLatestOutboxEntryIndex = async (networkID: number) => {
+    console.log(networkID)
+    const client = networkIDAndLayerToClient(networkID, 1)
+    const { outboxEntries } = await gqlRequest(
+      lastOutboxEntryQuery,
+      null,
+      client
+    )
+    console.log(outboxEntries)
+    return outboxEntries?.[0]?.outboxEntryIndex as number
+  }
+
+  const getETHWithdrawals = async (
+    callerAddress: string,
+    fromBlock: number,
+    toBlock: number,
+    networkID: number
+  ): Promise<L2ToL1EventResult[]> => {
+    const client = networkIDAndLayerToClient(networkID, 2)
+
+    const { l2ToL1Transactions } = await gqlRequest(
+      getWithdrawalsQuery,
+      { callerAddress, fromBlock, toBlock },
+      client
+    )
+
+    return l2ToL1Transactions.map((eventData: any) => {
+      const {
+        destination,
+        timestamp,
+        data,
+        caller,
+        uniqueId,
+        batchNumber,
+        indexInBatch,
+        arbBlockNum,
+        ethBlockNum,
+        callvalue,
+      } = eventData
+      return {
+        destination,
+        timestamp,
+        data,
+        caller,
+        uniqueId: BigNumber.from(uniqueId),
+        batchNumber: BigNumber.from(batchNumber),
+        indexInBatch: BigNumber.from(indexInBatch),
+        arbBlockNum: BigNumber.from(arbBlockNum),
+        ethBlockNum: BigNumber.from(ethBlockNum),
+        callvalue: BigNumber.from(callvalue),
+      } as L2ToL1EventResult
+    })
+  }
+
+  // call after we've confirmed the outbox entry has been created
+  const getOutGoingMessageStateV2 = async (
+    bridge,
+    batchNumber: BigNumber,
+    indexInBatch: BigNumber
+  ) => {
+    // TODO implement and check localStorage here
+    /* if (executedMessagesCache[hashOutgoingMessage(batchNumber, indexInBatch)]) {
+      return OutgoingMessageState.EXECUTED
+    } else { */
+    const proofData = await bridge.value.tryGetProofOnce(
+      batchNumber,
+      indexInBatch
+    )
+    const outgoingMessageState = await bridge.value.getOutGoingMessageState(
+      batchNumber,
+      indexInBatch
+    )
+    console.log(outgoingMessageState)
+    // this should never occur
+    if (!proofData) {
+      return OutgoingMessageState.UNCONFIRMED
+    }
+
+    const { path } = proofData
+    /* const res = await messageHasExecuted(
+      path,
+      batchNumber,
+      useL1Network.value.chainId
+    ) */
+
+    if (outgoingMessageState === 2) {
+      // TODO add to localStorage here
+      // addToExecutedMessagesCache(batchNumber, indexInBatch)
+      return OutgoingMessageState.EXECUTED
+    } else {
+      return OutgoingMessageState.CONFIRMED
+    }
+  }
+
+  const messageHasExecuted = async (
+    path: BigNumber,
+    batchNumber: BigNumber,
+    networkID: number
+  ) => {
+    const client = networkIDAndLayerToClient(networkID, 1)
+    const batchHexString = utils.hexStripZeros(batchNumber.toHexString())
+
+    const { outboxOutputs } = await gqlRequest(
+      messageHasExecutedQuery,
+      { path: path.toNumber(), batchHexString },
+      client
+    )
+
+    return outboxOutputs.length > 0
+  }
+
+  interface GetTokenWithdrawalsResult {
+    l2ToL1Event: L2ToL1EventResult
+    otherData: {
+      value: BigNumber
+      tokenAddress: string
+    }
+  }
+
+  const getLatestIndexedBlockNumber = async (subgraphName: string) => {
+    try {
+      const res = await axios.post(
+        'https://api.thegraph.com/index-node/graphql',
+        {
+          query: `{ indexingStatusForCurrentVersion(subgraphName: "${subgraphName}") {  chains { network latestBlock { number }  } } }`,
+        }
+      )
+      return res.data.data.indexingStatusForCurrentVersion.chains[0].latestBlock
+        .number
+    } catch (err) {
+      console.warn('Error getting graph status:', err)
+
+      return 0
+    }
+  }
+
+  const getBuiltInsGraphLatestBlockNumber = (l1NetworkID: number) => {
+    const subgraphName = ((l1NetworkID: number) => {
+      switch (l1NetworkID) {
+        case 1:
+          return 'fredlacs/arb-builtins'
+        case 4:
+          return 'fredlacs/arb-builtins-rinkeby'
+        default:
+          throw new Error('Unsupported netwowk')
+      }
+    })(l1NetworkID)
+
+    return getLatestIndexedBlockNumber(subgraphName)
+  }
+
+  const getL2GatewayGraphLatestBlockNumber = (l1NetworkID: number) => {
+    const subgraphName = ((l1NetworkID: number) => {
+      switch (l1NetworkID) {
+        case 1:
+          return 'fredlacs/layer2-token-gateway'
+        case 4:
+          return 'fredlacs/layer2-token-gateway-rinkeby'
+        default:
+          throw new Error('Unsupported netwowk')
+      }
+    })(l1NetworkID)
+
+    return getLatestIndexedBlockNumber(subgraphName)
+  }
+
   const successfulL1Deposits = computed(() => {
     // check 'deposit' and 'deposit-l1' for backwards compatibility with old client side cache
     return transactions.value.filter(
@@ -272,10 +570,10 @@ export function useTransactions() {
     })
     return deposits
   })
-  /* const withdrawalsTransformed = computed(() => {
+  const withdrawalsTransformed = computed(() => {
     const withdrawals: MergedTransaction[] = (
       Object.values(
-        s.arbTokenBridge?.pendingWithdrawalsMap || []
+        pendingWithdrawalsMap.value || []
       ) as L2ToL1EventResultPlus[]
     ).map((tx) => {
       return {
@@ -290,7 +588,7 @@ export function useTransactions() {
         resolvedAt: null,
         txId: tx.uniqueId?.toString(),
         asset: tx.symbol?.toLocaleLowerCase(),
-        value: ethers.utils.formatUnits(tx.value?.toString(), tx.decimals),
+        value: '2442',
         uniqueId: tx.uniqueId,
         isWithdrawal: true,
         blockNum: tx.ethBlockNum.toNumber(),
@@ -298,12 +596,13 @@ export function useTransactions() {
       }
     })
     return withdrawals
-  }) */
+  })
   const mergedTransactions = computed(() => {
     // return _reverse(
 
     const filtered = [
-      ...depositsTransformed.value /*, ...s.withdrawalsTransformed */,
+      ...depositsTransformed.value,
+      ...withdrawalsTransformed.value,
     ].filter((item) => !!item.createdAt)
     return filtered
       .sort((a, b): any => {
@@ -362,256 +661,6 @@ export function useTransactions() {
     })
     return seqNumToTicketCreation
   })
-  const currentL1BlockNumber = ref(0)
-
-  const getTokenWithdrawalsV2 = async (
-    bridge,
-    filter?: ethers.providers.Filter
-  ) => {
-    /* const latestGraphBlockNumber = await getL2GatewayGraphLatestBlockNumber(
-      useL1Network.value.chainId
-    )
-    console.log(
-      `*** L2 gateway graph block number: ${latestGraphBlockNumber} ***`
-    ) */
-    /*
-    const startBlock =
-      (filter && filter.fromBlock && +filter.fromBlock.toString()) || 0
-
-    // const pivotBlock = Math.max(latestGraphBlockNumber, startBlock)
-
-   /* const results = await getTokenWithdrawalsGraph(
-      account.value,
-      startBlock,
-      pivotBlock,
-      useL1Network.value.chainId
-    )
-
-    /* const symbols = await Promise.all(
-      results.map(resultData =>
-        getTokenSymbol(resultData.otherData.tokenAddress)
-      )
-    )
-    const decimals = await Promise.all(
-      results.map(resultData =>
-        getTokenDecimals(resultData.otherData.tokenAddress)
-      )
-    ) */
-
-    /* const outgoingMessageStates = await Promise.all(
-      results.map((withdrawEventData, i) => {
-        const { batchNumber, indexInBatch } = withdrawEventData.l2ToL1Event
-        return getOutGoingMessageState(batchNumber, indexInBatch)
-      })
-    )
-    const oldTokenWithdrawals = results.map((resultsData, i) => {
-      const {
-        caller,
-        destination,
-        uniqueId,
-        batchNumber,
-        indexInBatch,
-        arbBlockNum,
-        ethBlockNum,
-        timestamp,
-        callvalue,
-        data,
-      } = resultsData.l2ToL1Event
-      const { value, tokenAddress, type } = resultsData.otherData
-      const eventDataPlus: L2ToL1EventResultPlus = {
-        caller,
-        destination,
-        uniqueId,
-        batchNumber,
-        indexInBatch,
-        arbBlockNum,
-        ethBlockNum,
-        timestamp,
-        callvalue,
-        data,
-        type,
-        value,
-        tokenAddress,
-        outgoingMessageState: outgoingMessageStates[i],
-        symbol: symbols[i],
-        decimals: decimals[i],
-      }
-      return eventDataPlus
-    }) */
-
-    const recentTokenWithdrawals = await getTokenWithdrawals(
-      bridge,
-      ['0x5fAe6B0BE396B9541D5Cc8D50a98168b790d0d7e'],
-      {
-        fromBlock: 4832020,
-      }
-    )
-
-    const t = new Date().getTime()
-
-    return recentTokenWithdrawals
-  }
-
-  const getTokenWithdrawals = (
-    bridge,
-    gatewayAddresses: string[],
-    filter?: ethers.providers.Filter
-  ) => {
-    const t = new Date().getTime()
-
-    // const gateWayWithdrawalsResultsNested =
-    //   await bridge.value.getGatewayWithdrawEventData(
-    //     gatewayAddresses[0],
-    //     account.value,
-    //     filter
-    //   )
-
-    // console.log(gateWayWithdrawalsResultsNested)
-
-    // console.log(
-    //   `*** got token gateway event data in ${
-    //     (new Date().getTime() - t) / 1000
-    //   } seconds *** `
-    // )
-
-    // const gateWayWithdrawalsResults = gateWayWithdrawalsResultsNested.flat()
-
-    // const l2Txns = await Promise.all(
-    //   gateWayWithdrawalsResults.map((withdrawEventData) =>
-    //     bridge.value.getL2Transaction(withdrawEventData.txHash)
-    //   )
-    // )
-    // console.log(l2Txns)
-    // return l2Txns
-    /* const outgoingMessageStates = await Promise.all(
-      gateWayWithdrawalsResults.map((withdrawEventData, i) => {
-        const eventDataArr = bridge.getWithdrawalsInL2Transaction(l2Txns[i])
-        // TODO: length != 1
-        const { batchNumber, indexInBatch } = eventDataArr[0]
-        return getOutGoingMessageState(batchNumber, indexInBatch)
-      })
-    )
-    return gateWayWithdrawalsResults.map(
-      (withdrawEventData: WithdrawalInitiated, i) => {
-        // TODO: length != 1
-        const eventDataArr = bridge.getWithdrawalsInL2Transaction(l2Txns[i])
-        const {
-          caller,
-          destination,
-          uniqueId,
-          batchNumber,
-          indexInBatch,
-          arbBlockNum,
-          ethBlockNum,
-          timestamp,
-          callvalue,
-          data,
-        } = eventDataArr[0]
-
-        const eventDataPlus: L2ToL1EventResultPlus = {
-          caller,
-          destination,
-          uniqueId,
-          batchNumber,
-          indexInBatch,
-          arbBlockNum,
-          ethBlockNum,
-          timestamp,
-          callvalue,
-          data,
-          type: AssetType.ERC20,
-          value: withdrawEventData._amount,
-          tokenAddress: withdrawEventData.l1Token,
-          outgoingMessageState: outgoingMessageStates[i],
-          symbol: symbols[i],
-          decimals: decimals[i],
-        }
-        return eventDataPlus
-      }
-    ) */
-  }
-
-  const setInitialPendingWithdrawals = async (
-    bridge,
-    filter?: ethers.providers.Filter
-  ) => {
-    const pendingWithdrawals: PendingWithdrawalsMap = {}
-    const t = new Date().getTime()
-    console.log('*** Getting initial pending withdrawal data ***')
-    const l2ToL1Txns = await getTokenWithdrawalsV2(bridge, filter)
-
-    console.log(
-      `*** done getting pending withdrawals, took ${
-        Math.round(new Date().getTime() - t) / 1000
-      } seconds`
-    )
-    console.log(l2ToL1Txns)
-    /* for (const l2ToL1Thing of l2ToL1Txns as ) {
-      pendingWithdrawals[l2ToL1Thing.uniqueId.toString()] = l2ToL1Thing
-    }
-    console.log(pendingWithdrawals)
-    // setPendingWithdrawalMap(pendingWithdrawals)
-  }
-
-  /*  const getOutGoingMessageStateV2 = useCallback(
-    async (batchNumber: BigNumber, indexInBatch: BigNumber) => {
-      if (
-        executedMessagesCache[hashOutgoingMessage(batchNumber, indexInBatch)]
-      ) {
-        return OutgoingMessageState.EXECUTED
-      } else {
-        const proofData = await bridge.tryGetProofOnce(
-          batchNumber,
-          indexInBatch
-        )
-        if (!proofData) {
-          return OutgoingMessageState.UNCONFIRMED
-        }
-
-        const { path } = proofData
-        const l1NetworkID = await l1NetworkIDCached()
-        const res = await messageHasExecuted(path, batchNumber, l1NetworkID)
-
-        if (res) {
-          addToExecutedMessagesCache(batchNumber, indexInBatch)
-          return OutgoingMessageState.EXECUTED
-        } else {
-          return OutgoingMessageState.CONFIRMED
-        }
-      }
-    },
-    [executedMessagesCache]
-  )
-
-  const getOutGoingMessageState = useCallback(
-    async (batchNumber: BigNumber, indexInBatch: BigNumber) => {
-      if (
-        executedMessagesCache[hashOutgoingMessage(batchNumber, indexInBatch)]
-      ) {
-        return OutgoingMessageState.EXECUTED
-      } else {
-        return bridge.getOutGoingMessageState(batchNumber, indexInBatch)
-      }
-    },
-    [executedMessagesCache]
-  )
-
-  const addToExecutedMessagesCache = useCallback(
-    (batchNumber: BigNumber, indexInBatch: BigNumber) => {
-      const _executedMessagesCache = { ...executedMessagesCache }
-      _executedMessagesCache[hashOutgoingMessage(batchNumber, indexInBatch)] =
-        true
-      setExecutedMessagesCache(_executedMessagesCache)
-    },
-    [executedMessagesCache]
-  )
-
-  const hashOutgoingMessage = (
-    batchNumber: BigNumber,
-    indexInBatch: BigNumber
-  ) => {
-    return batchNumber.toString() + ',' + indexInBatch.toString() */
-  }
 
   return {
     transactions,
@@ -623,6 +672,8 @@ export function useTransactions() {
     successfulL1Deposits,
     sortedTransactions,
     setInitialPendingWithdrawals,
+    pendingWithdrawalsMap,
+    withdrawalsTransformed,
     mergedTransactionsToShow,
     mergedTransactions,
     pendingTransactions,

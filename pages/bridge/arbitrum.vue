@@ -146,7 +146,9 @@
           </div>
         </div>
       </div>
-      <BridgeTransactionsTable />
+      <BridgeTransactionsTable
+        :merged-transactions-to-show="mergedTransactionsToShow"
+      />
     </div>
   </div>
 </template>
@@ -156,14 +158,14 @@ import {
   computed,
   onMounted,
   ref,
-  watch,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
+import { useWeb3 } from '@instadapp/vue-web3'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
 import ArrowLeft from '~/assets/img/arrow-left.svg?inline'
 import Lock from '~/assets/img/lock.svg?inline'
 import { activeNetwork } from '~/composables/web3/useNetwork'
-import { useWeb3 } from '~/composables/web3/useWeb3'
+import { useTransactions } from '~/composables/bridge/useTransactions'
 import { useModal } from '~/composables/useModal'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useBridge } from '~/composables/bridge/useBridge'
@@ -179,7 +181,13 @@ export default defineComponent({
   setup() {
     const { showAssetBox } = useModal()
     const { getUserRealms, userRealms } = useRealms()
-    const { account /*, active */ } = useWeb3()
+    const { account, provider, library /*, active */ } = useWeb3()
+    const {
+      setInitialPendingWithdrawals,
+      mergedTransactionsToShow,
+      withdrawalsTransformed,
+      pendingWithdrawalsMap,
+    } = useTransactions()
     const {
       initBridge,
       depositRealm,
@@ -211,23 +219,26 @@ export default defineComponent({
     }
     onMounted(async () => {
       if (account.value) {
-        await initBridge()
-        /* await setInitialPendingWithdrawals(bridge, {
-          fromBlock: 4832019,
-        }) */
+        await getUserRealms()
+        setTimeout(async function () {
+          await setInitialPendingWithdrawals(bridge, {
+            fromBlock: 4832019,
+          })
+        }, 2500)
       }
     })
-    watch(
+    /* watch(
       account,
       async (val) => {
         if (val) {
+          console.log('account change' + val)
           await getUserRealms()
         }
       },
       {
         immediate: true,
       }
-    )
+    ) 
     watch(
       activeNetwork,
       async (val) => {
@@ -239,7 +250,7 @@ export default defineComponent({
       {
         immediate: true,
       }
-    )
+    ) */
     const selectedRealm = ref()
     const loadingMeta = ref(false)
 
@@ -268,6 +279,8 @@ export default defineComponent({
 
     return {
       activeNetwork,
+      provider,
+      library,
       networkName,
       assetsOnL2,
       assetsOnL1,
@@ -277,6 +290,9 @@ export default defineComponent({
       userRealms,
       l2TransactionCount,
       depositRealm,
+      mergedTransactionsToShow,
+      withdrawalsTransformed,
+      pendingWithdrawalsMap,
       partnerNetwork,
       showAssetBox,
       selectRealmForTransfer,

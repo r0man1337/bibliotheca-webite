@@ -9,7 +9,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { activeNetwork } from './useNetwork'
-import { useWeb3 } from './useWeb3'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useBigNumber } from './useBigNumber'
 import balanceABI from '~/abi/balance.json'
 import { createTokenUtils } from '~/utils/create-token-utils'

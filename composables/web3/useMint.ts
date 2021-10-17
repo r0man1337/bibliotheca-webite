@@ -10,13 +10,13 @@ import {
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useNetwork, activeNetwork } from './useNetwork'
-import { useWeb3 } from './useWeb3'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useGraph } from './useGraph'
 import { useBigNumber } from './useBigNumber'
 import { mintedRealmsQuery } from './../graphql/queries'
+import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import realmsABI from '~/abi/lootRealms.json'
 import erc721tokens from '~/constant/erc721tokens'
-import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 
 const result = reactive({ mint: null })
 

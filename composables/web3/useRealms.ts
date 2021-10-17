@@ -8,7 +8,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import { useNetwork, activeNetwork, Network } from './useNetwork'
-import { useWeb3 } from './useWeb3'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { usersRealms, usersSRealms } from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'

@@ -274,13 +274,18 @@ import { defineComponent, ref } from '@vue/composition-api'
 import { useTransactions } from '~/composables/bridge/useTransactions'
 
 export default defineComponent({
+  props: {
+    mergedTransactionsToShow: {
+      type: Array,
+      default: null,
+    },
+  },
   setup() {
     const {
       transactions,
-      mergedTransactionsToShow,
       mergedTransactions,
-      pendingTransactions,
-      seqNumToAutoRedeems,
+      withdrawalsTransformed,
+      pendingWithdrawalsMap,
       depositsTransformed,
     } = useTransactions()
 
@@ -291,10 +296,11 @@ export default defineComponent({
       showRedeemRetryableButton,
       isDepositMode,
       transactions,
-      mergedTransactionsToShow,
       mergedTransactions,
-      pendingTransactions,
-      seqNumToAutoRedeems,
+      pendingWithdrawalsMap,
+
+      withdrawalsTransformed,
+
       depositsTransformed,
     }
   },
