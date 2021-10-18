@@ -1,9 +1,9 @@
 import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 // import { useLocalStorage } from 'vue-composable';
 
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useModal } from '../useModal'
 import { useNotification } from '../useNotification'
-import { useWeb3 } from '@instadapp/vue-web3'
 
 import MainnetSVG from '~/assets/icons/mainnet.svg?inline'
 import ArbitrumSVG from '~/assets/icons/arbitrum.svg?inline'
@@ -66,7 +66,7 @@ if (activeNetworks.includes('rinkeby')) {
     partnerChainID: 421611,
     isArbitrum: false,
     explorerUrl: 'https://rinkeby.etherscan.io',
-    url: `https://rinkeby.infura.io/v3/${process.env.infuraId}`,
+    url: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
   })
 }
 if (activeNetworks.includes('arbitrum')) {

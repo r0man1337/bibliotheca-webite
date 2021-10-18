@@ -94,29 +94,27 @@ export function useBridge() {
   const l2TransactionCount = ref(null)
   const bridge = ref(null)
 
-  const initBridge = async () => {
-    const getL1Signer = async () => {
-      if (activeNetwork.value.isArbitrum) {
-        const ethProvider = new ethers.providers.JsonRpcProvider(
-          useL2Network.value.url
-        )
-        return ethProvider.getSigner(account.value)
-      }
-      return (await library.value?.getSigner()) as JsonRpcSigner
-    }
-
-    const getL2Signer = async () => {
-      if (activeNetwork.value.isArbitrum) {
-        return (await library.value?.getSigner(0)) as JsonRpcSigner
-      }
-      const arbProvider = new ethers.providers.JsonRpcProvider(
-        useL2Network.value.url
+  const getL1Signer = async () => {
+    if (activeNetwork.value.isArbitrum) {
+      const ethProvider = new ethers.providers.JsonRpcProvider(
+        useL1Network.value.url
       )
-      return arbProvider.getSigner(account.value)
+      return ethProvider.getSigner(account.value)
     }
-    console.log(await getL1Signer())
-    console.log(await getL2Signer())
+    return (await library.value?.getSigner(account.value)) as JsonRpcSigner
+  }
 
+  const getL2Signer = async () => {
+    if (activeNetwork.value.isArbitrum) {
+      return (await library.value?.getSigner(account.value)) as JsonRpcSigner
+    }
+    const arbProvider = new ethers.providers.JsonRpcProvider(
+      useL2Network.value.url
+    )
+    return arbProvider.getSigner(account.value)
+  }
+
+  const initBridge = async () => {
     try {
       bridge.value = await Bridge.init(await getL1Signer(), await getL2Signer())
       l2TransactionCount.value =
@@ -134,7 +132,6 @@ export function useBridge() {
       loading.depositL1 = true
       try {
         // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
-        console.log(l1Signer.value)
         const calldataBytes = ethers.utils.defaultAbiCoder.encode(
           ['address', 'uint256'],
           [bridge.value.l1Bridge.l1Signer._address, 1011]
@@ -159,7 +156,7 @@ export function useBridge() {
         const lootRealmsLockbox = new ethers.Contract(
           RINKEBY_L1_BRIDGE_ADDRESS,
           realmsLockBoxABI,
-          l1Signer.value
+          await getL1Signer()
         )
         const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
         const tokensAddrArr = tokensArr.map((a) => a.address)
@@ -167,7 +164,7 @@ export function useBridge() {
         const realmsContract = new ethers.Contract(
           tokensAddrArr[0],
           lootRealmsABI,
-          l1Signer.value
+          await getL1Signer()
         )
 
         const checkApproval = await realmsContract.isApprovedForAll(
@@ -206,7 +203,6 @@ export function useBridge() {
           { value: callValue }
         )
 
-        console.log(l1Signer._address)
         addTransaction({
           type: 'deposit-l1',
           status: 'pending',
