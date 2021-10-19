@@ -33,9 +33,10 @@
           px-4
           py-2
           space-x-6
-          border-gray-500
+          border-gray-800
           w-auto
           border
+          shadow-xl
         "
       >
         <a
@@ -57,10 +58,10 @@
           >mana: {{ adventurer.wallet.manasHeld }}</a
         >
         <a
-          v-if="adventurer.wallet.treasuresHeld"
+          v-if="adventurer.wallet.gAdventurersHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
-          href="#treasure"
-          >Treasure: {{ adventurer.wallet.treasuresHeld }}</a
+          href="#ga"
+          >Genesis Adventurers: {{ adventurer.wallet.gAdventurersHeld }}</a
         >
         <a
           v-if="adventurer.wallet.mLootsHeld"
@@ -96,6 +97,21 @@
           <Loader v-for="(loader, index) in 4" :key="index" class="mr-3 mb-3" />
         </div>
       </div>
+      <div v-if="adventurer.gadventurers.length" id="ga">
+        <hr />
+        <h3 class="mt-8">
+          Genesis Adventurers: {{ adventurer.wallet.gAdventurersHeld }}
+        </h3>
+        <div class="flex flex-wrap w-full">
+          <div
+            v-for="loot in adventurer.gadventurers"
+            :key="loot.id"
+            class="w-96"
+          >
+            <GACard :loot="loot" />
+          </div>
+        </div>
+      </div>
       <div v-if="adventurer.manas.length" id="mana">
         <hr />
         <h3 class="mt-8">Mana: {{ adventurer.manas.length }}</h3>
@@ -109,19 +125,7 @@
           </div>
         </div>
       </div>
-      <div v-if="adventurer.treasures.length" id="treasure">
-        <hr />
-        <h3 class="mt-8">Treasure: {{ adventurer.wallet.treasuresHeld }}</h3>
-        <div class="flex flex-wrap w-full">
-          <div
-            v-for="treasure in adventurer.treasures"
-            :key="treasure.id"
-            class="w-80"
-          >
-            <TreasureCard :treasure="treasure" />
-          </div>
-        </div>
-      </div>
+
       <div v-if="adventurer.mloots.length" id="mloot">
         <hr />
         <h3 class="mt-8">mLoot: {{ adventurer.wallet.mLootsHeld }}</h3>
@@ -168,7 +172,7 @@ export default defineComponent({
         wallet(id: $slug) {
           realmsHeld
           bagsHeld
-          treasuresHeld
+          gAdventurersHeld
           mLootsHeld
           manasHeld
         }
@@ -192,16 +196,19 @@ export default defineComponent({
             joined
           }
         }
-        treasures(first: 30, where: { currentOwner: $slug }) {
+        gadventurers(first: 30, where: { currentOwner: $slug }) {
           id
-          asset1
-          asset2
-          asset3
-          asset4
-          asset5
-          asset6
-          asset7
-          asset8
+          head
+          neck
+          chest
+          hand
+          ring
+          weapon
+          waist
+          foot
+          order
+          orderColor
+          orderCount
           currentOwner {
             address
             bagsHeld
