@@ -173,7 +173,10 @@ export default {
   generate: {
     fallback: true,
   },
-  serverMiddleware: [{ path: '/api', handler: '~/serverMiddleware/server.js' }],
+  serverMiddleware: [
+    { path: '/api', handler: '~/serverMiddleware/server.js' },
+    '~/serverMiddleware/redirects.ts',
+  ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config) {
