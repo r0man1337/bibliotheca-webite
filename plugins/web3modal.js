@@ -1,7 +1,7 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
 import Portis from '@portis/web3'
-import { setProviders } from '~/composables/web3/useWeb3'
+import { setProviders } from '@instadapp/vue-web3'
 import SVGcoinbase from '~/assets/icons/coinbase.svg'
 
 export default ({ $config }) => {

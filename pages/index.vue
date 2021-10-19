@@ -108,8 +108,8 @@
 
 <script>
 import { defineComponent, onMounted } from '@vue/composition-api'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useAdventurer } from '~/composables/useAdventurer'
-import { useWeb3 } from '~/composables/web3/useWeb3'
 
 import Book from '~/assets/img/book-open.svg?inline'
 export default defineComponent({

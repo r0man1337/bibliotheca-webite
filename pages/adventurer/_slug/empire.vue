@@ -25,11 +25,11 @@
 <script>
 import { defineComponent, onMounted } from '@vue/composition-api'
 
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
-import { useWeb3 } from '~/composables/web3/useWeb3'
 export default defineComponent({
   setup(props, context) {
     const { slug } = context.root.$route.params

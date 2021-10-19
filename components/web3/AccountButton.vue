@@ -99,7 +99,6 @@ import { useWeb3 } from '@instadapp/vue-web3'
 import { useFormatting } from '~/composables/useFormatting'
 import Helm from '~/assets/img/helm.svg?inline'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
-
 export default defineComponent({
   components: {
     Helm,

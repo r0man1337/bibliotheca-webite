@@ -121,7 +121,25 @@ export default {
           : 'http://localhost:1337/graphql',
         options: {},
       },
-      secondClient: {},
+      L1Mainnetlient: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-bridge-eth',
+      },
+
+      L2Mainnetlient: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-builtins',
+      },
+
+      L1RinkebyClient: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-bridge-eth-rinkeby',
+      },
+
+      L2RinkebyClient: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/fredlacs/arb-builtins-rinkeby',
+      },
     },
     options: {},
     useFetchPolyfill: true,

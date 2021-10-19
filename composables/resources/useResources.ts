@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { useWeb3 } from '../web3/useWeb3'
+import { useWeb3 } from '@instadapp/vue-web3'
 
 // ABI
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'

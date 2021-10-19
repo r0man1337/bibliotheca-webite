@@ -8,10 +8,11 @@ import {
 } from '@nuxtjs/composition-api'
 import { hexDataLength } from '@ethersproject/bytes'
 import { TransactionReceipt } from '@ethersproject/abstract-provider'
+import { JsonRpcSigner } from '@ethersproject/providers/lib/json-rpc-provider'
 import { ethers, BigNumber } from 'ethers'
 import { Bridge } from 'arb-ts'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { useWeb3 } from '../web3/useWeb3'
 import { useBigNumber } from '../web3/useBigNumber'
 import realmsLockBoxABI from '~/abi/realmsLockBox.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
@@ -78,7 +79,6 @@ export function useBridge() {
   const { provider, library, account, activate } = useWeb3()
   const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
   const {
-    transactions,
     successfulL1Deposits,
     sortedTransactions,
     addTransaction,
@@ -94,36 +94,34 @@ export function useBridge() {
   const l2TransactionCount = ref(null)
   const bridge = ref(null)
 
+  const getL1Signer = async () => {
+    if (activeNetwork.value.isArbitrum) {
+      const ethProvider = new ethers.providers.JsonRpcProvider(
+        useL1Network.value.url
+      )
+      return ethProvider.getSigner(account.value)
+    }
+    return (await library.value?.getSigner(account.value)) as JsonRpcSigner
+  }
+
+  const getL2Signer = async () => {
+    if (activeNetwork.value.isArbitrum) {
+      return (await library.value?.getSigner(account.value)) as JsonRpcSigner
+    }
+    const arbProvider = new ethers.providers.JsonRpcProvider(
+      useL2Network.value.url
+    )
+    return arbProvider.getSigner(account.value)
+  }
+
   const initBridge = async () => {
-    if (!process.server && account.value) {
-      if (!activeNetwork.value.isArbitrum) {
-        ethProvider.value = new ethers.providers.Web3Provider(window.ethereum)
-        arbProvider.value = new ethers.providers.JsonRpcProvider(
-          useL2Network.value.url
-        )
-      } else {
-        ethProvider.value = new ethers.providers.JsonRpcProvider(
-          useL1Network.value.url
-        )
-        arbProvider.value = new ethers.providers.Web3Provider(provider.value)
-      }
-
-      l1Signer.value = ethProvider.value.getSigner(account.value)
-      l2Signer.value = arbProvider.value.getSigner(account.value)
-
-      try {
-        bridge.value = await Bridge.init(
-          l1Signer.value,
-          l2Signer.value,
-          RINKEBY_L1_BRIDGE_ADDRESS,
-          ARB_RINKEBY_L2_BRIDGE_ADDRESS
-        )
-        l2TransactionCount.value =
-          await bridge.value.l2Signer.getTransactionCount()
-        return bridge.value
-      } catch (e) {
-        console.log(e)
-      }
+    try {
+      bridge.value = await Bridge.init(await getL1Signer(), await getL2Signer())
+      l2TransactionCount.value =
+        await bridge.value.l2Signer.getTransactionCount()
+      return bridge.value
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -134,7 +132,6 @@ export function useBridge() {
       loading.depositL1 = true
       try {
         // Calculate the amount of data to be sent to L2 (see LootRealmsLockbox)
-        console.log(l1Signer.value)
         const calldataBytes = ethers.utils.defaultAbiCoder.encode(
           ['address', 'uint256'],
           [bridge.value.l1Bridge.l1Signer._address, 1011]
@@ -159,7 +156,7 @@ export function useBridge() {
         const lootRealmsLockbox = new ethers.Contract(
           RINKEBY_L1_BRIDGE_ADDRESS,
           realmsLockBoxABI,
-          l1Signer.value
+          await getL1Signer()
         )
         const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
         const tokensAddrArr = tokensArr.map((a) => a.address)
@@ -167,7 +164,7 @@ export function useBridge() {
         const realmsContract = new ethers.Contract(
           tokensAddrArr[0],
           lootRealmsABI,
-          l1Signer.value
+          await getL1Signer()
         )
 
         const checkApproval = await realmsContract.isApprovedForAll(
@@ -206,7 +203,6 @@ export function useBridge() {
           { value: callValue }
         )
 
-        console.log(l1Signer._address)
         addTransaction({
           type: 'deposit-l1',
           status: 'pending',
@@ -506,7 +502,8 @@ export function useBridge() {
   const addL2Interval = ref()
   const checkPendingInterval = ref()
 
-  onMounted(() => {
+  onMounted(async () => {
+    await initBridge()
     addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
     checkPendingInterval.value = setInterval(
       checkAndUpdatePendingTransactions,
