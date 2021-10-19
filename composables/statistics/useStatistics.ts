@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { activeNetwork } from '../web3/useNetwork'
-import { useWeb3 } from '../web3/useWeb3'
+import { useWeb3 } from '../web3'
 import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
