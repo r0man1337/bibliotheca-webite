@@ -145,17 +145,12 @@ export default {
 
     const utilLinks = [
       {
-<<<<<<< HEAD
         page: '/bridge/arbitrum',
         title: 'Arbitrum Bridge',
       },
       {
-        page: '/realms/mint',
-        title: 'Mint realms',
-=======
         page: '/claim',
         title: 'Claims & Mints',
->>>>>>> dev
       },
       {
         page: '/realms/resources',
