@@ -21,6 +21,7 @@ export function useResources() {
 
   const loading = reactive({
     resources: false,
+    fetchingResources: false,
   })
 
   const result = reactive({ resources: null })
@@ -60,11 +61,12 @@ export function useResources() {
     }
   }
 
+  const upgradeCosts = ref()
   const fetchUpgradeCost = async (resourceId, level) => {
     try {
       error.resources = null
-      // loading.resources = true
-      return await upgradeCost(
+      loading.fetchingResources = true
+      upgradeCosts.value = await upgradeCost(
         account.value,
         activeNetwork.value.id,
         resourceId,
@@ -74,7 +76,7 @@ export function useResources() {
       console.log(e)
       error.resources = e.message
     } finally {
-      // loading.resources = false
+      loading.fetchingResources = false
     }
   }
   const upgradeResource = async (realmId, resourceId, level) => {
@@ -82,17 +84,15 @@ export function useResources() {
     try {
       error.resources = null
       loading.resources = true
-      const cost = await fetchUpgradeCost(resourceId, level)
-      console.log(cost)
-      const response = await upgradeResourceProduction(
+      await fetchUpgradeCost(resourceId, level)
+      await upgradeResourceProduction(
         account.value,
         activeNetwork.value.id,
         realmId,
         resourceId,
-        cost[1],
-        cost[0]
+        upgradeCosts.value[0],
+        upgradeCosts.value[1]
       )
-      console.log(response)
     } catch (e) {
       console.log(e)
       error.resources = e.message
@@ -106,6 +106,7 @@ export function useResources() {
     fetchProductionOutput,
     upgradeResource,
     fetchUpgradeCost,
+    upgradeCosts,
     error,
     loading,
     result,

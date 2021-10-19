@@ -1,6 +1,43 @@
 {
-  "address": "0xF841514865dC2757e271EB2c649D15DEe33AfF10",
+  "address": "0x593E78DDe8C7138D0Aa3c46D85015cDAfC734ACe",
   "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "lord",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "realmID",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "buildingID",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "resourcesValues",
+          "type": "uint256[]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "resourcesBurnt",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "ResourceUpgraded",
+      "type": "event"
+    },
     {
       "inputs": [
         {
@@ -17,14 +54,14 @@
       "name": "getCosts",
       "outputs": [
         {
-          "internalType": "uint256[]",
-          "name": "",
-          "type": "uint256[]"
-        },
-        {
           "internalType": "uint8[]",
           "name": "",
           "type": "uint8[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",
@@ -60,13 +97,6 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "initResourceValues",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -95,27 +125,27 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0xff5579e3b73003304556ebce23d1f7b42303a85d4b7f818c1da659cda02439bb",
+  "transactionHash": "0xfe6e34579cc81fc6704bf19498936b09b57eb3968680456244ed3868d8370b16",
   "receipt": {
     "to": null,
-    "from": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-    "contractAddress": "0xF841514865dC2757e271EB2c649D15DEe33AfF10",
+    "from": "0xF3a8b033c2572A2887c507aa92eD134B29620245",
+    "contractAddress": "0x593E78DDe8C7138D0Aa3c46D85015cDAfC734ACe",
     "transactionIndex": 0,
-    "gasUsed": "41813284",
+    "gasUsed": "27881790",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0xc94e127ae17356e2206275913a0b61dd3487f28e405b64b1fd4e0eb97530532f",
-    "transactionHash": "0xff5579e3b73003304556ebce23d1f7b42303a85d4b7f818c1da659cda02439bb",
+    "blockHash": "0x9d55b40256c93fe4bb2f3fb0c4c1c57d7476cd33a6960e5d7842199620206768",
+    "transactionHash": "0xfe6e34579cc81fc6704bf19498936b09b57eb3968680456244ed3868d8370b16",
     "logs": [],
-    "blockNumber": 5391832,
-    "cumulativeGasUsed": "32422384",
+    "blockNumber": 5740151,
+    "cumulativeGasUsed": "21532410",
     "status": 1,
     "byzantium": true
   },
   "args": [],
-  "solcInputHash": "6ff06cbd8dadafec7118428c79511e38",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_level\",\"type\":\"uint256\"}],\"name\":\"getCosts\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"},{\"internalType\":\"uint8[]\",\"name\":\"\",\"type\":\"uint8[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"}],\"name\":\"getProductionDetails\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initResourceValues\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_realmTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"resources\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"resourceValues\",\"type\":\"uint256[]\"}],\"name\":\"upgradeResource\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/facets/ResourceConstructionFacet.sol\":\"ResourceConstructionFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @title ERC721 token receiver interface\\n * @dev Interface for any contract that wants to support safeTransfers\\n * from ERC721 asset contracts.\\n */\\ninterface IERC721Receiver {\\n    /**\\n     * @dev Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom}\\n     * by `operator` from `from`, this function is called.\\n     *\\n     * It must return its Solidity selector to confirm the token transfer.\\n     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.\\n     *\\n     * The selector can be obtained in Solidity with `IERC721.onERC721Received.selector`.\\n     */\\n    function onERC721Received(\\n        address operator,\\n        address from,\\n        uint256 tokenId,\\n        bytes calldata data\\n    ) external returns (bytes4);\\n}\\n\",\"keccak256\":\"0xd9517254724276e2e8de3769183c1f738f445f0095c26fd9b86d3c6687e887b9\",\"license\":\"MIT\"},\"contracts/facets/ResourceConstructionFacet.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\nimport \\\"@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol\\\";\\nimport \\\"../interfaces/ResourcesIERC1155MintBurn.sol\\\";\\n\\n//TODO: implement IERCReveiver Calls\\n//TODO: Add ownly sRealm owner\\ncontract ResourceConstructionFacet {\\n    AppStorage internal s;\\n\\n    // TODO: add security to this\\n    function initResourceValues() public {\\n        // output levels\\n        s.levelProduction[1].output = 10;\\n        s.levelProduction[2].output = 14;\\n        s.levelProduction[3].output = 16;\\n        s.levelProduction[4].output = 18;\\n        s.levelProduction[5].output = 20;\\n\\n        // resource ids\\n        s.upgradeCosts[1].resourceIds = [1, 2, 3];\\n        s.upgradeCosts[2].resourceIds = [1, 2, 3];\\n        s.upgradeCosts[3].resourceIds = [1, 2, 3];\\n        s.upgradeCosts[4].resourceIds = [1, 2, 3];\\n\\n        // value costs\\n        s.upgradeCosts[1].upgradeCostLevels[1].value = [1, 1, 1];\\n        s.upgradeCosts[1].upgradeCostLevels[2].value = [2, 2, 2];\\n        s.upgradeCosts[1].upgradeCostLevels[3].value = [3, 3, 3];\\n        s.upgradeCosts[1].upgradeCostLevels[4].value = [4, 4, 4];\\n        s.upgradeCosts[1].upgradeCostLevels[5].value = [5, 5, 5];\\n\\n        s.upgradeCosts[2].upgradeCostLevels[1].value = [1, 1, 1];\\n        s.upgradeCosts[2].upgradeCostLevels[2].value = [2, 2, 2];\\n        s.upgradeCosts[2].upgradeCostLevels[3].value = [3, 3, 3];\\n        s.upgradeCosts[2].upgradeCostLevels[4].value = [4, 4, 4];\\n        s.upgradeCosts[2].upgradeCostLevels[5].value = [5, 5, 5];\\n    }\\n\\n    // TODO: Check resource is actually on the Realm\\n    // TODO: Check owner of Realm\\n    function upgradeResource(\\n        uint256 _realmTokenId,\\n        uint256 _resourceId,\\n        uint256[] memory resources,\\n        uint256[] memory resourceValues\\n    ) external payable {\\n        RealmInfo storage realmInfo = s.realmInfo[_realmTokenId];\\n        UpgradeCosts storage upgradeCosts = s.upgradeCosts[_resourceId];\\n\\n        ResourcesIERC1155MintBurn resourceTokens = ResourcesIERC1155MintBurn(\\n            s.resources\\n        );\\n\\n        // get level\\n\\n        for (uint256 i = 0; i < upgradeCosts.resourceIds.length; i++) {\\n            require(\\n                resources[i] == upgradeCosts.resourceIds[i],\\n                \\\"Incorrect resource\\\"\\n            );\\n            require(\\n                resourceValues[i] ==\\n                    upgradeCosts\\n                        .upgradeCostLevels[\\n                            realmInfo.resourceInfo[_resourceId].level\\n                        ]\\n                        .value[i],\\n                \\\"Incorrect resources values\\\"\\n            );\\n        }\\n\\n        resourceTokens.productionBuildingsBurn(\\n            msg.sender,\\n            resources,\\n            resourceValues\\n        );\\n\\n        realmInfo.resourceInfo[_resourceId].level++;\\n\\n        LevelProduction storage levelProduction = s.levelProduction[\\n            realmInfo.resourceInfo[_resourceId].level\\n        ];\\n        realmInfo.resourceInfo[_resourceId].production = levelProduction.output;\\n\\n        // TODO: Emit burn event\\n    }\\n\\n    function getProductionDetails(uint256 _tokenId, uint256 _resourceId)\\n        public\\n        view\\n        returns (uint256, uint256)\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n\\n        return (\\n            realmInfo.resourceInfo[_resourceId].level,\\n            realmInfo.resourceInfo[_resourceId].production\\n        );\\n    }\\n\\n    //TODO: Reverse return so resourceIds are first\\n    function getCosts(uint256 _resourceId, uint256 _level)\\n        public\\n        view\\n        returns (uint256[] memory, uint8[] memory)\\n    {\\n        UpgradeCosts storage upgradeCosts = s.upgradeCosts[_resourceId];\\n\\n        return (\\n            upgradeCosts.upgradeCostLevels[_level].value,\\n            upgradeCosts.resourceIds\\n        );\\n    }\\n}\\n\",\"keccak256\":\"0x9037dbe6cbc1cd0733a6e4b86943a02dcad5f952a188249c7bb8e7b19572d0c4\"},\"contracts/interfaces/IERC1155.sol\":{\"content\":\"// SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.2;\\n\\ninterface IERC1155 {\\n    /****************************************|\\n  |                 Events                 |\\n  |_______________________________________*/\\n\\n    /**\\n     * @dev Either TransferSingle or TransferBatch MUST emit when tokens are transferred, including zero amount transfers as well as minting or burning\\n     *   Operator MUST be msg.sender\\n     *   When minting/creating tokens, the `_from` field MUST be set to `0x0`\\n     *   When burning/destroying tokens, the `_to` field MUST be set to `0x0`\\n     *   The total amount transferred from address 0x0 minus the total amount transferred to 0x0 may be used by clients and exchanges to be added to the \\\"circulating supply\\\" for a given token ID\\n     *   To broadcast the existence of a token ID with no initial balance, the contract SHOULD emit the TransferSingle event from `0x0` to `0x0`, with the token creator as `_operator`, and a `_amount` of 0\\n     */\\n    event TransferSingle(\\n        address indexed _operator,\\n        address indexed _from,\\n        address indexed _to,\\n        uint256 _id,\\n        uint256 _amount\\n    );\\n\\n    /**\\n     * @dev Either TransferSingle or TransferBatch MUST emit when tokens are transferred, including zero amount transfers as well as minting or burning\\n     *   Operator MUST be msg.sender\\n     *   When minting/creating tokens, the `_from` field MUST be set to `0x0`\\n     *   When burning/destroying tokens, the `_to` field MUST be set to `0x0`\\n     *   The total amount transferred from address 0x0 minus the total amount transferred to 0x0 may be used by clients and exchanges to be added to the \\\"circulating supply\\\" for a given token ID\\n     *   To broadcast the existence of multiple token IDs with no initial balance, this SHOULD emit the TransferBatch event from `0x0` to `0x0`, with the token creator as `_operator`, and a `_amount` of 0\\n     */\\n    event TransferBatch(\\n        address indexed _operator,\\n        address indexed _from,\\n        address indexed _to,\\n        uint256[] _ids,\\n        uint256[] _amounts\\n    );\\n\\n    /**\\n     * @dev MUST emit when an approval is updated\\n     */\\n    event ApprovalForAll(\\n        address indexed _owner,\\n        address indexed _operator,\\n        bool _approved\\n    );\\n\\n    /****************************************|\\n  |                Functions               |\\n  |_______________________________________*/\\n\\n    /**\\n     * @notice Transfers amount of an _id from the _from address to the _to address specified\\n     * @dev MUST emit TransferSingle event on success\\n     * Caller must be approved to manage the _from account's tokens (see isApprovedForAll)\\n     * MUST throw if `_to` is the zero address\\n     * MUST throw if balance of sender for token `_id` is lower than the `_amount` sent\\n     * MUST throw on any other error\\n     * When transfer is complete, this function MUST check if `_to` is a smart contract (code size > 0). If so, it MUST call `onERC1155Received` on `_to` and revert if the return amount is not `bytes4(keccak256(\\\"onERC1155Received(address,address,uint256,uint256,bytes)\\\"))`\\n     * @param _from    Source address\\n     * @param _to      Target address\\n     * @param _id      ID of the token type\\n     * @param _amount  Transfered amount\\n     * @param _data    Additional data with no specified format, sent in call to `_to`\\n     */\\n    function safeTransferFrom(\\n        address _from,\\n        address _to,\\n        uint256 _id,\\n        uint256 _amount,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @notice Send multiple types of Tokens from the _from address to the _to address (with safety call)\\n     * @dev MUST emit TransferBatch event on success\\n     * Caller must be approved to manage the _from account's tokens (see isApprovedForAll)\\n     * MUST throw if `_to` is the zero address\\n     * MUST throw if length of `_ids` is not the same as length of `_amounts`\\n     * MUST throw if any of the balance of sender for token `_ids` is lower than the respective `_amounts` sent\\n     * MUST throw on any other error\\n     * When transfer is complete, this function MUST check if `_to` is a smart contract (code size > 0). If so, it MUST call `onERC1155BatchReceived` on `_to` and revert if the return amount is not `bytes4(keccak256(\\\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\\\"))`\\n     * Transfers and events MUST occur in the array order they were submitted (_ids[0] before _ids[1], etc)\\n     * @param _from     Source addresses\\n     * @param _to       Target addresses\\n     * @param _ids      IDs of each token type\\n     * @param _amounts  Transfer amounts per token type\\n     * @param _data     Additional data with no specified format, sent in call to `_to`\\n     */\\n    function safeBatchTransferFrom(\\n        address _from,\\n        address _to,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @notice Get the balance of an account's Tokens\\n     * @param _owner  The address of the token holder\\n     * @param _id     ID of the Token\\n     * @return        The _owner's balance of the Token type requested\\n     */\\n    function balanceOf(address _owner, uint256 _id)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /**\\n     * @notice Get the balance of multiple account/token pairs\\n     * @param _owners The addresses of the token holders\\n     * @param _ids    ID of the Tokens\\n     * @return        The _owner's balance of the Token types requested (i.e. balance for each (owner, id) pair)\\n     */\\n    function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids)\\n        external\\n        view\\n        returns (uint256[] memory);\\n\\n    /**\\n     * @notice Enable or disable approval for a third party (\\\"operator\\\") to manage all of caller's tokens\\n     * @dev MUST emit the ApprovalForAll event on success\\n     * @param _operator  Address to add to the set of authorized operators\\n     * @param _approved  True if the operator is approved, false to revoke approval\\n     */\\n    function setApprovalForAll(address _operator, bool _approved) external;\\n\\n    /**\\n     * @notice Queries the approval status of an operator for a given owner\\n     * @param _owner     The owner of the Tokens\\n     * @param _operator  Address of authorized operator\\n     * @return isOperator True if the operator is approved, false if not\\n     */\\n    function isApprovedForAll(address _owner, address _operator)\\n        external\\n        view\\n        returns (bool isOperator);\\n}\\n\",\"keccak256\":\"0xa71395b6df4a2d78d7d9a4e42e9411e44f1933f2190ebb59e93d46957cca1622\",\"license\":\"Apache-2.0\"},\"contracts/interfaces/ResourcesIERC1155MintBurn.sol\":{\"content\":\"// SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.2;\\n\\nimport \\\"./IERC1155.sol\\\";\\n\\n/**\\n * Recommended interface for public facing minting and burning functions.\\n * These public methods should have restricted access.\\n */\\ninterface ResourcesIERC1155MintBurn is IERC1155 {\\n    /***************************************|\\n  |        Public Minting Functions       |\\n  |______________________________________*/\\n\\n    /**\\n     * @dev Mint _amount of tokens of a given id if not frozen and if max supply not exceeded\\n     * @param _to     The address to mint tokens to.\\n     * @param _id     Token id to mint\\n     * @param _amount The amount to be minted\\n     * @param _data   Byte array of data to pass to recipient if it's a contract\\n     */\\n    function mint(\\n        address _to,\\n        uint256 _id,\\n        uint256 _amount,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @dev Mint tokens for each ids in _ids\\n     * @param _to      The address to mint tokens to.\\n     * @param _ids     Array of ids to mint\\n     * @param _amounts Array of amount of tokens to mint per id\\n     * @param _data    Byte array of data to pass to recipient if it's a contract\\n     */\\n    function batchMint(\\n        address _to,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts,\\n        bytes calldata _data\\n    ) external;\\n\\n    /***************************************|\\n  |        Public Minting Functions       |\\n  |______________________________________*/\\n\\n    /**\\n     * @notice Burn _amount of tokens of a given token id\\n     * @param _from    The address to burn tokens from\\n     * @param _id      Token id to burn\\n     * @param _amount  The amount to be burned\\n     */\\n    function burn(\\n        address _from,\\n        uint256 _id,\\n        uint256 _amount\\n    ) external;\\n\\n    /**\\n     * @notice Burn tokens of given token id for each (_ids[i], _amounts[i]) pair\\n     * @param _from     The address to burn tokens from\\n     * @param _ids      Array of token ids to burn\\n     * @param _amounts  Array of the amount to be burned\\n     */\\n    function batchBurn(\\n        address _from,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts\\n    ) external;\\n\\n    function resourceMinting(\\n        address _to,\\n        uint256[] memory _ids,\\n        uint256[] memory _amounts,\\n        uint256[] memory _tresuryAmounts,\\n        bytes memory _data\\n    ) external;\\n\\n    function productionBuildingsBurn(\\n        address _from,\\n        uint256[] memory _ids,\\n        uint256[] memory _amounts\\n    ) external;\\n}\\n\",\"keccak256\":\"0xb4589dc57eb5a51a1310bafc3fe0f9c0eaf696c7116fc65ff67a69d575532430\",\"license\":\"Apache-2.0\"},\"contracts/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct RealmStatistics {\\n    uint8 realmDefence;\\n    uint8 realmOffence;\\n    uint8 realmMagic;\\n    uint8 foodSupply;\\n}\\n\\nstruct RealmInfo {\\n    uint256 tokenId;\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint256[] resourceIds;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n}\\nstruct BuildingCosts {\\n    string name;\\n    uint8[] resourceIds;\\n    uint8[] resourceValues;\\n    uint8[] requirements;\\n}\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\\nlibrary UintKey {\\n    // Resources and wonders\\n    uint256 public constant WOOD = 1;\\n    uint256 public constant STONE = 2;\\n    uint256 public constant COAL = 3;\\n    uint256 public constant COPPER = 4;\\n    uint256 public constant OBSIDIAN = 5;\\n    uint256 public constant SILVER = 6;\\n    uint256 public constant IRONWOOD = 7;\\n    uint256 public constant COLD_IRON = 8;\\n    uint256 public constant GOLD = 9;\\n    uint256 public constant HARTWOOD = 10;\\n    uint256 public constant DIAMONDS = 11;\\n    uint256 public constant SAPPHIRE = 12;\\n    uint256 public constant DEEP_CRYSTAL = 13;\\n    uint256 public constant RUBY = 14;\\n    uint256 public constant IGNIUM = 15;\\n    uint256 public constant ETHEREAL_SILICA = 16;\\n    uint256 public constant TRUE_ICE = 17;\\n    uint256 public constant TWILIGHT_QUARTZ = 18;\\n    uint256 public constant ALCHEMICAL_SILVER = 19;\\n    uint256 public constant ADAMANTINE = 20;\\n    uint256 public constant MITHRAL = 21;\\n    uint256 public constant DRAGONHIDE = 22;\\n    //will add the rest of the wonders if library works as expected on test\\n    uint256 public constant CATHEDRAL_OF_AGONY = 23;\\n}\\n\",\"keccak256\":\"0xb30deaff61ab7453969f0a86b150b3d31a9241fd16f55ef3fa00e6498e90897f\"}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5061141a806100206000396000f3fe60806040526004361061003f5760003560e01c80633dc974a31461004457806396a2d73b1461005b578063b364a22114610099578063f9831c7d146100b5575b600080fd5b34801561005057600080fd5b506100596100f3565b005b34801561006757600080fd5b50610082600480360381019061007d9190610e29565b61072b565b6040516100909291906110ab565b60405180910390f35b6100b360048036038101906100ae9190610e65565b610839565b005b3480156100c157600080fd5b506100dc60048036038101906100d79190610e29565b610be8565b6040516100ea929190611122565b60405180910390f35b600a600060080160006001815260200190815260200160002060000160006101000a81548160ff021916908360ff160217905550600e600060080160006002815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506010600060080160006003815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506012600060080160006004815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506014600060080160006005815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060018152602001908152602001600020600001906003610246929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060028152602001908152602001600020600001906003610296929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff1681525060006009016000600381526020019081526020016000206000019060036102e6929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060048152602001908152602001600020600001906003610336929190610c68565b506040518060600160405280600160ff168152602001600160ff168152602001600160ff16815250600060090160006001815260200190815260200160002060010160006001815260200190815260200160002060000190600361039b929190610d0f565b506040518060600160405280600260ff168152602001600260ff168152602001600260ff168152506000600901600060018152602001908152602001600020600101600060028152602001908152602001600020600001906003610400929190610d0f565b506040518060600160405280600360ff168152602001600360ff168152602001600360ff168152506000600901600060018152602001908152602001600020600101600060038152602001908152602001600020600001906003610465929190610d0f565b506040518060600160405280600460ff168152602001600460ff168152602001600460ff1681525060006009016000600181526020019081526020016000206001016000600481526020019081526020016000206000019060036104ca929190610d0f565b506040518060600160405280600560ff168152602001600560ff168152602001600560ff16815250600060090160006001815260200190815260200160002060010160006005815260200190815260200160002060000190600361052f929190610d0f565b506040518060600160405280600160ff168152602001600160ff168152602001600160ff168152506000600901600060028152602001908152602001600020600101600060018152602001908152602001600020600001906003610594929190610d0f565b506040518060600160405280600260ff168152602001600260ff168152602001600260ff1681525060006009016000600281526020019081526020016000206001016000600281526020019081526020016000206000019060036105f9929190610d0f565b506040518060600160405280600360ff168152602001600360ff168152602001600360ff16815250600060090160006002815260200190815260200160002060010160006003815260200190815260200160002060000190600361065e929190610d0f565b506040518060600160405280600460ff168152602001600460ff168152602001600460ff1681525060006009016000600281526020019081526020016000206001016000600481526020019081526020016000206000019060036106c3929190610d0f565b506040518060600160405280600560ff168152602001600560ff168152602001600560ff168152506000600901600060028152602001908152602001600020600101600060058152602001908152602001600020600001906003610728929190610d0f565b50565b6060806000806009016000868152602001908152602001600020905080600101600085815260200190815260200160002060000181600001818054806020026020016040519081016040528092919081815260200182805480156107ae57602002820191906000526020600020905b81548152602001906001019080831161079a575b505050505091508080548060200260200160405190810160405280929190818152602001828054801561082657602002820191906000526020600020906000905b82829054906101000a900460ff1660ff16815260200190600101906020826000010492830192600103820291508084116107ef5790505b5050505050905092509250509250929050565b600080600001600086815260200190815260200160002090506000806009016000868152602001908152602001600020905060008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060005b8260000180549050811015610a9d578260000181815481106108e2577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002090602091828204019190069054906101000a900460ff1660ff1686828151811061093e577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610986576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161097d906110e2565b60405180910390fd5b8260010160008560060160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002060000181815481106109fe577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b9060005260206000200154858281518110610a42577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610a8a576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610a8190611102565b60405180910390fd5b8080610a9590611299565b915050610897565b508073ffffffffffffffffffffffffffffffffffffffff1663ddb6f7f13387876040518463ffffffff1660e01b8152600401610adb93929190611066565b600060405180830381600087803b158015610af557600080fd5b505af1158015610b09573d6000803e3d6000fd5b50505050826006016000878152602001908152602001600020600001600181819054906101000a900460ff1680929190610b42906112e2565b91906101000a81548160ff021916908360ff1602179055505060008060080160008560060160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002090508060000160009054906101000a900460ff1684600601600089815260200190815260200160002060000160026101000a81548160ff021916908360ff1602179055505050505050505050565b6000806000806000016000868152602001908152602001600020905080600601600085815260200190815260200160002060000160019054906101000a900460ff1681600601600086815260200190815260200160002060000160029054906101000a900460ff168160ff1691508060ff16905092509250509250929050565b82805482825590600052602060002090601f01602090048101928215610cfe5791602002820160005b83821115610ccf57835183826101000a81548160ff021916908360ff1602179055509260200192600101602081600001049283019260010302610c91565b8015610cfc5782816101000a81549060ff0219169055600101602081600001049283019260010302610ccf565b505b509050610d0b9190610d61565b5090565b828054828255906000526020600020908101928215610d50579160200282015b82811115610d4f578251829060ff16905591602001919060010190610d2f565b5b509050610d5d9190610d61565b5090565b5b80821115610d7a576000816000905550600101610d62565b5090565b6000610d91610d8c84611170565b61114b565b90508083825260208201905082856020860282011115610db057600080fd5b60005b85811015610de05781610dc68882610e14565b845260208401935060208301925050600181019050610db3565b5050509392505050565b600082601f830112610dfb57600080fd5b8135610e0b848260208601610d7e565b91505092915050565b600081359050610e23816113cd565b92915050565b60008060408385031215610e3c57600080fd5b6000610e4a85828601610e14565b9250506020610e5b85828601610e14565b9150509250929050565b60008060008060808587031215610e7b57600080fd5b6000610e8987828801610e14565b9450506020610e9a87828801610e14565b935050604085013567ffffffffffffffff811115610eb757600080fd5b610ec387828801610dea565b925050606085013567ffffffffffffffff811115610ee057600080fd5b610eec87828801610dea565b91505092959194509250565b6000610f048383611039565b60208301905092915050565b6000610f1c8383611057565b60208301905092915050565b610f318161121f565b82525050565b6000610f42826111bc565b610f4c81856111ec565b9350610f578361119c565b8060005b83811015610f88578151610f6f8882610ef8565b9750610f7a836111d2565b925050600181019050610f5b565b5085935050505092915050565b6000610fa0826111c7565b610faa81856111fd565b9350610fb5836111ac565b8060005b83811015610fe6578151610fcd8882610f10565b9750610fd8836111df565b925050600181019050610fb9565b5085935050505092915050565b600061100060128361120e565b915061100b8261137b565b602082019050919050565b6000611023601a8361120e565b915061102e826113a4565b602082019050919050565b61104281611251565b82525050565b61105181611251565b82525050565b6110608161125b565b82525050565b600060608201905061107b6000830186610f28565b818103602083015261108d8185610f37565b905081810360408301526110a18184610f37565b9050949350505050565b600060408201905081810360008301526110c58185610f37565b905081810360208301526110d98184610f95565b90509392505050565b600060208201905081810360008301526110fb81610ff3565b9050919050565b6000602082019050818103600083015261111b81611016565b9050919050565b60006040820190506111376000830185611048565b6111446020830184611048565b9392505050565b6000611155611166565b90506111618282611268565b919050565b6000604051905090565b600067ffffffffffffffff82111561118b5761118a61133b565b5b602082029050602081019050919050565b6000819050602082019050919050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b600082825260208201905092915050565b600061122a82611231565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600060ff82169050919050565b6112718261136a565b810181811067ffffffffffffffff821117156112905761128f61133b565b5b80604052505050565b60006112a482611251565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8214156112d7576112d661130c565b5b600182019050919050565b60006112ed8261125b565b915060ff8214156113015761130061130c565b5b600182019050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f8301169050919050565b7f496e636f7272656374207265736f757263650000000000000000000000000000600082015250565b7f496e636f7272656374207265736f75726365732076616c756573000000000000600082015250565b6113d681611251565b81146113e157600080fd5b5056fea2646970667358221220f19c2e62e0628088f67814245c1e65cd4b3d28f199068fc44addb3316370b72464736f6c63430008030033",
-  "deployedBytecode": "0x60806040526004361061003f5760003560e01c80633dc974a31461004457806396a2d73b1461005b578063b364a22114610099578063f9831c7d146100b5575b600080fd5b34801561005057600080fd5b506100596100f3565b005b34801561006757600080fd5b50610082600480360381019061007d9190610e29565b61072b565b6040516100909291906110ab565b60405180910390f35b6100b360048036038101906100ae9190610e65565b610839565b005b3480156100c157600080fd5b506100dc60048036038101906100d79190610e29565b610be8565b6040516100ea929190611122565b60405180910390f35b600a600060080160006001815260200190815260200160002060000160006101000a81548160ff021916908360ff160217905550600e600060080160006002815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506010600060080160006003815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506012600060080160006004815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506014600060080160006005815260200190815260200160002060000160006101000a81548160ff021916908360ff1602179055506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060018152602001908152602001600020600001906003610246929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060028152602001908152602001600020600001906003610296929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff1681525060006009016000600381526020019081526020016000206000019060036102e6929190610c68565b506040518060600160405280600160ff168152602001600260ff168152602001600360ff168152506000600901600060048152602001908152602001600020600001906003610336929190610c68565b506040518060600160405280600160ff168152602001600160ff168152602001600160ff16815250600060090160006001815260200190815260200160002060010160006001815260200190815260200160002060000190600361039b929190610d0f565b506040518060600160405280600260ff168152602001600260ff168152602001600260ff168152506000600901600060018152602001908152602001600020600101600060028152602001908152602001600020600001906003610400929190610d0f565b506040518060600160405280600360ff168152602001600360ff168152602001600360ff168152506000600901600060018152602001908152602001600020600101600060038152602001908152602001600020600001906003610465929190610d0f565b506040518060600160405280600460ff168152602001600460ff168152602001600460ff1681525060006009016000600181526020019081526020016000206001016000600481526020019081526020016000206000019060036104ca929190610d0f565b506040518060600160405280600560ff168152602001600560ff168152602001600560ff16815250600060090160006001815260200190815260200160002060010160006005815260200190815260200160002060000190600361052f929190610d0f565b506040518060600160405280600160ff168152602001600160ff168152602001600160ff168152506000600901600060028152602001908152602001600020600101600060018152602001908152602001600020600001906003610594929190610d0f565b506040518060600160405280600260ff168152602001600260ff168152602001600260ff1681525060006009016000600281526020019081526020016000206001016000600281526020019081526020016000206000019060036105f9929190610d0f565b506040518060600160405280600360ff168152602001600360ff168152602001600360ff16815250600060090160006002815260200190815260200160002060010160006003815260200190815260200160002060000190600361065e929190610d0f565b506040518060600160405280600460ff168152602001600460ff168152602001600460ff1681525060006009016000600281526020019081526020016000206001016000600481526020019081526020016000206000019060036106c3929190610d0f565b506040518060600160405280600560ff168152602001600560ff168152602001600560ff168152506000600901600060028152602001908152602001600020600101600060058152602001908152602001600020600001906003610728929190610d0f565b50565b6060806000806009016000868152602001908152602001600020905080600101600085815260200190815260200160002060000181600001818054806020026020016040519081016040528092919081815260200182805480156107ae57602002820191906000526020600020905b81548152602001906001019080831161079a575b505050505091508080548060200260200160405190810160405280929190818152602001828054801561082657602002820191906000526020600020906000905b82829054906101000a900460ff1660ff16815260200190600101906020826000010492830192600103820291508084116107ef5790505b5050505050905092509250509250929050565b600080600001600086815260200190815260200160002090506000806009016000868152602001908152602001600020905060008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060005b8260000180549050811015610a9d578260000181815481106108e2577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002090602091828204019190069054906101000a900460ff1660ff1686828151811061093e577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610986576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161097d906110e2565b60405180910390fd5b8260010160008560060160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002060000181815481106109fe577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b9060005260206000200154858281518110610a42577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610a8a576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610a8190611102565b60405180910390fd5b8080610a9590611299565b915050610897565b508073ffffffffffffffffffffffffffffffffffffffff1663ddb6f7f13387876040518463ffffffff1660e01b8152600401610adb93929190611066565b600060405180830381600087803b158015610af557600080fd5b505af1158015610b09573d6000803e3d6000fd5b50505050826006016000878152602001908152602001600020600001600181819054906101000a900460ff1680929190610b42906112e2565b91906101000a81548160ff021916908360ff1602179055505060008060080160008560060160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002090508060000160009054906101000a900460ff1684600601600089815260200190815260200160002060000160026101000a81548160ff021916908360ff1602179055505050505050505050565b6000806000806000016000868152602001908152602001600020905080600601600085815260200190815260200160002060000160019054906101000a900460ff1681600601600086815260200190815260200160002060000160029054906101000a900460ff168160ff1691508060ff16905092509250509250929050565b82805482825590600052602060002090601f01602090048101928215610cfe5791602002820160005b83821115610ccf57835183826101000a81548160ff021916908360ff1602179055509260200192600101602081600001049283019260010302610c91565b8015610cfc5782816101000a81549060ff0219169055600101602081600001049283019260010302610ccf565b505b509050610d0b9190610d61565b5090565b828054828255906000526020600020908101928215610d50579160200282015b82811115610d4f578251829060ff16905591602001919060010190610d2f565b5b509050610d5d9190610d61565b5090565b5b80821115610d7a576000816000905550600101610d62565b5090565b6000610d91610d8c84611170565b61114b565b90508083825260208201905082856020860282011115610db057600080fd5b60005b85811015610de05781610dc68882610e14565b845260208401935060208301925050600181019050610db3565b5050509392505050565b600082601f830112610dfb57600080fd5b8135610e0b848260208601610d7e565b91505092915050565b600081359050610e23816113cd565b92915050565b60008060408385031215610e3c57600080fd5b6000610e4a85828601610e14565b9250506020610e5b85828601610e14565b9150509250929050565b60008060008060808587031215610e7b57600080fd5b6000610e8987828801610e14565b9450506020610e9a87828801610e14565b935050604085013567ffffffffffffffff811115610eb757600080fd5b610ec387828801610dea565b925050606085013567ffffffffffffffff811115610ee057600080fd5b610eec87828801610dea565b91505092959194509250565b6000610f048383611039565b60208301905092915050565b6000610f1c8383611057565b60208301905092915050565b610f318161121f565b82525050565b6000610f42826111bc565b610f4c81856111ec565b9350610f578361119c565b8060005b83811015610f88578151610f6f8882610ef8565b9750610f7a836111d2565b925050600181019050610f5b565b5085935050505092915050565b6000610fa0826111c7565b610faa81856111fd565b9350610fb5836111ac565b8060005b83811015610fe6578151610fcd8882610f10565b9750610fd8836111df565b925050600181019050610fb9565b5085935050505092915050565b600061100060128361120e565b915061100b8261137b565b602082019050919050565b6000611023601a8361120e565b915061102e826113a4565b602082019050919050565b61104281611251565b82525050565b61105181611251565b82525050565b6110608161125b565b82525050565b600060608201905061107b6000830186610f28565b818103602083015261108d8185610f37565b905081810360408301526110a18184610f37565b9050949350505050565b600060408201905081810360008301526110c58185610f37565b905081810360208301526110d98184610f95565b90509392505050565b600060208201905081810360008301526110fb81610ff3565b9050919050565b6000602082019050818103600083015261111b81611016565b9050919050565b60006040820190506111376000830185611048565b6111446020830184611048565b9392505050565b6000611155611166565b90506111618282611268565b919050565b6000604051905090565b600067ffffffffffffffff82111561118b5761118a61133b565b5b602082029050602081019050919050565b6000819050602082019050919050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b600082825260208201905092915050565b600061122a82611231565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600060ff82169050919050565b6112718261136a565b810181811067ffffffffffffffff821117156112905761128f61133b565b5b80604052505050565b60006112a482611251565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8214156112d7576112d661130c565b5b600182019050919050565b60006112ed8261125b565b915060ff8214156113015761130061130c565b5b600182019050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f8301169050919050565b7f496e636f7272656374207265736f757263650000000000000000000000000000600082015250565b7f496e636f7272656374207265736f75726365732076616c756573000000000000600082015250565b6113d681611251565b81146113e157600080fd5b5056fea2646970667358221220f19c2e62e0628088f67814245c1e65cd4b3d28f199068fc44addb3316370b72464736f6c63430008030033",
+  "solcInputHash": "8cd6c73c9f10613865570e47e69af7a1",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"lord\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"realmID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"buildingID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"resourcesValues\",\"type\":\"uint256[]\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"resourcesBurnt\",\"type\":\"uint256[]\"}],\"name\":\"ResourceUpgraded\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_level\",\"type\":\"uint256\"}],\"name\":\"getCosts\",\"outputs\":[{\"internalType\":\"uint8[]\",\"name\":\"\",\"type\":\"uint8[]\"},{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"}],\"name\":\"getProductionDetails\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_realmTokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_resourceId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"resources\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"resourceValues\",\"type\":\"uint256[]\"}],\"name\":\"upgradeResource\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/settling/facets/ResourceConstructionFacet.sol\":\"ResourceConstructionFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/settling/facets/ResourceConstructionFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\n\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\nimport \\\"../../shared/interfaces/ResourcesIERC1155MintBurn.sol\\\";\\nimport {LibDiamond} from \\\"../libraries/LibDiamond.sol\\\";\\n\\n//TODO: implement IERCReveiver Calls\\n//TODO: Add ownly sRealm owner\\ncontract ResourceConstructionFacet {\\n    AppStorage internal s;\\n\\n    // TODO: Check resource is actually on the Realm\\n    // TODO: Check owner of Realm\\n    function upgradeResource(\\n        uint256 _realmTokenId,\\n        uint256 _resourceId,\\n        uint256[] memory resources,\\n        uint256[] memory resourceValues\\n    ) external payable {\\n        RealmInfo storage realmInfo = s.realmInfo[_realmTokenId];\\n        UpgradeCosts storage upgradeCosts = s.upgradeCosts[_resourceId];\\n\\n        ResourcesIERC1155MintBurn resourceTokens = ResourcesIERC1155MintBurn(\\n            s.resources\\n        );\\n\\n        // get level\\n\\n        for (uint256 i = 0; i < upgradeCosts.resourceIds.length; i++) {\\n            require(\\n                resources[i] == upgradeCosts.resourceIds[i],\\n                \\\"Incorrect resource\\\"\\n            );\\n            require(\\n                resourceValues[i] ==\\n                    upgradeCosts\\n                        .upgradeCostLevels[\\n                            realmInfo.resourceInfo[_resourceId].level\\n                        ]\\n                        .value[i],\\n                \\\"Incorrect resources values\\\"\\n            );\\n        }\\n\\n        resourceTokens.productionBuildingsBurn(\\n            msg.sender,\\n            resources,\\n            resourceValues\\n        );\\n\\n        realmInfo.resourceInfo[_resourceId].level++;\\n\\n        LevelProduction storage levelProduction = s.levelProduction[\\n            realmInfo.resourceInfo[_resourceId].level\\n        ];\\n\\n        realmInfo.resourceInfo[_resourceId].production = levelProduction.output;\\n\\n        emit ResourceUpgraded(\\n            msg.sender,\\n            _realmTokenId,\\n            _resourceId,\\n            resources,\\n            resourceValues\\n        );\\n    }\\n\\n    function getProductionDetails(uint256 _tokenId, uint256 _resourceId)\\n        public\\n        view\\n        returns (uint256, uint256)\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n\\n        return (\\n            realmInfo.resourceInfo[_resourceId].level,\\n            realmInfo.resourceInfo[_resourceId].production\\n        );\\n    }\\n\\n    function getCosts(uint256 _resourceId, uint256 _level)\\n        public\\n        view\\n        returns (uint8[] memory, uint256[] memory)\\n    {\\n        UpgradeCosts storage upgradeCosts = s.upgradeCosts[_resourceId];\\n\\n        return (\\n            upgradeCosts.resourceIds,\\n            upgradeCosts.upgradeCostLevels[_level].value\\n        );\\n    }\\n\\n    event ResourceUpgraded(\\n        address lord,\\n        uint256 realmID,\\n        uint256 buildingID,\\n        uint256[] resourcesValues,\\n        uint256[] resourcesBurnt\\n    );\\n}\\n\",\"keccak256\":\"0x4e97f05c353b76baa12bde4a8b9d58808261de92da35cf66ffec347e9056689f\"},\"contracts/settling/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmStatistics {\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xc165c0821fd3bbe8678ab7a5ec078a6c875b8e01d2c27558f37d551fbdf70eaa\"},\"contracts/settling/libraries/LibDiamond.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.2;\\n\\nimport {IDiamondCut} from \\\"../../shared/interfaces/IDiamondCut.sol\\\";\\n\\nlibrary LibDiamond {\\n    bytes32 constant DIAMOND_STORAGE_POSITION =\\n        keccak256(\\\"diamond.standard.diamond.storage\\\");\\n\\n    struct FacetAddressAndPosition {\\n        address facetAddress;\\n        uint96 functionSelectorPosition; // position in facetFunctionSelectors.functionSelectors array\\n    }\\n\\n    struct FacetFunctionSelectors {\\n        bytes4[] functionSelectors;\\n        uint256 facetAddressPosition; // position of facetAddress in facetAddresses array\\n    }\\n\\n    struct DiamondStorage {\\n        // maps function selector to the facet address and\\n        // the position of the selector in the facetFunctionSelectors.selectors array\\n        mapping(bytes4 => FacetAddressAndPosition) selectorToFacetAndPosition;\\n        // maps facet addresses to function selectors\\n        mapping(address => FacetFunctionSelectors) facetFunctionSelectors;\\n        // facet addresses\\n        address[] facetAddresses;\\n        // Used to query if a contract implements an interface.\\n        // Used to implement ERC-165.\\n        mapping(bytes4 => bool) supportedInterfaces;\\n        // owner of the contract\\n        address contractOwner;\\n    }\\n\\n    function diamondStorage()\\n        internal\\n        pure\\n        returns (DiamondStorage storage ds)\\n    {\\n        bytes32 position = DIAMOND_STORAGE_POSITION;\\n        assembly {\\n            ds.slot := position\\n        }\\n    }\\n\\n    event OwnershipTransferred(\\n        address indexed previousOwner,\\n        address indexed newOwner\\n    );\\n\\n    function setContractOwner(address _newOwner) internal {\\n        DiamondStorage storage ds = diamondStorage();\\n        address previousOwner = ds.contractOwner;\\n        ds.contractOwner = _newOwner;\\n        emit OwnershipTransferred(previousOwner, _newOwner);\\n    }\\n\\n    function contractOwner() internal view returns (address contractOwner_) {\\n        contractOwner_ = diamondStorage().contractOwner;\\n    }\\n\\n    function enforceIsContractOwner() internal view {\\n        require(\\n            msg.sender == diamondStorage().contractOwner,\\n            \\\"LibDiamond: Must be contract owner\\\"\\n        );\\n    }\\n\\n    event DiamondCut(\\n        IDiamondCut.FacetCut[] _diamondCut,\\n        address _init,\\n        bytes _calldata\\n    );\\n\\n    // Internal function version of diamondCut\\n    function diamondCut(\\n        IDiamondCut.FacetCut[] memory _diamondCut,\\n        address _init,\\n        bytes memory _calldata\\n    ) internal {\\n        for (\\n            uint256 facetIndex;\\n            facetIndex < _diamondCut.length;\\n            facetIndex++\\n        ) {\\n            IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;\\n            if (action == IDiamondCut.FacetCutAction.Add) {\\n                addFunctions(\\n                    _diamondCut[facetIndex].facetAddress,\\n                    _diamondCut[facetIndex].functionSelectors\\n                );\\n            } else if (action == IDiamondCut.FacetCutAction.Replace) {\\n                replaceFunctions(\\n                    _diamondCut[facetIndex].facetAddress,\\n                    _diamondCut[facetIndex].functionSelectors\\n                );\\n            } else if (action == IDiamondCut.FacetCutAction.Remove) {\\n                removeFunctions(\\n                    _diamondCut[facetIndex].facetAddress,\\n                    _diamondCut[facetIndex].functionSelectors\\n                );\\n            } else {\\n                revert(\\\"LibDiamondCut: Incorrect FacetCutAction\\\");\\n            }\\n        }\\n        emit DiamondCut(_diamondCut, _init, _calldata);\\n        initializeDiamondCut(_init, _calldata);\\n    }\\n\\n    function addFunctions(\\n        address _facetAddress,\\n        bytes4[] memory _functionSelectors\\n    ) internal {\\n        require(\\n            _functionSelectors.length > 0,\\n            \\\"LibDiamondCut: No selectors in facet to cut\\\"\\n        );\\n        DiamondStorage storage ds = diamondStorage();\\n        require(\\n            _facetAddress != address(0),\\n            \\\"LibDiamondCut: Add facet can't be address(0)\\\"\\n        );\\n        uint96 selectorPosition = uint96(\\n            ds.facetFunctionSelectors[_facetAddress].functionSelectors.length\\n        );\\n        // add new facet address if it does not exist\\n        if (selectorPosition == 0) {\\n            addFacet(ds, _facetAddress);\\n        }\\n        for (\\n            uint256 selectorIndex;\\n            selectorIndex < _functionSelectors.length;\\n            selectorIndex++\\n        ) {\\n            bytes4 selector = _functionSelectors[selectorIndex];\\n            address oldFacetAddress = ds\\n                .selectorToFacetAndPosition[selector]\\n                .facetAddress;\\n            require(\\n                oldFacetAddress == address(0),\\n                \\\"LibDiamondCut: Can't add function that already exists\\\"\\n            );\\n            addFunction(ds, selector, selectorPosition, _facetAddress);\\n            selectorPosition++;\\n        }\\n    }\\n\\n    function replaceFunctions(\\n        address _facetAddress,\\n        bytes4[] memory _functionSelectors\\n    ) internal {\\n        require(\\n            _functionSelectors.length > 0,\\n            \\\"LibDiamondCut: No selectors in facet to cut\\\"\\n        );\\n        DiamondStorage storage ds = diamondStorage();\\n        require(\\n            _facetAddress != address(0),\\n            \\\"LibDiamondCut: Add facet can't be address(0)\\\"\\n        );\\n        uint96 selectorPosition = uint96(\\n            ds.facetFunctionSelectors[_facetAddress].functionSelectors.length\\n        );\\n        // add new facet address if it does not exist\\n        if (selectorPosition == 0) {\\n            addFacet(ds, _facetAddress);\\n        }\\n        for (\\n            uint256 selectorIndex;\\n            selectorIndex < _functionSelectors.length;\\n            selectorIndex++\\n        ) {\\n            bytes4 selector = _functionSelectors[selectorIndex];\\n            address oldFacetAddress = ds\\n                .selectorToFacetAndPosition[selector]\\n                .facetAddress;\\n            require(\\n                oldFacetAddress != _facetAddress,\\n                \\\"LibDiamondCut: Can't replace function with same function\\\"\\n            );\\n            removeFunction(ds, oldFacetAddress, selector);\\n            addFunction(ds, selector, selectorPosition, _facetAddress);\\n            selectorPosition++;\\n        }\\n    }\\n\\n    function removeFunctions(\\n        address _facetAddress,\\n        bytes4[] memory _functionSelectors\\n    ) internal {\\n        require(\\n            _functionSelectors.length > 0,\\n            \\\"LibDiamondCut: No selectors in facet to cut\\\"\\n        );\\n        DiamondStorage storage ds = diamondStorage();\\n        // if function does not exist then do nothing and return\\n        require(\\n            _facetAddress == address(0),\\n            \\\"LibDiamondCut: Remove facet address must be address(0)\\\"\\n        );\\n        for (\\n            uint256 selectorIndex;\\n            selectorIndex < _functionSelectors.length;\\n            selectorIndex++\\n        ) {\\n            bytes4 selector = _functionSelectors[selectorIndex];\\n            address oldFacetAddress = ds\\n                .selectorToFacetAndPosition[selector]\\n                .facetAddress;\\n            removeFunction(ds, oldFacetAddress, selector);\\n        }\\n    }\\n\\n    function addFacet(DiamondStorage storage ds, address _facetAddress)\\n        internal\\n    {\\n        enforceHasContractCode(\\n            _facetAddress,\\n            \\\"LibDiamondCut: New facet has no code\\\"\\n        );\\n        ds.facetFunctionSelectors[_facetAddress].facetAddressPosition = ds\\n            .facetAddresses\\n            .length;\\n        ds.facetAddresses.push(_facetAddress);\\n    }\\n\\n    function addFunction(\\n        DiamondStorage storage ds,\\n        bytes4 _selector,\\n        uint96 _selectorPosition,\\n        address _facetAddress\\n    ) internal {\\n        ds\\n            .selectorToFacetAndPosition[_selector]\\n            .functionSelectorPosition = _selectorPosition;\\n        ds.facetFunctionSelectors[_facetAddress].functionSelectors.push(\\n            _selector\\n        );\\n        ds.selectorToFacetAndPosition[_selector].facetAddress = _facetAddress;\\n    }\\n\\n    function removeFunction(\\n        DiamondStorage storage ds,\\n        address _facetAddress,\\n        bytes4 _selector\\n    ) internal {\\n        require(\\n            _facetAddress != address(0),\\n            \\\"LibDiamondCut: Can't remove function that doesn't exist\\\"\\n        );\\n        // an immutable function is a function defined directly in a diamond\\n        require(\\n            _facetAddress != address(this),\\n            \\\"LibDiamondCut: Can't remove immutable function\\\"\\n        );\\n        // replace selector with last selector, then delete last selector\\n        uint256 selectorPosition = ds\\n            .selectorToFacetAndPosition[_selector]\\n            .functionSelectorPosition;\\n        uint256 lastSelectorPosition = ds\\n            .facetFunctionSelectors[_facetAddress]\\n            .functionSelectors\\n            .length - 1;\\n        // if not the same then replace _selector with lastSelector\\n        if (selectorPosition != lastSelectorPosition) {\\n            bytes4 lastSelector = ds\\n                .facetFunctionSelectors[_facetAddress]\\n                .functionSelectors[lastSelectorPosition];\\n            ds.facetFunctionSelectors[_facetAddress].functionSelectors[\\n                    selectorPosition\\n                ] = lastSelector;\\n            ds\\n                .selectorToFacetAndPosition[lastSelector]\\n                .functionSelectorPosition = uint96(selectorPosition);\\n        }\\n        // delete the last selector\\n        ds.facetFunctionSelectors[_facetAddress].functionSelectors.pop();\\n        delete ds.selectorToFacetAndPosition[_selector];\\n\\n        // if no more selectors for facet address then delete the facet address\\n        if (lastSelectorPosition == 0) {\\n            // replace facet address with last facet address and delete last facet address\\n            uint256 lastFacetAddressPosition = ds.facetAddresses.length - 1;\\n            uint256 facetAddressPosition = ds\\n                .facetFunctionSelectors[_facetAddress]\\n                .facetAddressPosition;\\n            if (facetAddressPosition != lastFacetAddressPosition) {\\n                address lastFacetAddress = ds.facetAddresses[\\n                    lastFacetAddressPosition\\n                ];\\n                ds.facetAddresses[facetAddressPosition] = lastFacetAddress;\\n                ds\\n                    .facetFunctionSelectors[lastFacetAddress]\\n                    .facetAddressPosition = facetAddressPosition;\\n            }\\n            ds.facetAddresses.pop();\\n            delete ds\\n                .facetFunctionSelectors[_facetAddress]\\n                .facetAddressPosition;\\n        }\\n    }\\n\\n    function initializeDiamondCut(address _init, bytes memory _calldata)\\n        internal\\n    {\\n        if (_init == address(0)) {\\n            require(\\n                _calldata.length == 0,\\n                \\\"LibDiamondCut: _init is address(0) but_calldata is not empty\\\"\\n            );\\n        } else {\\n            require(\\n                _calldata.length > 0,\\n                \\\"LibDiamondCut: _calldata is empty but _init is not address(0)\\\"\\n            );\\n            if (_init != address(this)) {\\n                enforceHasContractCode(\\n                    _init,\\n                    \\\"LibDiamondCut: _init address has no code\\\"\\n                );\\n            }\\n            (bool success, bytes memory error) = _init.delegatecall(_calldata);\\n            if (!success) {\\n                if (error.length > 0) {\\n                    // bubble up the error\\n                    revert(string(error));\\n                } else {\\n                    revert(\\\"LibDiamondCut: _init function reverted\\\");\\n                }\\n            }\\n        }\\n    }\\n\\n    function enforceHasContractCode(\\n        address _contract,\\n        string memory _errorMessage\\n    ) internal view {\\n        uint256 contractSize;\\n        assembly {\\n            contractSize := extcodesize(_contract)\\n        }\\n        require(contractSize > 0, _errorMessage);\\n    }\\n}\\n\",\"keccak256\":\"0x381be6bf44ad825d476842de372d56bc20f4c6b6c2c9a7b176b2a204020e7f39\",\"license\":\"MIT\"},\"contracts/shared/interfaces/IDiamondCut.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\ninterface IDiamondCut {\\n    enum FacetCutAction {\\n        Add,\\n        Replace,\\n        Remove\\n    }\\n    // Add=0, Replace=1, Remove=2\\n\\n    struct FacetCut {\\n        address facetAddress;\\n        FacetCutAction action;\\n        bytes4[] functionSelectors;\\n    }\\n\\n    /// @notice Add/replace/remove any number of functions and optionally execute\\n    ///         a function with delegatecall\\n    /// @param _diamondCut Contains the facet addresses and function selectors\\n    /// @param _init The address of the contract or facet to execute _calldata\\n    /// @param _calldata A function call, including function selector and arguments\\n    ///                  _calldata is executed with delegatecall on _init\\n    function diamondCut(\\n        FacetCut[] calldata _diamondCut,\\n        address _init,\\n        bytes calldata _calldata\\n    ) external;\\n\\n    event DiamondCut(FacetCut[] _diamondCut, address _init, bytes _calldata);\\n}\\n\",\"keccak256\":\"0xbf17f994eca1e6da64c2cec17318b5701ce0a424fb77db7a64a08c17a547b091\"},\"contracts/shared/interfaces/IERC1155.sol\":{\"content\":\"// SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.2;\\n\\ninterface IERC1155 {\\n    /****************************************|\\n  |                 Events                 |\\n  |_______________________________________*/\\n\\n    /**\\n     * @dev Either TransferSingle or TransferBatch MUST emit when tokens are transferred, including zero amount transfers as well as minting or burning\\n     *   Operator MUST be msg.sender\\n     *   When minting/creating tokens, the `_from` field MUST be set to `0x0`\\n     *   When burning/destroying tokens, the `_to` field MUST be set to `0x0`\\n     *   The total amount transferred from address 0x0 minus the total amount transferred to 0x0 may be used by clients and exchanges to be added to the \\\"circulating supply\\\" for a given token ID\\n     *   To broadcast the existence of a token ID with no initial balance, the contract SHOULD emit the TransferSingle event from `0x0` to `0x0`, with the token creator as `_operator`, and a `_amount` of 0\\n     */\\n    event TransferSingle(\\n        address indexed _operator,\\n        address indexed _from,\\n        address indexed _to,\\n        uint256 _id,\\n        uint256 _amount\\n    );\\n\\n    /**\\n     * @dev Either TransferSingle or TransferBatch MUST emit when tokens are transferred, including zero amount transfers as well as minting or burning\\n     *   Operator MUST be msg.sender\\n     *   When minting/creating tokens, the `_from` field MUST be set to `0x0`\\n     *   When burning/destroying tokens, the `_to` field MUST be set to `0x0`\\n     *   The total amount transferred from address 0x0 minus the total amount transferred to 0x0 may be used by clients and exchanges to be added to the \\\"circulating supply\\\" for a given token ID\\n     *   To broadcast the existence of multiple token IDs with no initial balance, this SHOULD emit the TransferBatch event from `0x0` to `0x0`, with the token creator as `_operator`, and a `_amount` of 0\\n     */\\n    event TransferBatch(\\n        address indexed _operator,\\n        address indexed _from,\\n        address indexed _to,\\n        uint256[] _ids,\\n        uint256[] _amounts\\n    );\\n\\n    /**\\n     * @dev MUST emit when an approval is updated\\n     */\\n    event ApprovalForAll(\\n        address indexed _owner,\\n        address indexed _operator,\\n        bool _approved\\n    );\\n\\n    /****************************************|\\n  |                Functions               |\\n  |_______________________________________*/\\n\\n    /**\\n     * @notice Transfers amount of an _id from the _from address to the _to address specified\\n     * @dev MUST emit TransferSingle event on success\\n     * Caller must be approved to manage the _from account's tokens (see isApprovedForAll)\\n     * MUST throw if `_to` is the zero address\\n     * MUST throw if balance of sender for token `_id` is lower than the `_amount` sent\\n     * MUST throw on any other error\\n     * When transfer is complete, this function MUST check if `_to` is a smart contract (code size > 0). If so, it MUST call `onERC1155Received` on `_to` and revert if the return amount is not `bytes4(keccak256(\\\"onERC1155Received(address,address,uint256,uint256,bytes)\\\"))`\\n     * @param _from    Source address\\n     * @param _to      Target address\\n     * @param _id      ID of the token type\\n     * @param _amount  Transfered amount\\n     * @param _data    Additional data with no specified format, sent in call to `_to`\\n     */\\n    function safeTransferFrom(\\n        address _from,\\n        address _to,\\n        uint256 _id,\\n        uint256 _amount,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @notice Send multiple types of Tokens from the _from address to the _to address (with safety call)\\n     * @dev MUST emit TransferBatch event on success\\n     * Caller must be approved to manage the _from account's tokens (see isApprovedForAll)\\n     * MUST throw if `_to` is the zero address\\n     * MUST throw if length of `_ids` is not the same as length of `_amounts`\\n     * MUST throw if any of the balance of sender for token `_ids` is lower than the respective `_amounts` sent\\n     * MUST throw on any other error\\n     * When transfer is complete, this function MUST check if `_to` is a smart contract (code size > 0). If so, it MUST call `onERC1155BatchReceived` on `_to` and revert if the return amount is not `bytes4(keccak256(\\\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\\\"))`\\n     * Transfers and events MUST occur in the array order they were submitted (_ids[0] before _ids[1], etc)\\n     * @param _from     Source addresses\\n     * @param _to       Target addresses\\n     * @param _ids      IDs of each token type\\n     * @param _amounts  Transfer amounts per token type\\n     * @param _data     Additional data with no specified format, sent in call to `_to`\\n     */\\n    function safeBatchTransferFrom(\\n        address _from,\\n        address _to,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @notice Get the balance of an account's Tokens\\n     * @param _owner  The address of the token holder\\n     * @param _id     ID of the Token\\n     * @return        The _owner's balance of the Token type requested\\n     */\\n    function balanceOf(address _owner, uint256 _id)\\n        external\\n        view\\n        returns (uint256);\\n\\n    /**\\n     * @notice Get the balance of multiple account/token pairs\\n     * @param _owners The addresses of the token holders\\n     * @param _ids    ID of the Tokens\\n     * @return        The _owner's balance of the Token types requested (i.e. balance for each (owner, id) pair)\\n     */\\n    function balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids)\\n        external\\n        view\\n        returns (uint256[] memory);\\n\\n    /**\\n     * @notice Enable or disable approval for a third party (\\\"operator\\\") to manage all of caller's tokens\\n     * @dev MUST emit the ApprovalForAll event on success\\n     * @param _operator  Address to add to the set of authorized operators\\n     * @param _approved  True if the operator is approved, false to revoke approval\\n     */\\n    function setApprovalForAll(address _operator, bool _approved) external;\\n\\n    /**\\n     * @notice Queries the approval status of an operator for a given owner\\n     * @param _owner     The owner of the Tokens\\n     * @param _operator  Address of authorized operator\\n     * @return isOperator True if the operator is approved, false if not\\n     */\\n    function isApprovedForAll(address _owner, address _operator)\\n        external\\n        view\\n        returns (bool isOperator);\\n}\\n\",\"keccak256\":\"0xa71395b6df4a2d78d7d9a4e42e9411e44f1933f2190ebb59e93d46957cca1622\",\"license\":\"Apache-2.0\"},\"contracts/shared/interfaces/ResourcesIERC1155MintBurn.sol\":{\"content\":\"// SPDX-License-Identifier: Apache-2.0\\npragma solidity ^0.8.2;\\n\\nimport \\\"./IERC1155.sol\\\";\\n\\n/**\\n * Recommended interface for public facing minting and burning functions.\\n * These public methods should have restricted access.\\n */\\ninterface ResourcesIERC1155MintBurn is IERC1155 {\\n    /***************************************|\\n  |        Public Minting Functions       |\\n  |______________________________________*/\\n\\n    /**\\n     * @dev Mint _amount of tokens of a given id if not frozen and if max supply not exceeded\\n     * @param _to     The address to mint tokens to.\\n     * @param _id     Token id to mint\\n     * @param _amount The amount to be minted\\n     * @param _data   Byte array of data to pass to recipient if it's a contract\\n     */\\n    function mint(\\n        address _to,\\n        uint256 _id,\\n        uint256 _amount,\\n        bytes calldata _data\\n    ) external;\\n\\n    /**\\n     * @dev Mint tokens for each ids in _ids\\n     * @param _to      The address to mint tokens to.\\n     * @param _ids     Array of ids to mint\\n     * @param _amounts Array of amount of tokens to mint per id\\n     * @param _data    Byte array of data to pass to recipient if it's a contract\\n     */\\n    function batchMint(\\n        address _to,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts,\\n        bytes calldata _data\\n    ) external;\\n\\n    /***************************************|\\n  |        Public Minting Functions       |\\n  |______________________________________*/\\n\\n    /**\\n     * @notice Burn _amount of tokens of a given token id\\n     * @param _from    The address to burn tokens from\\n     * @param _id      Token id to burn\\n     * @param _amount  The amount to be burned\\n     */\\n    function burn(\\n        address _from,\\n        uint256 _id,\\n        uint256 _amount\\n    ) external;\\n\\n    /**\\n     * @notice Burn tokens of given token id for each (_ids[i], _amounts[i]) pair\\n     * @param _from     The address to burn tokens from\\n     * @param _ids      Array of token ids to burn\\n     * @param _amounts  Array of the amount to be burned\\n     */\\n    function batchBurn(\\n        address _from,\\n        uint256[] calldata _ids,\\n        uint256[] calldata _amounts\\n    ) external;\\n\\n    function resourceMinting(\\n        address _to,\\n        uint256[] memory _ids,\\n        uint256[] memory _amounts,\\n        bytes memory _data\\n    ) external;\\n\\n    function batchResourceMinting(\\n        address _to,\\n        uint256[] memory _ids,\\n        uint256[] memory _amounts,\\n        bytes memory _data\\n    ) external;\\n\\n    function productionBuildingsBurn(\\n        address _from,\\n        uint256[] memory _ids,\\n        uint256[] memory _amounts\\n    ) external;\\n}\\n\",\"keccak256\":\"0x259fdded2348c09c4a61d4b01baf8730cb2102b1ef9a02374b19874400c620ba\",\"license\":\"Apache-2.0\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610d4a806100206000396000f3fe6080604052600436106100345760003560e01c806396a2d73b14610039578063b364a22114610077578063f9831c7d14610093575b600080fd5b34801561004557600080fd5b50610060600480360381019061005b91906106f8565b6100d1565b60405161006e9291906109db565b60405180910390f35b610091600480360381019061008c9190610734565b6101df565b005b34801561009f57600080fd5b506100ba60048036038101906100b591906106f8565b6105cd565b6040516100c8929190610a52565b60405180910390f35b606080600080600a0160008681526020019081526020016000209050806000018160010160008681526020019081526020016000206000018180548060200260200160405190810160405280929190818152602001828054801561017a57602002820191906000526020600020906000905b82829054906101000a900460ff1660ff16815260200190600101906020826000010492830192600103820291508084116101435790505b50505050509150808054806020026020016040519081016040528092919081815260200182805480156101cc57602002820191906000526020600020905b8154815260200190600101908083116101b8575b5050505050905092509250509250929050565b60008060000160008681526020019081526020016000209050600080600a016000868152602001908152602001600020905060008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060005b826000018054905081101561044357826000018181548110610288577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002090602091828204019190069054906101000a900460ff1660ff168682815181106102e4577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b60200260200101511461032c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161032390610a12565b60405180910390fd5b8260010160008560070160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002060000181815481106103a4577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002001548582815181106103e8577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610430576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161042790610a32565b60405180910390fd5b808061043b90610bc9565b91505061023d565b508073ffffffffffffffffffffffffffffffffffffffff1663ddb6f7f13387876040518463ffffffff1660e01b815260040161048193929190610935565b600060405180830381600087803b15801561049b57600080fd5b505af11580156104af573d6000803e3d6000fd5b50505050826007016000878152602001908152602001600020600001600181819054906101000a900460ff16809291906104e890610c12565b91906101000a81548160ff021916908360ff1602179055505060008060090160008560070160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002090508060000160009054906101000a900460ff1684600701600089815260200190815260200160002060000160026101000a81548160ff021916908360ff1602179055507f0c964a79da87fe8361bd37a15bd84ac04c3250382c830e50e2701845f34f090433898989896040516105bb95949392919061097a565b60405180910390a15050505050505050565b6000806000806000016000868152602001908152602001600020905080600701600085815260200190815260200160002060000160019054906101000a900460ff1681600701600086815260200190815260200160002060000160029054906101000a900460ff168160ff1691508060ff16905092509250509250929050565b600061066061065b84610aa0565b610a7b565b9050808382526020820190508285602086028201111561067f57600080fd5b60005b858110156106af578161069588826106e3565b845260208401935060208301925050600181019050610682565b5050509392505050565b600082601f8301126106ca57600080fd5b81356106da84826020860161064d565b91505092915050565b6000813590506106f281610cfd565b92915050565b6000806040838503121561070b57600080fd5b6000610719858286016106e3565b925050602061072a858286016106e3565b9150509250929050565b6000806000806080858703121561074a57600080fd5b6000610758878288016106e3565b9450506020610769878288016106e3565b935050604085013567ffffffffffffffff81111561078657600080fd5b610792878288016106b9565b925050606085013567ffffffffffffffff8111156107af57600080fd5b6107bb878288016106b9565b91505092959194509250565b60006107d38383610908565b60208301905092915050565b60006107eb8383610926565b60208301905092915050565b61080081610b4f565b82525050565b600061081182610aec565b61081b8185610b1c565b935061082683610acc565b8060005b8381101561085757815161083e88826107c7565b975061084983610b02565b92505060018101905061082a565b5085935050505092915050565b600061086f82610af7565b6108798185610b2d565b935061088483610adc565b8060005b838110156108b557815161089c88826107df565b97506108a783610b0f565b925050600181019050610888565b5085935050505092915050565b60006108cf601283610b3e565b91506108da82610cab565b602082019050919050565b60006108f2601a83610b3e565b91506108fd82610cd4565b602082019050919050565b61091181610b81565b82525050565b61092081610b81565b82525050565b61092f81610b8b565b82525050565b600060608201905061094a60008301866107f7565b818103602083015261095c8185610806565b905081810360408301526109708184610806565b9050949350505050565b600060a08201905061098f60008301886107f7565b61099c6020830187610917565b6109a96040830186610917565b81810360608301526109bb8185610806565b905081810360808301526109cf8184610806565b90509695505050505050565b600060408201905081810360008301526109f58185610864565b90508181036020830152610a098184610806565b90509392505050565b60006020820190508181036000830152610a2b816108c2565b9050919050565b60006020820190508181036000830152610a4b816108e5565b9050919050565b6000604082019050610a676000830185610917565b610a746020830184610917565b9392505050565b6000610a85610a96565b9050610a918282610b98565b919050565b6000604051905090565b600067ffffffffffffffff821115610abb57610aba610c6b565b5b602082029050602081019050919050565b6000819050602082019050919050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b600082825260208201905092915050565b6000610b5a82610b61565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600060ff82169050919050565b610ba182610c9a565b810181811067ffffffffffffffff82111715610bc057610bbf610c6b565b5b80604052505050565b6000610bd482610b81565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610c0757610c06610c3c565b5b600182019050919050565b6000610c1d82610b8b565b915060ff821415610c3157610c30610c3c565b5b600182019050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f8301169050919050565b7f496e636f7272656374207265736f757263650000000000000000000000000000600082015250565b7f496e636f7272656374207265736f75726365732076616c756573000000000000600082015250565b610d0681610b81565b8114610d1157600080fd5b5056fea2646970667358221220f5f5b7bec4fe635e29c4895dfb818aeca152e958d50f821c469a00f59fa709f664736f6c63430008030033",
+  "deployedBytecode": "0x6080604052600436106100345760003560e01c806396a2d73b14610039578063b364a22114610077578063f9831c7d14610093575b600080fd5b34801561004557600080fd5b50610060600480360381019061005b91906106f8565b6100d1565b60405161006e9291906109db565b60405180910390f35b610091600480360381019061008c9190610734565b6101df565b005b34801561009f57600080fd5b506100ba60048036038101906100b591906106f8565b6105cd565b6040516100c8929190610a52565b60405180910390f35b606080600080600a0160008681526020019081526020016000209050806000018160010160008681526020019081526020016000206000018180548060200260200160405190810160405280929190818152602001828054801561017a57602002820191906000526020600020906000905b82829054906101000a900460ff1660ff16815260200190600101906020826000010492830192600103820291508084116101435790505b50505050509150808054806020026020016040519081016040528092919081815260200182805480156101cc57602002820191906000526020600020905b8154815260200190600101908083116101b8575b5050505050905092509250509250929050565b60008060000160008681526020019081526020016000209050600080600a016000868152602001908152602001600020905060008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060005b826000018054905081101561044357826000018181548110610288577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002090602091828204019190069054906101000a900460ff1660ff168682815181106102e4577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b60200260200101511461032c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161032390610a12565b60405180910390fd5b8260010160008560070160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002060000181815481106103a4577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b90600052602060002001548582815181106103e8577f4e487b7100000000000000000000000000000000000000000000000000000000600052603260045260246000fd5b602002602001015114610430576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161042790610a32565b60405180910390fd5b808061043b90610bc9565b91505061023d565b508073ffffffffffffffffffffffffffffffffffffffff1663ddb6f7f13387876040518463ffffffff1660e01b815260040161048193929190610935565b600060405180830381600087803b15801561049b57600080fd5b505af11580156104af573d6000803e3d6000fd5b50505050826007016000878152602001908152602001600020600001600181819054906101000a900460ff16809291906104e890610c12565b91906101000a81548160ff021916908360ff1602179055505060008060090160008560070160008a815260200190815260200160002060000160019054906101000a900460ff1660ff16815260200190815260200160002090508060000160009054906101000a900460ff1684600701600089815260200190815260200160002060000160026101000a81548160ff021916908360ff1602179055507f0c964a79da87fe8361bd37a15bd84ac04c3250382c830e50e2701845f34f090433898989896040516105bb95949392919061097a565b60405180910390a15050505050505050565b6000806000806000016000868152602001908152602001600020905080600701600085815260200190815260200160002060000160019054906101000a900460ff1681600701600086815260200190815260200160002060000160029054906101000a900460ff168160ff1691508060ff16905092509250509250929050565b600061066061065b84610aa0565b610a7b565b9050808382526020820190508285602086028201111561067f57600080fd5b60005b858110156106af578161069588826106e3565b845260208401935060208301925050600181019050610682565b5050509392505050565b600082601f8301126106ca57600080fd5b81356106da84826020860161064d565b91505092915050565b6000813590506106f281610cfd565b92915050565b6000806040838503121561070b57600080fd5b6000610719858286016106e3565b925050602061072a858286016106e3565b9150509250929050565b6000806000806080858703121561074a57600080fd5b6000610758878288016106e3565b9450506020610769878288016106e3565b935050604085013567ffffffffffffffff81111561078657600080fd5b610792878288016106b9565b925050606085013567ffffffffffffffff8111156107af57600080fd5b6107bb878288016106b9565b91505092959194509250565b60006107d38383610908565b60208301905092915050565b60006107eb8383610926565b60208301905092915050565b61080081610b4f565b82525050565b600061081182610aec565b61081b8185610b1c565b935061082683610acc565b8060005b8381101561085757815161083e88826107c7565b975061084983610b02565b92505060018101905061082a565b5085935050505092915050565b600061086f82610af7565b6108798185610b2d565b935061088483610adc565b8060005b838110156108b557815161089c88826107df565b97506108a783610b0f565b925050600181019050610888565b5085935050505092915050565b60006108cf601283610b3e565b91506108da82610cab565b602082019050919050565b60006108f2601a83610b3e565b91506108fd82610cd4565b602082019050919050565b61091181610b81565b82525050565b61092081610b81565b82525050565b61092f81610b8b565b82525050565b600060608201905061094a60008301866107f7565b818103602083015261095c8185610806565b905081810360408301526109708184610806565b9050949350505050565b600060a08201905061098f60008301886107f7565b61099c6020830187610917565b6109a96040830186610917565b81810360608301526109bb8185610806565b905081810360808301526109cf8184610806565b90509695505050505050565b600060408201905081810360008301526109f58185610864565b90508181036020830152610a098184610806565b90509392505050565b60006020820190508181036000830152610a2b816108c2565b9050919050565b60006020820190508181036000830152610a4b816108e5565b9050919050565b6000604082019050610a676000830185610917565b610a746020830184610917565b9392505050565b6000610a85610a96565b9050610a918282610b98565b919050565b6000604051905090565b600067ffffffffffffffff821115610abb57610aba610c6b565b5b602082029050602081019050919050565b6000819050602082019050919050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b600082825260208201905092915050565b6000610b5a82610b61565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b600060ff82169050919050565b610ba182610c9a565b810181811067ffffffffffffffff82111715610bc057610bbf610c6b565b5b80604052505050565b6000610bd482610b81565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610c0757610c06610c3c565b5b600182019050919050565b6000610c1d82610b8b565b915060ff821415610c3157610c30610c3c565b5b600182019050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f8301169050919050565b7f496e636f7272656374207265736f757263650000000000000000000000000000600082015250565b7f496e636f7272656374207265736f75726365732076616c756573000000000000600082015250565b610d0681610b81565b8114610d1157600080fd5b5056fea2646970667358221220f5f5b7bec4fe635e29c4895dfb818aeca152e958d50f821c469a00f59fa709f664736f6c63430008030033",
   "devdoc": {
     "kind": "dev",
     "methods": {},
@@ -129,12 +159,12 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 25,
-        "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+        "astId": 185,
+        "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
         "label": "s",
         "offset": 0,
         "slot": "0",
-        "type": "t_struct(AppStorage)1127_storage"
+        "type": "t_struct(AppStorage)2502_storage"
       }
     ],
     "types": {
@@ -149,268 +179,350 @@
         "label": "uint256[]",
         "numberOfBytes": "32"
       },
+      "t_array(t_uint32)dyn_storage": {
+        "base": "t_uint32",
+        "encoding": "dynamic_array",
+        "label": "uint32[]",
+        "numberOfBytes": "32"
+      },
       "t_array(t_uint8)dyn_storage": {
         "base": "t_uint8",
         "encoding": "dynamic_array",
         "label": "uint8[]",
         "numberOfBytes": "32"
       },
-      "t_mapping(t_uint256,t_struct(BuildingCosts)1198_storage)": {
+      "t_int32": {
+        "encoding": "inplace",
+        "label": "int32",
+        "numberOfBytes": "4"
+      },
+      "t_mapping(t_uint256,t_struct(BuildingCosts)2604_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingCosts)1198_storage"
+        "value": "t_struct(BuildingCosts)2604_storage"
       },
-      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)1207_storage)": {
+      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)2613_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingUpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingUpgradeCosts)1207_storage"
+        "value": "t_struct(BuildingUpgradeCosts)2613_storage"
       },
-      "t_mapping(t_uint256,t_struct(LevelProduction)1210_storage)": {
+      "t_mapping(t_uint256,t_struct(LevelProduction)2616_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct LevelProduction)",
         "numberOfBytes": "32",
-        "value": "t_struct(LevelProduction)1210_storage"
+        "value": "t_struct(LevelProduction)2616_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmBuildings)1186_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmBuildings)2582_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmBuildings)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmBuildings)1186_storage"
+        "value": "t_struct(RealmBuildings)2582_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmInfo)1163_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmInfo)2551_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmInfo)1163_storage"
+        "value": "t_struct(RealmInfo)2551_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmStatistics)1136_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmStatistics)2520_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmStatistics)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmStatistics)1136_storage"
+        "value": "t_struct(RealmStatistics)2520_storage"
       },
-      "t_mapping(t_uint256,t_struct(ResourceInfo)1170_storage)": {
+      "t_mapping(t_uint256,t_struct(ResourceInfo)2558_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct ResourceInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(ResourceInfo)1170_storage"
+        "value": "t_struct(ResourceInfo)2558_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)1223_storage)": {
+      "t_mapping(t_uint256,t_struct(TheAges)2509_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct TheAges)",
+        "numberOfBytes": "32",
+        "value": "t_struct(TheAges)2509_storage"
+      },
+      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)2629_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCostLevels)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCostLevels)1223_storage"
+        "value": "t_struct(UpgradeCostLevels)2629_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCosts)1219_storage)": {
+      "t_mapping(t_uint256,t_struct(UpgradeCosts)2625_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCosts)1219_storage"
+        "value": "t_struct(UpgradeCosts)2625_storage"
       },
       "t_string_storage": {
         "encoding": "bytes",
         "label": "string",
         "numberOfBytes": "32"
       },
-      "t_struct(AppStorage)1127_storage": {
+      "t_struct(AppStorage)2502_storage": {
         "encoding": "inplace",
         "label": "struct AppStorage",
         "members": [
           {
-            "astId": 1082,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2448,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmInfo",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_uint256,t_struct(RealmInfo)1163_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmInfo)2551_storage)"
           },
           {
-            "astId": 1087,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2453,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmStatistics",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)1136_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)2520_storage)"
           },
           {
-            "astId": 1092,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2458,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmBuildings",
             "offset": 0,
             "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)1186_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)2582_storage)"
           },
           {
-            "astId": 1094,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2460,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "baseProductionRate",
             "offset": 0,
             "slot": "3",
             "type": "t_uint8"
           },
           {
-            "astId": 1096,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2462,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "maxProductionRate",
             "offset": 1,
             "slot": "3",
             "type": "t_uint8"
           },
           {
-            "astId": 1098,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2464,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "sRealms",
             "offset": 2,
             "slot": "3",
             "type": "t_address"
           },
           {
-            "astId": 1100,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2466,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realms",
             "offset": 0,
             "slot": "4",
             "type": "t_address"
           },
           {
-            "astId": 1102,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2468,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "treasury",
             "offset": 0,
             "slot": "5",
             "type": "t_address"
           },
           {
-            "astId": 1104,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2470,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "resources",
             "offset": 0,
             "slot": "6",
             "type": "t_address"
           },
           {
-            "astId": 1106,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2472,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "oracle",
             "offset": 0,
             "slot": "7",
             "type": "t_address"
           },
           {
-            "astId": 1111,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "levelProduction",
+            "astId": 2474,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "lords",
             "offset": 0,
             "slot": "8",
-            "type": "t_mapping(t_uint256,t_struct(LevelProduction)1210_storage)"
+            "type": "t_address"
           },
           {
-            "astId": 1116,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "upgradeCosts",
+            "astId": 2479,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "levelProduction",
             "offset": 0,
             "slot": "9",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)1219_storage)"
+            "type": "t_mapping(t_uint256,t_struct(LevelProduction)2616_storage)"
           },
           {
-            "astId": 1121,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "buildingUpgradeCosts",
+            "astId": 2484,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "upgradeCosts",
             "offset": 0,
             "slot": "10",
-            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)1207_storage)"
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)2625_storage)"
           },
           {
-            "astId": 1126,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "buildingCosts",
+            "astId": 2489,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "buildingUpgradeCosts",
             "offset": 0,
             "slot": "11",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)1198_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)2613_storage)"
+          },
+          {
+            "astId": 2494,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "buildingCosts",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)2604_storage)"
+          },
+          {
+            "astId": 2499,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "theAges",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_uint256,t_struct(TheAges)2509_storage)"
+          },
+          {
+            "astId": 2501,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "genesisTime",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256"
           }
         ],
-        "numberOfBytes": "384"
+        "numberOfBytes": "480"
       },
-      "t_struct(BuildingCosts)1198_storage": {
+      "t_struct(BuildingCosts)2604_storage": {
         "encoding": "inplace",
         "label": "struct BuildingCosts",
         "members": [
           {
-            "astId": 1188,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2584,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "name",
             "offset": 0,
             "slot": "0",
             "type": "t_string_storage"
           },
           {
-            "astId": 1191,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2587,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "1",
-            "type": "t_array(t_uint8)dyn_storage"
+            "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 1194,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2590,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "resourceValues",
             "offset": 0,
             "slot": "2",
-            "type": "t_array(t_uint8)dyn_storage"
+            "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 1197,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2593,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "requirements",
             "offset": 0,
             "slot": "3",
-            "type": "t_array(t_uint8)dyn_storage"
+            "type": "t_array(t_uint32)dyn_storage"
+          },
+          {
+            "astId": 2595,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "defence",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 2597,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "offence",
+            "offset": 4,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 2599,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "magic",
+            "offset": 8,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 2601,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "population",
+            "offset": 12,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 2603,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "food",
+            "offset": 16,
+            "slot": "4",
+            "type": "t_int32"
           }
         ],
-        "numberOfBytes": "128"
+        "numberOfBytes": "160"
       },
-      "t_struct(BuildingUpgradeCosts)1207_storage": {
+      "t_struct(BuildingUpgradeCosts)2613_storage": {
         "encoding": "inplace",
         "label": "struct BuildingUpgradeCosts",
         "members": [
           {
-            "astId": 1201,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2607,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmBuildings",
             "offset": 0,
             "slot": "0",
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 1206,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2612,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "buildingCosts",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)1198_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)2604_storage)"
           }
         ],
         "numberOfBytes": "64"
       },
-      "t_struct(LevelProduction)1210_storage": {
+      "t_struct(LevelProduction)2616_storage": {
         "encoding": "inplace",
         "label": "struct LevelProduction",
         "members": [
           {
-            "astId": 1209,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2615,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "output",
             "offset": 0,
             "slot": "0",
@@ -419,210 +531,266 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(RealmBuildings)1186_storage": {
+      "t_struct(RealmBuildings)2582_storage": {
         "encoding": "inplace",
         "label": "struct RealmBuildings",
         "members": [
           {
-            "astId": 1177,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2565,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "aquaducts",
             "offset": 0,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1179,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2567,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "temples",
             "offset": 1,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1181,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2569,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "castles",
             "offset": 2,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1183,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2571,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "markets",
             "offset": 3,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1185,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2573,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "ports",
             "offset": 4,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2575,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "barracks",
+            "offset": 5,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2577,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "farms",
+            "offset": 6,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2579,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "shipyard",
+            "offset": 7,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2581,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "fishingVillage",
+            "offset": 8,
             "slot": "0",
             "type": "t_uint8"
           }
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(RealmInfo)1163_storage": {
+      "t_struct(RealmInfo)2551_storage": {
         "encoding": "inplace",
         "label": "struct RealmInfo",
         "members": [
           {
-            "astId": 1138,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "tokenId",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_uint256"
-          },
-          {
-            "astId": 1140,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2522,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "name",
             "offset": 0,
-            "slot": "1",
+            "slot": "0",
             "type": "t_string_storage"
           },
           {
-            "astId": 1142,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2524,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "lastUpdateAt",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2526,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "vestedTimeUpdatedAt",
             "offset": 0,
             "slot": "2",
             "type": "t_uint256"
           },
           {
-            "astId": 1144,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "vestedTimeUpdatedAt",
+            "astId": 2528,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "ageSettled",
             "offset": 0,
             "slot": "3",
             "type": "t_uint256"
           },
           {
-            "astId": 1146,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "cities",
+            "astId": 2530,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "ageClaimed",
             "offset": 0,
             "slot": "4",
-            "type": "t_uint8"
+            "type": "t_uint256"
           },
           {
-            "astId": 1148,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "harbours",
-            "offset": 1,
-            "slot": "4",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 1150,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "rivers",
-            "offset": 2,
-            "slot": "4",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 1152,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "regions",
-            "offset": 3,
-            "slot": "4",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 1154,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "wonders",
-            "offset": 4,
-            "slot": "4",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 1157,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2533,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "5",
             "type": "t_array(t_uint256)dyn_storage"
           },
           {
-            "astId": 1162,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
-            "label": "resourceInfo",
+            "astId": 2535,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "cities",
             "offset": 0,
             "slot": "6",
-            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)1170_storage)"
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2537,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "harbours",
+            "offset": 1,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2539,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "rivers",
+            "offset": 2,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2541,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "regions",
+            "offset": 3,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2543,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "wonders",
+            "offset": 4,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2545,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "orderOf",
+            "offset": 5,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 2550,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "resourceInfo",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)2558_storage)"
           }
         ],
-        "numberOfBytes": "224"
+        "numberOfBytes": "256"
       },
-      "t_struct(RealmStatistics)1136_storage": {
+      "t_struct(RealmStatistics)2520_storage": {
         "encoding": "inplace",
         "label": "struct RealmStatistics",
         "members": [
           {
-            "astId": 1129,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2511,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmDefence",
             "offset": 0,
             "slot": "0",
-            "type": "t_uint8"
+            "type": "t_int32"
           },
           {
-            "astId": 1131,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2513,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmOffence",
-            "offset": 1,
+            "offset": 4,
             "slot": "0",
-            "type": "t_uint8"
+            "type": "t_int32"
           },
           {
-            "astId": 1133,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2515,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "realmMagic",
-            "offset": 2,
+            "offset": 8,
             "slot": "0",
-            "type": "t_uint8"
+            "type": "t_int32"
           },
           {
-            "astId": 1135,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2517,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "foodSupply",
-            "offset": 3,
+            "offset": 12,
             "slot": "0",
-            "type": "t_uint8"
+            "type": "t_int32"
+          },
+          {
+            "astId": 2519,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "population",
+            "offset": 16,
+            "slot": "0",
+            "type": "t_int32"
           }
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(ResourceInfo)1170_storage": {
+      "t_struct(ResourceInfo)2558_storage": {
         "encoding": "inplace",
         "label": "struct ResourceInfo",
         "members": [
           {
-            "astId": 1165,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2553,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "id",
             "offset": 0,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1167,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2555,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "level",
             "offset": 1,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 1169,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2557,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "production",
             "offset": 2,
             "slot": "0",
@@ -631,13 +799,44 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(UpgradeCostLevels)1223_storage": {
+      "t_struct(TheAges)2509_storage": {
+        "encoding": "inplace",
+        "label": "struct TheAges",
+        "members": [
+          {
+            "astId": 2504,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "settledRealms",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2506,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "ageStart",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 2508,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "label": "ageFinish",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(UpgradeCostLevels)2629_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCostLevels",
         "members": [
           {
-            "astId": 1222,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2628,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "value",
             "offset": 0,
             "slot": "0",
@@ -646,25 +845,25 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(UpgradeCosts)1219_storage": {
+      "t_struct(UpgradeCosts)2625_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCosts",
         "members": [
           {
-            "astId": 1213,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2619,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "0",
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 1218,
-            "contract": "contracts/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
+            "astId": 2624,
+            "contract": "contracts/settling/facets/ResourceConstructionFacet.sol:ResourceConstructionFacet",
             "label": "upgradeCostLevels",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)1223_storage)"
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)2629_storage)"
           }
         ],
         "numberOfBytes": "64"
@@ -673,6 +872,11 @@
         "encoding": "inplace",
         "label": "uint256",
         "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
       },
       "t_uint8": {
         "encoding": "inplace",

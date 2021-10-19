@@ -1,0 +1,817 @@
+{
+  "address": "0x2C83cDE2993249c2C62933cdB71941E77Cb7C9BF",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getRealmsAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getResourceAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getSRealmsAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTreasuryAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x7807ca0f5046dcb5cdeed0b19dfd4482903634fe3492cc984f58dfc79b720de2",
+  "receipt": {
+    "to": null,
+    "from": "0xF3a8b033c2572A2887c507aa92eD134B29620245",
+    "contractAddress": "0x2C83cDE2993249c2C62933cdB71941E77Cb7C9BF",
+    "transactionIndex": 0,
+    "gasUsed": "1579083",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x4da9b8bfb251f4846636c197f47479c59f1b42e10d692c26883aef3bd4e5de29",
+    "transactionHash": "0x7807ca0f5046dcb5cdeed0b19dfd4482903634fe3492cc984f58dfc79b720de2",
+    "logs": [],
+    "blockNumber": 5692093,
+    "cumulativeGasUsed": "9103",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "solcInputHash": "b63d76a89c253cf976a56a4a660dc6c0",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getResourceAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTreasuryAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/facets/GetterFacet.sol\":\"GetterFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/facets/GetterFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\n\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\n\\ncontract GetterFacet {\\n    AppStorage internal s;\\n\\n    function getResourceAddress() public view returns (address) {\\n        return s.resources;\\n    }\\n\\n    function getTreasuryAddress() public view returns (address) {\\n        return s.treasury;\\n    }\\n\\n    function getRealmsAddress() public view returns (address) {\\n        return s.realms;\\n    }\\n\\n    function getSRealmsAddress() public view returns (address) {\\n        return s.sRealms;\\n    }\\n}\\n\",\"keccak256\":\"0x0f9e6c3b6e6f96bff6055b7f11f169d16cfd7869ca8c4700e7ea8dc69e52828a\"},\"contracts/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmStatistics {\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xc165c0821fd3bbe8678ab7a5ec078a6c875b8e01d2c27558f37d551fbdf70eaa\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061020b806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80630ba6d7d3146100515780633cb842611461006f5780637b7cc4e51461008d578063e0024604146100ab575b600080fd5b6100596100c9565b6040516100669190610188565b60405180910390f35b6100776100f5565b6040516100849190610188565b60405180910390f35b610095610121565b6040516100a29190610188565b60405180910390f35b6100b361014d565b6040516100c09190610188565b60405180910390f35b60008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b610182816101a3565b82525050565b600060208201905061019d6000830184610179565b92915050565b60006101ae826101b5565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff8216905091905056fea264697066735822122071af7317fddb26259f66247da9805931fb874e95fa796d8e68d7c88d228904f064736f6c63430008030033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c80630ba6d7d3146100515780633cb842611461006f5780637b7cc4e51461008d578063e0024604146100ab575b600080fd5b6100596100c9565b6040516100669190610188565b60405180910390f35b6100776100f5565b6040516100849190610188565b60405180910390f35b610095610121565b6040516100a29190610188565b60405180910390f35b6100b361014d565b6040516100c09190610188565b60405180910390f35b60008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b610182816101a3565b82525050565b600060208201905061019d6000830184610179565b92915050565b60006101ae826101b5565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff8216905091905056fea264697066735822122071af7317fddb26259f66247da9805931fb874e95fa796d8e68d7c88d228904f064736f6c63430008030033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 2066,
+        "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+        "label": "s",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_struct(AppStorage)5126_storage"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_uint256)dyn_storage": {
+        "base": "t_uint256",
+        "encoding": "dynamic_array",
+        "label": "uint256[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_uint32)dyn_storage": {
+        "base": "t_uint32",
+        "encoding": "dynamic_array",
+        "label": "uint32[]",
+        "numberOfBytes": "32"
+      },
+      "t_array(t_uint8)dyn_storage": {
+        "base": "t_uint8",
+        "encoding": "dynamic_array",
+        "label": "uint8[]",
+        "numberOfBytes": "32"
+      },
+      "t_int32": {
+        "encoding": "inplace",
+        "label": "int32",
+        "numberOfBytes": "4"
+      },
+      "t_mapping(t_uint256,t_struct(BuildingCosts)5228_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct BuildingCosts)",
+        "numberOfBytes": "32",
+        "value": "t_struct(BuildingCosts)5228_storage"
+      },
+      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)5237_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct BuildingUpgradeCosts)",
+        "numberOfBytes": "32",
+        "value": "t_struct(BuildingUpgradeCosts)5237_storage"
+      },
+      "t_mapping(t_uint256,t_struct(LevelProduction)5240_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct LevelProduction)",
+        "numberOfBytes": "32",
+        "value": "t_struct(LevelProduction)5240_storage"
+      },
+      "t_mapping(t_uint256,t_struct(RealmBuildings)5206_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RealmBuildings)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RealmBuildings)5206_storage"
+      },
+      "t_mapping(t_uint256,t_struct(RealmInfo)5175_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RealmInfo)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RealmInfo)5175_storage"
+      },
+      "t_mapping(t_uint256,t_struct(RealmStatistics)5144_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RealmStatistics)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RealmStatistics)5144_storage"
+      },
+      "t_mapping(t_uint256,t_struct(ResourceInfo)5182_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct ResourceInfo)",
+        "numberOfBytes": "32",
+        "value": "t_struct(ResourceInfo)5182_storage"
+      },
+      "t_mapping(t_uint256,t_struct(TheAges)5133_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct TheAges)",
+        "numberOfBytes": "32",
+        "value": "t_struct(TheAges)5133_storage"
+      },
+      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)5253_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct UpgradeCostLevels)",
+        "numberOfBytes": "32",
+        "value": "t_struct(UpgradeCostLevels)5253_storage"
+      },
+      "t_mapping(t_uint256,t_struct(UpgradeCosts)5249_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct UpgradeCosts)",
+        "numberOfBytes": "32",
+        "value": "t_struct(UpgradeCosts)5249_storage"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(AppStorage)5126_storage": {
+        "encoding": "inplace",
+        "label": "struct AppStorage",
+        "members": [
+          {
+            "astId": 5072,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmInfo",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_uint256,t_struct(RealmInfo)5175_storage)"
+          },
+          {
+            "astId": 5077,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmStatistics",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)5144_storage)"
+          },
+          {
+            "astId": 5082,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmBuildings",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)5206_storage)"
+          },
+          {
+            "astId": 5084,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "baseProductionRate",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5086,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "maxProductionRate",
+            "offset": 1,
+            "slot": "3",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5088,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "sRealms",
+            "offset": 2,
+            "slot": "3",
+            "type": "t_address"
+          },
+          {
+            "astId": 5090,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realms",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_address"
+          },
+          {
+            "astId": 5092,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "treasury",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_address"
+          },
+          {
+            "astId": 5094,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resources",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_address"
+          },
+          {
+            "astId": 5096,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "oracle",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_address"
+          },
+          {
+            "astId": 5098,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "lords",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_address"
+          },
+          {
+            "astId": 5103,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "levelProduction",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_struct(LevelProduction)5240_storage)"
+          },
+          {
+            "astId": 5108,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "upgradeCosts",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)5249_storage)"
+          },
+          {
+            "astId": 5113,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "buildingUpgradeCosts",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)5237_storage)"
+          },
+          {
+            "astId": 5118,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "buildingCosts",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)5228_storage)"
+          },
+          {
+            "astId": 5123,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "theAges",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_uint256,t_struct(TheAges)5133_storage)"
+          },
+          {
+            "astId": 5125,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "genesisTime",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "480"
+      },
+      "t_struct(BuildingCosts)5228_storage": {
+        "encoding": "inplace",
+        "label": "struct BuildingCosts",
+        "members": [
+          {
+            "astId": 5208,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "name",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 5211,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceIds",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint32)dyn_storage"
+          },
+          {
+            "astId": 5214,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceValues",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint32)dyn_storage"
+          },
+          {
+            "astId": 5217,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "requirements",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_uint32)dyn_storage"
+          },
+          {
+            "astId": 5219,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "defence",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5221,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "offence",
+            "offset": 4,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5223,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "magic",
+            "offset": 8,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5225,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "population",
+            "offset": 12,
+            "slot": "4",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5227,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "food",
+            "offset": 16,
+            "slot": "4",
+            "type": "t_int32"
+          }
+        ],
+        "numberOfBytes": "160"
+      },
+      "t_struct(BuildingUpgradeCosts)5237_storage": {
+        "encoding": "inplace",
+        "label": "struct BuildingUpgradeCosts",
+        "members": [
+          {
+            "astId": 5231,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmBuildings",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_array(t_uint8)dyn_storage"
+          },
+          {
+            "astId": 5236,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "buildingCosts",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)5228_storage)"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_struct(LevelProduction)5240_storage": {
+        "encoding": "inplace",
+        "label": "struct LevelProduction",
+        "members": [
+          {
+            "astId": 5239,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "output",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(RealmBuildings)5206_storage": {
+        "encoding": "inplace",
+        "label": "struct RealmBuildings",
+        "members": [
+          {
+            "astId": 5189,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "aquaducts",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5191,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "temples",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5193,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "castles",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5195,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "markets",
+            "offset": 3,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5197,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "ports",
+            "offset": 4,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5199,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "barracks",
+            "offset": 5,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5201,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "farms",
+            "offset": 6,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5203,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "shipyard",
+            "offset": 7,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5205,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "fishingVillage",
+            "offset": 8,
+            "slot": "0",
+            "type": "t_uint8"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(RealmInfo)5175_storage": {
+        "encoding": "inplace",
+        "label": "struct RealmInfo",
+        "members": [
+          {
+            "astId": 5146,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "name",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 5148,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "lastUpdateAt",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5150,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "vestedTimeUpdatedAt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5152,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "ageSettled",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5154,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "ageClaimed",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5157,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceIds",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_array(t_uint256)dyn_storage"
+          },
+          {
+            "astId": 5159,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "cities",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5161,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "harbours",
+            "offset": 1,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5163,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "rivers",
+            "offset": 2,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5165,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "regions",
+            "offset": 3,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5167,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "wonders",
+            "offset": 4,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5169,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "orderOf",
+            "offset": 5,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5174,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceInfo",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)5182_storage)"
+          }
+        ],
+        "numberOfBytes": "256"
+      },
+      "t_struct(RealmStatistics)5144_storage": {
+        "encoding": "inplace",
+        "label": "struct RealmStatistics",
+        "members": [
+          {
+            "astId": 5135,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmDefence",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5137,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmOffence",
+            "offset": 4,
+            "slot": "0",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5139,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmMagic",
+            "offset": 8,
+            "slot": "0",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5141,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "foodSupply",
+            "offset": 12,
+            "slot": "0",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5143,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "population",
+            "offset": 16,
+            "slot": "0",
+            "type": "t_int32"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(ResourceInfo)5182_storage": {
+        "encoding": "inplace",
+        "label": "struct ResourceInfo",
+        "members": [
+          {
+            "astId": 5177,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "id",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5179,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "level",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5181,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "production",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_uint8"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(TheAges)5133_storage": {
+        "encoding": "inplace",
+        "label": "struct TheAges",
+        "members": [
+          {
+            "astId": 5128,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "settledRealms",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5130,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "ageStart",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5132,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "ageFinish",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(UpgradeCostLevels)5253_storage": {
+        "encoding": "inplace",
+        "label": "struct UpgradeCostLevels",
+        "members": [
+          {
+            "astId": 5252,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "value",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_array(t_uint256)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "32"
+      },
+      "t_struct(UpgradeCosts)5249_storage": {
+        "encoding": "inplace",
+        "label": "struct UpgradeCosts",
+        "members": [
+          {
+            "astId": 5243,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceIds",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_array(t_uint8)dyn_storage"
+          },
+          {
+            "astId": 5248,
+            "contract": "contracts/facets/GetterFacet.sol:GetterFacet",
+            "label": "upgradeCostLevels",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)5253_storage)"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
+      },
+      "t_uint8": {
+        "encoding": "inplace",
+        "label": "uint8",
+        "numberOfBytes": "1"
+      }
+    }
+  }
+}

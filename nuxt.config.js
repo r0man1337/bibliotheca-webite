@@ -132,6 +132,7 @@ export default {
     '~/plugins/analytics.js',
     '~/plugins/v-click-outside.js',
     '~/plugins/vue-awesome-countdown.js',
+    '~/plugins/v-tooltip.js',
   ],
   components: [
     '~/components/web3',

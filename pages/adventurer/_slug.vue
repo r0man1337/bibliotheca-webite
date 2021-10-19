@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-4">Hello Sir</h1>
+    <h1 class="mb-8">Sir, your vast empire</h1>
     <nav class="space-x-4 mb-8">
       <NuxtLink
         v-for="(link, index) in menuLinks"

@@ -2,10 +2,13 @@
   <div class="container">
     <div class="flex flex-wrap space-x-4">
       <DataCard>
-        <h5 class="text-red-400">Total Realms Settled</h5>
-        <div v-if="sRealms" class="text-4xl p-4 text-center">
+        <h5 class="text-red-200 uppercase text-center">Total Realms Settled</h5>
+        <div v-if="sRealms" class="text-6xl p-4 text-center">
           {{ sRealms.length }}
         </div>
+        <BButton type="primary" @click="claimAllResources()"
+          >Claim all your resources</BButton
+        >
       </DataCard>
     </div>
     <div class="mt-8">
@@ -39,6 +42,7 @@ export default defineComponent({
     const {
       stakeRealm,
       claimResources,
+      claimAllResources,
       claimBalance,
       realmBalance,
       loading,
@@ -61,6 +65,7 @@ export default defineComponent({
     return {
       stakeRealm,
       claimResources,
+      claimAllResources,
       claimBalance,
       realmBalance,
       loading,

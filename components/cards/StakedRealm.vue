@@ -7,7 +7,6 @@
       my-4
       text-white
       transform
-      hover:-translate-y-2
       transition
       duration-150
       min-h-80
@@ -51,14 +50,19 @@
       </div>
 
       <div class="p-2 flex flex-col">
-        <h4></h4>
         <h1 v-if="metaData" class="flex justify-between">
           <span>{{ metaData.name }}</span>
           <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
         </h1>
-        <div v-if="metaData && order(metaData.traits)" class="py-4">
-          <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+
+        <div class="flex justify-between">
+          <div v-if="metaData && order(metaData.traits)" class="py-4">
+            <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+          </div>
+          <Happiness class="self-center" :realm="realm.id" />
+          <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
+
         <div class="my-3">
           <span class="uppercase text-red-400 font-display"
             >days unclaimed</span
@@ -89,12 +93,14 @@
           />
         </div>
         <div v-if="buildings" class="my-3">
-          <span class="uppercase text-red-400 font-display">Buildings</span>
-          <br />
-          <div>Markets: {{ buildings[0] }}</div>
-          <div>Aquaducts: {{ buildings[1] }}</div>
-          <div>Castles: {{ buildings[2] }}</div>
-          <div>Ports: {{ buildings[3] }}</div>
+          <span class="uppercase text-gray-500 tracking-widest">Buildings</span>
+          <RealmBuildings
+            v-for="(building, index) in buildings"
+            :key="index"
+            :building-id="index"
+            :building="building"
+            :realm-id="realm.id"
+          />
         </div>
       </div>
       <button
@@ -158,6 +164,7 @@ import { defineComponent, ref, computed } from '@vue/composition-api'
 import axios from 'axios'
 import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
+
 import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
@@ -180,6 +187,7 @@ export default defineComponent({
       error,
       result,
       withdraw,
+      getTraits,
     } = useStaking()
 
     const {
@@ -193,10 +201,12 @@ export default defineComponent({
 
     const ids = ref()
     const metaData = ref()
+    const traits = ref()
 
     useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
       ids.value = await getRealmsResourceIds(props.realm.id)
+      traits.value = await getTraits(props.realm.id)
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
       await getBuildings(props.realm.id)
@@ -274,6 +284,7 @@ export default defineComponent({
       rivers,
       wonder,
       order,
+      traits,
     }
   },
 })

@@ -14,10 +14,12 @@ export function useConstruction() {
 
   const error = reactive({
     building: null,
+    costs: null,
   })
 
   const loading = reactive({
     building: null,
+    costs: false,
   })
 
   const result = reactive({ resources: null })
@@ -66,9 +68,49 @@ export function useConstruction() {
       loading.building = false
     }
   }
+
+  const costs = ref()
+
+  const getCosts = async (buildingId) => {
+    try {
+      error.costs = null
+      loading.costs = true
+      costs.value = await getBuildingCosts(
+        account.value,
+        activeNetwork.value.id,
+        buildingId
+      )
+    } catch (e) {
+      console.log(e)
+      error.costs = e.message
+    } finally {
+      loading.costs = false
+    }
+  }
+  const stats = ref()
+  const getBuildingStats = async (buildingId) => {
+    try {
+      error.costs = null
+      loading.costs = true
+      stats.value = await getAllBuildingStats(
+        account.value,
+        activeNetwork.value.id,
+        buildingId
+      )
+    } catch (e) {
+      console.log(e)
+      error.costs = e.message
+    } finally {
+      loading.costs = false
+    }
+  }
   return {
     constructBuilding,
     getBuildings,
+    getCosts,
+    getBuildingStats,
+    stats,
+    costs,
     buildings,
     error,
     loading,
@@ -115,4 +157,30 @@ async function construct(
   )
   await construct.wait()
   return construct
+}
+async function getBuildingCosts(owner, network, buildingId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const signer = provider.getSigner()
+  const constructionFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    TraitConstructionFacetAbi.abi,
+    signer
+  )
+
+  return await constructionFacet.getBuildingCosts(buildingId)
+}
+async function getAllBuildingStats(owner, network, buildingId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const signer = provider.getSigner()
+  const constructionFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    TraitConstructionFacetAbi.abi,
+    signer
+  )
+
+  return await constructionFacet.getAllBuildingStats(buildingId)
 }
