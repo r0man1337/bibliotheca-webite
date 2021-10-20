@@ -4,12 +4,21 @@ import axios from 'axios'
 import { utils } from 'ethers'
 import { gql } from 'graphql-request'
 import { useContext, ref } from '@nuxtjs/composition-api'
+import { AssetType } from '../useTransactions'
 import { useGraph } from '~/composables/web3/useGraph'
 import {
   lastOutboxEntryQuery,
   getWithdrawalsQuery,
   messageHasExecutedQuery,
 } from '~/composables/graphql/queries'
+
+interface GetTokenWithdrawalsResult {
+  l2ToL1Event: L2ToL1EventResult
+  otherData: {
+    realmId: number
+    type: AssetType
+  }
+}
 
 const networkIDAndLayerToClient = (networkID: number, layer: 1 | 2) => {
   switch (networkID) {
@@ -21,7 +30,16 @@ const networkIDAndLayerToClient = (networkID: number, layer: 1 | 2) => {
       throw new Error('Unsupported network')
   }
 }
-
+const L2RealmsClient = (l1NetworkID: number) => {
+  switch (l1NetworkID) {
+    case 1:
+      return 'L2GatewaysClient'
+    case 4:
+      return 'L2GatewaysRinkebyClient'
+    default:
+      throw new Error('Unsupported network')
+  }
+}
 export const getLatestOutboxEntryIndex = async (networkID: number) => {
   const { gqlRequest } = useGraph()
   const client = networkIDAndLayerToClient(networkID, 2)
@@ -91,14 +109,6 @@ export const messageHasExecuted = async (
   )
 
   return res.data.outboxOutputs.length > 0
-}
-
-interface GetTokenWithdrawalsResult {
-  l2ToL1Event: L2ToL1EventResult
-  otherData: {
-    value: BigNumber
-    tokenAddress: string
-  }
 }
 
 const getLatestIndexedBlockNumber = async (subgraphName: string) => {
