@@ -13,6 +13,8 @@
     "vercel-build": "yarn global add node-gyp"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@braid/vue-formulate": "^2.5.2",
     "@ethersproject/providers": "^5.4.5",
     "@instadapp/vue-web3": "^0.4.0",
@@ -41,9 +43,7 @@
     "v-tooltip": "^2.1.3",
     "vue-awesome-countdown": "^1.1.4",
     "vue-gtag": "^1.16.1",
-    "walletlink": "^2.1.6"
-  },
-  "devDependencies": {
+    "walletlink": "^2.1.6",
     "@babel/eslint-parser": "^7.14.7",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
