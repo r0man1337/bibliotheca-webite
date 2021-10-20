@@ -84,7 +84,9 @@ export function useBridge() {
     addTransaction,
     addTransactions,
     updateTransaction,
+    pendingWithdrawalsMap,
     pendingTransactions,
+    getOutGoingMessageState,
   } = useTransactions()
 
   const ethProvider = ref(null)
@@ -298,14 +300,15 @@ export function useBridge() {
       const lootRealmsL2 = new ethers.Contract(
         ARB_RINKEBY_L2_BRIDGE_ADDRESS,
         lootRealmsL2ABI,
-        l2Signer.value
+        await getL2Signer()
       )
+      console.log(lootRealmsL2)
 
       const checkApproval = await lootRealmsL2.isApprovedForAll(
         account.value,
         ARB_RINKEBY_L2_BRIDGE_ADDRESS
       )
-
+      console.log(checkApproval)
       if (!checkApproval) {
         console.log('approving')
         const approve = await lootRealmsL2.setApprovalForAll(
@@ -317,37 +320,48 @@ export function useBridge() {
 
       const tx = await lootRealmsL2.withdrawToL1(id)
 
-      try {
-        const receipt = await tx.wait()
-        // updateTransaction(receipt, tx)
+      const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
+      const tokensAddrArr = tokensArr.map((a) => a.address)
 
-        const l2ToL2EventData = await bridge.getWithdrawalsInL2Transaction(
-          receipt
-        )
-        console.log('event data')
+      try {
+        addTransaction({
+          type: 'withdraw',
+          status: 'pending',
+          value: id,
+          txID: tx.hash,
+          assetName: 'Realms',
+          assetType: AssetType.ERC721,
+          sender: account.value,
+          blockNumber: tx.blockNumber || 0, // TODO: ensure by fetching blocknumber?,
+          l1NetworkID: useL1Network.value.chainId,
+        })
+        const receipt = await tx.wait()
+        updateTransaction(receipt, tx)
+
+        const l2ToL2EventData =
+          await bridge.value.getWithdrawalsInL2Transaction(receipt)
+        console.log('l1 to l2event data')
         console.log(l2ToL2EventData)
-        /* if (l2ToL2EventData.length === 1) {
+        if (l2ToL2EventData.length === 1) {
           const l2ToL2EventDataResult = l2ToL2EventData[0]
           const id = l2ToL2EventDataResult.uniqueId.toString()
           const outgoingMessageState = await getOutGoingMessageState(
+            bridge,
             l2ToL2EventDataResult.batchNumber,
             l2ToL2EventDataResult.indexInBatch
           )
           const l2ToL2EventDataResultPlus = {
             ...l2ToL2EventDataResult,
             type: AssetType.ERC721,
-            tokenAddress: erc20l1Address,
-            value: amountParsed,
+            tokenAddress: tokensAddrArr[0],
+            value: id,
             outgoingMessageState,
-            symbol: tokenData.symbol,
-            decimals: tokenData.decimals,
           }
-          setPendingWithdrawalMap({
+          pendingWithdrawalsMap.value = {
             ...pendingWithdrawalsMap,
             [id]: l2ToL2EventDataResultPlus,
-          })
+          }
         }
-        updateTokenData(erc20l1Address) */
         return receipt
       } catch (err) {
         console.warn('withdraw token err', err)

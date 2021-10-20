@@ -116,29 +116,29 @@ const lastOutboxEntryQuery = gql`
   }
 `
 const getWithdrawalsQuery = gql`
-  query getWithdrawalsQuery(
-    $callerAddress: String
-    $fromBlock: Int
-    $toBlock: Int
-  ) {
-    l2ToL1Transactions(
+  query getWithdrawalsQuery($sender: String, $fromBlock: Int, $toBlock: Int) {
+    withdrawals(
       where: {
-        caller: $callerAddress
-        arbBlockNum_gte: $fromBlock
-        arbBlockNum_lt: $toBlock
+        from: $sender
+        l2BlockNum_gte: $fromBlock
+        l2BlockNum_lt: $toBlock
       }
+      orderBy: l2BlockNum
+      orderDirection: desc
     ) {
-      destination
-      timestamp
-      data
-      caller
-      id
-      uniqueId
-      batchNumber
-      indexInBatch
-      arbBlockNum
-      ethBlockNum
-      callvalue
+      l2ToL1Event {
+        id
+        caller
+        destination
+        batchNumber
+        indexInBatch
+        arbBlockNum
+        ethBlockNum
+        timestamp
+        callvalue
+        data
+      }
+      realmId
     }
   }
 `

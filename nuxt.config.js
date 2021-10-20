@@ -140,6 +140,10 @@ export default {
         endpoint:
           'https://api.thegraph.com/subgraphs/name/fredlacs/arb-builtins-rinkeby',
       },
+      L2GatewaysRinkebyClient: {
+        endpoint:
+          'https://api.thegraph.com/subgraphs/name/redbeardeth/arb-bridge-rinkeby',
+      },
     },
     options: {},
     useFetchPolyfill: true,
