@@ -81,7 +81,7 @@ export default defineComponent({
             address
             realmsHeld
             bagsHeld
-            treasuresHeld
+            gAdventurersHeld
             manasHeld
             mLootsHeld
           }
@@ -111,8 +111,8 @@ export default defineComponent({
         data: 'realmsHeld',
       },
       {
-        label: 'Treasure',
-        data: 'treasuresHeld',
+        label: 'GAs ',
+        data: 'gAdventurersHeld',
       },
       {
         label: 'Mana',

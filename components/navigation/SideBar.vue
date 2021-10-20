@@ -52,7 +52,7 @@
             {{ link.title }}</span
           >
         </NuxtLink>
-        <hr class="my-2 border-gray-700" />
+        <hr class="my-2 border-gray-600" />
         <NuxtLink
           v-for="link in assetLinks"
           :key="link.title"
@@ -61,7 +61,7 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</NuxtLink
         >
-        <hr class="my-2 border-gray-700" />
+        <hr class="my-2 border-gray-600" />
         <NuxtLink
           v-for="link in utilLinks"
           :key="link.title"
@@ -141,10 +141,6 @@ export default {
         page: '/manas',
         title: 'Genesis Mana',
       },
-      {
-        page: '/treasure',
-        title: 'Treasure',
-      },
     ]
 
     const utilLinks = [
@@ -153,8 +149,8 @@ export default {
         title: 'Arbitrum Bridge',
       },
       {
-        page: '/realms/mint',
-        title: 'Mint realms',
+        page: '/claim',
+        title: 'Claims & Mints',
       },
       {
         page: '/realms/resources',

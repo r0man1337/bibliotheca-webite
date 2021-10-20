@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-900 min-h-screen flex flex-wrap sm:flex-nowrap">
+  <div class="bg-gray-1000 min-h-screen flex flex-wrap sm:flex-nowrap">
     <div class="sm:hidden w-full mt-12 flex justify-between px-10">
       <div>
         <button class="text-xl" @click="toggleSideBar">Menu</button>

@@ -10,6 +10,16 @@ const usersSRealms = gql`
   query usersSRealms($address: String!) {
     srealms(first: 100, where: { currentOwner: $address }) {
       id
+      ageSettled
+      ageClaimed
+      name
+      regions
+      cities
+      harbors
+      rivers
+      resources
+      wonder
+      order
     }
   }
 `

@@ -154,6 +154,7 @@ export default {
     '~/plugins/analytics.js',
     '~/plugins/v-click-outside.js',
     '~/plugins/vue-awesome-countdown.js',
+    '~/plugins/v-tooltip.js',
   ],
   components: [
     '~/components/web3',
@@ -176,7 +177,10 @@ export default {
   generate: {
     fallback: true,
   },
-  serverMiddleware: [{ path: '/api', handler: '~/serverMiddleware/server.js' }],
+  serverMiddleware: [
+    { path: '/api', handler: '~/serverMiddleware/server.js' },
+    '~/serverMiddleware/redirects.ts',
+  ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config) {

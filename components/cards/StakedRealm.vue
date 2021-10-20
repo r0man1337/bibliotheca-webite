@@ -7,7 +7,6 @@
       my-4
       text-white
       transform
-      hover:-translate-y-2
       transition
       duration-150
       min-h-80
@@ -51,14 +50,19 @@
       </div>
 
       <div class="p-2 flex flex-col">
-        <h4></h4>
         <h1 v-if="metaData" class="flex justify-between">
           <span>{{ metaData.name }}</span>
           <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
         </h1>
-        <div v-if="metaData && order(metaData.traits)" class="py-4">
-          <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+
+        <div class="flex justify-between">
+          <div v-if="metaData && order(metaData.traits)" class="py-4">
+            <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+          </div>
+          <Happiness class="self-center" :realm="realm.id" />
+          <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
+        <RealmAgeStats :realm="realm.id" />
         <div class="my-3">
           <span class="uppercase text-red-400 font-display"
             >days unclaimed</span
@@ -82,19 +86,21 @@
             <span class="uppercase">LVL Resource p/day</span>
           </div>
           <StakedRealmResource
-            v-for="(resource, index) in ids"
+            v-for="(resource, index) in realm.resources"
             :key="index"
             :resource="resource"
             :realm-id="realm.id"
           />
         </div>
         <div v-if="buildings" class="my-3">
-          <span class="uppercase text-red-400 font-display">Buildings</span>
-          <br />
-          <div>Markets: {{ buildings[0] }}</div>
-          <div>Aquaducts: {{ buildings[1] }}</div>
-          <div>Castles: {{ buildings[2] }}</div>
-          <div>Ports: {{ buildings[3] }}</div>
+          <span class="uppercase text-gray-500 tracking-widest">Buildings</span>
+          <RealmBuildings
+            v-for="(building, index) in buildings"
+            :key="index"
+            :building-id="index"
+            :building="building"
+            :realm-id="realm.id"
+          />
         </div>
       </div>
       <button
@@ -136,20 +142,14 @@
           :rivers="rivers"
         />
       </div>
-      <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
+      <BButton
+        class="w-full mt-auto"
+        type="primary"
         @click="withdraw(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Unsettle</span>
-      </button>
-      <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
-        @click="constructBuilding(realm.id, 1, [1, 2, 3], [2, 2, 2])"
-      >
-        <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Build Aquaduct</span>
-      </button>
+        <span v-else>Unsettle Realm</span>
+      </BButton>
     </div>
   </div>
 </template>
@@ -158,6 +158,7 @@ import { defineComponent, ref, computed } from '@vue/composition-api'
 import axios from 'axios'
 import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
+
 import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
@@ -173,7 +174,6 @@ export default defineComponent({
   setup(props) {
     const {
       getRealmsResourceBalance,
-      getRealmsResourceIds,
       claimResources,
       balance,
       loading,
@@ -191,12 +191,10 @@ export default defineComponent({
       result: resultConstruction,
     } = useConstruction()
 
-    const ids = ref()
     const metaData = ref()
 
     useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
-      ids.value = await getRealmsResourceIds(props.realm.id)
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
       await getBuildings(props.realm.id)
@@ -258,7 +256,6 @@ export default defineComponent({
       loading,
       error,
       result,
-      ids,
       metaData,
       withdraw,
       loadingConstruction,

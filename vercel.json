@@ -11,6 +11,7 @@
             "config": {
                 "serverFiles": [
                     "serverMiddleware/server.js",
+                    "serverMiddleware/redirects.ts",
                     "serverMiddleware/db.json"
                 ]
             }

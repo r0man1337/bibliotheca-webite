@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
-import { activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '@instadapp/vue-web3'
+import { activeNetwork } from '../web3/useNetwork'
 import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
@@ -56,9 +56,21 @@ export function useStaking() {
       claimBalance.value = await claim(activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
-      error.stake = e.data.message
+      error.stake = e.message
     } finally {
       await getRealmsResourceBalance(realmId)
+      loading.stake = false
+    }
+  }
+  const claimAllResources = async () => {
+    try {
+      error.stake = null
+      loading.stake = true
+      claimBalance.value = await claimAll(activeNetwork.value.id)
+    } catch (e) {
+      console.log(e)
+      error.stake = e.message
+    } finally {
       loading.stake = false
     }
   }
@@ -87,11 +99,26 @@ export function useStaking() {
       loading.stake = false
     }
   }
+
+  const getTraits = async (realmId) => {
+    try {
+      error.stake = null
+      loading.stake = true
+      return await getAllTraits(activeNetwork.value.id, realmId)
+    } catch (e) {
+      console.log(e)
+      error.stake = e.message
+    } finally {
+      loading.stake = false
+    }
+  }
   return {
     stakeRealm,
+    getTraits,
     getRealmsResourceIds,
     getRealmsResourceBalance,
     claimResources,
+    claimAllResources,
     claimBalance,
     balance,
     error,
@@ -189,12 +216,33 @@ async function claim(network, realmId) {
     signer
   )
 
-  const withdraw = await resourceStakingFacet.withdrawResources(realmId, '0x')
+  const withdraw = await resourceStakingFacet.withdrawSingleRealmResources(
+    realmId,
+    '0x'
+  )
+
   await withdraw.wait()
 
   return withdraw
 }
+async function claimAll(network) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
 
+  const resourceStakingFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    StakingFacetAbi.abi,
+    signer
+  )
+
+  const withdraw = await resourceStakingFacet.withdrawAllResources('0x')
+
+  await withdraw.wait()
+
+  return withdraw
+}
 async function getResourceIds(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokensArr = diamondAddress[network].allTokens
@@ -210,6 +258,20 @@ async function getResourceIds(network, realmId) {
   return await resourceStakingFacet.getResourceIds(realmId)
 }
 
+async function getAllTraits(network, realmId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+
+  const resourceStakingFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    StakingFacetAbi.abi,
+    signer
+  )
+
+  return await resourceStakingFacet.getAllTraits(realmId)
+}
 async function unStakeAndExit(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokensArr = diamondAddress[network].allTokens

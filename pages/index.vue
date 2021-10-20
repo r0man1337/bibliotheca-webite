@@ -81,26 +81,6 @@
         >
           <div class="mt-auto">See all Loot</div>
         </div>
-        <div
-          class="
-            bg-black
-            p-4
-            rounded-xl
-            w-80
-            h-80
-            mt-10
-            text-3xl
-            cursor-pointer
-            transform
-            hover:-translate-y-2
-            transition
-            duration-150
-            flex flex-col
-          "
-          @click="$router.push('/treasure')"
-        >
-          <div class="mt-auto">See all Treasure</div>
-        </div>
       </div>
     </div>
   </section>

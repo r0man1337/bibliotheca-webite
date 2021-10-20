@@ -23,19 +23,23 @@
   >
     <div class="group-hover:text-red-400">
       <h3>{{ shortenHash(adventurer.address) }}</h3>
-      <div class="text-lg">
-        <span>Loots: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span>
+      <div class="text-xl">
+        <span
+          >Loot Bags: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span
+        >
         <br />
-        <span>Mana: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span>
+        <span
+          >Genesis Adventurers:
+          {{
+            adventurer.gAdventurersHeld ? adventurer.gAdventurersHeld : 0
+          }}</span
+        >
         <br />
         <span
           >Realms: {{ adventurer.realmsHeld ? adventurer.realmsHeld : 0 }}</span
         >
         <br />
-        <span
-          >Treasure:
-          {{ adventurer.treasuresHeld ? adventurer.treasuresHeld : 0 }}</span
-        >
+        <span>Mana: {{ adventurer.manasHeld ? adventurer.manasHeld : 0 }}</span>
         <br />
         <span
           >mLoot: {{ adventurer.mLootsHeld ? adventurer.mLootsHeld : 0 }}</span
