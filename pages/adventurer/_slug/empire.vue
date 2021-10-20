@@ -10,6 +10,18 @@
           >Claim all your resources</BButton
         >
       </DataCard>
+      <DataCard class="w-40">
+        <h5 class="text-red-200 uppercase text-center">Age</h5>
+        <div v-if="worldAge" class="text-6xl text-center p-4">
+          {{ worldAge }}
+        </div>
+      </DataCard>
+      <DataCard>
+        <h5 class="text-red-200 uppercase text-center">Lords</h5>
+
+        <BButton type="primary" @click="claimLords">Claim all lords</BButton>
+        <span v-if="lordsError">{{ lordsError.lords }}</span>
+      </DataCard>
     </div>
     <div class="mt-8">
       <h2>Settled Realms</h2>
@@ -27,6 +39,7 @@ import { defineComponent, onMounted } from '@vue/composition-api'
 
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useRealms } from '~/composables/web3/useRealms'
+import { useLords } from '~/composables/lords/useLords'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
@@ -34,6 +47,7 @@ export default defineComponent({
   setup(props, context) {
     const { slug } = context.root.$route.params
     const { getUserSRealms, sRealms } = useRealms()
+    const { claimLords, getWorldAge, worldAge, error: lordsError } = useLords()
     const { activeNetworkId, checkForNetworkMismatch, networkMismatch } =
       useNetwork()
     // const { open } = useWeb3Modal()
@@ -51,6 +65,7 @@ export default defineComponent({
     } = useStaking()
 
     onMounted(async () => {
+      await getWorldAge()
       await getUserSRealms(slug, 'arbitrumRinkeby')
       activeNetworkId.value = 'arbitrumRinkeby'
       if (account.value) {
@@ -72,6 +87,10 @@ export default defineComponent({
       error,
       result,
       sRealms,
+      claimLords,
+      lordsError,
+      getWorldAge,
+      worldAge,
     }
   },
 })

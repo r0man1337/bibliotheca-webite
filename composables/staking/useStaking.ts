@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
-import { activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '@instadapp/vue-web3'
+import { activeNetwork } from '../web3/useNetwork'
 import { useBigNumber } from '../web3/useBigNumber'
 import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
@@ -56,7 +56,7 @@ export function useStaking() {
       claimBalance.value = await claim(activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
-      error.stake = e.data.message
+      error.stake = e.message
     } finally {
       await getRealmsResourceBalance(realmId)
       loading.stake = false
@@ -69,7 +69,7 @@ export function useStaking() {
       claimBalance.value = await claimAll(activeNetwork.value.id)
     } catch (e) {
       console.log(e)
-      error.stake = e.data.message
+      error.stake = e.message
     } finally {
       loading.stake = false
     }

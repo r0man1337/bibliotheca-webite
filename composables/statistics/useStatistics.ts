@@ -51,7 +51,22 @@ export function useStatistics() {
       loading.stake = false
     }
   }
+  const ageClaimed = ref()
+  const getRealmAgeClaimed = async (realmId) => {
+    try {
+      error.stake = null
+      loading.stake = true
+      ageClaimed.value = await getAgeClaimed(activeNetwork.value.id, realmId)
+    } catch (e) {
+      console.log(e)
+      error.stake = e.message
+    } finally {
+      loading.stake = false
+    }
+  }
   return {
+    getRealmAgeClaimed,
+    ageClaimed,
     getHappiness,
     getStatistics,
     realmStatistics,
@@ -89,4 +104,19 @@ async function getAllStatistics(network, realmId) {
   )
 
   return await resourceStakingFacet.getAllStatistics(realmId)
+}
+
+async function getAgeClaimed(network, realmId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+
+  const resourceStakingFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    StakingFacetAbi.abi,
+    signer
+  )
+
+  return await resourceStakingFacet.getRealmAgeInfo(realmId)
 }

@@ -17,10 +17,10 @@
             justify-between
           "
         >
-          <div class="flex flex-col">
-            <span>Realm Defence:</span>
-            <span>Realm Offence:</span>
-            <span>Realm Magic:</span>
+          <div class="flex flex-col pr-2">
+            <span>Defence:</span>
+            <span>Offence:</span>
+            <span>Magic:</span>
           </div>
           <div class="flex flex-col">
             <span>{{ realmStatistics[0] }}</span>

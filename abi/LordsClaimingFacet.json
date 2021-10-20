@@ -1,5 +1,5 @@
 {
-  "address": "0xDdf0b989C68629ff3fD6f1dC98feC4612e0BC89F",
+  "address": "0xb1D91cD23548eA4A43D2982BE562F0Ec8CE773B7",
   "abi": [
     {
       "anonymous": false,
@@ -19,38 +19,6 @@
       ],
       "name": "LordsClaimed",
       "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "checkAllAvailableLords",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_tokenId",
-          "type": "uint256"
-        }
-      ],
-      "name": "checkAvailableLords",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
     },
     {
       "inputs": [],
@@ -86,27 +54,27 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0x07465746e436e04c6036dbeba4c2beb733ed964434d7f7d19e71531f33ced28c",
+  "transactionHash": "0xf0d53f720dc362c8a1d34c0a43ab509725cc69798a223c2bec3304811caf873b",
   "receipt": {
     "to": null,
     "from": "0xF3a8b033c2572A2887c507aa92eD134B29620245",
-    "contractAddress": "0xDdf0b989C68629ff3fD6f1dC98feC4612e0BC89F",
+    "contractAddress": "0xb1D91cD23548eA4A43D2982BE562F0Ec8CE773B7",
     "transactionIndex": 0,
-    "gasUsed": "32750894",
+    "gasUsed": "26250233",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x492104c5ad556f9b6cb53b7e6f928772f20d8f99514d19e995cbc295255be0f2",
-    "transactionHash": "0x07465746e436e04c6036dbeba4c2beb733ed964434d7f7d19e71531f33ced28c",
+    "blockHash": "0xd62d47b4d61b2746f396ebe53da8acb150eb11c0883156f93541d577a5fa30e3",
+    "transactionHash": "0xf0d53f720dc362c8a1d34c0a43ab509725cc69798a223c2bec3304811caf873b",
     "logs": [],
-    "blockNumber": 5695915,
-    "cumulativeGasUsed": "25145714",
+    "blockNumber": 5769712,
+    "cumulativeGasUsed": "20111533",
     "status": 1,
     "byzantium": true
   },
   "args": [],
-  "solcInputHash": "a42a3c816ae9f9f0d2b1c49f72f4a150",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_claimer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_lordsClaimed\",\"type\":\"uint256\"}],\"name\":\"LordsClaimed\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"checkAllAvailableLords\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"checkAvailableLords\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimAllLords\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_realmId\",\"type\":\"uint256\"}],\"name\":\"claimLords\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAge\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/facets/LordsClaimingFacet.sol\":\"LordsClaimingFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `recipient`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `sender` to `recipient` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(\\n        address sender,\\n        address recipient,\\n        uint256 amount\\n    ) external returns (bool);\\n\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n}\\n\",\"keccak256\":\"0x027b891937d20ccf213fdb9c31531574256de774bda99d3a70ecef6e1913ed2a\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../../utils/introspection/IERC165.sol\\\";\\n\\n/**\\n * @dev Required interface of an ERC721 compliant contract.\\n */\\ninterface IERC721 is IERC165 {\\n    /**\\n     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.\\n     */\\n    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\\n     */\\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\\n\\n    /**\\n     * @dev Returns the number of tokens in ``owner``'s account.\\n     */\\n    function balanceOf(address owner) external view returns (uint256 balance);\\n\\n    /**\\n     * @dev Returns the owner of the `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function ownerOf(uint256 tokenId) external view returns (address owner);\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients\\n     * are aware of the ERC721 protocol to prevent tokens from being forever locked.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId\\n    ) external;\\n\\n    /**\\n     * @dev Transfers `tokenId` token from `from` to `to`.\\n     *\\n     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId\\n    ) external;\\n\\n    /**\\n     * @dev Gives permission to `to` to transfer `tokenId` token to another account.\\n     * The approval is cleared when the token is transferred.\\n     *\\n     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.\\n     *\\n     * Requirements:\\n     *\\n     * - The caller must own the token or be an approved operator.\\n     * - `tokenId` must exist.\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address to, uint256 tokenId) external;\\n\\n    /**\\n     * @dev Returns the account approved for `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function getApproved(uint256 tokenId) external view returns (address operator);\\n\\n    /**\\n     * @dev Approve or remove `operator` as an operator for the caller.\\n     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.\\n     *\\n     * Requirements:\\n     *\\n     * - The `operator` cannot be the caller.\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     */\\n    function setApprovalForAll(address operator, bool _approved) external;\\n\\n    /**\\n     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.\\n     *\\n     * See {setApprovalForAll}\\n     */\\n    function isApprovedForAll(address owner, address operator) external view returns (bool);\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId,\\n        bytes calldata data\\n    ) external;\\n}\\n\",\"keccak256\":\"0xf101e8720213560fab41104d53b3cc7ba0456ef3a98455aa7f022391783144a0\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../IERC721.sol\\\";\\n\\n/**\\n * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension\\n * @dev See https://eips.ethereum.org/EIPS/eip-721\\n */\\ninterface IERC721Enumerable is IERC721 {\\n    /**\\n     * @dev Returns the total amount of tokens stored by the contract.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns a token ID owned by `owner` at a given `index` of its token list.\\n     * Use along with {balanceOf} to enumerate all of ``owner``'s tokens.\\n     */\\n    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);\\n\\n    /**\\n     * @dev Returns a token ID at a given `index` of all the tokens stored by the contract.\\n     * Use along with {totalSupply} to enumerate all tokens.\\n     */\\n    function tokenByIndex(uint256 index) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xa69205e5009601cf13be78b1e2f500e1e3b1d8012f22d966e63975273f602038\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0xa28007762d9da9db878dd421960c8cb9a10471f47ab5c1b3309bfe48e9e79ff4\",\"license\":\"MIT\"},\"contracts/facets/LordsClaimingFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\nimport \\\"../interfaces/SRealmsToken.sol\\\";\\nimport \\\"../interfaces/LordsToken.sol\\\";\\n\\ncontract LordsClaimingFacet {\\n    AppStorage internal s;\\n\\n    function _getAgeSupply(uint256 _age)\\n        internal\\n        view\\n        returns (uint256 _lordsAvailable)\\n    {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n\\n        _lordsAvailable = lordsToken.getAgeDistribution(_age);\\n        return _lordsAvailable;\\n    }\\n\\n    function getAge() external view returns (uint256) {\\n        return _getAge();\\n    }\\n\\n    function _getAge() internal view returns (uint256) {\\n        return (block.timestamp - s.genesisTime) / (1 days);\\n    }\\n\\n    function claimLords(uint256 _realmId)\\n        external\\n        payable\\n        checkSRealmOwner(_realmId)\\n    {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n\\n        RealmInfo storage realmInfo = s.realmInfo[_realmId];\\n\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n            uint256 supply = _getAgeSupply(x);\\n            totalEligbleLords += supply / totalSettledRealms;\\n            totalEligbleLords += supply % totalSettledRealms;\\n        }\\n\\n        realmInfo.ageClaimed = _getAge();\\n\\n        lordsToken.mint(msg.sender, totalEligbleLords);\\n\\n        emit LordsClaimed(msg.sender, totalEligbleLords);\\n    }\\n\\n    modifier checkSRealmOwner(uint256 _tokenId) {\\n        SRealmsToken sRealmstoken = SRealmsToken(s.sRealms);\\n        require(\\n            msg.sender == sRealmstoken.ownerOf(_tokenId),\\n            \\\"You do not own this Realm\\\"\\n        );\\n        _;\\n    }\\n\\n    function claimAllLords() external payable {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n        SRealmsToken sRealmstoken = SRealmsToken(s.sRealms);\\n\\n        uint256 tokenBalanceOwner = sRealmstoken.balanceOf(msg.sender);\\n\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        for (uint256 i = 0; i < tokenBalanceOwner; i++) {\\n            RealmInfo storage realmInfo = s.realmInfo[\\n                sRealmstoken.tokenOfOwnerByIndex(msg.sender, i)\\n            ];\\n\\n            for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n                uint256 supply = _getAgeSupply(x);\\n                totalEligbleLords += supply / totalSettledRealms;\\n                totalEligbleLords += supply % totalSettledRealms;\\n            }\\n\\n            realmInfo.ageClaimed = _getAge();\\n        }\\n\\n        lordsToken.mint(msg.sender, totalEligbleLords);\\n\\n        emit LordsClaimed(msg.sender, totalEligbleLords);\\n    }\\n\\n    function checkAllAvailableLords() public view returns (uint256) {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n        SRealmsToken sRealmstoken = SRealmsToken(s.sRealms);\\n\\n        uint256 tokenBalanceOwner = sRealmstoken.balanceOf(msg.sender);\\n\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        for (uint256 i = 0; i < tokenBalanceOwner; i++) {\\n            RealmInfo storage realmInfo = s.realmInfo[\\n                sRealmstoken.tokenOfOwnerByIndex(msg.sender, i)\\n            ];\\n\\n            for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n                uint256 supply = _getAgeSupply(x);\\n                totalEligbleLords += supply / totalSettledRealms;\\n                totalEligbleLords += supply % totalSettledRealms;\\n            }\\n        }\\n\\n        return totalEligbleLords;\\n    }\\n\\n    function checkAvailableLords(uint256 _tokenId)\\n        public\\n        view\\n        returns (uint256)\\n    {\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n\\n        for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n            uint256 supply = _getAgeSupply(x);\\n            totalEligbleLords += supply / totalSettledRealms;\\n            totalEligbleLords += supply % totalSettledRealms;\\n        }\\n\\n        return totalEligbleLords;\\n    }\\n\\n    event LordsClaimed(address _claimer, uint256 _lordsClaimed);\\n}\\n\",\"keccak256\":\"0x92f1e50545406dc18bcfd19d8fb35dbf44beadce4dce6f4aa4b88aa5a7d74e64\"},\"contracts/interfaces/LordsToken.sol\":{\"content\":\"pragma solidity ^0.8.2;\\nimport \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\n\\ninterface LordsToken is IERC20 {\\n    function mint(address to, uint256 amount) external;\\n\\n    function getAgeDistribution(uint256 _age) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xe44d6d1bc24dba0ea482a633969fc8299278c2858fffb05158c4bf487c14c017\"},\"contracts/interfaces/SRealmsToken.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.2;\\n\\nimport \\\"@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol\\\";\\n\\ninterface SRealmsToken is IERC721Enumerable {\\n    function changeDiamondAddress(address _newDiamondAddress) external;\\n\\n    function mintFromStakingContract(address to, uint256 tokenId) external;\\n\\n    function burn(uint256 tokenId) external;\\n}\\n\",\"keccak256\":\"0x721727d42568f1b4735d518e01aaa23f2cb6fe590009dcb402a63e9105c034df\",\"license\":\"MIT\"},\"contracts/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmStatistics {\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xc165c0821fd3bbe8678ab7a5ec078a6c875b8e01d2c27558f37d551fbdf70eaa\"}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610f84806100206000396000f3fe60806040526004361061004a5760003560e01c8063760fd3931461004f578063790aa06f14610059578063967e6e651461008457806397b05b4f146100af578063eac3f76e146100cb575b600080fd5b610057610108565b005b34801561006557600080fd5b5061006e61043b565b60405161007b9190610cfc565b60405180910390f35b34801561009057600080fd5b506100996106be565b6040516100a69190610cfc565b60405180910390f35b6100c960048036038101906100c49190610c05565b6106cd565b005b3480156100d757600080fd5b506100f260048036038101906100ed9190610c05565b6109c2565b6040516100ff9190610cfc565b60405180910390f35b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016101959190610c98565b60206040518083038186803b1580156101ad57600080fd5b505afa1580156101c1573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101e59190610c2e565b905060006101f1610abb565b905060008060005b6001846102069190610daf565b811015610247576000600d01600082815260200190815260200160002060000154826102329190610d28565b9150808061023f90610e1f565b9150506101f9565b5060005b8481101561038c5760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b8152600401610296929190610cb3565b60206040518083038186803b1580156102ae57600080fd5b505afa1580156102c2573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102e69190610c2e565b815260200190815260200160002090506000816004015490505b60018661030d9190610daf565b81101561036757600061031f82610ae1565b9050848161032d9190610d7e565b866103389190610d28565b955084816103469190610e68565b866103519190610d28565b955050808061035f90610e1f565b915050610300565b50610370610abb565b816004018190555050808061038490610e1f565b91505061024b565b508573ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b81526004016103c8929190610cb3565b600060405180830381600087803b1580156103e257600080fd5b505af11580156103f6573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db676338360405161042b929190610cb3565b60405180910390a1505050505050565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016104ca9190610c98565b60206040518083038186803b1580156104e257600080fd5b505afa1580156104f6573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061051a9190610c2e565b90506000610526610abb565b905060008060005b60018461053b9190610daf565b81101561057c576000600d01600082815260200190815260200160002060000154826105679190610d28565b9150808061057490610e1f565b91505061052e565b5060005b848110156106b15760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b81526004016105cb929190610cb3565b60206040518083038186803b1580156105e357600080fd5b505afa1580156105f7573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061061b9190610c2e565b815260200190815260200160002090506000816004015490505b6001866106429190610daf565b81101561069c57600061065482610ae1565b905084816106629190610d7e565b8661066d9190610d28565b9550848161067b9190610e68565b866106869190610d28565b955050808061069490610e1f565b915050610635565b505080806106a990610e1f565b915050610580565b5081965050505050505090565b60006106c8610abb565b905090565b8060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636352211e836040518263ffffffff1660e01b81526004016107309190610cfc565b60206040518083038186803b15801561074857600080fd5b505afa15801561075c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107809190610bdc565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146107ed576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016107e490610cdc565b60405180910390fd5b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050600080600001600086815260200190815260200160002090506000610839610abb565b905060008060005b60018461084e9190610daf565b81101561088f576000600d016000828152602001908152602001600020600001548261087a9190610d28565b9150808061088790610e1f565b915050610841565b506000846004015490505b6001846108a79190610daf565b8110156109015760006108b982610ae1565b905082816108c79190610d7e565b846108d29190610d28565b935082816108e09190610e68565b846108eb9190610d28565b93505080806108f990610e1f565b91505061089a565b5061090a610abb565b84600401819055508473ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b815260040161094d929190610cb3565b600060405180830381600087803b15801561096757600080fd5b505af115801561097b573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db67633836040516109b0929190610cb3565b60405180910390a15050505050505050565b6000806109cd610abb565b905060008060005b6001846109e29190610daf565b811015610a23576000600d0160008281526020019081526020016000206000015482610a0e9190610d28565b91508080610a1b90610e1f565b9150506109d5565b50600080600001600087815260200190815260200160002090506000816004015490505b600185610a549190610daf565b811015610aae576000610a6682610ae1565b90508381610a749190610d7e565b85610a7f9190610d28565b94508381610a8d9190610e68565b85610a989190610d28565b9450508080610aa690610e1f565b915050610a47565b5082945050505050919050565b6000620151806000600e015442610ad29190610daf565b610adc9190610d7e565b905090565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636049585f846040518263ffffffff1660e01b8152600401610b459190610cfc565b60206040518083038186803b158015610b5d57600080fd5b505afa158015610b71573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b959190610c2e565b915050919050565b600081519050610bac81610f20565b92915050565b600081359050610bc181610f37565b92915050565b600081519050610bd681610f37565b92915050565b600060208284031215610bee57600080fd5b6000610bfc84828501610b9d565b91505092915050565b600060208284031215610c1757600080fd5b6000610c2584828501610bb2565b91505092915050565b600060208284031215610c4057600080fd5b6000610c4e84828501610bc7565b91505092915050565b610c6081610de3565b82525050565b6000610c73601983610d17565b9150610c7e82610ef7565b602082019050919050565b610c9281610e15565b82525050565b6000602082019050610cad6000830184610c57565b92915050565b6000604082019050610cc86000830185610c57565b610cd56020830184610c89565b9392505050565b60006020820190508181036000830152610cf581610c66565b9050919050565b6000602082019050610d116000830184610c89565b92915050565b600082825260208201905092915050565b6000610d3382610e15565b9150610d3e83610e15565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03821115610d7357610d72610e99565b5b828201905092915050565b6000610d8982610e15565b9150610d9483610e15565b925082610da457610da3610ec8565b5b828204905092915050565b6000610dba82610e15565b9150610dc583610e15565b925082821015610dd857610dd7610e99565b5b828203905092915050565b6000610dee82610df5565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b6000610e2a82610e15565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610e5d57610e5c610e99565b5b600182019050919050565b6000610e7382610e15565b9150610e7e83610e15565b925082610e8e57610e8d610ec8565b5b828206905092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b7f596f7520646f206e6f74206f776e2074686973205265616c6d00000000000000600082015250565b610f2981610de3565b8114610f3457600080fd5b50565b610f4081610e15565b8114610f4b57600080fd5b5056fea26469706673582212209ac87912b1089d6d986c081bbee6708185e9a9d2846b55de2734c283af8aebac64736f6c63430008030033",
-  "deployedBytecode": "0x60806040526004361061004a5760003560e01c8063760fd3931461004f578063790aa06f14610059578063967e6e651461008457806397b05b4f146100af578063eac3f76e146100cb575b600080fd5b610057610108565b005b34801561006557600080fd5b5061006e61043b565b60405161007b9190610cfc565b60405180910390f35b34801561009057600080fd5b506100996106be565b6040516100a69190610cfc565b60405180910390f35b6100c960048036038101906100c49190610c05565b6106cd565b005b3480156100d757600080fd5b506100f260048036038101906100ed9190610c05565b6109c2565b6040516100ff9190610cfc565b60405180910390f35b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016101959190610c98565b60206040518083038186803b1580156101ad57600080fd5b505afa1580156101c1573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101e59190610c2e565b905060006101f1610abb565b905060008060005b6001846102069190610daf565b811015610247576000600d01600082815260200190815260200160002060000154826102329190610d28565b9150808061023f90610e1f565b9150506101f9565b5060005b8481101561038c5760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b8152600401610296929190610cb3565b60206040518083038186803b1580156102ae57600080fd5b505afa1580156102c2573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102e69190610c2e565b815260200190815260200160002090506000816004015490505b60018661030d9190610daf565b81101561036757600061031f82610ae1565b9050848161032d9190610d7e565b866103389190610d28565b955084816103469190610e68565b866103519190610d28565b955050808061035f90610e1f565b915050610300565b50610370610abb565b816004018190555050808061038490610e1f565b91505061024b565b508573ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b81526004016103c8929190610cb3565b600060405180830381600087803b1580156103e257600080fd5b505af11580156103f6573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db676338360405161042b929190610cb3565b60405180910390a1505050505050565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016104ca9190610c98565b60206040518083038186803b1580156104e257600080fd5b505afa1580156104f6573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061051a9190610c2e565b90506000610526610abb565b905060008060005b60018461053b9190610daf565b81101561057c576000600d01600082815260200190815260200160002060000154826105679190610d28565b9150808061057490610e1f565b91505061052e565b5060005b848110156106b15760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b81526004016105cb929190610cb3565b60206040518083038186803b1580156105e357600080fd5b505afa1580156105f7573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061061b9190610c2e565b815260200190815260200160002090506000816004015490505b6001866106429190610daf565b81101561069c57600061065482610ae1565b905084816106629190610d7e565b8661066d9190610d28565b9550848161067b9190610e68565b866106869190610d28565b955050808061069490610e1f565b915050610635565b505080806106a990610e1f565b915050610580565b5081965050505050505090565b60006106c8610abb565b905090565b8060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636352211e836040518263ffffffff1660e01b81526004016107309190610cfc565b60206040518083038186803b15801561074857600080fd5b505afa15801561075c573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107809190610bdc565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146107ed576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016107e490610cdc565b60405180910390fd5b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050600080600001600086815260200190815260200160002090506000610839610abb565b905060008060005b60018461084e9190610daf565b81101561088f576000600d016000828152602001908152602001600020600001548261087a9190610d28565b9150808061088790610e1f565b915050610841565b506000846004015490505b6001846108a79190610daf565b8110156109015760006108b982610ae1565b905082816108c79190610d7e565b846108d29190610d28565b935082816108e09190610e68565b846108eb9190610d28565b93505080806108f990610e1f565b91505061089a565b5061090a610abb565b84600401819055508473ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b815260040161094d929190610cb3565b600060405180830381600087803b15801561096757600080fd5b505af115801561097b573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db67633836040516109b0929190610cb3565b60405180910390a15050505050505050565b6000806109cd610abb565b905060008060005b6001846109e29190610daf565b811015610a23576000600d0160008281526020019081526020016000206000015482610a0e9190610d28565b91508080610a1b90610e1f565b9150506109d5565b50600080600001600087815260200190815260200160002090506000816004015490505b600185610a549190610daf565b811015610aae576000610a6682610ae1565b90508381610a749190610d7e565b85610a7f9190610d28565b94508381610a8d9190610e68565b85610a989190610d28565b9450508080610aa690610e1f565b915050610a47565b5082945050505050919050565b6000620151806000600e015442610ad29190610daf565b610adc9190610d7e565b905090565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636049585f846040518263ffffffff1660e01b8152600401610b459190610cfc565b60206040518083038186803b158015610b5d57600080fd5b505afa158015610b71573d6000803e3d6000fd5b505050506040513d601f19601f82011682018060405250810190610b959190610c2e565b915050919050565b600081519050610bac81610f20565b92915050565b600081359050610bc181610f37565b92915050565b600081519050610bd681610f37565b92915050565b600060208284031215610bee57600080fd5b6000610bfc84828501610b9d565b91505092915050565b600060208284031215610c1757600080fd5b6000610c2584828501610bb2565b91505092915050565b600060208284031215610c4057600080fd5b6000610c4e84828501610bc7565b91505092915050565b610c6081610de3565b82525050565b6000610c73601983610d17565b9150610c7e82610ef7565b602082019050919050565b610c9281610e15565b82525050565b6000602082019050610cad6000830184610c57565b92915050565b6000604082019050610cc86000830185610c57565b610cd56020830184610c89565b9392505050565b60006020820190508181036000830152610cf581610c66565b9050919050565b6000602082019050610d116000830184610c89565b92915050565b600082825260208201905092915050565b6000610d3382610e15565b9150610d3e83610e15565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03821115610d7357610d72610e99565b5b828201905092915050565b6000610d8982610e15565b9150610d9483610e15565b925082610da457610da3610ec8565b5b828204905092915050565b6000610dba82610e15565b9150610dc583610e15565b925082821015610dd857610dd7610e99565b5b828203905092915050565b6000610dee82610df5565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b6000610e2a82610e15565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610e5d57610e5c610e99565b5b600182019050919050565b6000610e7382610e15565b9150610e7e83610e15565b925082610e8e57610e8d610ec8565b5b828206905092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b7f596f7520646f206e6f74206f776e2074686973205265616c6d00000000000000600082015250565b610f2981610de3565b8114610f3457600080fd5b50565b610f4081610e15565b8114610f4b57600080fd5b5056fea26469706673582212209ac87912b1089d6d986c081bbee6708185e9a9d2846b55de2734c283af8aebac64736f6c63430008030033",
+  "solcInputHash": "de8e1bbd4111a57154191b5a5acd76b7",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_claimer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_lordsClaimed\",\"type\":\"uint256\"}],\"name\":\"LordsClaimed\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"claimAllLords\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_realmId\",\"type\":\"uint256\"}],\"name\":\"claimLords\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAge\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/settling/facets/LordsClaimingFacet.sol\":\"LordsClaimingFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `recipient`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address recipient, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `sender` to `recipient` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(\\n        address sender,\\n        address recipient,\\n        uint256 amount\\n    ) external returns (bool);\\n\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n}\\n\",\"keccak256\":\"0x027b891937d20ccf213fdb9c31531574256de774bda99d3a70ecef6e1913ed2a\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../../utils/introspection/IERC165.sol\\\";\\n\\n/**\\n * @dev Required interface of an ERC721 compliant contract.\\n */\\ninterface IERC721 is IERC165 {\\n    /**\\n     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.\\n     */\\n    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);\\n\\n    /**\\n     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.\\n     */\\n    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);\\n\\n    /**\\n     * @dev Returns the number of tokens in ``owner``'s account.\\n     */\\n    function balanceOf(address owner) external view returns (uint256 balance);\\n\\n    /**\\n     * @dev Returns the owner of the `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function ownerOf(uint256 tokenId) external view returns (address owner);\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients\\n     * are aware of the ERC721 protocol to prevent tokens from being forever locked.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must be have been allowed to move this token by either {approve} or {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId\\n    ) external;\\n\\n    /**\\n     * @dev Transfers `tokenId` token from `from` to `to`.\\n     *\\n     * WARNING: Usage of this method is discouraged, use {safeTransferFrom} whenever possible.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId\\n    ) external;\\n\\n    /**\\n     * @dev Gives permission to `to` to transfer `tokenId` token to another account.\\n     * The approval is cleared when the token is transferred.\\n     *\\n     * Only a single account can be approved at a time, so approving the zero address clears previous approvals.\\n     *\\n     * Requirements:\\n     *\\n     * - The caller must own the token or be an approved operator.\\n     * - `tokenId` must exist.\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address to, uint256 tokenId) external;\\n\\n    /**\\n     * @dev Returns the account approved for `tokenId` token.\\n     *\\n     * Requirements:\\n     *\\n     * - `tokenId` must exist.\\n     */\\n    function getApproved(uint256 tokenId) external view returns (address operator);\\n\\n    /**\\n     * @dev Approve or remove `operator` as an operator for the caller.\\n     * Operators can call {transferFrom} or {safeTransferFrom} for any token owned by the caller.\\n     *\\n     * Requirements:\\n     *\\n     * - The `operator` cannot be the caller.\\n     *\\n     * Emits an {ApprovalForAll} event.\\n     */\\n    function setApprovalForAll(address operator, bool _approved) external;\\n\\n    /**\\n     * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.\\n     *\\n     * See {setApprovalForAll}\\n     */\\n    function isApprovedForAll(address owner, address operator) external view returns (bool);\\n\\n    /**\\n     * @dev Safely transfers `tokenId` token from `from` to `to`.\\n     *\\n     * Requirements:\\n     *\\n     * - `from` cannot be the zero address.\\n     * - `to` cannot be the zero address.\\n     * - `tokenId` token must exist and be owned by `from`.\\n     * - If the caller is not `from`, it must be approved to move this token by either {approve} or {setApprovalForAll}.\\n     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function safeTransferFrom(\\n        address from,\\n        address to,\\n        uint256 tokenId,\\n        bytes calldata data\\n    ) external;\\n}\\n\",\"keccak256\":\"0xf101e8720213560fab41104d53b3cc7ba0456ef3a98455aa7f022391783144a0\",\"license\":\"MIT\"},\"@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../IERC721.sol\\\";\\n\\n/**\\n * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension\\n * @dev See https://eips.ethereum.org/EIPS/eip-721\\n */\\ninterface IERC721Enumerable is IERC721 {\\n    /**\\n     * @dev Returns the total amount of tokens stored by the contract.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns a token ID owned by `owner` at a given `index` of its token list.\\n     * Use along with {balanceOf} to enumerate all of ``owner``'s tokens.\\n     */\\n    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);\\n\\n    /**\\n     * @dev Returns a token ID at a given `index` of all the tokens stored by the contract.\\n     * Use along with {totalSupply} to enumerate all tokens.\\n     */\\n    function tokenByIndex(uint256 index) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xa69205e5009601cf13be78b1e2f500e1e3b1d8012f22d966e63975273f602038\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0xa28007762d9da9db878dd421960c8cb9a10471f47ab5c1b3309bfe48e9e79ff4\",\"license\":\"MIT\"},\"contracts/settling/facets/LordsClaimingFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\nimport \\\"../../shared/interfaces/SRealmsToken.sol\\\";\\nimport \\\"../../shared/interfaces/LordsToken.sol\\\";\\n\\ncontract LordsClaimingFacet {\\n    AppStorage internal s;\\n\\n    function _getAgeSupply(uint256 _age)\\n        internal\\n        view\\n        returns (uint256 _lordsAvailable)\\n    {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n\\n        _lordsAvailable = lordsToken.getAgeDistribution(_age);\\n        return _lordsAvailable;\\n    }\\n\\n    function getAge() external view returns (uint256) {\\n        return _getAge();\\n    }\\n\\n    function _getAge() internal view returns (uint256) {\\n        return (block.timestamp - s.genesisTime) / (1 days);\\n    }\\n\\n    function claimLords(uint256 _realmId)\\n        external\\n        payable\\n        checkSRealmOwner(_realmId)\\n    {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n\\n        RealmInfo storage realmInfo = s.realmInfo[_realmId];\\n\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n            uint256 supply = _getAgeSupply(x);\\n            totalEligbleLords += supply / totalSettledRealms;\\n            totalEligbleLords += supply % totalSettledRealms;\\n        }\\n\\n        require(totalEligbleLords > 0, \\\"NO_LORDS_AVAILABLE\\\");\\n\\n        realmInfo.ageClaimed = _getAge();\\n\\n        lordsToken.mint(msg.sender, totalEligbleLords);\\n\\n        emit LordsClaimed(msg.sender, totalEligbleLords);\\n    }\\n\\n    modifier checkSRealmOwner(uint256 _tokenId) {\\n        SRealmsToken sRealmstoken = SRealmsToken(s.sRealms);\\n        require(\\n            msg.sender == sRealmstoken.ownerOf(_tokenId),\\n            \\\"You do not own this Realm\\\"\\n        );\\n        _;\\n    }\\n\\n    function claimAllLords() external payable {\\n        LordsToken lordsToken = LordsToken(s.lords);\\n        SRealmsToken sRealmstoken = SRealmsToken(s.sRealms);\\n\\n        uint256 tokenBalanceOwner = sRealmstoken.balanceOf(msg.sender);\\n\\n        uint256 currentAge = _getAge();\\n\\n        uint256 totalEligbleLords;\\n\\n        uint256 totalSettledRealms;\\n\\n        for (uint256 i = 0; i < currentAge - 1; i++) {\\n            totalSettledRealms += s.theAges[i].settledRealms;\\n        }\\n\\n        for (uint256 i = 0; i < tokenBalanceOwner; i++) {\\n            RealmInfo storage realmInfo = s.realmInfo[\\n                sRealmstoken.tokenOfOwnerByIndex(msg.sender, i)\\n            ];\\n\\n            for (uint256 x = realmInfo.ageClaimed; x < currentAge - 1; x++) {\\n                uint256 supply = _getAgeSupply(x);\\n                totalEligbleLords += supply / totalSettledRealms;\\n                totalEligbleLords += supply % totalSettledRealms;\\n            }\\n\\n            realmInfo.ageClaimed = _getAge();\\n        }\\n        require(totalEligbleLords > 0, \\\"NO_LORDS_AVAILABLE\\\");\\n\\n        lordsToken.mint(msg.sender, totalEligbleLords);\\n\\n        emit LordsClaimed(msg.sender, totalEligbleLords);\\n    }\\n\\n    event LordsClaimed(address _claimer, uint256 _lordsClaimed);\\n}\\n\",\"keccak256\":\"0xbb761b4c715f72dd70d86354a121091426bec465c1c2487a3f0c594ecda3aa25\"},\"contracts/settling/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmStatistics {\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xc165c0821fd3bbe8678ab7a5ec078a6c875b8e01d2c27558f37d551fbdf70eaa\"},\"contracts/shared/interfaces/LordsToken.sol\":{\"content\":\"pragma solidity ^0.8.2;\\nimport \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\n\\ninterface LordsToken is IERC20 {\\n    function mint(address to, uint256 amount) external;\\n\\n    function getAgeDistribution(uint256 _age) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xe44d6d1bc24dba0ea482a633969fc8299278c2858fffb05158c4bf487c14c017\"},\"contracts/shared/interfaces/SRealmsToken.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.2;\\n\\nimport \\\"@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol\\\";\\n\\ninterface SRealmsToken is IERC721Enumerable {\\n    function changeDiamondAddress(address _newDiamondAddress) external;\\n\\n    function mintFromStakingContract(address to, uint256 tokenId) external;\\n\\n    function burn(uint256 tokenId) external;\\n}\\n\",\"keccak256\":\"0x721727d42568f1b4735d518e01aaa23f2cb6fe590009dcb402a63e9105c034df\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610c7c806100206000396000f3fe6080604052600436106100345760003560e01c8063760fd39314610039578063967e6e651461004357806397b05b4f1461006e575b600080fd5b61004161008a565b005b34801561004f57600080fd5b50610058610400565b60405161006591906109cb565b60405180910390f35b61008860048036038101906100839190610891565b61040f565b005b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016101179190610947565b60206040518083038186803b15801561012f57600080fd5b505afa158015610143573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061016791906108ba565b90506000610173610747565b905060008060005b6001846101889190610a7e565b8110156101c9576000600d01600082815260200190815260200160002060000154826101b491906109f7565b915080806101c190610aee565b91505061017b565b5060005b8481101561030e5760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b8152600401610218929190610962565b60206040518083038186803b15801561023057600080fd5b505afa158015610244573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061026891906108ba565b815260200190815260200160002090506000816004015490505b60018661028f9190610a7e565b8110156102e95760006102a18261076d565b905084816102af9190610a4d565b866102ba91906109f7565b955084816102c89190610b37565b866102d391906109f7565b95505080806102e190610aee565b915050610282565b506102f2610747565b816004018190555050808061030690610aee565b9150506101cd565b5060008211610352576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610349906109ab565b60405180910390fd5b8573ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b815260040161038d929190610962565b600060405180830381600087803b1580156103a757600080fd5b505af11580156103bb573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db67633836040516103f0929190610962565b60405180910390a1505050505050565b600061040a610747565b905090565b8060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636352211e836040518263ffffffff1660e01b815260040161047291906109cb565b60206040518083038186803b15801561048a57600080fd5b505afa15801561049e573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906104c29190610868565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461052f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016105269061098b565b60405180910390fd5b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060000160008681526020019081526020016000209050600061057b610747565b905060008060005b6001846105909190610a7e565b8110156105d1576000600d01600082815260200190815260200160002060000154826105bc91906109f7565b915080806105c990610aee565b915050610583565b506000846004015490505b6001846105e99190610a7e565b8110156106435760006105fb8261076d565b905082816106099190610a4d565b8461061491906109f7565b935082816106229190610b37565b8461062d91906109f7565b935050808061063b90610aee565b9150506105dc565b5060008211610687576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161067e906109ab565b60405180910390fd5b61068f610747565b84600401819055508473ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b81526004016106d2929190610962565b600060405180830381600087803b1580156106ec57600080fd5b505af1158015610700573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db6763383604051610735929190610962565b60405180910390a15050505050505050565b6000620151806000600e01544261075e9190610a7e565b6107689190610a4d565b905090565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636049585f846040518263ffffffff1660e01b81526004016107d191906109cb565b60206040518083038186803b1580156107e957600080fd5b505afa1580156107fd573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061082191906108ba565b915050919050565b60008151905061083881610c18565b92915050565b60008135905061084d81610c2f565b92915050565b60008151905061086281610c2f565b92915050565b60006020828403121561087a57600080fd5b600061088884828501610829565b91505092915050565b6000602082840312156108a357600080fd5b60006108b18482850161083e565b91505092915050565b6000602082840312156108cc57600080fd5b60006108da84828501610853565b91505092915050565b6108ec81610ab2565b82525050565b60006108ff6019836109e6565b915061090a82610bc6565b602082019050919050565b60006109226012836109e6565b915061092d82610bef565b602082019050919050565b61094181610ae4565b82525050565b600060208201905061095c60008301846108e3565b92915050565b600060408201905061097760008301856108e3565b6109846020830184610938565b9392505050565b600060208201905081810360008301526109a4816108f2565b9050919050565b600060208201905081810360008301526109c481610915565b9050919050565b60006020820190506109e06000830184610938565b92915050565b600082825260208201905092915050565b6000610a0282610ae4565b9150610a0d83610ae4565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03821115610a4257610a41610b68565b5b828201905092915050565b6000610a5882610ae4565b9150610a6383610ae4565b925082610a7357610a72610b97565b5b828204905092915050565b6000610a8982610ae4565b9150610a9483610ae4565b925082821015610aa757610aa6610b68565b5b828203905092915050565b6000610abd82610ac4565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b6000610af982610ae4565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610b2c57610b2b610b68565b5b600182019050919050565b6000610b4282610ae4565b9150610b4d83610ae4565b925082610b5d57610b5c610b97565b5b828206905092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b7f596f7520646f206e6f74206f776e2074686973205265616c6d00000000000000600082015250565b7f4e4f5f4c4f5244535f415641494c41424c450000000000000000000000000000600082015250565b610c2181610ab2565b8114610c2c57600080fd5b50565b610c3881610ae4565b8114610c4357600080fd5b5056fea26469706673582212207e317753dd532b3f5f09f9e888ec21ec12ab73babc220cf052c50d372e0650c164736f6c63430008030033",
+  "deployedBytecode": "0x6080604052600436106100345760003560e01c8063760fd39314610039578063967e6e651461004357806397b05b4f1461006e575b600080fd5b61004161008a565b005b34801561004f57600080fd5b50610058610400565b60405161006591906109cb565b60405180910390f35b61008860048036038101906100839190610891565b61040f565b005b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008173ffffffffffffffffffffffffffffffffffffffff166370a08231336040518263ffffffff1660e01b81526004016101179190610947565b60206040518083038186803b15801561012f57600080fd5b505afa158015610143573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061016791906108ba565b90506000610173610747565b905060008060005b6001846101889190610a7e565b8110156101c9576000600d01600082815260200190815260200160002060000154826101b491906109f7565b915080806101c190610aee565b91505061017b565b5060005b8481101561030e5760008060000160008873ffffffffffffffffffffffffffffffffffffffff16632f745c5933866040518363ffffffff1660e01b8152600401610218929190610962565b60206040518083038186803b15801561023057600080fd5b505afa158015610244573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061026891906108ba565b815260200190815260200160002090506000816004015490505b60018661028f9190610a7e565b8110156102e95760006102a18261076d565b905084816102af9190610a4d565b866102ba91906109f7565b955084816102c89190610b37565b866102d391906109f7565b95505080806102e190610aee565b915050610282565b506102f2610747565b816004018190555050808061030690610aee565b9150506101cd565b5060008211610352576040517f08c379a0000000000000000000000000000000000000000000000000000000008152600401610349906109ab565b60405180910390fd5b8573ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b815260040161038d929190610962565b600060405180830381600087803b1580156103a757600080fd5b505af11580156103bb573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db67633836040516103f0929190610962565b60405180910390a1505050505050565b600061040a610747565b905090565b8060008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636352211e836040518263ffffffff1660e01b815260040161047291906109cb565b60206040518083038186803b15801561048a57600080fd5b505afa15801561049e573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906104c29190610868565b73ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461052f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016105269061098b565b60405180910390fd5b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905060008060000160008681526020019081526020016000209050600061057b610747565b905060008060005b6001846105909190610a7e565b8110156105d1576000600d01600082815260200190815260200160002060000154826105bc91906109f7565b915080806105c990610aee565b915050610583565b506000846004015490505b6001846105e99190610a7e565b8110156106435760006105fb8261076d565b905082816106099190610a4d565b8461061491906109f7565b935082816106229190610b37565b8461062d91906109f7565b935050808061063b90610aee565b9150506105dc565b5060008211610687576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161067e906109ab565b60405180910390fd5b61068f610747565b84600401819055508473ffffffffffffffffffffffffffffffffffffffff166340c10f1933846040518363ffffffff1660e01b81526004016106d2929190610962565b600060405180830381600087803b1580156106ec57600080fd5b505af1158015610700573d6000803e3d6000fd5b505050507f12170b2044b97de561335471235c37308ebde6a0fc56428462a5f05f460db6763383604051610735929190610962565b60405180910390a15050505050505050565b6000620151806000600e01544261075e9190610a7e565b6107689190610a4d565b905090565b600080600060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1690508073ffffffffffffffffffffffffffffffffffffffff16636049585f846040518263ffffffff1660e01b81526004016107d191906109cb565b60206040518083038186803b1580156107e957600080fd5b505afa1580156107fd573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061082191906108ba565b915050919050565b60008151905061083881610c18565b92915050565b60008135905061084d81610c2f565b92915050565b60008151905061086281610c2f565b92915050565b60006020828403121561087a57600080fd5b600061088884828501610829565b91505092915050565b6000602082840312156108a357600080fd5b60006108b18482850161083e565b91505092915050565b6000602082840312156108cc57600080fd5b60006108da84828501610853565b91505092915050565b6108ec81610ab2565b82525050565b60006108ff6019836109e6565b915061090a82610bc6565b602082019050919050565b60006109226012836109e6565b915061092d82610bef565b602082019050919050565b61094181610ae4565b82525050565b600060208201905061095c60008301846108e3565b92915050565b600060408201905061097760008301856108e3565b6109846020830184610938565b9392505050565b600060208201905081810360008301526109a4816108f2565b9050919050565b600060208201905081810360008301526109c481610915565b9050919050565b60006020820190506109e06000830184610938565b92915050565b600082825260208201905092915050565b6000610a0282610ae4565b9150610a0d83610ae4565b9250827fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff03821115610a4257610a41610b68565b5b828201905092915050565b6000610a5882610ae4565b9150610a6383610ae4565b925082610a7357610a72610b97565b5b828204905092915050565b6000610a8982610ae4565b9150610a9483610ae4565b925082821015610aa757610aa6610b68565b5b828203905092915050565b6000610abd82610ac4565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b6000610af982610ae4565b91507fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff821415610b2c57610b2b610b68565b5b600182019050919050565b6000610b4282610ae4565b9150610b4d83610ae4565b925082610b5d57610b5c610b97565b5b828206905092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b7f596f7520646f206e6f74206f776e2074686973205265616c6d00000000000000600082015250565b7f4e4f5f4c4f5244535f415641494c41424c450000000000000000000000000000600082015250565b610c2181610ab2565b8114610c2c57600080fd5b50565b610c3881610ae4565b8114610c4357600080fd5b5056fea26469706673582212207e317753dd532b3f5f09f9e888ec21ec12ab73babc220cf052c50d372e0650c164736f6c63430008030033",
   "devdoc": {
     "kind": "dev",
     "methods": {},
@@ -121,11 +89,11 @@
     "storage": [
       {
         "astId": 244,
-        "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+        "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
         "label": "s",
         "offset": 0,
         "slot": "0",
-        "type": "t_struct(AppStorage)889_storage"
+        "type": "t_struct(AppStorage)653_storage"
       }
     ],
     "types": {
@@ -157,216 +125,216 @@
         "label": "int32",
         "numberOfBytes": "4"
       },
-      "t_mapping(t_uint256,t_struct(BuildingCosts)991_storage)": {
+      "t_mapping(t_uint256,t_struct(BuildingCosts)755_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingCosts)991_storage"
+        "value": "t_struct(BuildingCosts)755_storage"
       },
-      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)1000_storage)": {
+      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)764_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingUpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingUpgradeCosts)1000_storage"
+        "value": "t_struct(BuildingUpgradeCosts)764_storage"
       },
-      "t_mapping(t_uint256,t_struct(LevelProduction)1003_storage)": {
+      "t_mapping(t_uint256,t_struct(LevelProduction)767_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct LevelProduction)",
         "numberOfBytes": "32",
-        "value": "t_struct(LevelProduction)1003_storage"
+        "value": "t_struct(LevelProduction)767_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmBuildings)969_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmBuildings)733_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmBuildings)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmBuildings)969_storage"
+        "value": "t_struct(RealmBuildings)733_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmInfo)938_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmInfo)702_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmInfo)938_storage"
+        "value": "t_struct(RealmInfo)702_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmStatistics)907_storage)": {
+      "t_mapping(t_uint256,t_struct(RealmStatistics)671_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmStatistics)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmStatistics)907_storage"
+        "value": "t_struct(RealmStatistics)671_storage"
       },
-      "t_mapping(t_uint256,t_struct(ResourceInfo)945_storage)": {
+      "t_mapping(t_uint256,t_struct(ResourceInfo)709_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct ResourceInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(ResourceInfo)945_storage"
+        "value": "t_struct(ResourceInfo)709_storage"
       },
-      "t_mapping(t_uint256,t_struct(TheAges)896_storage)": {
+      "t_mapping(t_uint256,t_struct(TheAges)660_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct TheAges)",
         "numberOfBytes": "32",
-        "value": "t_struct(TheAges)896_storage"
+        "value": "t_struct(TheAges)660_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)1016_storage)": {
+      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)780_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCostLevels)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCostLevels)1016_storage"
+        "value": "t_struct(UpgradeCostLevels)780_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCosts)1012_storage)": {
+      "t_mapping(t_uint256,t_struct(UpgradeCosts)776_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCosts)1012_storage"
+        "value": "t_struct(UpgradeCosts)776_storage"
       },
       "t_string_storage": {
         "encoding": "bytes",
         "label": "string",
         "numberOfBytes": "32"
       },
-      "t_struct(AppStorage)889_storage": {
+      "t_struct(AppStorage)653_storage": {
         "encoding": "inplace",
         "label": "struct AppStorage",
         "members": [
           {
-            "astId": 835,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 599,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmInfo",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_uint256,t_struct(RealmInfo)938_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmInfo)702_storage)"
           },
           {
-            "astId": 840,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 604,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmStatistics",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)907_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)671_storage)"
           },
           {
-            "astId": 845,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 609,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmBuildings",
             "offset": 0,
             "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)969_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)733_storage)"
           },
           {
-            "astId": 847,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 611,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "baseProductionRate",
             "offset": 0,
             "slot": "3",
             "type": "t_uint8"
           },
           {
-            "astId": 849,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 613,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "maxProductionRate",
             "offset": 1,
             "slot": "3",
             "type": "t_uint8"
           },
           {
-            "astId": 851,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 615,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "sRealms",
             "offset": 2,
             "slot": "3",
             "type": "t_address"
           },
           {
-            "astId": 853,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 617,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realms",
             "offset": 0,
             "slot": "4",
             "type": "t_address"
           },
           {
-            "astId": 855,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 619,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "treasury",
             "offset": 0,
             "slot": "5",
             "type": "t_address"
           },
           {
-            "astId": 857,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 621,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resources",
             "offset": 0,
             "slot": "6",
             "type": "t_address"
           },
           {
-            "astId": 859,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 623,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "oracle",
             "offset": 0,
             "slot": "7",
             "type": "t_address"
           },
           {
-            "astId": 861,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 625,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "lords",
             "offset": 0,
             "slot": "8",
             "type": "t_address"
           },
           {
-            "astId": 866,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 630,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "levelProduction",
             "offset": 0,
             "slot": "9",
-            "type": "t_mapping(t_uint256,t_struct(LevelProduction)1003_storage)"
+            "type": "t_mapping(t_uint256,t_struct(LevelProduction)767_storage)"
           },
           {
-            "astId": 871,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 635,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "upgradeCosts",
             "offset": 0,
             "slot": "10",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)1012_storage)"
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)776_storage)"
           },
           {
-            "astId": 876,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 640,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "buildingUpgradeCosts",
             "offset": 0,
             "slot": "11",
-            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)1000_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)764_storage)"
           },
           {
-            "astId": 881,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 645,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "buildingCosts",
             "offset": 0,
             "slot": "12",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)991_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)755_storage)"
           },
           {
-            "astId": 886,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 650,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "theAges",
             "offset": 0,
             "slot": "13",
-            "type": "t_mapping(t_uint256,t_struct(TheAges)896_storage)"
+            "type": "t_mapping(t_uint256,t_struct(TheAges)660_storage)"
           },
           {
-            "astId": 888,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 652,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "genesisTime",
             "offset": 0,
             "slot": "14",
@@ -375,77 +343,77 @@
         ],
         "numberOfBytes": "480"
       },
-      "t_struct(BuildingCosts)991_storage": {
+      "t_struct(BuildingCosts)755_storage": {
         "encoding": "inplace",
         "label": "struct BuildingCosts",
         "members": [
           {
-            "astId": 971,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 735,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "name",
             "offset": 0,
             "slot": "0",
             "type": "t_string_storage"
           },
           {
-            "astId": 974,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 738,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "1",
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 977,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 741,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resourceValues",
             "offset": 0,
             "slot": "2",
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 980,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 744,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "requirements",
             "offset": 0,
             "slot": "3",
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 982,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 746,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "defence",
             "offset": 0,
             "slot": "4",
             "type": "t_int32"
           },
           {
-            "astId": 984,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 748,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "offence",
             "offset": 4,
             "slot": "4",
             "type": "t_int32"
           },
           {
-            "astId": 986,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 750,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "magic",
             "offset": 8,
             "slot": "4",
             "type": "t_int32"
           },
           {
-            "astId": 988,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 752,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "population",
             "offset": 12,
             "slot": "4",
             "type": "t_int32"
           },
           {
-            "astId": 990,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 754,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "food",
             "offset": 16,
             "slot": "4",
@@ -454,36 +422,36 @@
         ],
         "numberOfBytes": "160"
       },
-      "t_struct(BuildingUpgradeCosts)1000_storage": {
+      "t_struct(BuildingUpgradeCosts)764_storage": {
         "encoding": "inplace",
         "label": "struct BuildingUpgradeCosts",
         "members": [
           {
-            "astId": 994,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 758,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmBuildings",
             "offset": 0,
             "slot": "0",
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 999,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 763,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "buildingCosts",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)991_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)755_storage)"
           }
         ],
         "numberOfBytes": "64"
       },
-      "t_struct(LevelProduction)1003_storage": {
+      "t_struct(LevelProduction)767_storage": {
         "encoding": "inplace",
         "label": "struct LevelProduction",
         "members": [
           {
-            "astId": 1002,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 766,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "output",
             "offset": 0,
             "slot": "0",
@@ -492,77 +460,77 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(RealmBuildings)969_storage": {
+      "t_struct(RealmBuildings)733_storage": {
         "encoding": "inplace",
         "label": "struct RealmBuildings",
         "members": [
           {
-            "astId": 952,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 716,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "aquaducts",
             "offset": 0,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 954,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 718,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "temples",
             "offset": 1,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 956,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 720,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "castles",
             "offset": 2,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 958,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 722,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "markets",
             "offset": 3,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 960,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 724,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "ports",
             "offset": 4,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 962,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 726,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "barracks",
             "offset": 5,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 964,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 728,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "farms",
             "offset": 6,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 966,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 730,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "shipyard",
             "offset": 7,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 968,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 732,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "fishingVillage",
             "offset": 8,
             "slot": "0",
@@ -571,156 +539,156 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(RealmInfo)938_storage": {
+      "t_struct(RealmInfo)702_storage": {
         "encoding": "inplace",
         "label": "struct RealmInfo",
         "members": [
           {
-            "astId": 909,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 673,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "name",
             "offset": 0,
             "slot": "0",
             "type": "t_string_storage"
           },
           {
-            "astId": 911,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 675,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "lastUpdateAt",
             "offset": 0,
             "slot": "1",
             "type": "t_uint256"
           },
           {
-            "astId": 913,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 677,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "vestedTimeUpdatedAt",
             "offset": 0,
             "slot": "2",
             "type": "t_uint256"
           },
           {
-            "astId": 915,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 679,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "ageSettled",
             "offset": 0,
             "slot": "3",
             "type": "t_uint256"
           },
           {
-            "astId": 917,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 681,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "ageClaimed",
             "offset": 0,
             "slot": "4",
             "type": "t_uint256"
           },
           {
-            "astId": 920,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 684,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "5",
             "type": "t_array(t_uint256)dyn_storage"
           },
           {
-            "astId": 922,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 686,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "cities",
             "offset": 0,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 924,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 688,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "harbours",
             "offset": 1,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 926,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 690,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "rivers",
             "offset": 2,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 928,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 692,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "regions",
             "offset": 3,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 930,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 694,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "wonders",
             "offset": 4,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 932,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 696,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "orderOf",
             "offset": 5,
             "slot": "6",
             "type": "t_uint8"
           },
           {
-            "astId": 937,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 701,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resourceInfo",
             "offset": 0,
             "slot": "7",
-            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)945_storage)"
+            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)709_storage)"
           }
         ],
         "numberOfBytes": "256"
       },
-      "t_struct(RealmStatistics)907_storage": {
+      "t_struct(RealmStatistics)671_storage": {
         "encoding": "inplace",
         "label": "struct RealmStatistics",
         "members": [
           {
-            "astId": 898,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 662,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmDefence",
             "offset": 0,
             "slot": "0",
             "type": "t_int32"
           },
           {
-            "astId": 900,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 664,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmOffence",
             "offset": 4,
             "slot": "0",
             "type": "t_int32"
           },
           {
-            "astId": 902,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 666,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "realmMagic",
             "offset": 8,
             "slot": "0",
             "type": "t_int32"
           },
           {
-            "astId": 904,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 668,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "foodSupply",
             "offset": 12,
             "slot": "0",
             "type": "t_int32"
           },
           {
-            "astId": 906,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 670,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "population",
             "offset": 16,
             "slot": "0",
@@ -729,29 +697,29 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(ResourceInfo)945_storage": {
+      "t_struct(ResourceInfo)709_storage": {
         "encoding": "inplace",
         "label": "struct ResourceInfo",
         "members": [
           {
-            "astId": 940,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 704,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "id",
             "offset": 0,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 942,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 706,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "level",
             "offset": 1,
             "slot": "0",
             "type": "t_uint8"
           },
           {
-            "astId": 944,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 708,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "production",
             "offset": 2,
             "slot": "0",
@@ -760,29 +728,29 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(TheAges)896_storage": {
+      "t_struct(TheAges)660_storage": {
         "encoding": "inplace",
         "label": "struct TheAges",
         "members": [
           {
-            "astId": 891,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 655,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "settledRealms",
             "offset": 0,
             "slot": "0",
             "type": "t_uint256"
           },
           {
-            "astId": 893,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 657,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "ageStart",
             "offset": 0,
             "slot": "1",
             "type": "t_uint256"
           },
           {
-            "astId": 895,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 659,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "ageFinish",
             "offset": 0,
             "slot": "2",
@@ -791,13 +759,13 @@
         ],
         "numberOfBytes": "96"
       },
-      "t_struct(UpgradeCostLevels)1016_storage": {
+      "t_struct(UpgradeCostLevels)780_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCostLevels",
         "members": [
           {
-            "astId": 1015,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 779,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "value",
             "offset": 0,
             "slot": "0",
@@ -806,25 +774,25 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(UpgradeCosts)1012_storage": {
+      "t_struct(UpgradeCosts)776_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCosts",
         "members": [
           {
-            "astId": 1006,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 770,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "resourceIds",
             "offset": 0,
             "slot": "0",
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 1011,
-            "contract": "contracts/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
+            "astId": 775,
+            "contract": "contracts/settling/facets/LordsClaimingFacet.sol:LordsClaimingFacet",
             "label": "upgradeCostLevels",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)1016_storage)"
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)780_storage)"
           }
         ],
         "numberOfBytes": "64"

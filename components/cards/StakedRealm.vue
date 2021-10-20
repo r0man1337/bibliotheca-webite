@@ -62,7 +62,7 @@
           <Happiness class="self-center" :realm="realm.id" />
           <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
-
+        <RealmAgeStats :realm="realm.id" />
         <div class="my-3">
           <span class="uppercase text-red-400 font-display"
             >days unclaimed</span
@@ -86,7 +86,7 @@
             <span class="uppercase">LVL Resource p/day</span>
           </div>
           <StakedRealmResource
-            v-for="(resource, index) in ids"
+            v-for="(resource, index) in realm.resources"
             :key="index"
             :resource="resource"
             :realm-id="realm.id"
@@ -142,20 +142,14 @@
           :rivers="rivers"
         />
       </div>
-      <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
+      <BButton
+        class="w-full mt-auto"
+        type="primary"
         @click="withdraw(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Unsettle</span>
-      </button>
-      <button
-        class="bg-gray-900 rounded w-full px-4 py-2 mt-4"
-        @click="constructBuilding(realm.id, 1, [1, 2, 3], [2, 2, 2])"
-      >
-        <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Build Aquaduct</span>
-      </button>
+        <span v-else>Unsettle Realm</span>
+      </BButton>
     </div>
   </div>
 </template>
@@ -180,14 +174,12 @@ export default defineComponent({
   setup(props) {
     const {
       getRealmsResourceBalance,
-      getRealmsResourceIds,
       claimResources,
       balance,
       loading,
       error,
       result,
       withdraw,
-      getTraits,
     } = useStaking()
 
     const {
@@ -199,14 +191,10 @@ export default defineComponent({
       result: resultConstruction,
     } = useConstruction()
 
-    const ids = ref()
     const metaData = ref()
-    const traits = ref()
 
     useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
-      ids.value = await getRealmsResourceIds(props.realm.id)
-      traits.value = await getTraits(props.realm.id)
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
       await getBuildings(props.realm.id)
@@ -268,7 +256,6 @@ export default defineComponent({
       loading,
       error,
       result,
-      ids,
       metaData,
       withdraw,
       loadingConstruction,
@@ -284,7 +271,6 @@ export default defineComponent({
       rivers,
       wonder,
       order,
-      traits,
     }
   },
 })

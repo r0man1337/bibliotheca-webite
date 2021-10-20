@@ -6,7 +6,7 @@
       </button>
 
       <template slot="popover">
-        <div class="bg-gray-300 shadow-xl p-4 rounded text-black">
+        <div class="bg-gray-300 shadow-xl p-4 rounded text-black w-72">
           <h4 class="mb-4">Realm Happiness: {{ happiness }}</h4>
           <span>Resource Production: {{ (happiness / 100) * 100 }}%</span>
           <br />

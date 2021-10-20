@@ -21,11 +21,11 @@ export function useLords() {
   const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
 
   const error = reactive({
-    resources: null,
+    lords: null,
   })
 
   const loading = reactive({
-    resources: false,
+    lords: false,
   })
 
   const result = reactive({ resources: null })
@@ -33,25 +33,58 @@ export function useLords() {
 
   const lordsAvailableOnRealm = ref()
 
-  const getAvailableLords = async (realmId) => {
+  const claimLords = async (realmId) => {
     try {
-      error.resources = null
-      // loading.resources = true
-      lordsAvailableOnRealm.value = await getLordsBalanceOnRealm(
+      error.lords = null
+      loading.lords = true
+      lordsAvailableOnRealm.value = await claimAllLords(
         account,
         activeNetwork.value.id,
         realmId
       )
     } catch (e) {
       console.log(e)
-      error.resources = e.message
+      error.lords = e.data.message
     } finally {
-      // loading.resources = false
+      loading.lords = false
+    }
+  }
+  const worldAge = ref()
+  const getWorldAge = async (realmId) => {
+    try {
+      error.lords = null
+      loading.lords = true
+      worldAge.value = await getAge(account, activeNetwork.value.id, realmId)
+    } catch (e) {
+      console.log(e)
+      error.lords = e.data.message
+    } finally {
+      loading.lords = false
+    }
+  }
+  const lordsBalance = ref()
+  const getAdventurersLords = async (account) => {
+    try {
+      error.lords = null
+      loading.lords = true
+      lordsBalance.value = await getLordsBalance(
+        account,
+        activeNetwork.value.id
+      )
+    } catch (e) {
+      console.log(e)
+      error.lords = e.data.message
+    } finally {
+      loading.lords = false
     }
   }
 
   return {
-    getAvailableLords,
+    claimLords,
+    getWorldAge,
+    getAdventurersLords,
+    lordsBalance,
+    worldAge,
     lordsAvailableOnRealm,
     error,
     loading,
@@ -60,23 +93,9 @@ export function useLords() {
   }
 }
 
-async function getLordsBalanceOnRealm(owner, network, realmId) {
+async function claimAllLords(owner, network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
-
-  // SRealms Token
-  const tokensArr = sRealmsToken[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
-  console.log(tokensAddrArr[0])
-
-  const sRealm = new ethers.Contract(
-    tokensAddrArr[0],
-    LordsClaimingFacetAbi.abi,
-    signer
-  )
-  // sRealms
-  const totalSRealms = await sRealm.balanceOf(owner)
-  console.log(totalSRealms)
 
   const LordstokensFacet = diamondAddress[network].allTokens
   const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
@@ -86,6 +105,42 @@ async function getLordsBalanceOnRealm(owner, network, realmId) {
     LordsClaimingFacetAbi.abi,
     signer
   )
-  const getCurrentAge = await lordsTokens.getAge()
-  console.log(getCurrentAge)
+  const lords = await lordsTokens.claimAllLords()
+  await lords
+  return lords
+}
+
+async function getAge(owner, network, realmId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+
+  const LordstokensFacet = diamondAddress[network].allTokens
+  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+
+  const lordsTokens = new ethers.Contract(
+    lordstokensFacetArr[0],
+    LordsClaimingFacetAbi.abi,
+    signer
+  )
+  const lords = await lordsTokens.getAge()
+  await lords
+  return lords
+}
+
+async function getLordsBalance(owner, network) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+
+  const LordstokensFacet = lordsAddress[network].allTokens
+  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+
+  const lordsTokens = new ethers.Contract(
+    lordstokensFacetArr[0],
+    LordsTokenAbi.abi,
+    signer
+  )
+
+  const lords = await lordsTokens.balanceOf(owner)
+
+  return ethers.utils.formatEther(lords)
 }
