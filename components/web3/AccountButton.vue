@@ -67,27 +67,6 @@
       >
         <span> disconnect? </span>
       </button>
-
-      <!-- <div v-show="show" class="w-auto px-2 absolute z-10 mt-0.5 right-0 mr-2">
-        <ul
-          class="bg-black text-white shadow-lg max-h-60 rounded-md py-1 text-gray overflow-auto focus:outline-none sm:text-sm"
-          tabindex="-1"
-          role="listbox"
-          aria-labelledby="listbox-label"
-          aria-activedescendant="listbox-option-3"
-        >
-          <li
-            id="listbox-option-0"
-            class="cursor-pointer select-none relative py-3 pl-3 pr-9 hover:bg-red-200 text-red-400 rounded"
-            role="option"
-            @click="deactivate"
-          >
-            <span class="flex items-center">
-              Disconnect
-            </span>
-          </li>
-        </ul>
-      </div> -->
     </div>
     <BButton v-else class="" type="primary" @click="open">
       Connect to the Lootverse

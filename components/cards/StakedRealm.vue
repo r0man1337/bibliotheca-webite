@@ -112,16 +112,6 @@
             :realm-id="realm.id"
           />
         </div>
-        <div v-if="buildings" class="my-3">
-          <span class="uppercase text-red-400 font-display">Buildings</span>
-          <RealmBuildings
-            v-for="(building, index) in buildings"
-            :key="index"
-            :building-id="index"
-            :building="building"
-            :realm-id="realm.id"
-          />
-        </div>
       </div>
 
       <div
@@ -131,11 +121,24 @@
         {{ error.stake }}
       </div>
     </div>
-    <div class="h-full w-full" :class="{ 'bg-white hidden': !active }">
+    <div
+      class="h-full w-full flex flex-col"
+      :class="{ 'bg-white hidden': !active }"
+    >
       <div class="flex p-3">
         <button class="bg-gray-900 rounded p-2 ml-auto" @click="active = false">
           Flip
         </button>
+      </div>
+      <div v-if="buildings" class="my-3 px-2">
+        <span class="uppercase text-red-400 font-display">Buildings</span>
+        <RealmBuildings
+          v-for="(building, index) in buildings"
+          :key="index"
+          :building-id="index"
+          :building="building"
+          :realm-id="realm.id"
+        />
       </div>
       <div v-if="metaData" class="px-2">
         <Levels

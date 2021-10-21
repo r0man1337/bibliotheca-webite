@@ -55,8 +55,10 @@ export default defineComponent({
       } catch (e) {
         console.log(e)
       } finally {
-        const response = await getOSData(userRealms.value.l2)
-        metaData.value = response.data.assets
+        if (userRealms.value.l2) {
+          const response = await getOSData(userRealms.value.l2)
+          metaData.value = response.data.assets
+        }
       }
     })
 
