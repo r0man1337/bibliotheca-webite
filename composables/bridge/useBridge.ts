@@ -86,6 +86,9 @@ export function useBridge() {
     updateTransaction,
     pendingWithdrawalsMap,
     pendingTransactions,
+    setTransactionConfirmed,
+    addToExecutedMessagesCache,
+    setTransactionFailure,
     getOutGoingMessageState,
   } = useTransactions()
 
@@ -116,11 +119,17 @@ export function useBridge() {
     return arbProvider.getSigner(account.value)
   }
 
+  const currentL1BlockNumber = ref(0)
+
   const initBridge = async () => {
     try {
       bridge.value = await Bridge.init(await getL1Signer(), await getL2Signer())
       l2TransactionCount.value =
         await bridge.value.l2Signer.getTransactionCount()
+      bridge.value.l1Provider.on('block', (blockNumber) => {
+        console.log('received block event' + blockNumber)
+        currentL1BlockNumber.value = blockNumber
+      })
       return bridge.value
     } catch (e) {
       console.log(e)
@@ -358,7 +367,7 @@ export function useBridge() {
             outgoingMessageState,
           }
           pendingWithdrawalsMap.value = {
-            ...pendingWithdrawalsMap,
+            ...pendingWithdrawalsMap.value,
             [id]: l2ToL2EventDataResultPlus,
           }
         }
@@ -368,6 +377,45 @@ export function useBridge() {
       }
     }
   }
+
+  const triggerOutbox = async (pendingWithdrawalsMapSent, id: string) => {
+    console.log(pendingWithdrawalsMapSent.value)
+    if (!pendingWithdrawalsMapSent.value[id])
+      throw new Error('Outbox message not found')
+    const { batchNumber, indexInBatch, tokenAddress, value } =
+      pendingWithdrawalsMapSent.value[id]
+    const res = await bridge.value.triggerL2ToL1Transaction(
+      batchNumber,
+      indexInBatch,
+      true
+    )
+    addTransaction({
+      status: 'pending',
+      type: 'outbox',
+      value: null,
+      assetName: 'Realms',
+      assetType: AssetType.ERC721,
+      sender: account.value,
+      txID: res.hash,
+      l1NetworkID: useL1Network.value.chainId,
+    })
+    try {
+      const rec = await res.wait()
+      if (rec.status === 1) {
+        setTransactionConfirmed(rec.transactionHash)
+        const newPendingWithdrawalsMap = { ...pendingWithdrawalsMap.value }
+        delete newPendingWithdrawalsMap[id]
+        pendingWithdrawalsMap.value = newPendingWithdrawalsMap
+        addToExecutedMessagesCache(batchNumber, indexInBatch)
+      } else {
+        setTransactionFailure(rec.transactionHash)
+      }
+      return rec
+    } catch (err) {
+      console.warn('WARNING: token outbox execute failed:', err)
+    }
+  }
+
   const getL2TxnHashes = async (depositTxn) => {
     let seqNum: BigNumber
     if (depositTxn.seqNum) {
@@ -535,6 +583,8 @@ export function useBridge() {
     withdrawToL1,
     getL2TxnHashes,
     l2TransactionCount,
+    triggerOutbox,
+    currentL1BlockNumber,
     error,
     bridge,
     result,

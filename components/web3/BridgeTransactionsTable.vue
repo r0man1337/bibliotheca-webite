@@ -59,7 +59,7 @@
               </tr>
             </thead>
             <tbody
-              v-if="transactions"
+              v-if="mergedTransactionsToShow"
               class="bg-gray-600 text-white divide-y divide-gray-200"
             >
               <tr
@@ -85,19 +85,6 @@
                 </td>
                 <td class="px-4 py-6 whitespace-nowrap text-sm">
                   <StatusPill :status="transaction.status" />
-                  <!-- <StatusBadge
-          variant={
-            transaction.status === 'success'
-              ? 'green'
-              : transaction.status === 'failure'
-              ? 'red'
-              : transaction.status === 'pending'
-              ? 'blue'
-              : 'yellow'
-          }
-        >
-          {transaction.status}
-        </StatusBadge>-->
                 </td>
                 <td
                   class="
@@ -109,36 +96,50 @@
                     text-gray-500
                   "
                 >
-                  <!--<div
+                  <div
                     v-if="
                       transaction.isWithdrawal &&
                       transaction.status.toLowerCase() === 'confirmed'
                     "
                     class="relative group"
                   >
-                    <button
-                      :disabled="!isDepositMode"
-                      :onClick="handleTriggerOutbox"
-                      type="submit"
-                      class="
-                        flex
-                        items-center
-                        justify-center
-                        bg-white
-                        border border-gray-300
-                        rounded-md
-                        shadow-sm
-                        hover:bg-gray-100
-                        p-2
-                        min-w-16
-                      "
-                    >
-                      Claim
-                    </button>
-                    <Tooltip v-if="!isDepositMode"
-                      >Must be on l1 network to claim withdrawal.</Tooltip
-                    >
-                  </div>-->
+                    <v-popover placement="right" trigger="hover">
+                      <button
+                        :disabled="!isDepositMode"
+                        type="submit"
+                        class="
+                          flex
+                          items-center
+                          justify-center
+                          bg-white
+                          border border-gray-300
+                          rounded-md
+                          shadow-sm
+                          hover:bg-gray-100
+                          p-2
+                          min-w-16
+                        "
+                        @click="handleTriggerOutbox(transaction)"
+                      >
+                        Claim
+                      </button>
+                      <template v-if="!isDepositMode" slot="popover">
+                        <div
+                          class="
+                            bg-gray-300
+                            shadow-xl
+                            p-4
+                            rounded
+                            text-black
+                            w-72
+                            ml-2
+                          "
+                        >
+                          Must be on l1 network to claim withdrawal
+                        </div>
+                      </template>
+                    </v-popover>
+                  </div>
 
                   <div v-if="showRedeemRetryableButton" class="relative group">
                     <button
@@ -165,14 +166,14 @@
               </Tooltip>-->
                   </div>
 
-                  <!--<div
+                  <div
                     v-if="
                       transaction.isWithdrawal &&
                       transaction.status === 'Executed'
                     "
                   >
                     Already claimed
-                  </div>-->
+                  </div>
                 </td>
                 <td
                   class="
@@ -209,7 +210,10 @@
                       transaction.status === 'Unconfirmed'
                     "
                   >
-                    <span>Unconfirmed: ETA: calcEtaDisplay()</span>
+                    <span
+                      >Unconfirmed: ETA:
+                      {{ calcEtaDisplay(transaction.blockNum) }}</span
+                    >
                   </div>
                 </td>
                 <td
@@ -259,7 +263,7 @@
                     text-gray-500
                   "
                 >
-                  {{ transaction.value }}
+                  {{ transaction.realmId }}
                 </td>
               </tr>
             </tbody>
@@ -270,8 +274,9 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
-import { useTransactions } from '~/composables/bridge/useTransactions'
+import { defineComponent, ref, computed } from '@vue/composition-api'
+import { useBridge } from '~/composables/bridge/useBridge'
+import { activeNetwork, useNetwork } from '~/composables/web3/useNetwork'
 
 export default defineComponent({
   props: {
@@ -280,28 +285,59 @@ export default defineComponent({
       default: null,
     },
   },
-  setup() {
-    const {
-      transactions,
-      mergedTransactions,
-      withdrawalsTransformed,
-      pendingWithdrawalsMap,
-      depositsTransformed,
-    } = useTransactions()
+  setup(props, context) {
+    const { useL1Network, useL2Network } = useNetwork()
+    const { currentL1BlockNumber } = useBridge()
+    const { confirmPeriodBlocks = 45818 } = useL2Network.value
+    const { blockTime = 15 } = useL1Network.value
 
+    const handleTriggerOutbox = (transaction) => {
+      console.log(transaction)
+      if (transaction.txId === null) {
+        return
+      }
+      context.emit('triggerOutbox', transaction)
+    }
+
+    const calcEtaDisplay = (blockNum) => {
+      const blocksRemaining = Math.max(
+        confirmPeriodBlocks - (currentL1BlockNumber.value - blockNum),
+        0
+      )
+      const minutesLeft = Math.round((blocksRemaining * blockTime) / 60)
+      const hoursLeft = Math.round(minutesLeft / 60)
+      const daysLeft = Math.round(hoursLeft / 24)
+
+      if (daysLeft > 0) {
+        return `~${blocksRemaining} blocks (~${daysLeft} day${
+          daysLeft === 1 ? '' : 's'
+        })`
+      }
+
+      if (hoursLeft > 0) {
+        return `~${blocksRemaining} blocks (~${hoursLeft} hour${
+          hoursLeft === 1 ? '' : 's'
+        })`
+      }
+
+      if (minutesLeft === 0) {
+        return 'about 1 hour'
+      }
+
+      return `~${blocksRemaining} blocks (~${minutesLeft} minute${
+        minutesLeft === 1 ? '' : 's'
+      })`
+    }
     const showRedeemRetryableButton = ref()
-    const isDepositMode = ref(true)
+    const isDepositMode = computed(() => {
+      return !activeNetwork.value.isArbitrum
+    })
 
     return {
+      handleTriggerOutbox,
+      calcEtaDisplay,
       showRedeemRetryableButton,
       isDepositMode,
-      transactions,
-      mergedTransactions,
-      pendingWithdrawalsMap,
-
-      withdrawalsTransformed,
-
-      depositsTransformed,
     }
   },
 })

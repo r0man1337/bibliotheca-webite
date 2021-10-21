@@ -238,6 +238,7 @@ export function useTransactions() {
   const setResolvedTimestamp = (txID: string, timestamp?: string) => {
     return updateResolvedTimestamp(txID, timestamp)
   }
+
   const setTransactionFailure = (txID?: string) => {
     if (!txID) {
       console.warn(' Cannot set transaction failure: TxID not included (???)')
@@ -245,17 +246,22 @@ export function useTransactions() {
     }
     return updateStatusAndSeqNum('failure', txID)
   }
+  const clearPendingTransactions = () => {
+    return transactions.value.filter((txn) => txn.status !== 'pending')
+  }
+
+  const setTransactionConfirmed = (txID: string) => {
+    return updateStatusAndSeqNum('confirmed', txID)
+  }
 
   const setInitialPendingWithdrawals = async (
     bridge,
     filter?: ethers.providers.Filter
   ) => {
-    const pendingWithdrawals: PendingWithdrawalsMap = {}
+    const pendingWithdrawals = {}
     const t = new Date().getTime()
     console.log('*** Getting initial pending withdrawal data ***')
-    const l2ToL1Txns = (
-      await Promise.all([getTokenWithdrawalsV2(bridge, filter)])
-    ).flat()
+    const l2ToL1Txns = await getTokenWithdrawalsV2(bridge, filter)
 
     console.log(
       `*** done getting pending withdrawals, took ${
@@ -339,6 +345,7 @@ export function useTransactions() {
         return getOutGoingMessageState(bridge, batchNumber, indexInBatch)
       })
     )
+
     const oldTokenWithdrawals = results.map((resultsData, i) => {
       const {
         caller,
@@ -793,7 +800,7 @@ export function useTransactions() {
     return deposits
   })
   const withdrawalsTransformed = computed(() => {
-    const withdrawals: MergedTransaction[] = (
+    const withdrawalsTest: MergedTransaction[] = (
       Object.values(
         pendingWithdrawalsMap.value || []
       ) as L2ToL1EventResultPlus[]
@@ -817,7 +824,7 @@ export function useTransactions() {
         tokenAddress: tx.tokenAddress || null,
       }
     })
-    return withdrawals
+    return withdrawalsTest
   })
   const mergedTransactions = computed(() => {
     // return _reverse(
@@ -923,8 +930,10 @@ export function useTransactions() {
 
   return {
     transactions,
-    /* clearPendingTransactions,
-      setTransactionConfirmed, */
+    clearPendingTransactions,
+    setTransactionConfirmed,
+    setTransactionFailure,
+    addToExecutedMessagesCache,
     updateTransaction,
     addTransaction,
     addTransactions,
