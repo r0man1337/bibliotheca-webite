@@ -61,7 +61,7 @@ export function useLords() {
       worldAge.value = await getAge(account, activeNetwork.value.id, realmId)
     } catch (e) {
       console.log(e)
-      error.lords = e.data.message
+      // error.lords = e.data.message
     } finally {
       loading.lords = false
     }

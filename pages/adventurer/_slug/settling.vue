@@ -10,6 +10,8 @@
         :key="realm.id"
         :realm="realm"
         stake
+        class="w-80"
+        @realmSettled="popFromArray"
       />
     </div>
     <div v-else>
@@ -20,12 +22,16 @@
 <script>
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
 import axios from 'axios'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
+import { useNetwork } from '~/composables/web3/useNetwork'
 export default defineComponent({
   setup(props, context) {
     const { slug } = context.root.$route.params
     const { getUserRealms, userRealms, loading: realmsLoading } = useRealms()
+    const { checkForNetworkMismatch, networkMismatch } = useNetwork()
+    const { account } = useWeb3()
     const {
       stakeRealm,
       claimResources,
@@ -39,6 +45,11 @@ export default defineComponent({
     const metaData = ref()
 
     onMounted(async () => {
+      if (account.value) {
+        if (networkMismatch.value) {
+          checkForNetworkMismatch()
+        }
+      }
       try {
         await getUserRealms(slug, 'arbitrumRinkeby')
       } catch (e) {
@@ -69,6 +80,11 @@ export default defineComponent({
       })
     }
 
+    const popFromArray = (value) => {
+      const index = metaData.value.map((e) => e.token_id).indexOf(value)
+      metaData.value.splice(index, 1)
+    }
+
     return {
       userRealms,
       stakeRealm,
@@ -80,6 +96,7 @@ export default defineComponent({
       result,
       realmsLoading,
       metaData,
+      popFromArray,
     }
   },
 })

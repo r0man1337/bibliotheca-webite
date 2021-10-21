@@ -1,5 +1,8 @@
 <template>
-  <div class="my-1 flex justify-between">
+  <div
+    class="my-1 flex justify-between"
+    @mouseover="getBuildingStats(buildingId)"
+  >
     <span class="flex">
       <!-- <span
         v-if="output"
@@ -24,7 +27,7 @@
           hover:bg-gray-800 hover:shadow
           font-body
         "
-        @mouseover="getBuildingStats(buildingId)"
+        :disabled="loading.building"
         @click="constructBuilding(realmId, buildingId, stats[1], stats[2])"
       >
         {{ loading.building ? 'Building..' : 'Build' }}

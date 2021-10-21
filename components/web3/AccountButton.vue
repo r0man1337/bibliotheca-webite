@@ -89,12 +89,7 @@
         </ul>
       </div> -->
     </div>
-    <BButton
-      v-else
-      class="bg-gray-400 text-gray-900 hover:text-white"
-      type="primary"
-      @click="open"
-    >
+    <BButton v-else class="" type="primary" @click="open">
       Connect to the Lootverse
     </BButton>
   </div>

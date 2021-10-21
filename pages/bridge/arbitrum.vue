@@ -111,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div class="sm:w-4/12 flex justify-around sticky top-50 h-full">
+      <div class="sm:w-4/12 flex justify-around top-50 h-full">
         <div>
           <h4 class="mb-4 flex">
             Arbitrum Layer 2
@@ -146,6 +146,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="container mx-auto">
       <BridgeTransactionsTable
         :merged-transactions-to-show="mergedTransactionsToShow"
       />

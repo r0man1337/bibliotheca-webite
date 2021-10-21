@@ -27,7 +27,7 @@ export function useStaking() {
     try {
       error.stake = null
       loading.stake = true
-      await setApprovalForAll(activeNetwork.value.id)
+      await setApprovalForAll(account.value, activeNetwork.value.id)
       result.stake = await stake(account.value, activeNetwork.value.id, realmId)
     } catch (e) {
       error.stake = e.message
@@ -146,7 +146,7 @@ async function stake(owner, network, realmId) {
   return stake
 }
 // TODO: make generic
-async function setApprovalForAll(network) {
+async function setApprovalForAll(owner, network) {
   const tokensArr = diamondAddress[network].allTokens
   const tokensAddrArr = tokensArr.map((a) => a.address)
 
@@ -159,6 +159,15 @@ async function setApprovalForAll(network) {
     lootRealmsABI,
     signer
   )
+
+  const isApproved = await realmsContract.isApprovedForAll(
+    owner,
+    tokensAddrArr[0]
+  )
+  console.log(isApproved)
+  if (isApproved) {
+    return
+  }
   const approve = await realmsContract.setApprovalForAll(tokensAddrArr[0], true)
   await approve.wait()
   return approve

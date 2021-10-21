@@ -108,15 +108,12 @@
         See detail
       </NuxtLink>
     </div>
-    <div v-else>
-      <div class="p-2">
-        <button
-          class="bg-red-500 rounded w-full px-4 py-2"
-          @click="stakeRealm(id)"
-        >
+    <div v-else class="mt-auto">
+      <div class="p-2 mt-auto">
+        <BButton class="w-full" type="primary" @click="stakeRealmPop(id)">
           <span v-if="loading.stake">Settling....</span>
           <span v-else>Settle Realm</span>
-        </button>
+        </BButton>
       </div>
     </div>
   </div>
@@ -172,6 +169,16 @@ export default defineComponent({
     const order = (traits) => {
       return traits.find((resource) => resource.trait_type === 'Order')
     }
+
+    const stakeRealmPop = async (id) => {
+      try {
+        await stakeRealm(id)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        context.emit('realmSettled', id)
+      }
+    }
     return {
       shortenHash,
       navigate,
@@ -186,6 +193,7 @@ export default defineComponent({
       loading,
       error,
       result,
+      stakeRealmPop,
     }
   },
 })
