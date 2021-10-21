@@ -6,7 +6,7 @@ module.exports = {
       './pages/**/*.vue',
       './validators/*.js',
       './slices/**/*.vue',
-      './composables/utils/*.{ts,tsx}',
+      './composables/utils/*.ts',
     ],
   },
   theme: {
