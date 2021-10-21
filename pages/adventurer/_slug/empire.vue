@@ -6,7 +6,7 @@
         <div v-if="sRealms" class="text-6xl p-4 text-center">
           {{ sRealms.length }}
         </div>
-        <BButton type="primary" @click="claimAllResources()"
+        <BButton class="mt-auto" type="primary" @click="claimAllResources()"
           >Claim all your resources</BButton
         >
       </DataCard>
@@ -29,9 +29,10 @@
       </DataCard>
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Lords</h5>
-
-        <BButton type="primary" @click="claimLords">Claim all lords</BButton>
-        <span v-if="lordsError">{{ lordsError.lords }}</span>
+        <div class="mt-auto">
+          <BButton type="primary" @click="claimLords">Claim all lords</BButton>
+          <span v-if="lordsError">{{ lordsError.lords }}</span>
+        </div>
       </DataCard>
     </div>
     <div class="mt-8">

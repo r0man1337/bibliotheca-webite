@@ -52,7 +52,7 @@
             {{ link.title }}</span
           >
         </NuxtLink>
-        <hr class="my-2 border-gray-600" />
+
         <NuxtLink
           v-for="link in assetLinks"
           :key="link.title"
@@ -165,7 +165,7 @@ export default {
     const adventureLinks = [
       {
         page: '/adventurer',
-        title: 'Adventurers',
+        title: 'Search All',
       },
     ]
 

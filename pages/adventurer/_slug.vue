@@ -3,7 +3,7 @@
     <h3 class="text-gray-400">{{ shortenHash(slug) }}</h3>
     <h1 class="mb-8">Sir, your vast empire</h1>
     <div class="flex">
-      <nav class="space-x-4 mb-8 bg-gray-800 px-3 py-5 rounded-2xl shadow">
+      <nav class="space-x-4 mb-8 bg-gray-900 px-3 py-5 rounded-2xl">
         <NuxtLink
           v-for="(link, index) in menuLinks"
           :key="index"
@@ -14,7 +14,7 @@
             py-3
             text-gray-400
             hover:bg-black hover:text-red-200
-            font-display
+            uppercase
           "
           :to="'/adventurer/' + slug + '/' + link.slug"
           >{{ link.title }}</NuxtLink

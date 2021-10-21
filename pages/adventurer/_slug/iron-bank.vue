@@ -25,7 +25,7 @@
       <span v-if="lordsBalance" class="text-3xl"
         >LORDS: {{ lordsBalance }} 👑
       </span>
-      <table class="table-fixed w-full rounded-2xl">
+      <table class="table-fixed w-full">
         <thead>
           <tr class="text-xl text-left">
             <th class="w-1/2">Resource</th>
@@ -37,7 +37,7 @@
           <ResourceRow
             v-for="(resource, index) in sortedResources"
             :key="index"
-            class="rounded-lg"
+            class="even:bg-gray-900 rounded-lg"
             :resource="resource"
           />
         </tbody>
