@@ -150,6 +150,7 @@
     <div class="container mx-auto">
       <BridgeTransactionsTable
         :merged-transactions-to-show="mergedTransactionsToShow"
+        @triggerOutbox="triggerOutboxTransaction"
       />
     </div>
   </div>
@@ -200,6 +201,7 @@ export default defineComponent({
       loadingBridge,
       l2TransactionCount,
       loading,
+      triggerOutbox,
     } = useBridge()
 
     const networkName = computed(() => {
@@ -217,6 +219,18 @@ export default defineComponent({
         await depositRealm(selectedRealm.value.token_id)
       } else {
         await withdrawToL1(selectedRealm.value.token_id)
+      }
+    }
+    const triggerOutboxTransaction = async (transaction) => {
+      console.log(transaction.txId.toString())
+      const res = await triggerOutbox(
+        pendingWithdrawalsMap,
+        transaction.txId.toString()
+      )
+
+      if (!res) {
+        // eslint-disable-next-line no-alert
+        alert("Can't claim this withdrawal yet; try again later")
       }
     }
     onMounted(async () => {
@@ -292,6 +306,7 @@ export default defineComponent({
       userRealms,
       l2TransactionCount,
       depositRealm,
+      triggerOutboxTransaction,
       mergedTransactionsToShow,
       withdrawalsTransformed,
       pendingWithdrawalsMap,

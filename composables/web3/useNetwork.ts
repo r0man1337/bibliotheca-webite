@@ -27,6 +27,8 @@ export type Network = {
   isArbitrum: boolean
   explorerUrl: string
   url: string
+  blockTime?: number
+  confirmPeriodBlocks?: number
 }
 interface TokenBridge {
   l1Address: string
@@ -54,6 +56,7 @@ if (activeNetworks.includes('mainnet')) {
     isArbitrum: false,
     explorerUrl: 'https://etherscan.io',
     url: process.env.RPC_URL_1 as string,
+    blockTime: 15,
   })
 }
 if (activeNetworks.includes('rinkeby')) {
@@ -80,6 +83,7 @@ if (activeNetworks.includes('arbitrum')) {
     isArbitrum: true,
     explorerUrl: 'https://arbiscan.io',
     url: 'https://arb1.arbitrum.io/rpc',
+    confirmPeriodBlocks: 48384,
   })
 }
 if (activeNetworks.includes('arbitrumRinkeby')) {
@@ -93,6 +97,7 @@ if (activeNetworks.includes('arbitrumRinkeby')) {
     isArbitrum: true,
     explorerUrl: 'https://testnet.arbiscan.io',
     url: 'https://rinkeby.arbitrum.io/rpc',
+    confirmPeriodBlocks: 6545,
   })
 }
 if (activeNetworks.includes('localDevelopment')) {
