@@ -3,7 +3,8 @@
     <span class="flex">
       <span
         v-if="output"
-        class="border border-gray-800 rounded p-1 text-xs mr-2"
+        :class="findResources(resource).colourClass"
+        class="rounded p-1 text-sm mr-2 bg-opacity-75"
         >{{ output[0] }}</span
       >
       <span class="self-center">
@@ -37,7 +38,7 @@
       </button>
 
       <template slot="popover">
-        <div class="bg-gray-300 shadow-xl p-4 rounded text-black">
+        <div class="bg-gray-300 shadow-xl p-4 rounded text-gray-900">
           <h4 class="text-center mb-1">Upgrade Cost</h4>
 
           <div v-if="upgradeCosts" class="flex justify-between">
@@ -46,6 +47,11 @@
                 v-for="(cost, index) in upgradeCosts[0]"
                 :key="index"
                 class="pr-3"
+              >
+                <span
+                  :class="findResources(cost).colourClass"
+                  class="rounded-full p-2 mr-1 bg-opacity-75 border"
+                ></span
                 >{{ findResources(cost).trait }}:</span
               >
             </div>
@@ -63,7 +69,7 @@
 </template>
 <script>
 import { defineComponent, useFetch } from '@nuxtjs/composition-api'
-import ResourceData from '~/composables/resource.json'
+import { resources } from '@/composables/utils/resourceColours'
 import { useResources } from '~/composables/resources/useResources'
 import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
@@ -72,7 +78,7 @@ export default defineComponent({
   },
   props: {
     resource: {
-      type: Object,
+      type: Number,
       required: true,
     },
     realmId: {
@@ -91,7 +97,7 @@ export default defineComponent({
     } = useResources()
 
     const findResources = (resource) => {
-      return ResourceData.find((a) => a.id === parseInt(resource))
+      return resources.find((a) => a.id === parseInt(resource))
     }
 
     useFetch(async () => {

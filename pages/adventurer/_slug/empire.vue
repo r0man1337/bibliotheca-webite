@@ -15,6 +15,17 @@
         <div v-if="worldAge" class="text-6xl text-center p-4">
           {{ worldAge }}
         </div>
+        <no-ssr>
+          <vac
+            v-if="timeNextAge"
+            class="text-center"
+            :end-time="new Date().getTime() + (86400000 - timeNextAge * 1000)"
+          >
+            <span slot="process" slot-scope="{ timeObj }">{{
+              `Time Left in Age: ${timeObj.h}:${timeObj.m}:${timeObj.s}`
+            }}</span>
+          </vac>
+        </no-ssr>
       </DataCard>
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Lords</h5>
@@ -38,6 +49,7 @@
 import { defineComponent, onMounted } from '@vue/composition-api'
 
 import { useWeb3 } from '@instadapp/vue-web3'
+
 import { useRealms } from '~/composables/web3/useRealms'
 import { useLords } from '~/composables/lords/useLords'
 import { useStaking } from '~/composables/staking/useStaking'
@@ -47,7 +59,14 @@ export default defineComponent({
   setup(props, context) {
     const { slug } = context.root.$route.params
     const { getUserSRealms, sRealms } = useRealms()
-    const { claimLords, getWorldAge, worldAge, error: lordsError } = useLords()
+    const {
+      claimLords,
+      getWorldAge,
+      worldAge,
+      error: lordsError,
+      getTimeToNextAge,
+      timeNextAge,
+    } = useLords()
     const { activeNetworkId, checkForNetworkMismatch, networkMismatch } =
       useNetwork()
     // const { open } = useWeb3Modal()
@@ -67,6 +86,7 @@ export default defineComponent({
     onMounted(async () => {
       await getWorldAge()
       await getUserSRealms(slug, 'arbitrumRinkeby')
+      await getTimeToNextAge()
       activeNetworkId.value = 'arbitrumRinkeby'
       if (account.value) {
         if (networkMismatch.value) {
@@ -91,6 +111,9 @@ export default defineComponent({
       lordsError,
       getWorldAge,
       worldAge,
+      getTimeToNextAge,
+
+      timeNextAge,
     }
   },
 })

@@ -1,29 +1,11 @@
 <template>
   <section>
-    <h4 class="text-gray-400">adventurer</h4>
-    <h1>{{ shortenHash(slug) }}</h1>
     <div v-if="!$fetchState.pending && !adventurer.l1">
       No Loot or Derivatives for this adventurer... yet.
     </div>
 
     <div v-else-if="!$fetchState.pending && adventurer.l1">
-      <h3>
-        <span class="text-2xl">
-          <span v-if="usersGold" class="text-yellow-400">{{ usersGold }}</span>
-          <span v-else>...</span>
-          Adventurers Gold</span
-        >
-        <br />
-        <span class="text-xl text-gray-400"
-          >${{
-            (usersGold * goldPrice)
-              .toFixed(2)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-          }}
-          USD
-        </span>
-      </h3>
+      <h4 class="mb-3">Ethereum Assets</h4>
       <div
         class="
           bg-black
@@ -34,12 +16,12 @@
           px-4
           py-2
           space-x-6
-          border-gray-500
+          border-gray-900
           w-auto
           border
+          shadow
         "
       >
-        <h3>Ethereum Assets</h3>
         <a
           v-if="adventurer.l1.bagsHeld"
           class="hover:bg-gray-900 px-2 py-1 rounded"
@@ -57,12 +39,6 @@
           class="hover:bg-gray-900 px-2 py-1 rounded"
           href="#mana"
           >mana: {{ adventurer.l1.manasHeld }}</a
-        >
-        <a
-          v-if="adventurer.l1.treasuresHeld"
-          class="hover:bg-gray-900 px-2 py-1 rounded"
-          href="#treasure"
-          >Treasure: {{ adventurer.l1.treasuresHeld }}</a
         >
         <a
           v-if="adventurer.l1.mLootsHeld"
@@ -85,7 +61,6 @@
       </div>
 
       <div v-if="adventurer.l1.realms.length" id="realms">
-        <hr />
         <div v-if="openSeaData.length">
           <h3 class="mt-8">Realms: {{ adventurer.l1.realmsHeld }}</h3>
           <div class="flex flex-wrap w-full">
@@ -108,19 +83,6 @@
             class="w-80"
           >
             <ManaCard :mana="mana" />
-          </div>
-        </div>
-      </div>
-      <div v-if="adventurer.l1.treasures.length" id="treasure">
-        <hr />
-        <h3 class="mt-8">Treasure: {{ adventurer.l1.treasuresHeld }}</h3>
-        <div class="flex flex-wrap w-full">
-          <div
-            v-for="treasure in adventurer.l1.treasures"
-            :key="treasure.id"
-            class="w-80"
-          >
-            <TreasureCard :treasure="treasure" />
           </div>
         </div>
       </div>
@@ -147,46 +109,22 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
-import { Contract, ethers } from 'ethers'
+
 import { useFormatting } from '~/composables/useFormatting'
-import GoldAbi from '~/abi/gold.json'
 import { useAdventurer } from '~/composables/useAdventurer'
 
-import { usePrice, useRarity } from '~/composables'
+import { useRarity } from '~/composables'
 export default defineComponent({
   setup(props, context) {
     const { checkRealmRarity } = useRarity()
-    const { goldPrice } = usePrice()
     const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
 
     const { getAdventurer, adventurer } = useAdventurer()
 
-    const usersGold = ref(null)
-    const goldTokenAddress = '0x32353A6C91143bfd6C7d363B546e62a9A2489A20'
-
-    // eslint-disable-next-line
-    const provider = new ethers.getDefaultProvider('mainnet', {
-      etherscan: process.env.ETHER_SCAN,
-      alchemy: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-      infura: process.env.INFURA_ID,
-    })
-
-    const options = {
-      address: slug,
-      provider,
-    }
-
-    const getBalance = async (options) => {
-      const contract = new Contract(goldTokenAddress, GoldAbi, options.provider)
-      const balance = await contract.balanceOf(options.address)
-      return ethers.utils.formatEther(balance)
-    }
-
     onMounted(async () => {
-      usersGold.value = await getBalance(options)
       if (adventurer.value.l1) {
-        openSeaFetch()
+        await openSeaFetch()
       }
     })
 
@@ -245,8 +183,6 @@ export default defineComponent({
       adventurer,
       slug,
       shortenHash,
-      goldPrice,
-      usersGold,
       openSeaData,
       loading,
       realmOpenSea,

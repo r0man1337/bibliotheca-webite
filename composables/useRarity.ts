@@ -1,4 +1,4 @@
-import resource from './resource.json'
+import { resources } from '@/composables/utils/resourceColours'
 
 const useRarity = () => {
   const checkRealmRarity = (realm) => {
@@ -20,9 +20,9 @@ const useRarity = () => {
         const add = (attribute[e].value / 60) * 3
         score = score + add
       } else {
-        for (let i = 0; i < resource.length; i++) {
-          if (attribute[e].value === resource[i].trait) {
-            const add = 1 / (resource[i].value / 8000)
+        for (let i = 0; i < resources.length; i++) {
+          if (attribute[e].value === resources[i].trait) {
+            const add = 1 / (resources[i].value / 8000)
             score = score + add
           }
         }

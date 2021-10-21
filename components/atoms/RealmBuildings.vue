@@ -40,6 +40,10 @@
                 v-for="(cost, index) in stats[1]"
                 :key="index"
                 class="pr-3 capitalize"
+                ><span
+                  :class="findResources(cost).colourClass"
+                  class="rounded-full p-2 mr-1 bg-opacity-75"
+                ></span
                 >{{ findResources(cost).trait }}:</span
               >
               <hr class="my-2" />
@@ -56,8 +60,14 @@
                 cost
               }}</span>
               <hr class="my-2" />
-              <span>{{ stats[7] }}</span>
-              <span>{{ stats[8] }}</span>
+              <span
+                ><span v-if="stats[7] > 0">+{{ stats[7] }}</span
+                ><span v-else>{{ stats[7] }}</span></span
+              >
+              <span
+                ><span v-if="stats[8] > 0">+{{ stats[8] }}</span
+                ><span v-else>{{ stats[8] }}</span></span
+              >
               <hr class="my-2" />
 
               <span>{{ stats[4] }}</span>
@@ -74,7 +84,7 @@
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import allBuildings from '~/composables/buildings.json'
 import { useConstruction } from '~/composables/construction/useConstruction'
-import ResourceData from '~/composables/resource.json'
+import { resources } from '@/composables/utils/resourceColours'
 // import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
   //   components: {
@@ -112,7 +122,7 @@ export default defineComponent({
       return allBuildings.find((a) => a.id === parseInt(props.buildingId))
     })
     const findResources = (resource) => {
-      return ResourceData.find((a) => a.id === parseInt(resource))
+      return resources.find((a) => a.id === parseInt(resource))
     }
     // useFetch(async () => {
     //   await fetchProductionOutput(props.realmId, props.resource)

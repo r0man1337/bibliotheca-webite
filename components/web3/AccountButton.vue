@@ -13,11 +13,13 @@
             hover:text-red-500
             rounded
             px-5
+            font-display
             py-1
+            text-xl
           "
         >
-          <Helm class="w-10 h-10 stroke-current fill-current self-center" /> My
-          Adventure
+          <Helm class="w-10 h-10 stroke-current fill-current self-center" />
+          My Empire
         </NuxtLink>
       </div>
 
@@ -26,7 +28,7 @@
         type="button"
         class="
           border-black border
-          bg-black
+          bg-gray-700
           rounded
           pl-3
           py-2
@@ -50,7 +52,7 @@
         type="button"
         class="
           border-black border
-          bg-black
+          bg-gray-700
           rounded
           pl-3
           py-2
@@ -87,8 +89,13 @@
         </ul>
       </div> -->
     </div>
-    <BButton v-else type="primary" @click="open">
-      Connect to the LootVerse
+    <BButton
+      v-else
+      class="bg-gray-400 text-gray-900 hover:text-white"
+      type="primary"
+      @click="open"
+    >
+      Connect to the Lootverse
     </BButton>
   </div>
 </template>

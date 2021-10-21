@@ -1,24 +1,36 @@
 <template>
   <div>
+    <h3 class="text-gray-400">{{ shortenHash(slug) }}</h3>
     <h1 class="mb-8">Sir, your vast empire</h1>
-    <nav class="space-x-4 mb-8">
-      <NuxtLink
-        v-for="(link, index) in menuLinks"
-        :key="index"
-        class="text-xl rounded-xl px-4 py-3 hover:bg-black hover:text-red-400"
-        :to="'/adventurer/' + slug + '/' + link.slug"
-        >{{ link.title }}</NuxtLink
-      >
-    </nav>
+    <div class="flex">
+      <nav class="space-x-4 mb-8 bg-gray-800 px-3 py-5 rounded-2xl shadow">
+        <NuxtLink
+          v-for="(link, index) in menuLinks"
+          :key="index"
+          class="
+            text-xl
+            rounded-xl
+            px-6
+            py-3
+            text-gray-400
+            hover:bg-black hover:text-red-200
+            font-display
+          "
+          :to="'/adventurer/' + slug + '/' + link.slug"
+          >{{ link.title }}</NuxtLink
+        >
+      </nav>
+    </div>
 
     <NuxtChild />
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-
+import { useFormatting } from '~/composables/useFormatting'
 export default defineComponent({
   setup(props, context) {
+    const { shortenHash } = useFormatting()
     const { slug } = context.root.$route.params
     // const variables = ref({ slug: slug.toLowerCase() })
 
@@ -28,10 +40,6 @@ export default defineComponent({
         slug: 'empire',
       },
       {
-        title: 'Loot Assets',
-        slug: '',
-      },
-      {
         title: 'Realm Settling',
         slug: 'settling',
       },
@@ -39,10 +47,15 @@ export default defineComponent({
         title: 'Iron Bank',
         slug: 'iron-bank',
       },
+      {
+        title: 'Assets',
+        slug: '',
+      },
     ]
     return {
       slug,
       menuLinks,
+      shortenHash,
     }
   },
 })

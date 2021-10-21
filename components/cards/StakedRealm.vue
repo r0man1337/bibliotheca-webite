@@ -57,29 +57,48 @@
 
         <div class="flex justify-between">
           <div v-if="metaData && order(metaData.traits)" class="py-4">
-            <OrderChip class="text-sm" :order="order(metaData.traits).value" />
+            <OrderChip class="text-sm" :order-id="realm.order" />
           </div>
           <Happiness class="self-center" :realm="realm.id" />
           <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
         <RealmAgeStats :realm="realm.id" />
-        <div class="my-3">
-          <span class="uppercase text-red-400 font-display"
-            >days unclaimed</span
-          >
-          <br />
-          <span
-            >Day:
-            <span v-if="balance">{{ (balance.day / 3600).toFixed(4) }} </span>
-          </span>
-          <br />
-          <span
-            >Month:
-            <span v-if="balance"
-              >{{ (balance.month / (3600 * 30)).toFixed(4) }}
+        <span class="uppercase text-red-400 font-display mt-3"
+          >days unclaimed</span
+        >
+        <div class="flex justify-between">
+          <div>
+            <span
+              >Day:
+              <span v-if="balance">{{ (balance.day / 3600).toFixed(4) }} </span>
             </span>
-          </span>
+            <br />
+            <span
+              >Month:
+              <span v-if="balance"
+                >{{ (balance.month / (3600 * 30)).toFixed(4) }}
+              </span>
+            </span>
+          </div>
+          <div>
+            <button
+              class="
+                border border-gray-800
+                rounded
+                px-2
+                py-1
+                text-xs
+                hover:bg-gray-800 hover:shadow
+                font-body
+              "
+              @click="claimResources(realm.id)"
+            >
+              <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
+              <span v-else>Claim</span>
+            </button>
+          </div>
         </div>
+
         <div class="my-3">
           <span class="uppercase text-red-400 font-display">Resources</span>
           <div class="text-xs">
@@ -93,7 +112,7 @@
           />
         </div>
         <div v-if="buildings" class="my-3">
-          <span class="uppercase text-gray-500 tracking-widest">Buildings</span>
+          <span class="uppercase text-red-400 font-display">Buildings</span>
           <RealmBuildings
             v-for="(building, index) in buildings"
             :key="index"
@@ -103,23 +122,7 @@
           />
         </div>
       </div>
-      <button
-        class="
-          bg-gray-900
-          rounded
-          w-full
-          px-4
-          py-2
-          mt-auto
-          hover:bg-gray-600
-          transition-all
-          duration-300
-        "
-        @click="claimResources(realm.id)"
-      >
-        <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Claim Resources</span>
-      </button>
+
       <div
         v-if="error.stake"
         class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"

@@ -7,8 +7,8 @@ import {
   ref,
   watch,
 } from '@nuxtjs/composition-api'
-import { useNetwork, activeNetwork, Network } from './useNetwork'
 import { useWeb3 } from '@instadapp/vue-web3'
+import { useNetwork, activeNetwork, Network } from './useNetwork'
 import { usersRealms, usersSRealms } from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
@@ -75,7 +75,7 @@ export function useRealms() {
     try {
       error.getUserRealms = null
       loading.value = true
-      if (!network) {
+      if (!slug) {
         sRealms.value = await fetchUserSRealms(slug, useL2Network.value.id)
       } else {
         console.log(slug)
