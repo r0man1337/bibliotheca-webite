@@ -26,6 +26,7 @@ export function useLords() {
 
   const loading = reactive({
     lords: false,
+    claim: false,
   })
 
   const result = reactive({ resources: null })
@@ -36,7 +37,7 @@ export function useLords() {
   const claimLords = async (realmId) => {
     try {
       error.lords = null
-      loading.lords = true
+      loading.claim = true
       lordsAvailableOnRealm.value = await claimAllLords(
         account,
         activeNetwork.value.id,
@@ -50,7 +51,7 @@ export function useLords() {
         error.lords = e.message
       }
     } finally {
-      loading.lords = false
+      loading.claim = false
     }
   }
   const worldAge = ref()

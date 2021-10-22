@@ -12,7 +12,8 @@
       align-bottom
       transition-all
       transform
-      bg-white
+      bg-gray-900
+      shadow
       sm:my-16 sm:align-middle sm:p-6
     "
     :class="{

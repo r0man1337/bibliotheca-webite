@@ -30,7 +30,12 @@
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Lords</h5>
         <div class="mt-auto">
-          <BButton type="primary" @click="claimLords">Claim all lords</BButton>
+          <BButton
+            :loading="loadingLords.claim"
+            type="primary"
+            @click="claimLords"
+            >Claim all lords</BButton
+          >
           <span v-if="lordsError">{{ lordsError.lords }}</span>
         </div>
       </DataCard>
@@ -39,7 +44,12 @@
       <h2>Settled Realms</h2>
     </div>
     <div v-if="sRealms" class="flex flex-wrap">
-      <StakedRealm v-for="realm in sRealms" :key="realm.id" :realm="realm" />
+      <StakedRealm
+        v-for="realm in sRealms"
+        :key="realm.id"
+        :realm="realm"
+        @unsettle="popFromArray"
+      />
     </div>
     <div v-else>
       <Loader />
@@ -66,6 +76,7 @@ export default defineComponent({
       worldAge,
       error: lordsError,
       getTimeToNextAge,
+      loading: loadingLords,
       timeNextAge,
     } = useLords()
     const { activeNetworkId, checkForNetworkMismatch, networkMismatch } =
@@ -98,7 +109,13 @@ export default defineComponent({
       }
     })
 
+    const popFromArray = (value) => {
+      const index = sRealms.value.map((e) => e.id).indexOf(value)
+      sRealms.value.splice(index, 1)
+    }
+
     return {
+      popFromArray,
       stakeRealm,
       claimResources,
       claimAllResources,
@@ -113,7 +130,7 @@ export default defineComponent({
       getWorldAge,
       worldAge,
       getTimeToNextAge,
-
+      loadingLords,
       timeNextAge,
     }
   },

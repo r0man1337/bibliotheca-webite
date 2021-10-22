@@ -140,7 +140,7 @@ async function stake(owner, network, realmId) {
     signer
   )
   console.log(resourceStakingFacet)
-  const stake = await resourceStakingFacet.stakeRealm(realmId, true)
+  const stake = await resourceStakingFacet.stakeRealm(realmId, false)
   await stake.wait()
 
   return stake

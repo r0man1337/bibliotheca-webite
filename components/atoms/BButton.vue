@@ -10,12 +10,16 @@
     @click="externalSite()"
   >
     <slot v-if="!loading" />
-    <span v-else>Loading</span>
+    <span v-else><LoadingRings class="mx-auto w-7 h-7" /></span>
   </component>
 </template>
 <script>
 import { ButtonColors } from '@/validators/Button'
+import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default {
+  components: {
+    LoadingRings,
+  },
   props: {
     to: {
       type: String,

@@ -152,7 +152,7 @@
       <BButton
         class="w-full mt-auto"
         type="primary"
-        @click="withdraw(realm.id)"
+        @click="unsettle(realm.id)"
       >
         <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
         <span v-else>Unsettle Realm</span>
@@ -178,7 +178,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, context) {
     const {
       getRealmsResourceBalance,
       claimResources,
@@ -199,6 +199,16 @@ export default defineComponent({
     } = useConstruction()
 
     const metaData = ref()
+
+    const unsettle = async (id) => {
+      try {
+        await withdraw(id)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        context.emit('unsettle', id)
+      }
+    }
 
     useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
@@ -278,6 +288,7 @@ export default defineComponent({
       rivers,
       wonder,
       order,
+      unsettle,
     }
   },
 })
