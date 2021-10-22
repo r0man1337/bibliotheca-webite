@@ -236,63 +236,6 @@ export function useBridge() {
           console.warn('deposit token failure', err)
           throw err
         }
-
-        /* const event = receipt.events[receipt.events.length - 1]
-        const ticketId = event.args[0]
-
-        const ticketIdBigNumber = ethers.BigNumber.from(ticketId.toString())
-
-        console.log(`Ticket Id: ${ticketId}`)
-        await getUserRealms()
-        const autoRedeemHash =
-          await bridge.value.calculateRetryableAutoRedeemTxnHash(
-            ticketIdBigNumber
-          )
-        const autoRedeemRec = await arbProvider.value.getTransactionReceipt(
-          autoRedeemHash
-        )
-        console.log(
-          `AutoRedeem https://rinkeby-explorer.arbitrum.io/tx/${autoRedeemHash}`
-        )
-        console.log(autoRedeemRec)
-
-        const redeemTxnHash =
-          await bridge.value.calculateL2RetryableTransactionHash(
-            ticketIdBigNumber
-          )
-        const redeemTxnRec = await arbProvider.value.getTransactionReceipt(
-          redeemTxnHash
-        )
-        console.log(
-          `RedeemTxn https://rinkeby-explorer.arbitrum.io/tx/${redeemTxnHash}`
-        )
-        console.log(redeemTxnRec)
-
-        const retryableTicketHash =
-          await bridge.value.calculateL2TransactionHash(ticketIdBigNumber)
-        const retryableTicketRec =
-          await arbProvider.value.getTransactionReceipt(retryableTicketHash)
-        console.log(
-          `RetryableTicket https://rinkeby-explorer.arbitrum.io/tx/${retryableTicketHash}`
-        )
-        console.log(retryableTicketRec)
-
-        const ourMessagesSequenceNum = seqNums[0]
-
-        const retryableTxnHash =
-          await bridge.value.calculateL2RetryableTransactionHash(
-            ourMessagesSequenceNum
-          )
-
-        console.log(`Waiting L2 tx: ${retryableTxnHash}`)
-
-        // Wait for L2
-        const retryRec = await arbProvider.value.waitForTransaction(
-          retryableTxnHash
-        ) 
-
-        console.log(`L2 retryable txn executed: ${retryRec.transactionHash}`) */
-        await getUserRealms()
       } catch (e) {
         console.log(e)
       } finally {
@@ -535,7 +478,7 @@ export function useBridge() {
           return provider?.getTransactionReceipt(tx.txID)
         })
       ).then((txReceipts: TransactionReceipt[]) => {
-        txReceipts.forEach((txReceipt: TransactionReceipt, i) => {
+        txReceipts.forEach(async (txReceipt: TransactionReceipt, i) => {
           if (!txReceipt) {
             console.info(
               'Transaction receipt not yet found:',
@@ -543,6 +486,7 @@ export function useBridge() {
             )
           } else {
             updateTransaction(txReceipt)
+            await getUserRealms()
           }
         })
       })
@@ -562,15 +506,19 @@ export function useBridge() {
     return result.realmsOnL2
   }
   const addL2Interval = ref()
-  const checkPendingInterval = ref()
+  const checkPendingInterval = ref(null)
 
   onMounted(async () => {
     await initBridge()
-    addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
-    checkPendingInterval.value = setInterval(
-      checkAndUpdatePendingTransactions,
-      4000
-    )
+    if (!addL2Interval.value) {
+      addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+    }
+    if (!checkPendingInterval.value) {
+      checkPendingInterval.value = setInterval(
+        checkAndUpdatePendingTransactions,
+        4000
+      )
+    }
   })
   onBeforeUnmount(() => {
     clearInterval(addL2Interval.value)
@@ -582,6 +530,7 @@ export function useBridge() {
     depositRealm,
     withdrawToL1,
     getL2TxnHashes,
+    checkPendingInterval,
     l2TransactionCount,
     triggerOutbox,
     currentL1BlockNumber,

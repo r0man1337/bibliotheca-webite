@@ -268,6 +268,9 @@
               </tr>
             </tbody>
           </table>
+          <div v-if="loading.transactions" class="flex">
+            <LoadingRings /> Loading Pending Transactions
+          </div>
         </div>
       </div>
     </div>
@@ -277,11 +280,19 @@
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import { useBridge } from '~/composables/bridge/useBridge'
 import { activeNetwork, useNetwork } from '~/composables/web3/useNetwork'
+import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 
 export default defineComponent({
+  components: {
+    LoadingRings,
+  },
   props: {
     mergedTransactionsToShow: {
       type: Array,
+      default: null,
+    },
+    loading: {
+      type: Object,
       default: null,
     },
   },
@@ -290,7 +301,6 @@ export default defineComponent({
     const { currentL1BlockNumber } = useBridge()
     const { confirmPeriodBlocks = 45818 } = useL2Network.value
     const { blockTime = 15 } = useL1Network.value
-
     const handleTriggerOutbox = (transaction) => {
       console.log(transaction)
       if (transaction.txId === null) {

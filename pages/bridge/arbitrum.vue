@@ -150,6 +150,7 @@
     <div class="container mx-auto">
       <BridgeTransactionsTable
         :merged-transactions-to-show="mergedTransactionsToShow"
+        :loading="loadingTransactions"
         @triggerOutbox="triggerOutboxTransaction"
       />
     </div>
@@ -190,6 +191,7 @@ export default defineComponent({
       mergedTransactionsToShow,
       withdrawalsTransformed,
       pendingWithdrawalsMap,
+      loading: loadingTransactions,
     } = useTransactions()
     const {
       initBridge,
@@ -202,6 +204,7 @@ export default defineComponent({
       l2TransactionCount,
       loading,
       triggerOutbox,
+      checkPendingInterval,
     } = useBridge()
 
     const networkName = computed(() => {
@@ -217,6 +220,9 @@ export default defineComponent({
       }
       if (!activeNetwork.value.isArbitrum) {
         await depositRealm(selectedRealm.value.token_id)
+        setTimeout(async function () {
+          await getUserRealms()
+        }, 2500)
       } else {
         await withdrawToL1(selectedRealm.value.token_id)
       }
@@ -306,6 +312,7 @@ export default defineComponent({
       userRealms,
       l2TransactionCount,
       depositRealm,
+      checkPendingInterval,
       triggerOutboxTransaction,
       mergedTransactionsToShow,
       withdrawalsTransformed,
@@ -317,6 +324,7 @@ export default defineComponent({
       loadingMeta,
       loading,
       loadingBridge,
+      loadingTransactions,
       l2Function,
     }
   },

@@ -120,6 +120,10 @@ export function useTransactions() {
   const { gqlRequest } = useGraph()
   const pendingWithdrawalsMap = ref({})
 
+  const loading = reactive({
+    transactions: false,
+  })
+
   const error = reactive({
     depositL1: null,
   })
@@ -258,6 +262,7 @@ export function useTransactions() {
     bridge,
     filter?: ethers.providers.Filter
   ) => {
+    loading.transactions = true
     const pendingWithdrawals = {}
     const t = new Date().getTime()
     console.log('*** Getting initial pending withdrawal data ***')
@@ -274,6 +279,7 @@ export function useTransactions() {
       pendingWithdrawals[l2ToL1Thing.uniqueId.toString()] = l2ToL1Thing
     }
     pendingWithdrawalsMap.value = pendingWithdrawals
+    loading.transactions = false
   }
 
   const getTokenWithdrawalsV2 = async (
@@ -800,7 +806,7 @@ export function useTransactions() {
     return deposits
   })
   const withdrawalsTransformed = computed(() => {
-    const withdrawalsTest: MergedTransaction[] = (
+    const withdrawals: MergedTransaction[] = (
       Object.values(
         pendingWithdrawalsMap.value || []
       ) as L2ToL1EventResultPlus[]
@@ -824,7 +830,7 @@ export function useTransactions() {
         tokenAddress: tx.tokenAddress || null,
       }
     })
-    return withdrawalsTest
+    return withdrawals
   })
   const mergedTransactions = computed(() => {
     // return _reverse(
@@ -929,6 +935,7 @@ export function useTransactions() {
   })
 
   return {
+    loading,
     transactions,
     clearPendingTransactions,
     setTransactionConfirmed,
