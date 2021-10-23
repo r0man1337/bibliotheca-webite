@@ -159,9 +159,10 @@
 <script>
 import {
   defineComponent,
-  computed,
   onMounted,
   ref,
+  watch,
+  onBeforeUnmount,
 } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import { useWeb3 } from '@instadapp/vue-web3'
@@ -174,6 +175,7 @@ import { useModal } from '~/composables/useModal'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useBridge } from '~/composables/bridge/useBridge'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 export default defineComponent({
   components: {
     ArrowRight,
@@ -185,9 +187,12 @@ export default defineComponent({
   setup() {
     const { showAssetBox } = useModal()
     const { getUserRealms, userRealms } = useRealms()
-    const { account, provider, library /*, active */ } = useWeb3()
+    const { account, provider, library, active } = useWeb3()
+    const { open } = useWeb3Modal()
     const {
       setInitialPendingWithdrawals,
+      transactions,
+      sortedTransactions,
       mergedTransactionsToShow,
       withdrawalsTransformed,
       pendingWithdrawalsMap,
@@ -199,20 +204,12 @@ export default defineComponent({
       withdrawToL1,
       bridge,
       partnerNetwork,
-      result,
       loadingBridge,
-      l2TransactionCount,
       loading,
       triggerOutbox,
-      checkPendingInterval,
+      checkAndAddL2DepositTxns,
+      checkAndUpdatePendingTransactions,
     } = useBridge()
-
-    const networkName = computed(() => {
-      return activeNetwork.value.name
-    })
-
-    const assetsOnL1 = ref()
-    const assetsOnL2 = ref()
 
     const l2Function = async () => {
       if (!bridge.value) {
@@ -239,33 +236,48 @@ export default defineComponent({
         alert("Can't claim this withdrawal yet; try again later")
       }
     }
-    onMounted(async () => {
-      if (account.value) {
-        await getUserRealms()
-        setTimeout(async function () {
-          await setInitialPendingWithdrawals(bridge, {
-            fromBlock: 4832019,
-          })
-        }, 2500)
-      }
+    const addL2Interval = ref()
+    const checkPendingInterval = ref(null)
+
+    onMounted(() => {
+      if (!account.value) return open()
     })
-    /* watch(
-      account,
+    onBeforeUnmount(() => {
+      clearInterval(addL2Interval.value)
+      clearInterval(checkPendingInterval.value)
+    })
+    watch(
+      [active, account, activeNetwork],
       async (val) => {
         if (val) {
           console.log('account change' + val)
-          await getUserRealms()
+
+          clearInterval(addL2Interval.value)
+          clearInterval(checkPendingInterval.value)
+          if (account.value) {
+            await initBridge()
+            await getUserRealms()
+            await setInitialPendingWithdrawals(bridge, {
+              fromBlock: 4832019,
+            })
+          }
+          addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+          checkPendingInterval.value = setInterval(
+            checkAndUpdatePendingTransactions,
+            4000
+          )
         }
       },
       {
         immediate: true,
       }
-    ) 
-    watch(
+    )
+    /* watch(
       activeNetwork,
       async (val) => {
         if (val) {
           await initBridge()
+
           console.log('watch chain id')
         }
       },
@@ -301,20 +313,16 @@ export default defineComponent({
 
     return {
       activeNetwork,
+      active,
       provider,
       library,
-      networkName,
-      assetsOnL2,
-      assetsOnL1,
       account,
       bridge,
-      result,
       userRealms,
-      l2TransactionCount,
-      depositRealm,
-      checkPendingInterval,
       triggerOutboxTransaction,
       mergedTransactionsToShow,
+      transactions,
+      sortedTransactions,
       withdrawalsTransformed,
       pendingWithdrawalsMap,
       partnerNetwork,

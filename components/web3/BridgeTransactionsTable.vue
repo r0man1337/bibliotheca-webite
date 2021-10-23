@@ -346,6 +346,7 @@ export default defineComponent({
     return {
       handleTriggerOutbox,
       calcEtaDisplay,
+      currentL1BlockNumber,
       showRedeemRetryableButton,
       isDepositMode,
     }

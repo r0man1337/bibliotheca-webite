@@ -185,7 +185,7 @@ export function useBridge() {
         console.log(checkApproval)
 
         const network = await bridge.value.l1Bridge.l1Provider.getNetwork()
-        const networkID = await network.chainId.toString()
+        const networkID = await network.chainId
 
         if (!checkApproval) {
           const tx = await realmsContract.setApprovalForAll(
@@ -350,6 +350,7 @@ export function useBridge() {
         delete newPendingWithdrawalsMap[id]
         pendingWithdrawalsMap.value = newPendingWithdrawalsMap
         addToExecutedMessagesCache(batchNumber, indexInBatch)
+        await getUserRealms()
       } else {
         setTransactionFailure(rec.transactionHash)
       }
