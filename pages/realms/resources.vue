@@ -39,8 +39,8 @@ import {
   Tooltip,
   SubTitle,
 } from 'chart.js'
+import { resources as resourceData } from '@/composables/utils/resourceColours'
 
-import { resources } from '@/composables/utils/resourceColours'
 Chart.register(
   ArcElement,
   LineElement,
@@ -67,11 +67,12 @@ Chart.register(
   Tooltip,
   SubTitle
 )
+
 export default defineComponent({
   setup(props, context) {
     const myChart = ref(null)
 
-    const filteredResources = colour.filter((d) => {
+    const filteredResources = resourceData.filter((d) => {
       return d.value > 1
     })
 
@@ -130,7 +131,7 @@ export default defineComponent({
       console.log(myChart.value)
     })
 
-    return { myChart, resources, colour }
+    return { myChart, resources, colours }
   },
 })
 </script>
