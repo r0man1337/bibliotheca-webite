@@ -105,7 +105,7 @@ export function useLords() {
       timeNextAge.value = await timeToNextAge(activeNetwork.value.id)
     } catch (e) {
       console.log(e)
-      error.lords = e.data.message
+      error.lords = e.data?.message
     } finally {
       loading.lords = false
     }

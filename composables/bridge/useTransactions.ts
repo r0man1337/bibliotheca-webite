@@ -473,90 +473,6 @@ export function useTransactions() {
     )
   }
 
-  /* const getEthWithdrawalsV2 = async (
-    bridge,
-    filter?: ethers.providers.Filter
-  ) => {
-    console.log('bridge is')
-    console.log(bridge)
-    const networkID = useL1Network.value.chainId
-    const address = account.value
-    const startBlock =
-      (filter && filter.fromBlock && +filter.fromBlock.toString()) || 0
-
-    const latestGraphBlockNumber = await getBuiltInsGraphLatestBlockNumber(
-      useL1Network.value.chainId
-    )
-    const pivotBlock = Math.max(latestGraphBlockNumber, startBlock)
-
-    console.log(
-      `*** L2 gateway graph block number: ${latestGraphBlockNumber} ***`
-    )
-
-    const oldEthWithdrawalEventData = await getETHWithdrawals(
-      ARB_RINKEBY_L2_BRIDGE_ADDRESS,
-      startBlock,
-      pivotBlock,
-      networkID
-    )
-    const recentETHWithdrawalData = await bridge.value.getL2ToL1EventData(
-      address,
-      {
-        fromBlock: pivotBlock,
-      }
-    )
-    const ethWithdrawalEventData = oldEthWithdrawalEventData.concat(
-      recentETHWithdrawalData
-    )
-    console.log(ethWithdrawalEventData)
-    const lastOutboxEntryIndexDec = await getLatestOutboxEntryIndex(networkID)
-
-    console.log(
-      `*** Last Outbox Entry Batch Number: ${lastOutboxEntryIndexDec} ***`
-    )
-
-    const ethWithdrawalData: L2ToL1EventResultPlus[] = []
-    for (const eventData of ethWithdrawalEventData) {
-      const {
-        destination,
-        timestamp,
-        data,
-        caller,
-        uniqueId,
-        batchNumber,
-        indexInBatch,
-        arbBlockNum,
-        ethBlockNum,
-        callvalue,
-      } = eventData
-      const batchNumberDec = batchNumber.toNumber()
-      const outgoingMessageState =
-        batchNumberDec > lastOutboxEntryIndexDec
-          ? OutgoingMessageState.UNCONFIRMED
-          : await getOutGoingMessageStateV2(bridge, batchNumber, indexInBatch)
-
-      const allWithdrawalData: L2ToL1EventResultPlus = {
-        caller,
-        destination,
-        uniqueId,
-        batchNumber,
-        indexInBatch,
-        arbBlockNum,
-        ethBlockNum,
-        timestamp,
-        callvalue,
-        data,
-        type: AssetType.ETH,
-        value: callvalue,
-        symbol: 'REALMS',
-        tokenId: 1,
-        outgoingMessageState,
-      }
-      ethWithdrawalData.push(allWithdrawalData)
-    }
-    return ethWithdrawalData
-  } */
-
   const networkIDAndLayerToClient = (networkID: number, layer: 1 | 2) => {
     switch (networkID) {
       case 1:
@@ -578,48 +494,6 @@ export function useTransactions() {
     )
     console.log(outboxEntries)
     return outboxEntries?.[0]?.outboxEntryIndex as number
-  }
-
-  const getETHWithdrawals = async (
-    callerAddress: string,
-    fromBlock: number,
-    toBlock: number,
-    networkID: number
-  ): Promise<L2ToL1EventResult[]> => {
-    const client = networkIDAndLayerToClient(networkID, 2)
-
-    const { l2ToL1Transactions } = await gqlRequest(
-      getWithdrawalsQuery,
-      { callerAddress, fromBlock, toBlock },
-      client
-    )
-
-    return l2ToL1Transactions.map((eventData: any) => {
-      const {
-        destination,
-        timestamp,
-        data,
-        caller,
-        uniqueId,
-        batchNumber,
-        indexInBatch,
-        arbBlockNum,
-        ethBlockNum,
-        callvalue,
-      } = eventData
-      return {
-        destination,
-        timestamp,
-        data,
-        caller,
-        uniqueId: BigNumber.from(uniqueId),
-        batchNumber: BigNumber.from(batchNumber),
-        indexInBatch: BigNumber.from(indexInBatch),
-        arbBlockNum: BigNumber.from(arbBlockNum),
-        ethBlockNum: BigNumber.from(ethBlockNum),
-        callvalue: BigNumber.from(callvalue),
-      } as L2ToL1EventResult
-    })
   }
 
   const getOutGoingMessageState = async (
@@ -767,14 +641,17 @@ export function useTransactions() {
     )
   })
   const sortedTransactions = computed(() => {
-    return [...transactions.value]
-      .filter((tx) => tx.sender === account.value)
-      .filter(
-        (tx) =>
-          !tx.l1NetworkID ||
-          tx.l1NetworkID === useL1Network.value.chainId.toString()
-      )
-      .reverse()
+    if (transactions.value) {
+      return [...transactions.value]
+        .filter((tx) => tx.sender === account.value)
+        .filter(
+          (tx) =>
+            !tx.l1NetworkID || tx.l1NetworkID === useL1Network.value.chainId
+        )
+        .reverse()
+    } else {
+      return []
+    }
   })
   const pendingTransactions = computed(() => {
     return sortedTransactions.value.filter((tx) => tx.status === 'pending')
