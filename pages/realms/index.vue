@@ -7,10 +7,10 @@
         <input
           v-model="search"
           placeholder="insert realm id"
-          class="bg-black rounded px-4 py-2 text-xl w-2/3"
+          class="bg-black rounded-2xl px-4 py-2 text-xl w-2/3"
           type="text"
         />
-        <BButton class="ml-3 w-1/3 text-sm" type="primary">find realm</BButton>
+        <BButton class="ml-3 w-1/3" type="primary">find realm</BButton>
       </form>
 
       <div class="flex flex-wrap sm:space-x-3 my-3">

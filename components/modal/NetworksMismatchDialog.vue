@@ -11,7 +11,7 @@
       align-bottom
       transition-all
       transform
-      bg-white
+      bg-gray-900
       border border-opacity-50
       rounded-lg
       shadow-xl
@@ -23,13 +23,13 @@
     aria-modal="true"
     aria-labelledby="modal-headline"
   >
-    <div class="mt-3 text-center text-black sm:mt-5">
+    <div class="mt-3 text-center text-white sm:mt-5">
       <h3 id="modal-headline" class="font-semibold text-19 dark:text-light">
         Switch to
         <span class="capitalize">{{ activeNetwork.displayName }}</span>
       </h3>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <p class="px-6 mt-6 font-medium">
+      <p class="px-6 mt-6 text-xl">
         Change the wallet network to
         <span class="capitalize">{{ activeNetwork.displayName }}</span> to
         proceed.

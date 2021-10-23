@@ -1,34 +1,14 @@
 <template>
-  <div
-    v-if="networks.length > 1"
-    v-click-outside="hide"
-    class="relative w-[160px] md:w-[178px] mr-6"
-  >
-    <button
-      type="button"
-      class="
-        bg-primary-light
-        hover:bg-primary-blue-hover
-        relative
-        w-full
-        border border-primary-blue-border
-        rounded
-        pl-2.5
-        pr-10
-        py-1.5
-        text-left
-        focus:outline-none
-        focus:ring-1
-        focus:ring-[#0846E4]
-        focus:border-[#0846E4]
-        sm:text-sm
-      "
+  <div v-if="networks.length > 1" v-click-outside="hide" class="relative mr-6">
+    <BButton
+      type="primary"
+      class=""
       aria-haspopup="listbox"
       aria-expanded="true"
       aria-labelledby="listbox-label"
       @click="show = !show"
     >
-      <span class="flex items-center capitalize font-medium text-sm">
+      <span class="flex items-center">
         <component :is="activeNetwork.icon" class="w-6 h-6 mr-2" />
 
         {{ activeNetwork.displayName }}
@@ -58,33 +38,20 @@
           />
         </svg>
       </span>
-    </button>
-
-    <!--
-      Select popover, show/hide based on select state.
-
-      Entering: ""
-        From: ""
-        To: ""
-      Leaving: "transition ease-in duration-100"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-    <div v-show="show" class="w-full px-2 absolute z-10 mt-0.5">
+    </BButton>
+    <div v-show="show" class="w-full px-2 absolute z-10">
       <ul
         class="
           w-full
-          bg-white
+          bg-gray-400
           shadow-lg
           max-h-60
           rounded-md
           py-1
           text-base
-          ring-1 ring-black ring-opacity-5
           overflow-auto
           focus:outline-none
           sm:text-sm
-          divide-y divide-[#556D9C]/8
         "
         tabindex="-1"
         role="listbox"
@@ -100,7 +67,15 @@
           v-for="network in networks"
           id="listbox-option-0"
           :key="network.id"
-          class="cursor-pointer select-none relative py-2 pl-3 pr-9"
+          class="
+            cursor-pointer
+            select-none
+            relative
+            py-2
+            pl-3
+            pr-9
+            hover:bg-gray-300 hover:text-white
+          "
           role="option"
           @click="setActiveNetwork(network.id)"
         >
@@ -118,15 +93,7 @@
         -->
           <span
             v-if="activeNetwork.id === network.id"
-            class="
-              text-primary-blue-dark
-              absolute
-              inset-y-0
-              right-0
-              flex
-              items-center
-              pr-4
-            "
+            class="absolute inset-y-0 right-0 flex items-center pr-4"
           >
             <svg
               width="8"
@@ -137,7 +104,7 @@
             >
               <path
                 d="M0.5 5.86603C-0.166667 5.48113 -0.166667 4.51888 0.5 4.13397L6.5 0.669874C7.16667 0.284973 8 0.766099 8 1.5359L8 8.4641C8 9.2339 7.16667 9.71503 6.5 9.33013L0.5 5.86603Z"
-                fill="#3F75FF"
+                fill="#000"
               />
             </svg>
           </span>

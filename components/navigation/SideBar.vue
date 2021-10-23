@@ -45,12 +45,7 @@
           :to="link.page"
           @click.native="toggleSideBar"
         >
-          <span class="flex"
-            ><Helm
-              class="w-8 h-8 stroke-current fill-current self-center mr-2"
-            />
-            {{ link.title }}</span
-          >
+          <span class="flex"> {{ link.title }}</span>
         </NuxtLink>
 
         <NuxtLink
@@ -112,7 +107,7 @@ import Github from '~/assets/img/github.svg?inline'
 import Discord from '~/assets/img/discord.svg?inline'
 import Medium from '~/assets/img/medium.svg?inline'
 import Twitter from '~/assets/img/twitter.svg?inline'
-import Helm from '~/assets/img/helm.svg?inline'
+// import Helm from '~/assets/img/helm.svg?inline'
 export default {
   name: 'SideBar',
   components: {
@@ -122,7 +117,6 @@ export default {
     Discord,
     Medium,
     Twitter,
-    Helm,
   },
   setup() {
     const { toggleSideBar, sideBarOpen } = useUiState()

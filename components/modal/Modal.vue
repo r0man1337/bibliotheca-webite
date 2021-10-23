@@ -15,6 +15,7 @@
           pb-20
           text-center
           sm:justify-center sm:p-0
+          font-body
         "
       >
         <transition

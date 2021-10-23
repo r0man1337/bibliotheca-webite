@@ -10,15 +10,15 @@
       <input
         v-model="search"
         placeholder="Insert Loot item name"
-        class="bg-black rounded px-4 py-2 text-xl sm:mx-2"
+        class="bg-black rounded-xl px-4 py-2 text-xl sm:mx-2"
         type="text"
       />
-      <button
+      <BButton
         class="px-4 py-3 hover:bg-black transition duration-150 rounded"
-        type="submit"
+        type="primary"
       >
         Find Item Bags
-      </button>
+      </BButton>
     </form>
     <div v-if="!$fetchState.pending">
       <div v-if="!queryLoading" class="flex flex-wrap">

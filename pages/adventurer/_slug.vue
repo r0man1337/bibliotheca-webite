@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3 class="text-gray-400">{{ shortenHash(slug) }}</h3>
+    <h3 class="text-gray-400">
+      <span v-if="ensName">{{ ensName }}</span>
+      <span v-else>{{ shortenHash(slug) }}</span>
+    </h3>
     <h1 class="mb-8">Sir, your vast empire</h1>
     <div class="flex">
       <nav class="space-x-4 mb-8 bg-gray-900 px-3 py-5 rounded-2xl">
@@ -26,11 +29,11 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted } from '@nuxtjs/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 export default defineComponent({
   setup(props, context) {
-    const { shortenHash } = useFormatting()
+    const { shortenHash, returnEns, ensName } = useFormatting()
     const { slug } = context.root.$route.params
     // const variables = ref({ slug: slug.toLowerCase() })
 
@@ -52,9 +55,13 @@ export default defineComponent({
         slug: '',
       },
     ]
+    onMounted(async () => {
+      await returnEns(slug)
+    })
     return {
       slug,
       menuLinks,
+      ensName,
       shortenHash,
     }
   },

@@ -8,7 +8,8 @@
       px-8
       py-8
       overflow-hidden
-      text-left text-black
+      text-left
+      font-body
       align-bottom
       transition-all
       transform
@@ -29,9 +30,7 @@
       }"
     >
       <div class="text-center">
-        <h3 id="modal-headline" class="font-bold text-2xl text-[#374253]">
-          Connect your wallet
-        </h3>
+        <h3 id="modal-headline">Connect your wallet</h3>
       </div>
       <div class="mt-8 w-full space-y-4">
         <button
@@ -44,12 +43,11 @@
             text-left
             flex
             items-center
-            h-[80px]
-            border border-[#DBE5F4]
-            rounded-[4px]
-            text-lg text-[#374253]
-            font-semibold
-            hover:bg-background-light
+            text-lg
+            font-body
+            rounded-2xl
+            border border-gray-600
+            hover:bg-gray-800
           "
           :disabled="connecting"
           @click="connect(wallet.connector)"

@@ -22,8 +22,11 @@
     @click="navigate"
   >
     <div class="group-hover:text-red-400">
-      <h3>{{ shortenHash(adventurer.address) }}</h3>
-      <div class="text-xl">
+      <h3>
+        <span v-if="ensName">{{ ensName }}</span>
+        <span v-else>{{ shortenHash(adventurer.address) }}</span>
+      </h3>
+      <div class="text-xl text-gray-400">
         <span
           >Loot Bags: {{ adventurer.bagsHeld ? adventurer.bagsHeld : 0 }}</span
         >
@@ -52,7 +55,7 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, onMounted } from '@vue/composition-api'
 import { useFormatting } from '~/composables/useFormatting'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
 export default defineComponent({
@@ -66,13 +69,18 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const { shortenHash } = useFormatting()
+    const { shortenHash, returnEns, ensName } = useFormatting()
     const navigate = () => {
       context.root.$router.push(`/adventurer/${props.adventurer.address}`)
     }
+
+    onMounted(async () => {
+      await returnEns(props.adventurer.address)
+    })
     return {
       shortenHash,
       navigate,
+      ensName,
     }
   },
 })

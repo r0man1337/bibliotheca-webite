@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import { ref } from '@nuxtjs/composition-api'
 const locale = 'en-US'
 export function useFormatting() {
   function shortenHash(hash: any, size = 4) {
@@ -31,10 +32,17 @@ export function useFormatting() {
 
     return `${mDisplay}:${sDisplay}`
   }
-
+  const ensName = ref()
   const returnEns = async (value: any) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    return await provider.lookupAddress(value)
+
+    try {
+      ensName.value = await provider.lookupAddress(value)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      console.log(ensName.value)
+    }
   }
 
   return {
@@ -42,5 +50,6 @@ export function useFormatting() {
     toLocaleString,
     formatMillisecondsShort,
     returnEns,
+    ensName,
   }
 }
