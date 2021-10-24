@@ -254,7 +254,8 @@ export default defineComponent({
 
           clearInterval(addL2Interval.value)
           clearInterval(checkPendingInterval.value)
-          if (account.value) {
+          console.log('after interval')
+          if (account.value && !process.server) {
             await initBridge()
             await getUserRealms()
             await setInitialPendingWithdrawals(bridge, {

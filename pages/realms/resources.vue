@@ -103,7 +103,6 @@ export default defineComponent({
     }
     onMounted(() => {
       const ctx = document.getElementById('myChart')
-      console.log(ctx)
       myChart.value = new Chart(ctx, {
         type: 'pie',
         data,
@@ -127,8 +126,6 @@ export default defineComponent({
           },
         },
       })
-
-      console.log(myChart.value)
     })
 
     return { myChart, resources, colours }
