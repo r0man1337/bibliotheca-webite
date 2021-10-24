@@ -146,7 +146,7 @@ export default defineComponent({
       chainId,
       (val) => {
         if (val) {
-          if ([1, 4, 42161, 421611].includes(val)) {
+          if ([1, 4, 42161, 421611, 1337].includes(val)) {
             checkForNetworkMismatch()
           } else {
             showNetworksMismatchDialog()

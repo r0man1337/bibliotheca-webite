@@ -187,6 +187,23 @@ export function useNetwork() {
     }
   }
 
+  async function switchToLocalHardhat() {
+    if (window.ethereum) {
+      const chainData = {
+        chainId: '0x539',
+      }
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [chainData],
+        })
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    }
+  }
+
   async function switchToArbRinkeby() {
     if (window.ethereum) {
       const chainId = '0x66eeb'
@@ -269,6 +286,8 @@ export function useNetwork() {
         await switchToMainnet()
       } else if (activeNetwork.value.id === 'rinkeby') {
         await switchToRinkeby()
+      } else if (activeNetwork.value.id === 'localDevelopment') {
+        await switchToLocalHardhat()
       } else if (activeNetwork.value.id === 'arbitrumRinkeby') {
         await switchToArbRinkeby()
       } else {

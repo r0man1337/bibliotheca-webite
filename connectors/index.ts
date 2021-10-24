@@ -18,11 +18,12 @@ const RPC_URLS: { [chainId: number]: string } = {
   1: process.env.RPC_URL_1 as string,
   4: 'https://rinkeby-light.eth.linkpool.io',
   421611: 'https://rinkeby.arbitrum.io/rpc',
-  42161: 'ttps://arb1.arbitrum.io/rpc',
+  42161: 'https://arb1.arbitrum.io/rpc',
+  1337: 'http://127.0.0.1:8545/',
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1, 4, 421611, 42161],
+  supportedChainIds: [1, 4, 421611, 42161, 1337],
 })
 
 export const walletconnect = new WalletConnectConnector({
