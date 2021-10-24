@@ -250,21 +250,21 @@ export default defineComponent({
       [active, account, activeNetwork],
       async (val) => {
         if (val) {
-          console.log('account change' + val)
-
           clearInterval(addL2Interval.value)
           clearInterval(checkPendingInterval.value)
-          console.log('after interval')
-          if (account.value && !process.server) {
+          if (account.value) {
             await initBridge()
             await getUserRealms()
             await setInitialPendingWithdrawals(bridge, {
               fromBlock: 4832019,
             })
           }
-          addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
+          addL2Interval.value = setInterval(
+            () => checkAndAddL2DepositTxns,
+            4000
+          )
           checkPendingInterval.value = setInterval(
-            checkAndUpdatePendingTransactions,
+            () => checkAndUpdatePendingTransactions,
             4000
           )
         }
