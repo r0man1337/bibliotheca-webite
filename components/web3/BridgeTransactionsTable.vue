@@ -295,10 +295,13 @@ export default defineComponent({
       type: Object,
       default: null,
     },
+    currentL1BlockNumber: {
+      type: Number,
+      default: 0,
+    },
   },
   setup(props, context) {
     const { useL1Network, useL2Network } = useNetwork()
-    const { currentL1BlockNumber } = useBridge()
     const { confirmPeriodBlocks = 45818 } = useL2Network.value
     const { blockTime = 15 } = useL1Network.value
     const handleTriggerOutbox = (transaction) => {
@@ -311,7 +314,7 @@ export default defineComponent({
 
     const calcEtaDisplay = (blockNum) => {
       const blocksRemaining = Math.max(
-        confirmPeriodBlocks - (currentL1BlockNumber.value - blockNum),
+        confirmPeriodBlocks - (props.currentL1BlockNumber - blockNum),
         0
       )
       const minutesLeft = Math.round((blocksRemaining * blockTime) / 60)
@@ -346,7 +349,6 @@ export default defineComponent({
     return {
       handleTriggerOutbox,
       calcEtaDisplay,
-      currentL1BlockNumber,
       showRedeemRetryableButton,
       isDepositMode,
     }

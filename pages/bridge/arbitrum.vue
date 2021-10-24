@@ -151,6 +151,7 @@
       <BridgeTransactionsTable
         :merged-transactions-to-show="mergedTransactionsToShow"
         :loading="loadingTransactions"
+        :current-l1-block-number="currentL1BlockNumber"
         @triggerOutbox="triggerOutboxTransaction"
       />
     </div>
@@ -209,6 +210,7 @@ export default defineComponent({
       triggerOutbox,
       checkAndAddL2DepositTxns,
       checkAndUpdatePendingTransactions,
+      currentL1BlockNumber,
     } = useBridge()
 
     const l2Function = async () => {
@@ -328,6 +330,7 @@ export default defineComponent({
       pendingWithdrawalsMap,
       partnerNetwork,
       showAssetBox,
+      currentL1BlockNumber,
       selectRealmForTransfer,
       selectedRealm,
       loadingMeta,
