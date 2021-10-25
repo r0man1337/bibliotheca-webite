@@ -54,6 +54,10 @@ export default defineComponent({
         title: 'Assets',
         slug: '',
       },
+      {
+        title: 'Market',
+        slug: 'market',
+      },
     ]
     onMounted(async () => {
       await returnEns(slug)
