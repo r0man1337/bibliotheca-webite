@@ -1,5 +1,9 @@
 <template>
-  <div v-if="networks.length > 1" v-click-outside="hide" class="relative mr-6">
+  <div
+    v-if="availableNetworks.length > 1"
+    v-click-outside="hide"
+    class="relative mr-6"
+  >
     <BButton
       type="primary"
       class=""
@@ -64,7 +68,7 @@
         Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
       -->
         <li
-          v-for="network in networks"
+          v-for="network in availableNetworks"
           id="listbox-option-0"
           :key="network.id"
           class="
@@ -130,8 +134,12 @@ export default defineComponent({
   setup() {
     const show = ref(false)
     const { chainId, ethersProviders, account } = useWeb3()
-    const { networks, checkForNetworkMismatch, networkMismatch, networkName } =
-      useNetwork()
+    const {
+      availableNetworks,
+      checkForNetworkMismatch,
+      networkMismatch,
+      networkName,
+    } = useNetwork()
     const { showNetworksMismatchDialog } = useModal()
 
     const setActiveNetwork = async (networkId) => {
@@ -164,7 +172,7 @@ export default defineComponent({
       chainId,
       hide,
       show,
-      networks,
+      availableNetworks,
       networkMismatch,
       networkName,
       activeNetwork,

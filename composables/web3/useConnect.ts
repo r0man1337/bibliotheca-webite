@@ -1,10 +1,20 @@
 import { useWeb3 } from '@instadapp/vue-web3'
-import { onMounted, ref, watch, watchEffect } from '@nuxtjs/composition-api'
+import {
+  onMounted,
+  ref,
+  watch,
+  computed,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import { injected } from '~/connectors'
 
 export function useConnect() {
-  const { activate, active } = useWeb3()
+  const { activate, active, account } = useWeb3()
   const tried = ref(false)
+  const route = useRoute()
+  const isAddressPage = computed(() => {
+    return route.value.params.address === account.value
+  })
 
   onMounted(() => {
     if (!active.value && !tried.value) {
@@ -29,5 +39,6 @@ export function useConnect() {
 
   return {
     tried,
+    isAddressPage,
   }
 }

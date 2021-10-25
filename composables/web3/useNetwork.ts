@@ -4,9 +4,7 @@ import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useModal } from '../useModal'
 import { useNotification } from '../useNotification'
-
-import MainnetSVG from '~/assets/icons/mainnet.svg?inline'
-import ArbitrumSVG from '~/assets/icons/arbitrum.svg?inline'
+import { Network, allNetworks } from '~/constant/networks'
 
 const activeNetworks = process.env.ACTIVE_NETWORKS.split(',')
 
@@ -17,107 +15,15 @@ export enum NetworkId {
   ArbRinkeby = 'arbRinkeby',
 }
 
-export type Network = {
-  id: string
-  chainId: number
-  displayName: string
-  icon: any
-  tokenBridge: Record<string, any>
-  partnerChainID: number
-  isArbitrum: boolean
-  explorerUrl: string
-  url: string
-  blockTime?: number
-  confirmPeriodBlocks?: number
-}
-interface TokenBridge {
-  l1Address: string
-  l2Address: string
-}
-
-const mainnetBridge: TokenBridge = {
-  l1Address: '0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef',
-  l2Address: '0x5288c571Fd7aD117beA99bF60FE0846C4E84F933',
-}
-
-const rinkebyBridge: TokenBridge = {
-  l1Address: '0x70C143928eCfFaf9F5b406f7f4fC28Dc43d68380',
-  l2Address: '0x9413AD42910c1eA60c737dB5f58d1C504498a3cD',
-}
-export const networks: Network[] = []
-if (activeNetworks.includes('mainnet')) {
-  networks.push({
-    id: 'mainnet',
-    chainId: 1,
-    displayName: 'Ethereum Mainnet',
-    icon: MainnetSVG,
-    tokenBridge: mainnetBridge,
-    partnerChainID: 42161,
-    isArbitrum: false,
-    explorerUrl: 'https://etherscan.io',
-    url: process.env.RPC_URL_1 as string,
-    blockTime: 15,
-  })
-}
-if (activeNetworks.includes('rinkeby')) {
-  networks.push({
-    id: 'rinkeby',
-    chainId: 4,
-    displayName: 'Eth Rinkeby',
-    icon: MainnetSVG,
-    tokenBridge: rinkebyBridge,
-    partnerChainID: 421611,
-    isArbitrum: false,
-    explorerUrl: 'https://rinkeby.etherscan.io',
-    url: `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`,
-  })
-}
-if (activeNetworks.includes('arbitrum')) {
-  networks.push({
-    id: 'arbitrum',
-    chainId: 42161,
-    displayName: 'Arbitrum',
-    icon: MainnetSVG,
-    tokenBridge: mainnetBridge,
-    partnerChainID: 1,
-    isArbitrum: true,
-    explorerUrl: 'https://arbiscan.io',
-    url: 'https://arb1.arbitrum.io/rpc',
-    confirmPeriodBlocks: 48384,
-  })
-}
-if (activeNetworks.includes('arbitrumRinkeby')) {
-  networks.push({
-    id: 'arbitrumRinkeby',
-    chainId: 421611,
-    displayName: 'Arbitrum Rinkeby',
-    icon: MainnetSVG,
-    tokenBridge: rinkebyBridge,
-    partnerChainID: 4,
-    isArbitrum: true,
-    explorerUrl: 'https://testnet.arbiscan.io',
-    url: 'https://rinkeby.arbitrum.io/rpc',
-    confirmPeriodBlocks: 6545,
-  })
-}
-if (activeNetworks.includes('localDevelopment')) {
-  networks.push({
-    id: 'localDevelopment',
-    chainId: 1337,
-    displayName: 'Local Hardhat',
-    icon: MainnetSVG,
-    tokenBridge: rinkebyBridge,
-    partnerChainID: null,
-    isArbitrum: false,
-    explorerUrl: 'http://127.0.0.1:8545/',
-    url: 'http://127.0.0.1:8545/',
-  })
-}
+const availableNetworks = allNetworks.filter((network) =>
+  activeNetworks.includes(network.id)
+)
 
 export const activeNetworkId = ref<NetworkId>()
 export const activeNetwork = computed(
   (): Network =>
-    networks.find((n) => n.id === activeNetworkId.value) || networks[0]
+    availableNetworks.find((n) => n.id === activeNetworkId.value) ||
+    availableNetworks[0]
 )
 export function useNetwork() {
   const { showWarning } = useNotification()
@@ -135,7 +41,9 @@ export function useNetwork() {
     }
   }
   const partnerNetwork = computed(() =>
-    networks.find((n) => n.chainId === activeNetwork.value.partnerChainID)
+    availableNetworks.find(
+      (n) => n.chainId === activeNetwork.value.partnerChainID
+    )
   )
 
   const useL1Network = computed((): Network => {
@@ -296,7 +204,7 @@ export function useNetwork() {
   return {
     networkMismatch,
     activeNetworkId,
-    networks,
+    availableNetworks,
     chainId,
     switchNetwork,
     checkForNetworkMismatch,

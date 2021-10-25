@@ -22,16 +22,19 @@
 <script>
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
 import axios from 'axios'
-import { useWeb3 } from '@instadapp/vue-web3'
 import { useRealms } from '~/composables/web3/useRealms'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
 export default defineComponent({
   setup(props, context) {
-    const { slug } = context.root.$route.params
+    const { address } = context.root.$route.params
     const { getUserRealms, userRealms, loading: realmsLoading } = useRealms()
-    const { checkForNetworkMismatch, networkMismatch } = useNetwork()
-    const { account } = useWeb3()
+    const {
+      checkForNetworkMismatch,
+      networkMismatch,
+      activeNetworkId,
+      useL2Network,
+    } = useNetwork()
     const {
       stakeRealm,
       claimResources,
@@ -45,13 +48,14 @@ export default defineComponent({
     const metaData = ref()
 
     onMounted(async () => {
-      if (account.value) {
-        if (networkMismatch.value) {
-          checkForNetworkMismatch()
-        }
+      activeNetworkId.value = useL2Network.value.id
+
+      if (networkMismatch.value) {
+        checkForNetworkMismatch()
       }
+
       try {
-        await getUserRealms(slug, 'l2')
+        await getUserRealms(address, 'l2')
       } catch (e) {
         console.log(e)
       } finally {
@@ -89,6 +93,7 @@ export default defineComponent({
 
     return {
       userRealms,
+      activeNetworkId,
       stakeRealm,
       claimResources,
       claimBalance,

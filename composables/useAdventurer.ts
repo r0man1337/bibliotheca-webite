@@ -13,11 +13,7 @@ import {
   getl2Adventurer,
   usersSRealms,
 } from './graphql/queries'
-import {
-  useNetwork,
-  activeNetwork,
-  Network,
-} from '~/composables/web3/useNetwork'
+import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
 

@@ -18,7 +18,7 @@ import sRealmsToken from '~/constant/sRealmsTokens'
 import GoldAbi from '~/abi/gold.json'
 export function useLords() {
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
 
   const error = reactive({
     lords: null,

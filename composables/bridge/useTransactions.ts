@@ -15,10 +15,8 @@ import axios from 'axios'
 
 import {
   // Bridge,
-  networks,
   L2ToL1EventResult,
   OutgoingMessageState,
-  Bridge,
   WithdrawalInitiated,
 } from 'arb-ts'
 
@@ -116,7 +114,7 @@ const transactions = ref([])
 
 export function useTransactions() {
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
   const { gqlRequest } = useGraph()
   const pendingWithdrawalsMap = ref({})
 

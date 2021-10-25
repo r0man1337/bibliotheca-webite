@@ -9,7 +9,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { L1ArbitrumExtendedGateway } from 'arb-ts/dist/lib/abi'
-import { useNetwork, activeNetwork, Network } from './useNetwork'
+import { useNetwork, activeNetwork } from './useNetwork'
 import { usersRealms, usersSRealms } from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
@@ -48,11 +48,11 @@ export function useRealms() {
     return realms
   }
 
-  const getUserRealms = async (slug?, layer?: Layers) => {
+  const getUserRealms = async (address?, layer?: Layers) => {
     try {
       error.getUserRealms = null
       loading.value = true
-      const address = slug || account.value
+      const userAddress = address || account.value
       console.log(address)
       if (!layer) {
         Promise.all([
@@ -60,7 +60,7 @@ export function useRealms() {
           (userRealms.value.l2 = await fetchUserRealms(address, 'l2')),
         ])
       } else {
-        userRealms.value[layer] = await fetchUserRealms(slug, layer)
+        userRealms.value[layer] = await fetchUserRealms(userAddress, layer)
       }
     } catch (e) {
       console.log(e)
@@ -78,15 +78,14 @@ export function useRealms() {
     return srealms
   }
 
-  const getUserSRealms = async (slug, network?) => {
+  const getUserSRealms = async (address, network?) => {
     try {
       error.getUserRealms = null
       loading.value = true
-      if (!slug) {
-        sRealms.value = await fetchUserSRealms(slug, useL2Network.value.id)
+      if (!address) {
+        sRealms.value = await fetchUserSRealms(address, useL2Network.value.id)
       } else {
-        console.log(slug)
-        sRealms.value = await fetchUserSRealms(slug, network)
+        sRealms.value = await fetchUserSRealms(address, network)
       }
     } catch (e) {
       console.log(e)

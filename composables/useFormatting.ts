@@ -1,5 +1,7 @@
 import { ethers } from 'ethers'
 import { ref } from '@nuxtjs/composition-api'
+import { allNetworks } from '~/constant/networks'
+
 const locale = 'en-US'
 export function useFormatting() {
   function shortenHash(hash: any, size = 4) {
@@ -34,14 +36,11 @@ export function useFormatting() {
   }
   const ensName = ref()
   const returnEns = async (value: any) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-
+    const provider = new ethers.providers.JsonRpcProvider(allNetworks[0].url)
     try {
       ensName.value = await provider.lookupAddress(value)
     } catch (e) {
       console.log(e)
-    } finally {
-      console.log(ensName.value)
     }
   }
 

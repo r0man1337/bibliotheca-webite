@@ -118,7 +118,7 @@ export default defineComponent({
   setup(props, context) {
     const { checkRealmRarity } = useRarity()
     const { shortenHash } = useFormatting()
-    const { slug } = context.root.$route.params
+    const { address } = context.root.$route.params
 
     const { getAdventurer, adventurer } = useAdventurer()
 
@@ -129,7 +129,7 @@ export default defineComponent({
     })
 
     useFetch(async () => {
-      await getAdventurer(slug.toLowerCase())
+      await getAdventurer(address.toLowerCase())
     })
 
     const openSeaData = ref([])
@@ -143,7 +143,7 @@ export default defineComponent({
         try {
           const response = await axios.get(
             'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50&owner=' +
-              slug +
+              address +
               '&offset=' +
               page * 50,
             {
@@ -181,7 +181,7 @@ export default defineComponent({
 
     return {
       adventurer,
-      slug,
+      address,
       shortenHash,
       openSeaData,
       loading,

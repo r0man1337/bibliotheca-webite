@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
-import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '@instadapp/vue-web3'
+import { useNetwork, activeNetwork } from '../web3/useNetwork'
 
 // ABI
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
@@ -13,7 +13,7 @@ import diamondAddress from '~/constant/diamondAddress'
 
 export function useResources() {
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
 
   const error = reactive({
     resources: null,

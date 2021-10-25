@@ -53,7 +53,7 @@ import { usePrice } from '~/composables'
 export default defineComponent({
   setup(props, context) {
     const { goldPrice } = usePrice()
-    const { slug } = context.root.$route.params
+    const { address } = context.root.$route.params
     const {
       getAdventurersLords,
       lordsBalance,
@@ -70,8 +70,8 @@ export default defineComponent({
       return b.value - a.value
     })
     useFetch(async () => {
-      await getAdventurersLords(slug)
-      // await getAdventurersGold(slug)
+      await getAdventurersLords(address)
+      // await getAdventurersGold(address)
     })
     return {
       getAdventurersLords,

@@ -68,7 +68,7 @@ import { useNetwork } from '~/composables/web3/useNetwork'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 export default defineComponent({
   setup(props, context) {
-    const { slug } = context.root.$route.params
+    const { address } = context.root.$route.params
     const { getUserSRealms, sRealms } = useRealms()
     const {
       claimLords,
@@ -97,14 +97,14 @@ export default defineComponent({
 
     onMounted(async () => {
       await getWorldAge()
-      await getUserSRealms(slug, 'arbitrumRinkeby')
+      await getUserSRealms(address, 'arbitrumRinkeby')
       await getTimeToNextAge()
       activeNetworkId.value = 'arbitrumRinkeby'
       if (account.value) {
         if (networkMismatch.value) {
           checkForNetworkMismatch()
         } else {
-          await getUserSRealms(slug, 'arbitrumRinkeby')
+          await getUserSRealms(address, 'arbitrumRinkeby')
         }
       }
     })
