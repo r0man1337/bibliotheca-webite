@@ -48,16 +48,16 @@ export function useRealms() {
     return realms
   }
 
-  const getUserRealms = async (address?, layer?: Layers) => {
+  const getUserRealms = async (address?: null, layer?: Layers) => {
     try {
       error.getUserRealms = null
       loading.value = true
+
       const userAddress = address || account.value
-      console.log(address)
       if (!layer) {
         Promise.all([
-          (userRealms.value.l1 = await fetchUserRealms(address, 'l1')),
-          (userRealms.value.l2 = await fetchUserRealms(address, 'l2')),
+          (userRealms.value.l1 = await fetchUserRealms(userAddress, 'l1')),
+          (userRealms.value.l2 = await fetchUserRealms(userAddress, 'l2')),
         ])
       } else {
         userRealms.value[layer] = await fetchUserRealms(userAddress, layer)

@@ -81,7 +81,7 @@
             hover:bg-gray-300 hover:text-white
           "
           role="option"
-          @click="setActiveNetwork(network.id)"
+          @click="setActiveNetworkFunction(network.id)"
         >
           <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
           <span class="flex items-center text-black">
@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { defineComponent, nextTick, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
 import {
   useNetwork,
@@ -139,15 +139,14 @@ export default defineComponent({
       checkForNetworkMismatch,
       networkMismatch,
       networkName,
+      setActiveNetwork,
     } = useNetwork()
     const { showNetworksMismatchDialog } = useModal()
 
-    const setActiveNetwork = async (networkId) => {
+    const setActiveNetworkFunction = async (networkId) => {
       // await stopSimulation();
-      activeNetworkId.value = networkId
       show.value = false
-      await nextTick()
-      checkForNetworkMismatch()
+      await setActiveNetwork(networkId)
     }
 
     watch(
@@ -176,7 +175,7 @@ export default defineComponent({
       networkMismatch,
       networkName,
       activeNetwork,
-      setActiveNetwork,
+      setActiveNetworkFunction,
       activeNetworkId,
       account,
       ethersProviders,

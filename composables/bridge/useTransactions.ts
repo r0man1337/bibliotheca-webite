@@ -271,12 +271,13 @@ export function useTransactions() {
         Math.round(new Date().getTime() - t) / 1000
       } seconds`
     )
-
     for (const l2ToL1Thing of l2ToL1Txns) {
-      console.log(l2ToL1Thing)
-      pendingWithdrawals[l2ToL1Thing.uniqueId.toString()] = l2ToL1Thing
+      if (l2ToL1Thing) {
+        pendingWithdrawals[l2ToL1Thing.uniqueId.toString()] = l2ToL1Thing
+      }
     }
     pendingWithdrawalsMap.value = pendingWithdrawals
+
     loading.transactions = false
   }
 
@@ -399,76 +400,79 @@ export function useTransactions() {
     const t = new Date().getTime()
     const tokensArr = erc721tokens[useL2Network.value.id].allTokens
     const tokensAddrArr = tokensArr.map((a) => a.address)
-
-    const gateWayWithdrawalsResultsNested =
-      await bridge.value.getGatewayWithdrawEventData(
-        tokensAddrArr[0],
-        address,
-        filter
-      )
-    console.log(gateWayWithdrawalsResultsNested)
-    console.log(
-      `*** got token gateway event data in ${
-        (new Date().getTime() - t) / 1000
-      } seconds *** `
-    )
-
-    const gateWayWithdrawalsResults = gateWayWithdrawalsResultsNested
-
-    const l2Txns = await Promise.all(
-      gateWayWithdrawalsResults.map((withdrawEventData) =>
-        bridge.value.getL2Transaction(withdrawEventData.txHash)
-      )
-    )
-
-    const outgoingMessageStates = await Promise.all(
-      gateWayWithdrawalsResults.map((withdrawEventData, i) => {
-        const eventDataArr = bridge.value.getWithdrawalsInL2Transaction(
-          l2Txns[i]
+    try {
+      const gateWayWithdrawalsResultsNested =
+        await bridge.value.getGatewayWithdrawEventData(
+          tokensAddrArr[0],
+          address,
+          filter
         )
-        // TODO: length != 1
-        const { batchNumber, indexInBatch } = eventDataArr[0]
-        return getOutGoingMessageState(bridge, batchNumber, indexInBatch)
-      })
-    )
-    return gateWayWithdrawalsResults.map(
-      (withdrawEventData: WithdrawalInitiated, i) => {
-        // TODO: length != 1
-        const eventDataArr = bridge.value.getWithdrawalsInL2Transaction(
-          l2Txns[i]
-        )
-        const {
-          caller,
-          destination,
-          uniqueId,
-          batchNumber,
-          indexInBatch,
-          arbBlockNum,
-          ethBlockNum,
-          timestamp,
-          callvalue,
-          data,
-        } = eventDataArr[0]
+      console.log(gateWayWithdrawalsResultsNested)
+      console.log(
+        `*** got token gateway event data in ${
+          (new Date().getTime() - t) / 1000
+        } seconds *** `
+      )
 
-        const eventDataPlus = {
-          caller,
-          destination,
-          uniqueId,
-          batchNumber,
-          indexInBatch,
-          arbBlockNum,
-          ethBlockNum,
-          timestamp,
-          callvalue,
-          data,
-          type: AssetType.ERC20,
-          value: withdrawEventData._amount,
-          tokenAddress: withdrawEventData.l1Token,
-          outgoingMessageState: outgoingMessageStates[i],
+      const gateWayWithdrawalsResults = gateWayWithdrawalsResultsNested
+
+      const l2Txns = await Promise.all(
+        gateWayWithdrawalsResults.map((withdrawEventData) =>
+          bridge.value.getL2Transaction(withdrawEventData.txHash)
+        )
+      )
+
+      const outgoingMessageStates = await Promise.all(
+        gateWayWithdrawalsResults.map((withdrawEventData, i) => {
+          const eventDataArr = bridge.value.getWithdrawalsInL2Transaction(
+            l2Txns[i]
+          )
+          // TODO: length != 1
+          const { batchNumber, indexInBatch } = eventDataArr[0]
+          return getOutGoingMessageState(bridge, batchNumber, indexInBatch)
+        })
+      )
+      return gateWayWithdrawalsResults.map(
+        (withdrawEventData: WithdrawalInitiated, i) => {
+          // TODO: length != 1
+          const eventDataArr = bridge.value.getWithdrawalsInL2Transaction(
+            l2Txns[i]
+          )
+          const {
+            caller,
+            destination,
+            uniqueId,
+            batchNumber,
+            indexInBatch,
+            arbBlockNum,
+            ethBlockNum,
+            timestamp,
+            callvalue,
+            data,
+          } = eventDataArr[0]
+
+          const eventDataPlus = {
+            caller,
+            destination,
+            uniqueId,
+            batchNumber,
+            indexInBatch,
+            arbBlockNum,
+            ethBlockNum,
+            timestamp,
+            callvalue,
+            data,
+            type: AssetType.ERC20,
+            value: withdrawEventData._amount,
+            tokenAddress: withdrawEventData.l1Token,
+            outgoingMessageState: outgoingMessageStates[i],
+          }
+          return eventDataPlus
         }
-        return eventDataPlus
-      }
-    )
+      )
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const networkIDAndLayerToClient = (networkID: number, layer: 1 | 2) => {
@@ -502,10 +506,14 @@ export function useTransactions() {
     if (executedMessagesCache[hashOutgoingMessage(batchNumber, indexInBatch)]) {
       return OutgoingMessageState.EXECUTED
     } else {
-      return await bridge.value.getOutGoingMessageState(
-        batchNumber,
-        indexInBatch
-      )
+      try {
+        return await bridge.value.getOutGoingMessageState(
+          batchNumber,
+          indexInBatch
+        )
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 

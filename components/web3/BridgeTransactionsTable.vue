@@ -99,6 +99,7 @@
                   <div
                     v-if="
                       transaction.isWithdrawal &&
+                      transaction.status &&
                       transaction.status.toLowerCase() === 'confirmed'
                     "
                     class="relative group"
@@ -135,7 +136,11 @@
                             ml-2
                           "
                         >
-                          Must be on l1 network to claim withdrawal
+                          Must be on
+                          <span @click="switchToL1Network()"
+                            >layer 1 network</span
+                          >
+                          to claim withdrawal
                         </div>
                       </template>
                     </v-popover>
@@ -267,10 +272,13 @@
                 </td>
               </tr>
             </tbody>
+            <tr v-if="loading.transactions">
+              <td colspan="5" class="flex w-100 py-2">
+                <LoadingRings />
+                <span class="ml-4 py-2">Loading Pending Transactions</span>
+              </td>
+            </tr>
           </table>
-          <div v-if="loading.transactions" class="flex">
-            <LoadingRings /> Loading Pending Transactions
-          </div>
         </div>
       </div>
     </div>
@@ -278,8 +286,11 @@
 </template>
 <script>
 import { defineComponent, ref, computed } from '@vue/composition-api'
-import { useBridge } from '~/composables/bridge/useBridge'
-import { activeNetwork, useNetwork } from '~/composables/web3/useNetwork'
+import {
+  activeNetwork,
+  activeNetworkId,
+  useNetwork,
+} from '~/composables/web3/useNetwork'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 
 export default defineComponent({
@@ -311,7 +322,9 @@ export default defineComponent({
       }
       context.emit('triggerOutbox', transaction)
     }
-
+    const switchToL1Network = () => {
+      activeNetworkId.value = useL1Network.value.id
+    }
     const calcEtaDisplay = (blockNum) => {
       const blocksRemaining = Math.max(
         confirmPeriodBlocks - (props.currentL1BlockNumber - blockNum),
@@ -349,6 +362,7 @@ export default defineComponent({
     return {
       handleTriggerOutbox,
       calcEtaDisplay,
+      switchToL1Network,
       showRedeemRetryableButton,
       isDepositMode,
     }

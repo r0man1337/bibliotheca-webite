@@ -1,4 +1,10 @@
-import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import {
+  computed,
+  onMounted,
+  ref,
+  watch,
+  nextTick,
+} from '@nuxtjs/composition-api'
 // import { useLocalStorage } from 'vue-composable';
 
 import { useWeb3 } from '@instadapp/vue-web3'
@@ -45,6 +51,11 @@ export function useNetwork() {
       (n) => n.chainId === activeNetwork.value.partnerChainID
     )
   )
+  const setActiveNetwork = async (networkId) => {
+    activeNetworkId.value = networkId
+    await nextTick()
+    checkForNetworkMismatch()
+  }
 
   const useL1Network = computed((): Network => {
     if (!activeNetwork.value.isArbitrum) {
@@ -206,6 +217,7 @@ export function useNetwork() {
     activeNetworkId,
     availableNetworks,
     chainId,
+    setActiveNetwork,
     switchNetwork,
     checkForNetworkMismatch,
     partnerNetwork,
