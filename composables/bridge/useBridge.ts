@@ -77,7 +77,7 @@ export function useBridge() {
 
   const { times, plus, ensureValue } = useBigNumber()
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
   const {
     successfulL1Deposits,
     sortedTransactions,
@@ -506,32 +506,13 @@ export function useBridge() {
     // console.log(balance)
     return result.realmsOnL2
   }
-  const addL2Interval = ref()
-  const checkPendingInterval = ref(null)
 
-  onMounted(async () => {
-    await initBridge()
-    if (!addL2Interval.value) {
-      addL2Interval.value = setInterval(checkAndAddL2DepositTxns, 4000)
-    }
-    if (!checkPendingInterval.value) {
-      checkPendingInterval.value = setInterval(
-        checkAndUpdatePendingTransactions,
-        4000
-      )
-    }
-  })
-  onBeforeUnmount(() => {
-    clearInterval(addL2Interval.value)
-    clearInterval(checkPendingInterval.value)
-  })
   return {
     initBridge,
     getL2Realms,
     depositRealm,
     withdrawToL1,
     getL2TxnHashes,
-    checkPendingInterval,
     l2TransactionCount,
     triggerOutbox,
     currentL1BlockNumber,

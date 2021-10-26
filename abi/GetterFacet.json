@@ -1,6 +1,203 @@
 {
-  "address": "0x790BDE8C410B75299bDAdA4Cd79b72DB46819114",
+  "address": "0xcA9c5a47A4E0be47e383D8D59917c083005bb188",
   "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "get30DayVestingTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAgeClaimed",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAgeSettled",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_realmId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAllStatistics",
+      "outputs": [
+        {
+          "internalType": "int32",
+          "name": "",
+          "type": "int32"
+        },
+        {
+          "internalType": "int32",
+          "name": "",
+          "type": "int32"
+        },
+        {
+          "internalType": "int32",
+          "name": "",
+          "type": "int32"
+        },
+        {
+          "internalType": "int32",
+          "name": "",
+          "type": "int32"
+        },
+        {
+          "internalType": "int32",
+          "name": "",
+          "type": "int32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAllTraits",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getCities",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getFoodSupply",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getHarbours",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
     {
       "inputs": [],
       "name": "getLordsAddress",
@@ -9,6 +206,68 @@
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getName",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPopulation",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRealmAgeInfo",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -28,6 +287,25 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRegions",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "getResourceAddress",
       "outputs": [
@@ -35,6 +313,63 @@
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getResourceIds",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getResourceLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRivers",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -65,29 +400,67 @@
       ],
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVestingTime",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getWonder",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
-  "transactionHash": "0x2a8e094acb015a49f713644f7aa4d5fd0ac8f928b8fb92c4cb787019b6d3b122",
+  "transactionHash": "0xa5d335302e7c9a3d9b64dda051897420cc952b112a0a345f7a20d22e8dd9189f",
   "receipt": {
     "to": null,
     "from": "0xF3a8b033c2572A2887c507aa92eD134B29620245",
-    "contractAddress": "0x790BDE8C410B75299bDAdA4Cd79b72DB46819114",
+    "contractAddress": "0xcA9c5a47A4E0be47e383D8D59917c083005bb188",
     "transactionIndex": 0,
-    "gasUsed": "5539929",
+    "gasUsed": "32854400",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x318aaefef199a1b63c5d33935a3e116a29ebf69d4f5c9810a23211d36c8987e2",
-    "transactionHash": "0x2a8e094acb015a49f713644f7aa4d5fd0ac8f928b8fb92c4cb787019b6d3b122",
+    "blockHash": "0xe862c99d63832637e045829b8839e79361808d2e08e8f90366d2751d0eb47d82",
+    "transactionHash": "0xa5d335302e7c9a3d9b64dda051897420cc952b112a0a345f7a20d22e8dd9189f",
     "logs": [],
-    "blockNumber": 5769709,
-    "cumulativeGasUsed": "3819989",
+    "blockNumber": 5982980,
+    "cumulativeGasUsed": "25165500",
     "status": 1,
     "byzantium": true
   },
   "args": [],
-  "solcInputHash": "4d7f9a7ffb8a52da2ddcd0286d2b1b11",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLordsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getResourceAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTreasuryAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/settling/facets/GetterFacet.sol\":\"GetterFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/settling/facets/GetterFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\n\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\n\\ncontract GetterFacet {\\n    AppStorage internal s;\\n\\n    function getResourceAddress() public view returns (address) {\\n        return s.resources;\\n    }\\n\\n    function getTreasuryAddress() public view returns (address) {\\n        return s.treasury;\\n    }\\n\\n    function getRealmsAddress() public view returns (address) {\\n        return s.realms;\\n    }\\n\\n    function getSRealmsAddress() public view returns (address) {\\n        return s.sRealms;\\n    }\\n\\n    function getLordsAddress() public view returns (address) {\\n        return s.lords;\\n    }\\n}\\n\",\"keccak256\":\"0x02b035c09223f54986ed60b3003dc89eed5f031b64bb92f269feda24f288e3ba\"},\"contracts/settling/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    mapping(uint256 => RealmStatistics) realmStatistics;\\n    mapping(uint256 => RealmBuildings) realmBuildings;\\n    uint8 baseProductionRate;\\n    uint8 maxProductionRate;\\n    address sRealms;\\n    address realms;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmStatistics {\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct StatsInfo {\\n    uint8 id;\\n    uint8 value; // level of statistic\\n}\\n\\nstruct RealmBuildings {\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xc165c0821fd3bbe8678ab7a5ec078a6c875b8e01d2c27558f37d551fbdf70eaa\"}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50610260806100206000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c80630ba6d7d31461005c5780633cb842611461007a5780637b7cc4e51461009857806380695a88146100b6578063e0024604146100d4575b600080fd5b6100646100f2565b60405161007191906101dd565b60405180910390f35b61008261011e565b60405161008f91906101dd565b60405180910390f35b6100a061014a565b6040516100ad91906101dd565b60405180910390f35b6100be610176565b6040516100cb91906101dd565b60405180910390f35b6100dc6101a2565b6040516100e991906101dd565b60405180910390f35b60008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6101d7816101f8565b82525050565b60006020820190506101f260008301846101ce565b92915050565b60006102038261020a565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff8216905091905056fea26469706673582212202f09dd5def4342953709552738a2edefc0a59ce35d9117f0f8a887f9a459a2d964736f6c63430008030033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c80630ba6d7d31461005c5780633cb842611461007a5780637b7cc4e51461009857806380695a88146100b6578063e0024604146100d4575b600080fd5b6100646100f2565b60405161007191906101dd565b60405180910390f35b61008261011e565b60405161008f91906101dd565b60405180910390f35b6100a061014a565b6040516100ad91906101dd565b60405180910390f35b6100be610176565b6040516100cb91906101dd565b60405180910390f35b6100dc6101a2565b6040516100e991906101dd565b60405180910390f35b60008060030160029054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060060160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060080160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b6101d7816101f8565b82525050565b60006020820190506101f260008301846101ce565b92915050565b60006102038261020a565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff8216905091905056fea26469706673582212202f09dd5def4342953709552738a2edefc0a59ce35d9117f0f8a887f9a459a2d964736f6c63430008030033",
+  "solcInputHash": "d8b2bb63233aed491a06ed5388fa0df5",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.3+commit.8d00100c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"get30DayVestingTime\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getAgeClaimed\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getAgeSettled\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_realmId\",\"type\":\"uint256\"}],\"name\":\"getAllStatistics\",\"outputs\":[{\"internalType\":\"int32\",\"name\":\"\",\"type\":\"int32\"},{\"internalType\":\"int32\",\"name\":\"\",\"type\":\"int32\"},{\"internalType\":\"int32\",\"name\":\"\",\"type\":\"int32\"},{\"internalType\":\"int32\",\"name\":\"\",\"type\":\"int32\"},{\"internalType\":\"int32\",\"name\":\"\",\"type\":\"int32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getAllTraits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getCities\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getFoodSupply\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getHarbours\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLordsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getPopulation\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getRealmAgeInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getRegions\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getResourceAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getResourceIds\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getResourceLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getRivers\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSRealmsAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTreasuryAddress\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getVestingTime\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"getWonder\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/settling/facets/GetterFacet.sol\":\"GetterFacet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/settling/facets/GetterFacet.sol\":{\"content\":\"// StakingFacet-License-Identifier: MIT\\npragma solidity ^0.8.2;\\n\\nimport \\\"../libraries/LibAppStorage.sol\\\";\\n\\ncontract GetterFacet {\\n    AppStorage internal s;\\n\\n    function getResourceAddress() public view returns (address) {\\n        return s.resources;\\n    }\\n\\n    function getTreasuryAddress() public view returns (address) {\\n        return s.treasury;\\n    }\\n\\n    function getRealmsAddress() public view returns (address) {\\n        return s.realms;\\n    }\\n\\n    function getSRealmsAddress() public view returns (address) {\\n        return s.sRealms;\\n    }\\n\\n    function getLordsAddress() public view returns (address) {\\n        return s.lords;\\n    }\\n\\n    function getVestingTime(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return block.timestamp - realmInfo.lastUpdateAt;\\n    }\\n\\n    function get30DayVestingTime(uint256 _tokenId)\\n        public\\n        view\\n        returns (uint256)\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return block.timestamp - realmInfo.vestedTimeUpdatedAt;\\n    }\\n\\n    function getAllStatistics(uint256 _realmId)\\n        public\\n        view\\n        returns (\\n            int32,\\n            int32,\\n            int32,\\n            int32,\\n            int32\\n        )\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_realmId];\\n        return (\\n            realmInfo.realmDefence,\\n            realmInfo.realmOffence,\\n            realmInfo.realmMagic,\\n            realmInfo.foodSupply,\\n            realmInfo.population\\n        );\\n    }\\n\\n    function getAllTraits(uint256 _tokenId)\\n        public\\n        view\\n        returns (\\n            uint256,\\n            uint256,\\n            uint256,\\n            uint256,\\n            uint256,\\n            uint256\\n        )\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return (\\n            realmInfo.regions,\\n            realmInfo.cities,\\n            realmInfo.harbours,\\n            realmInfo.rivers,\\n            realmInfo.orderOf,\\n            realmInfo.wonders\\n        );\\n    }\\n\\n    function getName(uint256 _tokenId) public view returns (string memory) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.name;\\n    }\\n\\n    function getRegions(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.regions;\\n    }\\n\\n    function getCities(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.cities;\\n    }\\n\\n    function getHarbours(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.harbours;\\n    }\\n\\n    function getRivers(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.rivers;\\n    }\\n\\n    function getResourceIds(uint256 _tokenId)\\n        public\\n        view\\n        returns (uint256[] memory)\\n    {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.resourceIds;\\n    }\\n\\n    function getResourceLength(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.resourceIds.length;\\n    }\\n\\n    function getWonder(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.wonders;\\n    }\\n\\n    function getAgeSettled(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.ageSettled;\\n    }\\n\\n    function getAgeClaimed(uint256 _tokenId) public view returns (uint256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.ageClaimed;\\n    }\\n\\n    function getRealmAgeInfo(uint256 _tokenId)\\n        public\\n        view\\n        returns (uint256, uint256)\\n    {\\n        return (getAgeSettled(_tokenId), getAgeClaimed(_tokenId));\\n    }\\n\\n    function getPopulation(uint256 _tokenId) public view returns (int256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.population;\\n    }\\n\\n    function getFoodSupply(uint256 _tokenId) public view returns (int256) {\\n        RealmInfo storage realmInfo = s.realmInfo[_tokenId];\\n        return realmInfo.foodSupply;\\n    }\\n}\\n\",\"keccak256\":\"0xdae193cf60451685bfa65d46289a27188eae4100beb9ace6250d262bba69c939\"},\"contracts/settling/libraries/LibAppStorage.sol\":{\"content\":\"pragma solidity ^0.8.2;\\n\\nstruct AppStorage {\\n    mapping(uint256 => RealmInfo) realmInfo;\\n    address sRealms;\\n    address realms;\\n    address realmsStorage;\\n    address treasury;\\n    address resources;\\n    address oracle;\\n    address lords;\\n    mapping(uint256 => LevelProduction) levelProduction;\\n    mapping(uint256 => UpgradeCosts) upgradeCosts;\\n    mapping(uint256 => BuildingUpgradeCosts) buildingUpgradeCosts;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n    mapping(uint256 => TheAges) theAges;\\n    uint256 genesisTime;\\n    mapping(uint256 => Raiding) raiding;\\n    mapping(uint256 => RaidingArmy) raidingArmy;\\n    mapping(uint256 => DefendingArmy) defendingArmy;\\n    mapping(uint256 => ArmyUnit) armyUnit;\\n}\\n\\nstruct TheAges {\\n    uint256 settledRealms;\\n    uint256 ageStart;\\n    uint256 ageFinish;\\n}\\n\\nstruct RealmInfo {\\n    string name;\\n    uint256 lastUpdateAt;\\n    uint256 vestedTimeUpdatedAt;\\n    uint256 ageSettled;\\n    uint256 ageClaimed;\\n    uint256[] resourceIds;\\n    uint8 cities;\\n    uint8 harbours;\\n    uint8 rivers;\\n    uint8 regions;\\n    uint8 wonders;\\n    uint8 orderOf;\\n    uint8 aquaducts;\\n    uint8 temples;\\n    uint8 castles;\\n    uint8 markets;\\n    uint8 ports;\\n    uint8 barracks;\\n    uint8 farms;\\n    uint8 shipyard;\\n    uint8 fishingVillage;\\n    int32 realmDefence;\\n    int32 realmOffence;\\n    int32 realmMagic;\\n    int32 foodSupply;\\n    int32 population;\\n    mapping(uint256 => ResourceInfo) resourceInfo;\\n}\\n\\nstruct ResourceInfo {\\n    uint8 id;\\n    uint8 level; // level of resource production\\n    uint8 production;\\n}\\n\\nstruct BuildingCosts {\\n    string name;\\n    uint32[] resourceIds;\\n    uint32[] resourceValues;\\n    uint32[] requirements;\\n    int32 defence;\\n    int32 offence;\\n    int32 magic;\\n    int32 population;\\n    int32 food;\\n}\\n\\nstruct BuildingUpgradeCosts {\\n    uint8[] realmBuildings;\\n    mapping(uint256 => BuildingCosts) buildingCosts;\\n}\\n\\nstruct LevelProduction {\\n    uint8 output;\\n}\\nstruct UpgradeCosts {\\n    uint8[] resourceIds;\\n    mapping(uint256 => UpgradeCostLevels) upgradeCostLevels;\\n}\\n\\nstruct UpgradeCostLevels {\\n    uint256[] value;\\n}\\nstruct Raiding {\\n    uint256 coolDownTime;\\n    uint256 totalRaids;\\n    uint256 successfulRaids;\\n}\\n\\nstruct RaidingArmy {\\n    uint32 knightsTrained;\\n    uint32 knightsSlayed;\\n    uint32 footSoldiersTrained;\\n    uint32 footSoldiersSlayed;\\n    mapping(uint256 => TrainedArmyUnit) knights;\\n    mapping(uint256 => TrainedArmyUnit) footSoldiers;\\n}\\n\\nstruct DefendingArmy {\\n    uint32 trebuchetsTrained;\\n    uint32 trebuchetsSlayed;\\n    uint32 scorpionsTrained;\\n    uint32 scorpionsSlayed;\\n    mapping(uint256 => TrainedArmyUnit) trebuchets;\\n    mapping(uint256 => TrainedArmyUnit) scorpions;\\n}\\n\\nstruct TrainedArmyUnit {\\n    bool destroyed;\\n    uint256 unitFinished;\\n}\\n\\nstruct ArmyUnit {\\n    string name;\\n    uint256 timeToTrain;\\n    uint32 offence;\\n    uint32 defence;\\n    uint256[] resourceIds;\\n    uint256[] resourceValues;\\n}\\n\\nlibrary LibAppStorage {\\n    function diamondStorage() internal pure returns (AppStorage storage ds) {\\n        assembly {\\n            ds.slot := 0\\n        }\\n    }\\n\\n    function abs(int256 x) internal pure returns (uint256) {\\n        return uint256(x >= 0 ? x : -x);\\n    }\\n}\\n\",\"keccak256\":\"0xdf4eaff003a64be8c2fe375e99c6b5464c22c235404aaa429c2917a21babbac4\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610f91806100206000396000f3fe608060405234801561001057600080fd5b50600436106101425760003560e01c806361eb6865116100b857806380695a881161007c57806380695a88146104155780639fb42cf414610433578063ab67134b14610468578063b47e8c5e14610498578063db99740f146104c8578063e0024604146104f957610142565b806361eb6865146103335780636b8ff574146103635780636bd1d84d146103935780637b7cc4e5146103c75780637fe4faf8146103e557610142565b8063322942ee1161010a578063322942ee146102255780633cb84261146102555780633e383b4314610273578063431f8864146102a357806346b9cb8a146102d35780635c5081281461030357610142565b806304eaf327146101475780630ba6d7d3146101775780631634a51d1461019557806319d7151d146101c5578063255a4217146101f5575b600080fd5b610161600480360381019061015c9190610aff565b610517565b60405161016e9190610cef565b60405180910390f35b61017f61054e565b60405161018c9190610c22565b60405180910390f35b6101af60048036038101906101aa9190610aff565b61057a565b6040516101bc9190610c5f565b60405180910390f35b6101df60048036038101906101da9190610aff565b6105b1565b6040516101ec9190610cef565b60405180910390f35b61020f600480360381019061020a9190610aff565b6105e8565b60405161021c9190610cef565b60405180910390f35b61023f600480360381019061023a9190610aff565b61060f565b60405161024c9190610cef565b60405180910390f35b61025d610641565b60405161026a9190610c22565b60405180910390f35b61028d60048036038101906102889190610aff565b61066d565b60405161029a9190610cef565b60405180910390f35b6102bd60048036038101906102b89190610aff565b610694565b6040516102ca9190610c5f565b60405180910390f35b6102ed60048036038101906102e89190610aff565b6106cb565b6040516102fa9190610cef565b60405180910390f35b61031d60048036038101906103189190610aff565b6106fd565b60405161032a9190610cef565b60405180910390f35b61034d60048036038101906103489190610aff565b610727565b60405161035a9190610c3d565b60405180910390f35b61037d60048036038101906103789190610aff565b61079d565b60405161038a9190610ccd565b60405180910390f35b6103ad60048036038101906103a89190610aff565b61084d565b6040516103be959493929190610c7a565b60405180910390f35b6103cf6108db565b6040516103dc9190610c22565b60405180910390f35b6103ff60048036038101906103fa9190610aff565b610907565b60405161040c9190610cef565b60405180910390f35b61041d61093e565b60405161042a9190610c22565b60405180910390f35b61044d60048036038101906104489190610aff565b61096a565b60405161045f96959493929190610d33565b60405180910390f35b610482600480360381019061047d9190610aff565b610a32565b60405161048f9190610cef565b60405180910390f35b6104b260048036038101906104ad9190610aff565b610a69565b6040516104bf9190610cef565b60405180910390f35b6104e260048036038101906104dd9190610aff565b610aa0565b6040516104f0929190610d0a565b60405180910390f35b610501610abe565b60405161050e9190610c22565b60405180910390f35b60008060008001600084815260200190815260200160002090508060060160019054906101000a900460ff1660ff16915050919050565b60008060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060070160009054906101000a900460030b60030b915050919050565b60008060008001600084815260200190815260200160002090508060060160049054906101000a900460ff1660ff16915050919050565b60008060008001600084815260200190815260200160002090508060040154915050919050565b60008060008001600084815260200190815260200160002090508060020154426106399190610de9565b915050919050565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060030154915050919050565b600080600080016000848152602001908152602001600020905080600601601b9054906101000a900460030b60030b915050919050565b60008060008001600084815260200190815260200160002090508060010154426106f59190610de9565b915050919050565b60008060008001600084815260200190815260200160002090508060050180549050915050919050565b6060600080600001600084815260200190815260200160002090508060050180548060200260200160405190810160405280929190818152602001828054801561079057602002820191906000526020600020905b81548152602001906001019080831161077c575b5050505050915050919050565b6060600080600001600084815260200190815260200160002090508060000180546107c790610ea3565b80601f01602080910402602001604051908101604052809291908181526020018280546107f390610ea3565b80156108405780601f1061081557610100808354040283529160200191610840565b820191906000526020600020905b81548152906001019060200180831161082357829003601f168201915b5050505050915050919050565b600080600080600080600080016000888152602001908152602001600020905080600601600f9054906101000a900460030b8160060160139054906101000a900460030b8260060160179054906101000a900460030b83600601601b9054906101000a900460030b8460070160009054906101000a900460030b955095509550955095505091939590929450565b60008060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060060160009054906101000a900460ff1660ff16915050919050565b60008060070160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b600080600080600080600080600001600089815260200190815260200160002090508060060160039054906101000a900460ff168160060160009054906101000a900460ff168260060160019054906101000a900460ff168360060160029054906101000a900460ff168460060160059054906101000a900460ff168560060160049054906101000a900460ff168560ff1695508460ff1694508360ff1693508260ff1692508160ff1691508060ff1690509650965096509650965096505091939550919395565b60008060008001600084815260200190815260200160002090508060060160029054906101000a900460ff1660ff16915050919050565b60008060008001600084815260200190815260200160002090508060060160039054906101000a900460ff1660ff16915050919050565b600080610aac8361066d565b610ab5846105e8565b91509150915091565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b600081359050610af981610f44565b92915050565b600060208284031215610b1157600080fd5b6000610b1f84828501610aea565b91505092915050565b6000610b348383610c04565b60208301905092915050565b610b4981610e1d565b82525050565b6000610b5a82610da4565b610b648185610dc7565b9350610b6f83610d94565b8060005b83811015610ba0578151610b878882610b28565b9750610b9283610dba565b925050600181019050610b73565b5085935050505092915050565b610bb681610e2f565b82525050565b610bc581610e39565b82525050565b6000610bd682610daf565b610be08185610dd8565b9350610bf0818560208601610e70565b610bf981610f33565b840191505092915050565b610c0d81610e66565b82525050565b610c1c81610e66565b82525050565b6000602082019050610c376000830184610b40565b92915050565b60006020820190508181036000830152610c578184610b4f565b905092915050565b6000602082019050610c746000830184610bad565b92915050565b600060a082019050610c8f6000830188610bbc565b610c9c6020830187610bbc565b610ca96040830186610bbc565b610cb66060830185610bbc565b610cc36080830184610bbc565b9695505050505050565b60006020820190508181036000830152610ce78184610bcb565b905092915050565b6000602082019050610d046000830184610c13565b92915050565b6000604082019050610d1f6000830185610c13565b610d2c6020830184610c13565b9392505050565b600060c082019050610d486000830189610c13565b610d556020830188610c13565b610d626040830187610c13565b610d6f6060830186610c13565b610d7c6080830185610c13565b610d8960a0830184610c13565b979650505050505050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b6000610df482610e66565b9150610dff83610e66565b925082821015610e1257610e11610ed5565b5b828203905092915050565b6000610e2882610e46565b9050919050565b6000819050919050565b60008160030b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b60005b83811015610e8e578082015181840152602081019050610e73565b83811115610e9d576000848401525b50505050565b60006002820490506001821680610ebb57607f821691505b60208210811415610ecf57610ece610f04565b5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000601f19601f8301169050919050565b610f4d81610e66565b8114610f5857600080fd5b5056fea264697066735822122030c5956de1ab23137a4967cf57ff2fe623c65dd65fa913c80462dcb75f82c6c764736f6c63430008030033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101425760003560e01c806361eb6865116100b857806380695a881161007c57806380695a88146104155780639fb42cf414610433578063ab67134b14610468578063b47e8c5e14610498578063db99740f146104c8578063e0024604146104f957610142565b806361eb6865146103335780636b8ff574146103635780636bd1d84d146103935780637b7cc4e5146103c75780637fe4faf8146103e557610142565b8063322942ee1161010a578063322942ee146102255780633cb84261146102555780633e383b4314610273578063431f8864146102a357806346b9cb8a146102d35780635c5081281461030357610142565b806304eaf327146101475780630ba6d7d3146101775780631634a51d1461019557806319d7151d146101c5578063255a4217146101f5575b600080fd5b610161600480360381019061015c9190610aff565b610517565b60405161016e9190610cef565b60405180910390f35b61017f61054e565b60405161018c9190610c22565b60405180910390f35b6101af60048036038101906101aa9190610aff565b61057a565b6040516101bc9190610c5f565b60405180910390f35b6101df60048036038101906101da9190610aff565b6105b1565b6040516101ec9190610cef565b60405180910390f35b61020f600480360381019061020a9190610aff565b6105e8565b60405161021c9190610cef565b60405180910390f35b61023f600480360381019061023a9190610aff565b61060f565b60405161024c9190610cef565b60405180910390f35b61025d610641565b60405161026a9190610c22565b60405180910390f35b61028d60048036038101906102889190610aff565b61066d565b60405161029a9190610cef565b60405180910390f35b6102bd60048036038101906102b89190610aff565b610694565b6040516102ca9190610c5f565b60405180910390f35b6102ed60048036038101906102e89190610aff565b6106cb565b6040516102fa9190610cef565b60405180910390f35b61031d60048036038101906103189190610aff565b6106fd565b60405161032a9190610cef565b60405180910390f35b61034d60048036038101906103489190610aff565b610727565b60405161035a9190610c3d565b60405180910390f35b61037d60048036038101906103789190610aff565b61079d565b60405161038a9190610ccd565b60405180910390f35b6103ad60048036038101906103a89190610aff565b61084d565b6040516103be959493929190610c7a565b60405180910390f35b6103cf6108db565b6040516103dc9190610c22565b60405180910390f35b6103ff60048036038101906103fa9190610aff565b610907565b60405161040c9190610cef565b60405180910390f35b61041d61093e565b60405161042a9190610c22565b60405180910390f35b61044d60048036038101906104489190610aff565b61096a565b60405161045f96959493929190610d33565b60405180910390f35b610482600480360381019061047d9190610aff565b610a32565b60405161048f9190610cef565b60405180910390f35b6104b260048036038101906104ad9190610aff565b610a69565b6040516104bf9190610cef565b60405180910390f35b6104e260048036038101906104dd9190610aff565b610aa0565b6040516104f0929190610d0a565b60405180910390f35b610501610abe565b60405161050e9190610c22565b60405180910390f35b60008060008001600084815260200190815260200160002090508060060160019054906101000a900460ff1660ff16915050919050565b60008060010160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060070160009054906101000a900460030b60030b915050919050565b60008060008001600084815260200190815260200160002090508060060160049054906101000a900460ff1660ff16915050919050565b60008060008001600084815260200190815260200160002090508060040154915050919050565b60008060008001600084815260200190815260200160002090508060020154426106399190610de9565b915050919050565b60008060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060030154915050919050565b600080600080016000848152602001908152602001600020905080600601601b9054906101000a900460030b60030b915050919050565b60008060008001600084815260200190815260200160002090508060010154426106f59190610de9565b915050919050565b60008060008001600084815260200190815260200160002090508060050180549050915050919050565b6060600080600001600084815260200190815260200160002090508060050180548060200260200160405190810160405280929190818152602001828054801561079057602002820191906000526020600020905b81548152602001906001019080831161077c575b5050505050915050919050565b6060600080600001600084815260200190815260200160002090508060000180546107c790610ea3565b80601f01602080910402602001604051908101604052809291908181526020018280546107f390610ea3565b80156108405780601f1061081557610100808354040283529160200191610840565b820191906000526020600020905b81548152906001019060200180831161082357829003601f168201915b5050505050915050919050565b600080600080600080600080016000888152602001908152602001600020905080600601600f9054906101000a900460030b8160060160139054906101000a900460030b8260060160179054906101000a900460030b83600601601b9054906101000a900460030b8460070160009054906101000a900460030b955095509550955095505091939590929450565b60008060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060008001600084815260200190815260200160002090508060060160009054906101000a900460ff1660ff16915050919050565b60008060070160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b600080600080600080600080600001600089815260200190815260200160002090508060060160039054906101000a900460ff168160060160009054906101000a900460ff168260060160019054906101000a900460ff168360060160029054906101000a900460ff168460060160059054906101000a900460ff168560060160049054906101000a900460ff168560ff1695508460ff1694508360ff1693508260ff1692508160ff1691508060ff1690509650965096509650965096505091939550919395565b60008060008001600084815260200190815260200160002090508060060160029054906101000a900460ff1660ff16915050919050565b60008060008001600084815260200190815260200160002090508060060160039054906101000a900460ff1660ff16915050919050565b600080610aac8361066d565b610ab5846105e8565b91509150915091565b60008060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b600081359050610af981610f44565b92915050565b600060208284031215610b1157600080fd5b6000610b1f84828501610aea565b91505092915050565b6000610b348383610c04565b60208301905092915050565b610b4981610e1d565b82525050565b6000610b5a82610da4565b610b648185610dc7565b9350610b6f83610d94565b8060005b83811015610ba0578151610b878882610b28565b9750610b9283610dba565b925050600181019050610b73565b5085935050505092915050565b610bb681610e2f565b82525050565b610bc581610e39565b82525050565b6000610bd682610daf565b610be08185610dd8565b9350610bf0818560208601610e70565b610bf981610f33565b840191505092915050565b610c0d81610e66565b82525050565b610c1c81610e66565b82525050565b6000602082019050610c376000830184610b40565b92915050565b60006020820190508181036000830152610c578184610b4f565b905092915050565b6000602082019050610c746000830184610bad565b92915050565b600060a082019050610c8f6000830188610bbc565b610c9c6020830187610bbc565b610ca96040830186610bbc565b610cb66060830185610bbc565b610cc36080830184610bbc565b9695505050505050565b60006020820190508181036000830152610ce78184610bcb565b905092915050565b6000602082019050610d046000830184610c13565b92915050565b6000604082019050610d1f6000830185610c13565b610d2c6020830184610c13565b9392505050565b600060c082019050610d486000830189610c13565b610d556020830188610c13565b610d626040830187610c13565b610d6f6060830186610c13565b610d7c6080830185610c13565b610d8960a0830184610c13565b979650505050505050565b6000819050602082019050919050565b600081519050919050565b600081519050919050565b6000602082019050919050565b600082825260208201905092915050565b600082825260208201905092915050565b6000610df482610e66565b9150610dff83610e66565b925082821015610e1257610e11610ed5565b5b828203905092915050565b6000610e2882610e46565b9050919050565b6000819050919050565b60008160030b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b60005b83811015610e8e578082015181840152602081019050610e73565b83811115610e9d576000848401525b50505050565b60006002820490506001821680610ebb57607f821691505b60208210811415610ecf57610ece610f04565b5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000601f19601f8301169050919050565b610f4d81610e66565b8114610f5857600080fd5b5056fea264697066735822122030c5956de1ab23137a4967cf57ff2fe623c65dd65fa913c80462dcb75f82c6c764736f6c63430008030033",
   "devdoc": {
     "kind": "dev",
     "methods": {},
@@ -101,12 +474,12 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 260,
+        "astId": 2179,
         "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
         "label": "s",
         "offset": 0,
         "slot": "0",
-        "type": "t_struct(AppStorage)2788_storage"
+        "type": "t_struct(AppStorage)5246_storage"
       }
     ],
     "types": {
@@ -133,235 +506,269 @@
         "label": "uint8[]",
         "numberOfBytes": "32"
       },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
       "t_int32": {
         "encoding": "inplace",
         "label": "int32",
         "numberOfBytes": "4"
       },
-      "t_mapping(t_uint256,t_struct(BuildingCosts)2890_storage)": {
+      "t_mapping(t_uint256,t_struct(ArmyUnit)5431_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct ArmyUnit)",
+        "numberOfBytes": "32",
+        "value": "t_struct(ArmyUnit)5431_storage"
+      },
+      "t_mapping(t_uint256,t_struct(BuildingCosts)5341_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingCosts)2890_storage"
+        "value": "t_struct(BuildingCosts)5341_storage"
       },
-      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)2899_storage)": {
+      "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)5350_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct BuildingUpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(BuildingUpgradeCosts)2899_storage"
+        "value": "t_struct(BuildingUpgradeCosts)5350_storage"
       },
-      "t_mapping(t_uint256,t_struct(LevelProduction)2902_storage)": {
+      "t_mapping(t_uint256,t_struct(DefendingArmy)5411_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct DefendingArmy)",
+        "numberOfBytes": "32",
+        "value": "t_struct(DefendingArmy)5411_storage"
+      },
+      "t_mapping(t_uint256,t_struct(LevelProduction)5353_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct LevelProduction)",
         "numberOfBytes": "32",
-        "value": "t_struct(LevelProduction)2902_storage"
+        "value": "t_struct(LevelProduction)5353_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmBuildings)2868_storage)": {
+      "t_mapping(t_uint256,t_struct(Raiding)5373_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
-        "label": "mapping(uint256 => struct RealmBuildings)",
+        "label": "mapping(uint256 => struct Raiding)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmBuildings)2868_storage"
+        "value": "t_struct(Raiding)5373_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmInfo)2837_storage)": {
+      "t_mapping(t_uint256,t_struct(RaidingArmy)5392_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct RaidingArmy)",
+        "numberOfBytes": "32",
+        "value": "t_struct(RaidingArmy)5392_storage"
+      },
+      "t_mapping(t_uint256,t_struct(RealmInfo)5312_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct RealmInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(RealmInfo)2837_storage"
+        "value": "t_struct(RealmInfo)5312_storage"
       },
-      "t_mapping(t_uint256,t_struct(RealmStatistics)2806_storage)": {
-        "encoding": "mapping",
-        "key": "t_uint256",
-        "label": "mapping(uint256 => struct RealmStatistics)",
-        "numberOfBytes": "32",
-        "value": "t_struct(RealmStatistics)2806_storage"
-      },
-      "t_mapping(t_uint256,t_struct(ResourceInfo)2844_storage)": {
+      "t_mapping(t_uint256,t_struct(ResourceInfo)5319_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct ResourceInfo)",
         "numberOfBytes": "32",
-        "value": "t_struct(ResourceInfo)2844_storage"
+        "value": "t_struct(ResourceInfo)5319_storage"
       },
-      "t_mapping(t_uint256,t_struct(TheAges)2795_storage)": {
+      "t_mapping(t_uint256,t_struct(TheAges)5253_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct TheAges)",
         "numberOfBytes": "32",
-        "value": "t_struct(TheAges)2795_storage"
+        "value": "t_struct(TheAges)5253_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)2915_storage)": {
+      "t_mapping(t_uint256,t_struct(TrainedArmyUnit)5416_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct TrainedArmyUnit)",
+        "numberOfBytes": "32",
+        "value": "t_struct(TrainedArmyUnit)5416_storage"
+      },
+      "t_mapping(t_uint256,t_struct(UpgradeCostLevels)5366_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCostLevels)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCostLevels)2915_storage"
+        "value": "t_struct(UpgradeCostLevels)5366_storage"
       },
-      "t_mapping(t_uint256,t_struct(UpgradeCosts)2911_storage)": {
+      "t_mapping(t_uint256,t_struct(UpgradeCosts)5362_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct UpgradeCosts)",
         "numberOfBytes": "32",
-        "value": "t_struct(UpgradeCosts)2911_storage"
+        "value": "t_struct(UpgradeCosts)5362_storage"
       },
       "t_string_storage": {
         "encoding": "bytes",
         "label": "string",
         "numberOfBytes": "32"
       },
-      "t_struct(AppStorage)2788_storage": {
+      "t_struct(AppStorage)5246_storage": {
         "encoding": "inplace",
         "label": "struct AppStorage",
         "members": [
           {
-            "astId": 2734,
+            "astId": 5184,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "realmInfo",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_uint256,t_struct(RealmInfo)2837_storage)"
+            "type": "t_mapping(t_uint256,t_struct(RealmInfo)5312_storage)"
           },
           {
-            "astId": 2739,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realmStatistics",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(RealmStatistics)2806_storage)"
-          },
-          {
-            "astId": 2744,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realmBuildings",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_uint256,t_struct(RealmBuildings)2868_storage)"
-          },
-          {
-            "astId": 2746,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "baseProductionRate",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2748,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "maxProductionRate",
-            "offset": 1,
-            "slot": "3",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2750,
+            "astId": 5186,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "sRealms",
-            "offset": 2,
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address"
+          },
+          {
+            "astId": 5188,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "realms",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address"
+          },
+          {
+            "astId": 5190,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmsStorage",
+            "offset": 0,
             "slot": "3",
             "type": "t_address"
           },
           {
-            "astId": 2752,
+            "astId": 5192,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realms",
+            "label": "treasury",
             "offset": 0,
             "slot": "4",
             "type": "t_address"
           },
           {
-            "astId": 2754,
+            "astId": 5194,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "treasury",
+            "label": "resources",
             "offset": 0,
             "slot": "5",
             "type": "t_address"
           },
           {
-            "astId": 2756,
+            "astId": 5196,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "resources",
+            "label": "oracle",
             "offset": 0,
             "slot": "6",
             "type": "t_address"
           },
           {
-            "astId": 2758,
+            "astId": 5198,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "oracle",
+            "label": "lords",
             "offset": 0,
             "slot": "7",
             "type": "t_address"
           },
           {
-            "astId": 2760,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "lords",
-            "offset": 0,
-            "slot": "8",
-            "type": "t_address"
-          },
-          {
-            "astId": 2765,
+            "astId": 5203,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "levelProduction",
             "offset": 0,
-            "slot": "9",
-            "type": "t_mapping(t_uint256,t_struct(LevelProduction)2902_storage)"
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_struct(LevelProduction)5353_storage)"
           },
           {
-            "astId": 2770,
+            "astId": 5208,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "upgradeCosts",
             "offset": 0,
-            "slot": "10",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)2911_storage)"
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCosts)5362_storage)"
           },
           {
-            "astId": 2775,
+            "astId": 5213,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "buildingUpgradeCosts",
             "offset": 0,
-            "slot": "11",
-            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)2899_storage)"
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_struct(BuildingUpgradeCosts)5350_storage)"
           },
           {
-            "astId": 2780,
+            "astId": 5218,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "buildingCosts",
             "offset": 0,
-            "slot": "12",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)2890_storage)"
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)5341_storage)"
           },
           {
-            "astId": 2785,
+            "astId": 5223,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "theAges",
             "offset": 0,
-            "slot": "13",
-            "type": "t_mapping(t_uint256,t_struct(TheAges)2795_storage)"
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_struct(TheAges)5253_storage)"
           },
           {
-            "astId": 2787,
+            "astId": 5225,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "genesisTime",
             "offset": 0,
-            "slot": "14",
+            "slot": "13",
             "type": "t_uint256"
+          },
+          {
+            "astId": 5230,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "raiding",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_uint256,t_struct(Raiding)5373_storage)"
+          },
+          {
+            "astId": 5235,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "raidingArmy",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_mapping(t_uint256,t_struct(RaidingArmy)5392_storage)"
+          },
+          {
+            "astId": 5240,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "defendingArmy",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_mapping(t_uint256,t_struct(DefendingArmy)5411_storage)"
+          },
+          {
+            "astId": 5245,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "armyUnit",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_mapping(t_uint256,t_struct(ArmyUnit)5431_storage)"
           }
         ],
-        "numberOfBytes": "480"
+        "numberOfBytes": "576"
       },
-      "t_struct(BuildingCosts)2890_storage": {
+      "t_struct(ArmyUnit)5431_storage": {
         "encoding": "inplace",
-        "label": "struct BuildingCosts",
+        "label": "struct ArmyUnit",
         "members": [
           {
-            "astId": 2870,
+            "astId": 5418,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "name",
             "offset": 0,
@@ -369,7 +776,62 @@
             "type": "t_string_storage"
           },
           {
-            "astId": 2873,
+            "astId": 5420,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "timeToTrain",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 5422,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "offence",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5424,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "defence",
+            "offset": 4,
+            "slot": "2",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5427,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceIds",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_array(t_uint256)dyn_storage"
+          },
+          {
+            "astId": 5430,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "resourceValues",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_array(t_uint256)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "160"
+      },
+      "t_struct(BuildingCosts)5341_storage": {
+        "encoding": "inplace",
+        "label": "struct BuildingCosts",
+        "members": [
+          {
+            "astId": 5321,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "name",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 5324,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "resourceIds",
             "offset": 0,
@@ -377,7 +839,7 @@
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 2876,
+            "astId": 5327,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "resourceValues",
             "offset": 0,
@@ -385,7 +847,7 @@
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 2879,
+            "astId": 5330,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "requirements",
             "offset": 0,
@@ -393,7 +855,7 @@
             "type": "t_array(t_uint32)dyn_storage"
           },
           {
-            "astId": 2881,
+            "astId": 5332,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "defence",
             "offset": 0,
@@ -401,7 +863,7 @@
             "type": "t_int32"
           },
           {
-            "astId": 2883,
+            "astId": 5334,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "offence",
             "offset": 4,
@@ -409,7 +871,7 @@
             "type": "t_int32"
           },
           {
-            "astId": 2885,
+            "astId": 5336,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "magic",
             "offset": 8,
@@ -417,7 +879,7 @@
             "type": "t_int32"
           },
           {
-            "astId": 2887,
+            "astId": 5338,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "population",
             "offset": 12,
@@ -425,7 +887,7 @@
             "type": "t_int32"
           },
           {
-            "astId": 2889,
+            "astId": 5340,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "food",
             "offset": 16,
@@ -435,12 +897,12 @@
         ],
         "numberOfBytes": "160"
       },
-      "t_struct(BuildingUpgradeCosts)2899_storage": {
+      "t_struct(BuildingUpgradeCosts)5350_storage": {
         "encoding": "inplace",
         "label": "struct BuildingUpgradeCosts",
         "members": [
           {
-            "astId": 2893,
+            "astId": 5344,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "realmBuildings",
             "offset": 0,
@@ -448,22 +910,77 @@
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 2898,
+            "astId": 5349,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "buildingCosts",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)2890_storage)"
+            "type": "t_mapping(t_uint256,t_struct(BuildingCosts)5341_storage)"
           }
         ],
         "numberOfBytes": "64"
       },
-      "t_struct(LevelProduction)2902_storage": {
+      "t_struct(DefendingArmy)5411_storage": {
+        "encoding": "inplace",
+        "label": "struct DefendingArmy",
+        "members": [
+          {
+            "astId": 5394,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "trebuchetsTrained",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5396,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "trebuchetsSlayed",
+            "offset": 4,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5398,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "scorpionsTrained",
+            "offset": 8,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5400,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "scorpionsSlayed",
+            "offset": 12,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5405,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "trebuchets",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(TrainedArmyUnit)5416_storage)"
+          },
+          {
+            "astId": 5410,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "scorpions",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(TrainedArmyUnit)5416_storage)"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(LevelProduction)5353_storage": {
         "encoding": "inplace",
         "label": "struct LevelProduction",
         "members": [
           {
-            "astId": 2901,
+            "astId": 5352,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "output",
             "offset": 0,
@@ -473,91 +990,98 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(RealmBuildings)2868_storage": {
+      "t_struct(Raiding)5373_storage": {
         "encoding": "inplace",
-        "label": "struct RealmBuildings",
+        "label": "struct Raiding",
         "members": [
           {
-            "astId": 2851,
+            "astId": 5368,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "aquaducts",
+            "label": "coolDownTime",
             "offset": 0,
             "slot": "0",
-            "type": "t_uint8"
+            "type": "t_uint256"
           },
           {
-            "astId": 2853,
+            "astId": 5370,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "temples",
-            "offset": 1,
-            "slot": "0",
-            "type": "t_uint8"
+            "label": "totalRaids",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
           },
           {
-            "astId": 2855,
+            "astId": 5372,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "castles",
-            "offset": 2,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2857,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "markets",
-            "offset": 3,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2859,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "ports",
-            "offset": 4,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2861,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "barracks",
-            "offset": 5,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2863,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "farms",
-            "offset": 6,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2865,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "shipyard",
-            "offset": 7,
-            "slot": "0",
-            "type": "t_uint8"
-          },
-          {
-            "astId": 2867,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "fishingVillage",
-            "offset": 8,
-            "slot": "0",
-            "type": "t_uint8"
+            "label": "successfulRaids",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
           }
         ],
-        "numberOfBytes": "32"
+        "numberOfBytes": "96"
       },
-      "t_struct(RealmInfo)2837_storage": {
+      "t_struct(RaidingArmy)5392_storage": {
+        "encoding": "inplace",
+        "label": "struct RaidingArmy",
+        "members": [
+          {
+            "astId": 5375,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "knightsTrained",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5377,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "knightsSlayed",
+            "offset": 4,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5379,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "footSoldiersTrained",
+            "offset": 8,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5381,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "footSoldiersSlayed",
+            "offset": 12,
+            "slot": "0",
+            "type": "t_uint32"
+          },
+          {
+            "astId": 5386,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "knights",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_struct(TrainedArmyUnit)5416_storage)"
+          },
+          {
+            "astId": 5391,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "footSoldiers",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(TrainedArmyUnit)5416_storage)"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_struct(RealmInfo)5312_storage": {
         "encoding": "inplace",
         "label": "struct RealmInfo",
         "members": [
           {
-            "astId": 2808,
+            "astId": 5255,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "name",
             "offset": 0,
@@ -565,7 +1089,7 @@
             "type": "t_string_storage"
           },
           {
-            "astId": 2810,
+            "astId": 5257,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "lastUpdateAt",
             "offset": 0,
@@ -573,7 +1097,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2812,
+            "astId": 5259,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "vestedTimeUpdatedAt",
             "offset": 0,
@@ -581,7 +1105,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2814,
+            "astId": 5261,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "ageSettled",
             "offset": 0,
@@ -589,7 +1113,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2816,
+            "astId": 5263,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "ageClaimed",
             "offset": 0,
@@ -597,7 +1121,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2819,
+            "astId": 5266,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "resourceIds",
             "offset": 0,
@@ -605,7 +1129,7 @@
             "type": "t_array(t_uint256)dyn_storage"
           },
           {
-            "astId": 2821,
+            "astId": 5268,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "cities",
             "offset": 0,
@@ -613,7 +1137,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2823,
+            "astId": 5270,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "harbours",
             "offset": 1,
@@ -621,7 +1145,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2825,
+            "astId": 5272,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "rivers",
             "offset": 2,
@@ -629,7 +1153,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2827,
+            "astId": 5274,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "regions",
             "offset": 3,
@@ -637,7 +1161,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2829,
+            "astId": 5276,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "wonders",
             "offset": 4,
@@ -645,7 +1169,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2831,
+            "astId": 5278,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "orderOf",
             "offset": 5,
@@ -653,69 +1177,134 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2836,
+            "astId": 5280,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "aquaducts",
+            "offset": 6,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5282,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "temples",
+            "offset": 7,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5284,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "castles",
+            "offset": 8,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5286,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "markets",
+            "offset": 9,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5288,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "ports",
+            "offset": 10,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5290,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "barracks",
+            "offset": 11,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5292,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "farms",
+            "offset": 12,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5294,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "shipyard",
+            "offset": 13,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5296,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "fishingVillage",
+            "offset": 14,
+            "slot": "6",
+            "type": "t_uint8"
+          },
+          {
+            "astId": 5298,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmDefence",
+            "offset": 15,
+            "slot": "6",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5300,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmOffence",
+            "offset": 19,
+            "slot": "6",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5302,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "realmMagic",
+            "offset": 23,
+            "slot": "6",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5304,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "foodSupply",
+            "offset": 27,
+            "slot": "6",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5306,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "population",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_int32"
+          },
+          {
+            "astId": 5311,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "resourceInfo",
             "offset": 0,
-            "slot": "7",
-            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)2844_storage)"
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_struct(ResourceInfo)5319_storage)"
           }
         ],
-        "numberOfBytes": "256"
+        "numberOfBytes": "288"
       },
-      "t_struct(RealmStatistics)2806_storage": {
-        "encoding": "inplace",
-        "label": "struct RealmStatistics",
-        "members": [
-          {
-            "astId": 2797,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realmDefence",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_int32"
-          },
-          {
-            "astId": 2799,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realmOffence",
-            "offset": 4,
-            "slot": "0",
-            "type": "t_int32"
-          },
-          {
-            "astId": 2801,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "realmMagic",
-            "offset": 8,
-            "slot": "0",
-            "type": "t_int32"
-          },
-          {
-            "astId": 2803,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "foodSupply",
-            "offset": 12,
-            "slot": "0",
-            "type": "t_int32"
-          },
-          {
-            "astId": 2805,
-            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
-            "label": "population",
-            "offset": 16,
-            "slot": "0",
-            "type": "t_int32"
-          }
-        ],
-        "numberOfBytes": "32"
-      },
-      "t_struct(ResourceInfo)2844_storage": {
+      "t_struct(ResourceInfo)5319_storage": {
         "encoding": "inplace",
         "label": "struct ResourceInfo",
         "members": [
           {
-            "astId": 2839,
+            "astId": 5314,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "id",
             "offset": 0,
@@ -723,7 +1312,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2841,
+            "astId": 5316,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "level",
             "offset": 1,
@@ -731,7 +1320,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 2843,
+            "astId": 5318,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "production",
             "offset": 2,
@@ -741,12 +1330,12 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(TheAges)2795_storage": {
+      "t_struct(TheAges)5253_storage": {
         "encoding": "inplace",
         "label": "struct TheAges",
         "members": [
           {
-            "astId": 2790,
+            "astId": 5248,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "settledRealms",
             "offset": 0,
@@ -754,7 +1343,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2792,
+            "astId": 5250,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "ageStart",
             "offset": 0,
@@ -762,7 +1351,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 2794,
+            "astId": 5252,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "ageFinish",
             "offset": 0,
@@ -772,12 +1361,35 @@
         ],
         "numberOfBytes": "96"
       },
-      "t_struct(UpgradeCostLevels)2915_storage": {
+      "t_struct(TrainedArmyUnit)5416_storage": {
+        "encoding": "inplace",
+        "label": "struct TrainedArmyUnit",
+        "members": [
+          {
+            "astId": 5413,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "destroyed",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool"
+          },
+          {
+            "astId": 5415,
+            "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
+            "label": "unitFinished",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_struct(UpgradeCostLevels)5366_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCostLevels",
         "members": [
           {
-            "astId": 2914,
+            "astId": 5365,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "value",
             "offset": 0,
@@ -787,12 +1399,12 @@
         ],
         "numberOfBytes": "32"
       },
-      "t_struct(UpgradeCosts)2911_storage": {
+      "t_struct(UpgradeCosts)5362_storage": {
         "encoding": "inplace",
         "label": "struct UpgradeCosts",
         "members": [
           {
-            "astId": 2905,
+            "astId": 5356,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "resourceIds",
             "offset": 0,
@@ -800,12 +1412,12 @@
             "type": "t_array(t_uint8)dyn_storage"
           },
           {
-            "astId": 2910,
+            "astId": 5361,
             "contract": "contracts/settling/facets/GetterFacet.sol:GetterFacet",
             "label": "upgradeCostLevels",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)2915_storage)"
+            "type": "t_mapping(t_uint256,t_struct(UpgradeCostLevels)5366_storage)"
           }
         ],
         "numberOfBytes": "64"

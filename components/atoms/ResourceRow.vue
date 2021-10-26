@@ -26,11 +26,11 @@ export default defineComponent({
   },
 
   setup(props, context) {
-    const { slug } = context.root.$route.params
+    const { address } = context.root.$route.params
     const { fetchResource, loading } = useResources()
     const balance = ref()
     useFetch(async () => {
-      balance.value = await fetchResource(slug, props.resource.id)
+      balance.value = await fetchResource(address, props.resource.id)
     })
     return {
       fetchResource,

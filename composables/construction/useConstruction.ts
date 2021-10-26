@@ -10,7 +10,7 @@ import erc721tokens from '~/constant/erc721tokens'
 
 export function useConstruction() {
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
 
   const error = reactive({
     building: null,

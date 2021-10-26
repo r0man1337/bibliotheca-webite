@@ -2,7 +2,7 @@ import { ref } from '@nuxtjs/composition-api'
 // import { useFormatting } from '@/composables/useFormatting';
 // import { getEtherscanLink, getMaticLink, getTenderlyLink } from './useLink';
 // import { useRandom } from './useRandom';
-import { Network, activeNetworkId } from './web3/useNetwork'
+import { activeNetworkId } from './web3/useNetwork'
 // const { makeid } = useRandom();
 
 const queue = ref([])

@@ -27,8 +27,10 @@
             ></div>
             <div class="p-6">
               <h3 class="mb-4">Your Realms</h3>
+              <div v-if="loadingRealms"><LoadingRings /></div>
               <AssetPill
                 v-for="(asset, index) in userRealms.l1"
+                v-else
                 :key="index"
                 :asset="asset"
                 :selected="
@@ -187,7 +189,7 @@ export default defineComponent({
 
   setup() {
     const { showAssetBox } = useModal()
-    const { getUserRealms, userRealms } = useRealms()
+    const { getUserRealms, userRealms, loading: loadingRealms } = useRealms()
     const { account, provider, library, active } = useWeb3()
     const { open } = useWeb3Modal()
     const {
@@ -204,7 +206,6 @@ export default defineComponent({
       depositRealm,
       withdrawToL1,
       bridge,
-      partnerNetwork,
       loadingBridge,
       loading,
       triggerOutbox,
@@ -255,8 +256,7 @@ export default defineComponent({
           clearInterval(addL2Interval.value)
           clearInterval(checkPendingInterval.value)
           if (account.value) {
-            await initBridge()
-            await getUserRealms()
+            await Promise.all([await initBridge(), await getUserRealms()])
             await setInitialPendingWithdrawals(bridge, {
               fromBlock: 4832019,
             })
@@ -324,11 +324,7 @@ export default defineComponent({
       userRealms,
       triggerOutboxTransaction,
       mergedTransactionsToShow,
-      transactions,
-      sortedTransactions,
-      withdrawalsTransformed,
-      pendingWithdrawalsMap,
-      partnerNetwork,
+      loadingRealms,
       showAssetBox,
       currentL1BlockNumber,
       selectRealmForTransfer,
@@ -338,6 +334,9 @@ export default defineComponent({
       loadingBridge,
       loadingTransactions,
       l2Function,
+      transactions,
+      sortedTransactions,
+      withdrawalsTransformed,
     }
   },
 })

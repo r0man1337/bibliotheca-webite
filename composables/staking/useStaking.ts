@@ -7,6 +7,7 @@ import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import SRealmTokenABI from '~/abi/SRealmToken.json'
+import GetterFacet from '~/abi/GetterFacet.json'
 import diamondAddress from '~/constant/diamondAddress'
 
 import erc721tokens from '~/constant/erc721tokens'
@@ -140,7 +141,7 @@ async function stake(owner, network, realmId) {
     signer
   )
   console.log(resourceStakingFacet)
-  const stake = await resourceStakingFacet.stakeRealm(realmId, false)
+  const stake = await resourceStakingFacet.stakeRealm(realmId, true)
   await stake.wait()
 
   return stake
@@ -205,14 +206,14 @@ async function getBalance(network, realmId) {
   const signer = provider.getSigner()
   const tokensAddrArr = tokensArr.map((a) => a.address)
 
-  const resourceStakingFacet = new ethers.Contract(
+  const getterFacet = new ethers.Contract(
     tokensAddrArr[0],
-    StakingFacetAbi.abi,
+    GetterFacet.abi,
     signer
   )
-  const day = await resourceStakingFacet.getVestingTime(realmId)
-  const month = await resourceStakingFacet.get30DayVestingTime(realmId)
-  const name = await resourceStakingFacet.getName(realmId)
+  const day = await getterFacet.getVestingTime(realmId)
+  const month = await getterFacet.get30DayVestingTime(realmId)
+  const name = await getterFacet.getName(realmId)
   const resources = {
     day,
     month,

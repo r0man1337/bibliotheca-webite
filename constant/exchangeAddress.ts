@@ -7,7 +7,7 @@ export default {
       type: 'exchange',
       symbol: 'resourceExchange',
       name: 'Resource Token Exchange',
-      address: '0xc3e53F4d16Ae77Db1c982e75a937B9f60FE63690',
+      address: '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d',
     },
   ]),
 }

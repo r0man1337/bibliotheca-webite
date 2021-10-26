@@ -7,7 +7,7 @@ export default {
       type: 'diamond',
       symbol: 'realmsDiamond',
       name: 'Realms Diamond',
-      address: '0xA642375Cc15249A81da9c435fB4eDD8A9343ce7F',
+      address: '0xFBe0421c53706746151ACa2Cf22F81Dc41262519',
     },
   ]),
   localDevelopment: createTokenUtils([

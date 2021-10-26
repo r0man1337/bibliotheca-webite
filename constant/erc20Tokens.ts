@@ -7,7 +7,7 @@ export default {
       type: 'token',
       symbol: 'LORDS',
       name: 'LordsToken',
-      address: '0x32Ed2C734057d77F9C3b1D1E167F7D9b3a623Ddd',
+      address: '0x9c3Cb08A7C4924B0365D5FE427Df04adD3FA3024',
     },
   ]),
   localDevelopment: createTokenUtils([

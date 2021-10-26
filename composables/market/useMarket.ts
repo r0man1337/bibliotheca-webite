@@ -16,7 +16,8 @@ import erc20Tokens from '~/constant/erc20Tokens'
 
 export function useMarket() {
   const { provider, library, account, activate } = useWeb3()
-  const { networks, partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { availableNetworks, partnerNetwork, useL1Network, useL2Network } =
+    useNetwork()
 
   const error = reactive({
     resources: null,
@@ -177,7 +178,7 @@ async function getLiquidityBalance(network, resourceId) {
     signer
   )
 
-  const liquidityBal = await exchange.getBalance(signer.getAddress(), [
+  const liquidityBal = await exchange.balanceOf(signer.getAddress(), [
     resourceId,
   ])
   return ethers.utils.formatEther(liquidityBal)
