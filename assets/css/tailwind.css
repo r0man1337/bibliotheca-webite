@@ -28,6 +28,7 @@ body {
 html {
     scroll-behavior: smooth;
 }
-body {cursor: url(http://www.rw-designer.com/cursor-extern.php?id=47799);}
+
+
 @tailwind components;
 @tailwind utilities;

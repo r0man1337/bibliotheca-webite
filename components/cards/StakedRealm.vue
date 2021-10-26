@@ -41,12 +41,14 @@
             Flip
           </button>
         </div>
+        <WarriorStanding />
         <img
           v-if="metaData"
           class="rounded-xl"
           :src="metaData.image_url"
           alt=""
         />
+
         <Loader v-else class="w-full" />
       </div>
 

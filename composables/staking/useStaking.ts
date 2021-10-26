@@ -255,7 +255,7 @@ async function claimAll(network) {
     signer
   )
 
-  const withdraw = await resourceStakingFacet.withdrawAllResources('0x')
+  const withdraw = await resourceStakingFacet.withdrawAllResources()
 
   await withdraw.wait()
 
