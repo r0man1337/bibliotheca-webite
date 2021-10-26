@@ -6,28 +6,14 @@ import { TreasureFragment } from './fragments/treasure'
 import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
-const getWalletSRealmsQuery = gql`
-  query getSRealms($address: String) {
-    srealms(first: 100, where: { currentOwner_contains: $address }) {
-      id
-      ageSettled
-      ageClaimed
-      name
-      regions
-      cities
-      harbors
-      rivers
-      resources
-      wonder
-      order
-    }
-  }
-`
 const getSRealmsQuery = gql`
   query getSRealms($address: String, $first: Int, $skip: Int) {
     srealms(
       first: $first
-      where: { currentOwner_contains: $address }
+      where: {
+        currentOwner_contains: $address
+        currentOwner_not: "0x0000000000000000000000000000000000000000"
+      }
       skip: $skip
     ) {
       id
@@ -41,6 +27,10 @@ const getSRealmsQuery = gql`
       resources
       wonder
       order
+
+      currentOwner {
+        id
+      }
     }
   }
 `
@@ -175,7 +165,6 @@ const messageHasExecutedQuery = gql`
 export {
   getRealms,
   mintedRealmsQuery,
-  getWalletSRealmsQuery,
   getSRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,

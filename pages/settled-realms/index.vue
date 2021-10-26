@@ -13,6 +13,25 @@
       </form>
 
       <div class="flex flex-wrap sm:space-x-3 my-3">
+        <span class="pr-4 self-center">Filter By:</span>
+        <BButton
+          v-for="(data, index) in filterByData"
+          :key="index"
+          type="primary"
+          :class="{ 'bg-black text-red-300': data.data === orderBy }"
+          px-2
+          py-2
+          hover:bg-black
+          rounded
+          capitalize
+          hover:text-red-300
+          mb-2
+          mr-2
+          >{{ data.name }}</BButton
+        >
+      </div>
+
+      <div class="flex flex-wrap sm:space-x-3 my-3">
         <span class="pr-4 self-center">Order By:</span>
         <BButton
           v-for="(data, index) in orderByData"
@@ -34,20 +53,14 @@
           {{ data.name }}
         </BButton>
       </div>
-      <div>
-        <span
-          >Final rarity is still being determined until mint finishes. Higher
-          numbers are more rare, and range between 5 and 8300.</span
-        >
-      </div>
 
       <div v-if="!$fetchState.pending" class="flex flex-wrap w-full">
-        <div v-for="realm in sRealms" :key="realm.id" class="w-80">
-          <StakedRealm :realm="realm" />
-          <!-- <div class="p-12">{{ realm }}</div> -->
-
-          <!--<RealmCard :id="realm.token_id" :realm="realm" />-->
-        </div>
+        <StakedRealm
+          v-for="realm in displayedSRealms"
+          :key="realm.id"
+          :realm="realm"
+        />
+        <!--<RealmCard :id="realm.token_id" :realm="realm" />-->
       </div>
       <div v-else class="flex flex-wrap mt-6">
         <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
@@ -67,7 +80,7 @@
 
 <script>
 import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
-import axios from 'axios'
+// import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/web3/useRealms'
 
@@ -82,24 +95,29 @@ export default defineComponent({
     const openSeaData = ref()
     const loading = ref()
     const orderBy = ref()
-    const offset = ref(0)
-
+    const skip = ref(0)
+    const displayedSRealms = ref()
     const orderByData = [
       {
         data: 'sale_date',
-        name: 'sale date',
-      },
-      {
-        data: 'sale_count',
-        name: 'sale count',
+        name: 'rarity',
       },
       {
         data: 'sale_price',
-        name: 'sale price',
+        name: 'last staked',
       },
     ]
-
-    const baseAssetAddress =
+    const filterByData = [
+      {
+        data: 'sale_date',
+        name: 'resource',
+      },
+      {
+        data: 'sale_price',
+        name: 'wonder',
+      },
+    ]
+    /* const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
     const getOSData = async () => {
@@ -123,14 +141,15 @@ export default defineComponent({
           },
         })
       }
-    }
+    } */
 
     const { fetch } = useFetch(async () => {
       await getSRealms()
+      displayedSRealms.value = sRealms.value
     })
 
     const setOrderBy = async (data) => {
-      offset.value = 0
+      skip.value = 0
       orderBy.value = data.data
       await fetch()
     }
@@ -143,11 +162,10 @@ export default defineComponent({
 
     const fetchMoreRealms = async () => {
       loading.value = true
-      offset.value = offset.value + 50
+      skip.value = skip.value + 2
       try {
-        const response = await getOSData()
-        const newRealms = response.data.assets
-        openSeaData.value = openSeaData.value.concat(newRealms)
+        await getSRealms({ skip: skip.value })
+        displayedSRealms.value = displayedSRealms.value.concat(sRealms.value)
       } catch (e) {
         console.log(e)
       } finally {
@@ -163,9 +181,11 @@ export default defineComponent({
       loading,
       submitSearch,
       search,
+      displayedSRealms,
       fetchMoreRealms,
       orderByData,
       setOrderBy,
+      filterByData,
       orderBy,
       sRealms,
     }

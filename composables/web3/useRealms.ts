@@ -10,11 +10,7 @@ import {
 import { useWeb3 } from '@instadapp/vue-web3'
 import { buildSRealmsWhere } from '../graphql/helpers/search'
 import { useNetwork, activeNetwork } from './useNetwork'
-import {
-  getRealms,
-  getSRealmsQuery,
-  getWalletSRealmsQuery,
-} from './../graphql/queries'
+import { getRealms, getSRealmsQuery } from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
 export enum Layers {
@@ -74,9 +70,10 @@ export function useRealms() {
   }
 
   const defaultVariables = (params?) => {
+    console.log(params)
     return {
-      address: params?.address.toLowerCase() || '',
-      first: params?.first || 100,
+      address: params?.address?.toLowerCase() || '',
+      first: params?.first || 2,
       skip: params?.skip || 0,
     }
   }
@@ -92,6 +89,7 @@ export function useRealms() {
   }
 
   const getSRealms = async (params) => {
+    console.log(params)
     try {
       error.getWalletRealms = null
       loading.value = true
