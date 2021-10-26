@@ -1,19 +1,7 @@
 /* eslint-disable max-depth */
-import {
-  computed,
-  reactive,
-  onMounted,
-  useContext,
-  ref,
-  watch,
-} from '@nuxtjs/composition-api'
-import { useWeb3 } from '@instadapp/vue-web3'
-import {
-  getl1Adventurer,
-  getl2Adventurer,
-  usersSRealms,
-} from './graphql/queries'
-import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
+import { reactive, ref } from '@nuxtjs/composition-api'
+import { getl1Adventurer, getl2Adventurer } from './graphql/queries'
+import { useNetwork } from '~/composables/web3/useNetwork'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
 
@@ -24,7 +12,6 @@ export function useAdventurer() {
   })
   const { gqlRequest } = useGraph()
   const { useL1Network, useL2Network } = useNetwork()
-  const { open } = useWeb3Modal()
   const adventurer = ref({
     l1: null,
     l2: null,

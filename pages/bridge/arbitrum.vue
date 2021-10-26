@@ -189,7 +189,7 @@ export default defineComponent({
 
   setup() {
     const { showAssetBox } = useModal()
-    const { getUserRealms, userRealms, loading: loadingRealms } = useRealms()
+    const { getWalletRealms, userRealms, loading: loadingRealms } = useRealms()
     const { account, provider, library, active } = useWeb3()
     const { open } = useWeb3Modal()
     const {
@@ -221,7 +221,7 @@ export default defineComponent({
       if (!activeNetwork.value.isArbitrum) {
         await depositRealm(selectedRealm.value.token_id)
         setTimeout(async function () {
-          await getUserRealms()
+          await getWalletRealms()
         }, 2500)
       } else {
         await withdrawToL1(selectedRealm.value.token_id)
@@ -256,7 +256,7 @@ export default defineComponent({
           clearInterval(addL2Interval.value)
           clearInterval(checkPendingInterval.value)
           if (account.value) {
-            await Promise.all([await initBridge(), await getUserRealms()])
+            await Promise.all([await initBridge(), await getWalletRealms()])
             await setInitialPendingWithdrawals(bridge, {
               fromBlock: 4832019,
             })

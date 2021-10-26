@@ -38,7 +38,7 @@ export function useAtime() {
   const { provider, account, activate } = useWeb3()
   const { open } = useWeb3Modal()
   const { gqlRequest } = useGraph()
-  const { userRealms, getUserRealms } = useRealms()
+  const { userRealms, getWalletRealms } = useRealms()
 
   const flatObject = (arr) => {
     const flatArray = []
@@ -50,7 +50,7 @@ export function useAtime() {
 
   const checkAtimeRealmIdMinted = async () => {
     console.log('checking if realm minted atims')
-    await getUserRealms()
+    await getWalletRealms()
     if (userRealms.value.l1) {
       const symbols = userRealms.value.l1.filter(
         (realm) => realm.atimeClaime === false

@@ -8,12 +8,15 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import { useWeb3 } from '@instadapp/vue-web3'
-import { L1ArbitrumExtendedGateway } from 'arb-ts/dist/lib/abi'
+import { buildSRealmsWhere } from '../graphql/helpers/search'
 import { useNetwork, activeNetwork } from './useNetwork'
-import { usersRealms, usersSRealms } from './../graphql/queries'
+import {
+  getRealms,
+  getSRealmsQuery,
+  getWalletSRealmsQuery,
+} from './../graphql/queries'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 import { useGraph } from '~/composables/web3/useGraph'
-
 export enum Layers {
   l1,
   l2,
@@ -21,7 +24,7 @@ export enum Layers {
 export function useRealms() {
   const loading = ref(false)
   const error = reactive({
-    getUserRealms: null,
+    getWalletRealms: null,
   })
   const { account } = useWeb3()
   const { gqlRequest } = useGraph()
@@ -31,6 +34,7 @@ export function useRealms() {
     l1: null,
     l2: null,
   })
+  const accountSRealms = ref()
   const sRealms = ref()
 
   const fetchUserRealms = async (account, layer) => {
@@ -41,16 +45,16 @@ export function useRealms() {
       network = useL2Network.value.id
     }
     const { realms } = await gqlRequest(
-      usersRealms,
+      getRealms,
       { address: account.toLowerCase() },
       network
     )
     return realms
   }
 
-  const getUserRealms = async (address?: null, layer?: Layers) => {
+  const getWalletRealms = async (address?: null, layer?: Layers) => {
     try {
-      error.getUserRealms = null
+      error.getWalletRealms = null
       loading.value = true
 
       const userAddress = address || account.value
@@ -69,24 +73,42 @@ export function useRealms() {
     }
   }
 
-  const fetchUserSRealms = async (account, network) => {
+  const defaultVariables = (params?) => {
+    return {
+      address: params?.address.toLowerCase() || '',
+      first: params?.first || 100,
+      skip: params?.skip || 0,
+    }
+  }
+
+  const fetchSRealms = async (params?) => {
+    console.log(defaultVariables(params))
     const { srealms } = await gqlRequest(
-      usersSRealms,
-      { address: account.toLowerCase() },
-      network
+      getSRealmsQuery,
+      defaultVariables(params),
+      useL2Network.value.id
     )
     return srealms
   }
 
-  const getUserSRealms = async (address, network?) => {
+  const getSRealms = async (params) => {
     try {
-      error.getUserRealms = null
+      error.getWalletRealms = null
       loading.value = true
-      if (!address) {
-        sRealms.value = await fetchUserSRealms(address, useL2Network.value.id)
-      } else {
-        sRealms.value = await fetchUserSRealms(address, network)
-      }
+      sRealms.value = await fetchSRealms(params)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      loading.value = false
+    }
+  }
+  const getWalletSRealms = async (params?) => {
+    try {
+      error.getWalletRealms = null
+      loading.value = true
+      console.log(params)
+
+      accountSRealms.value = await fetchSRealms(params)
     } catch (e) {
       console.log(e)
     } finally {
@@ -95,11 +117,13 @@ export function useRealms() {
   }
 
   return {
-    getUserRealms,
-    getUserSRealms,
+    getWalletRealms,
+    getWalletSRealms,
+    getSRealms,
     error,
     loading,
     userRealms,
+    accountSRealms,
     sRealms,
   }
 }
