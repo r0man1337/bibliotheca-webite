@@ -2,11 +2,10 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3'
-import { useBigNumber } from '../web3/useBigNumber'
-import { useRealms } from '~/composables/web3/useRealms'
+
 import StakingFacetAbi from '~/abi/StakingFacet.json'
-import lootRealmsABI from '~/abi/lootRealms.json'
-import SRealmTokenABI from '~/abi/SRealmToken.json'
+
+import GetterFacetAbi from '~/abi/GetterFacet.json'
 import diamondAddress from '~/constant/diamondAddress'
 
 import erc721tokens from '~/constant/erc721tokens'
@@ -97,13 +96,13 @@ async function getAllStatistics(network, realmId) {
   const signer = provider.getSigner()
   const tokensAddrArr = tokensArr.map((a) => a.address)
 
-  const resourceStakingFacet = new ethers.Contract(
+  const getterFacet = new ethers.Contract(
     tokensAddrArr[0],
-    StakingFacetAbi.abi,
+    GetterFacetAbi.abi,
     signer
   )
 
-  return await resourceStakingFacet.getAllStatistics(realmId)
+  return await getterFacet.getAllStatistics(realmId)
 }
 
 async function getAgeClaimed(network, realmId) {
@@ -112,11 +111,11 @@ async function getAgeClaimed(network, realmId) {
   const signer = provider.getSigner()
   const tokensAddrArr = tokensArr.map((a) => a.address)
 
-  const resourceStakingFacet = new ethers.Contract(
+  const getterFacetAbi = new ethers.Contract(
     tokensAddrArr[0],
-    StakingFacetAbi.abi,
+    GetterFacetAbi.abi,
     signer
   )
 
-  return await resourceStakingFacet.getRealmAgeInfo(realmId)
+  return await getterFacetAbi.getRealmAgeInfo(realmId)
 }

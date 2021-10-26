@@ -25,7 +25,7 @@ export default {
       type: 'token',
       symbol: 'sRealms',
       name: 'sRealms (for Adventurers)',
-      address: '0xaba69E747c749173518dc3dd1507e7B871297F03',
+      address: '0x4D9a6c1EA9Bd17B9Bce0257c27FC32986372990D',
     },
   ]),
   localDevelopment: createTokenUtils([
