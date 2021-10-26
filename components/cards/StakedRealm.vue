@@ -79,7 +79,7 @@
             <span
               >Month:
               <span v-if="balance"
-                >{{ (balance.month / (3600 * 30)).toFixed(4) }}
+                >{{ (balance.month / (3600 * 14)).toFixed(4) }}
               </span>
             </span>
           </div>

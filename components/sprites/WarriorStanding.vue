@@ -6,7 +6,7 @@
 <style scoped>
 .sprite-view-frame {
   width: 155px;
-  height: 155px;
+  height: 114px;
   overflow: hidden; /* this will hide any sprites outside of the frame*/
 }
 .sprite-renderer {

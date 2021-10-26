@@ -43,7 +43,8 @@
 
       <div v-if="!$fetchState.pending" class="flex flex-wrap w-full">
         <div v-for="realm in sRealms" :key="realm.id" class="w-80">
-          <div class="p-12">{{ realm }}</div>
+          <StakedRealm :realm="realm" />
+          <!-- <div class="p-12">{{ realm }}</div> -->
 
           <!--<RealmCard :id="realm.token_id" :realm="realm" />-->
         </div>
