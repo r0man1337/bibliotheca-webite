@@ -3,8 +3,8 @@
     <div class="flex flex-wrap space-x-4">
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Total Realms Settled</h5>
-        <div v-if="sRealms" class="text-6xl p-4 text-center">
-          {{ sRealms.length }}
+        <div v-if="accountSRealms" class="text-6xl p-4 text-center">
+          {{ accountSRealms.length }}
         </div>
         <BButton class="mt-auto" type="primary" @click="claimAllResources()"
           >Claim all your resources</BButton
@@ -43,9 +43,9 @@
     <div class="mt-8">
       <h2>Settled Realms</h2>
     </div>
-    <div v-if="sRealms" class="flex flex-wrap">
+    <div v-if="accountSRealms" class="flex flex-wrap">
       <StakedRealm
-        v-for="realm in sRealms"
+        v-for="realm in accountSRealms"
         :key="realm.id"
         :realm="realm"
         @unsettle="popFromArray"
@@ -69,7 +69,7 @@ import { useNetwork } from '~/composables/web3/useNetwork'
 export default defineComponent({
   setup(props, context) {
     const { address } = context.root.$route.params
-    const { getUserSRealms, sRealms } = useRealms()
+    const { getWalletSRealms, accountSRealms } = useRealms()
     const {
       claimLords,
       getWorldAge,
@@ -79,8 +79,12 @@ export default defineComponent({
       loading: loadingLords,
       timeNextAge,
     } = useLords()
-    const { activeNetworkId, checkForNetworkMismatch, networkMismatch } =
-      useNetwork()
+    const {
+      activeNetworkId,
+      checkForNetworkMismatch,
+      networkMismatch,
+      useL2Network,
+    } = useNetwork()
     // const { open } = useWeb3Modal()
     const { account } = useWeb3()
 
@@ -97,21 +101,19 @@ export default defineComponent({
 
     onMounted(async () => {
       await getWorldAge()
-      await getUserSRealms(address, 'arbitrumRinkeby')
+      await getWalletSRealms({ address })
       await getTimeToNextAge()
-      activeNetworkId.value = 'arbitrumRinkeby'
+      activeNetworkId.value = useL2Network.value.id
       if (account.value) {
         if (networkMismatch.value) {
           checkForNetworkMismatch()
-        } else {
-          await getUserSRealms(address, 'arbitrumRinkeby')
         }
       }
     })
 
     const popFromArray = (value) => {
-      const index = sRealms.value.map((e) => e.id).indexOf(value)
-      sRealms.value.splice(index, 1)
+      const index = accountSRealms.value.map((e) => e.id).indexOf(value)
+      accountSRealms.value.splice(index, 1)
     }
 
     return {
@@ -124,7 +126,7 @@ export default defineComponent({
       loading,
       error,
       result,
-      sRealms,
+      accountSRealms,
       claimLords,
       lordsError,
       getWorldAge,

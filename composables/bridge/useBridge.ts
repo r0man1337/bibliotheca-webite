@@ -60,7 +60,7 @@ export const txnTypeToLayer = (txnType: TxnType): 1 | 2 => {
 }
 
 export function useBridge() {
-  const { getUserRealms } = useRealms()
+  const { getWalletRealms } = useRealms()
   const loadingBridge = ref(false)
   const error = reactive({
     depositL1: null,
@@ -350,7 +350,7 @@ export function useBridge() {
         delete newPendingWithdrawalsMap[id]
         pendingWithdrawalsMap.value = newPendingWithdrawalsMap
         addToExecutedMessagesCache(batchNumber, indexInBatch)
-        await getUserRealms()
+        await getWalletRealms()
       } else {
         setTransactionFailure(rec.transactionHash)
       }
@@ -487,7 +487,7 @@ export function useBridge() {
             )
           } else {
             updateTransaction(txReceipt)
-            await getUserRealms()
+            await getWalletRealms()
           }
         })
       })

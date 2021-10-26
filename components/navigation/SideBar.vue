@@ -132,6 +132,10 @@ export default {
         title: 'Realms',
       },
       {
+        page: '/settled-realms',
+        title: 'Settled Realms',
+      },
+      {
         page: '/manas',
         title: 'Genesis Mana',
       },

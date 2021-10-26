@@ -6,9 +6,9 @@ import { TreasureFragment } from './fragments/treasure'
 import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
-const usersSRealms = gql`
-  query usersSRealms($address: String!) {
-    srealms(first: 100, where: { currentOwner: $address }) {
+const getWalletSRealmsQuery = gql`
+  query getSRealms($address: String) {
+    srealms(first: 100, where: { currentOwner_contains: $address }) {
       id
       ageSettled
       ageClaimed
@@ -23,9 +23,29 @@ const usersSRealms = gql`
     }
   }
 `
-
-const usersRealms = gql`
-  query usersRealms($address: String!) {
+const getSRealmsQuery = gql`
+  query getSRealms($address: String, $first: Int, $skip: Int) {
+    srealms(
+      first: $first
+      where: { currentOwner_contains: $address }
+      skip: $skip
+    ) {
+      id
+      ageSettled
+      ageClaimed
+      name
+      regions
+      cities
+      harbors
+      rivers
+      resources
+      wonder
+      order
+    }
+  }
+`
+const getRealms = gql`
+  query usersRealms($address: String) {
     realms(first: 100, where: { currentOwner: $address }) {
       id
       tokenURI
@@ -153,9 +173,10 @@ const messageHasExecutedQuery = gql`
   }
 `
 export {
-  usersRealms,
+  getRealms,
   mintedRealmsQuery,
-  usersSRealms,
+  getWalletSRealmsQuery,
+  getSRealmsQuery,
   getl1Adventurer,
   getl2Adventurer,
   lastOutboxEntryQuery,
