@@ -19,5 +19,8 @@ export const SRealmFragment = gql`
     resources
     wonder
     order
+    currentOwner {
+      address
+    }
   }
 `

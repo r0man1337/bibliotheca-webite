@@ -57,6 +57,7 @@
           <span>{{ metaData.name }}</span>
           <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
         </h1>
+        <Ens v-if="realm" :address="realm.currentOwner.address" />
 
         <div class="flex justify-between">
           <div v-if="metaData && order(metaData.traits)" class="py-4">
@@ -83,22 +84,11 @@
               </span>
             </span>
           </div>
-          <div>
-            <button
-              class="
-                border border-gray-800
-                rounded
-                px-2
-                py-1
-                text-xs
-                hover:bg-gray-800 hover:shadow
-                font-body
-              "
-              @click="claimResources(realm.id)"
-            >
+          <div v-if="isAddressPage">
+            <BButton type="small" @click="claimResources(realm.id)">
               <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
               <span v-else>Claim</span>
-            </button>
+            </BButton>
           </div>
         </div>
 
@@ -114,6 +104,7 @@
             :realm-id="realm.id"
           />
         </div>
+        <RaidRealm :raided-realm="realm" class="w-full" />
       </div>
 
       <div
@@ -152,6 +143,7 @@
         />
       </div>
       <BButton
+        v-if="isAddressPage"
         class="w-full mt-auto"
         type="primary"
         @click="unsettle(realm.id)"
@@ -167,7 +159,7 @@ import { defineComponent, ref, computed } from '@vue/composition-api'
 import axios from 'axios'
 import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
-
+import { useConnect } from '~/composables/web3/useConnect'
 import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 export default defineComponent({
@@ -181,6 +173,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const { isAddressPage } = useConnect()
     const {
       getRealmsResourceBalance,
       claimResources,
@@ -291,6 +284,7 @@ export default defineComponent({
       wonder,
       order,
       unsettle,
+      isAddressPage,
     }
   },
 })

@@ -17,25 +17,17 @@
       </span>
     </span>
     <v-popover
-      v-if="output"
+      v-if="output && isAddressPage"
       :content="fetchUpgradeCost(resource, output[0])"
       placement="right"
       trigger="hover"
     >
-      <button
-        class="
-          border border-gray-800
-          rounded
-          px-2
-          py-1
-          text-xs
-          hover:bg-gray-800 hover:shadow
-          font-body
-        "
+      <Web3Button
+        type="small"
         @click="upgradeResource(realmId, resource, output[0])"
       >
         {{ loading.resources ? 'Upgrading..' : 'Upgrade' }}
-      </button>
+      </Web3Button>
 
       <template slot="popover">
         <div class="bg-gray-300 shadow-xl p-4 rounded text-gray-900">
@@ -71,6 +63,7 @@
 import { defineComponent, useFetch } from '@nuxtjs/composition-api'
 import { resources } from '@/composables/utils/resourceColours'
 import { useResources } from '~/composables/resources/useResources'
+import { useConnect } from '~/composables/web3/useConnect'
 import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
   components: {
@@ -87,6 +80,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { isAddressPage } = useConnect()
     const {
       fetchUpgradeCost,
       fetchProductionOutput,
@@ -112,6 +106,7 @@ export default defineComponent({
       upgradeCosts,
       loading,
       output,
+      isAddressPage,
     }
   },
 })

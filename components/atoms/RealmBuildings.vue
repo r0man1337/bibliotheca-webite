@@ -17,21 +17,13 @@
       </span>
     </span>
     <v-popover placement="right" trigger="hover">
-      <button
-        class="
-          border border-gray-800
-          rounded
-          px-2
-          py-1
-          text-xs
-          hover:bg-gray-800 hover:shadow
-          font-body
-        "
+      <Web3Button
+        type="small"
         :disabled="loading.building"
         @click="constructBuilding(realmId, buildingId, stats[1], stats[2])"
       >
         {{ loading.building ? 'Building..' : 'Build' }}
-      </button>
+      </Web3Button>
 
       <template slot="popover">
         <div class="bg-gray-300 shadow-xl p-4 rounded text-black">

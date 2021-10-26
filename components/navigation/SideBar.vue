@@ -9,7 +9,7 @@
       ease-in-out
       transition-all
       left-0
-      z-30
+      z-20
     "
     :class="
       sideBarOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'

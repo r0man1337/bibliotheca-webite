@@ -30,6 +30,7 @@ const getSRealmsQuery = gql`
 
       currentOwner {
         id
+        address
       }
     }
   }
