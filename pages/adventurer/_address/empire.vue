@@ -3,8 +3,8 @@
     <div class="flex flex-wrap space-x-4">
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Total Realms Settled</h5>
-        <div v-if="accountSRealms" class="text-6xl p-4 text-center">
-          {{ accountSRealms.length }}
+        <div v-if="sRealms.length" class="text-6xl p-4 text-center">
+          {{ adventurer.l2.srealmsHeld }}
         </div>
         <BButton class="mt-auto" type="primary" @click="claimAllResources()"
           >Claim all your resources</BButton
@@ -43,9 +43,9 @@
     <div class="mt-8">
       <h2>Settled Realms</h2>
     </div>
-    <div v-if="accountSRealms" class="flex flex-wrap">
+    <div v-if="sRealms.length" class="flex flex-wrap">
       <StakedRealm
-        v-for="realm in accountSRealms"
+        v-for="realm in adventurer.l2.srealms"
         :key="realm.id"
         :realm="realm"
         @unsettle="popFromArray"
@@ -57,19 +57,19 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { defineComponent, onMounted, computed } from '@vue/composition-api'
 
 import { useWeb3 } from '@instadapp/vue-web3'
-
-import { useRealms } from '~/composables/web3/useRealms'
 import { useLords } from '~/composables/lords/useLords'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
+import { useAdventurer } from '~/composables/useAdventurer'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 export default defineComponent({
   setup(props, context) {
     const { address } = context.root.$route.params
-    const { getWalletSRealms, accountSRealms } = useRealms()
+    const { getAdventurer, adventurer } = useAdventurer()
+
     const {
       claimLords,
       getWorldAge,
@@ -99,9 +99,13 @@ export default defineComponent({
       result,
     } = useStaking()
 
+    const sRealms = computed(() => {
+      return adventurer.value.l2?.srealms || []
+    })
+
     onMounted(async () => {
       await getWorldAge()
-      await getWalletSRealms({ address })
+      await getAdventurer(address, 'l2')
       await getTimeToNextAge()
       activeNetworkId.value = useL2Network.value.id
       if (account.value) {
@@ -112,11 +116,12 @@ export default defineComponent({
     })
 
     const popFromArray = (value) => {
-      const index = accountSRealms.value.map((e) => e.id).indexOf(value)
-      accountSRealms.value.splice(index, 1)
+      const index = adventurer.value.map((e) => e.id).indexOf(value)
+      adventurer.value.l2.srealms.value.splice(index, 1)
     }
 
     return {
+      adventurer,
       popFromArray,
       stakeRealm,
       claimResources,
@@ -126,7 +131,7 @@ export default defineComponent({
       loading,
       error,
       result,
-      accountSRealms,
+      sRealms,
       claimLords,
       lordsError,
       getWorldAge,

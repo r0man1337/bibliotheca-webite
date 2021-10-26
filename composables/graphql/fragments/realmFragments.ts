@@ -6,3 +6,18 @@ export const RealmFragment = gql`
     tokenURI
   }
 `
+export const SRealmFragment = gql`
+  fragment SRealmData on SRealm {
+    id
+    ageSettled
+    ageClaimed
+    name
+    regions
+    cities
+    harbors
+    rivers
+    resources
+    wonder
+    order
+  }
+`

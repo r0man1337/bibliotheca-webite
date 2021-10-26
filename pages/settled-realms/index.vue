@@ -1,6 +1,11 @@
 <template>
   <section>
     <div>
+      <Filters
+        class="fixed w-80 min-h-screen"
+        :filters-open="filtersOpen"
+        @toggleFilter="filtersOpen = !filtersOpen"
+      />
       <h1>Settled Realms</h1>
       <form class="flex sm:w-1/3" method="POST" @submit.prevent="submitSearch">
         <input
@@ -13,21 +18,20 @@
       </form>
 
       <div class="flex flex-wrap sm:space-x-3 my-3">
-        <span class="pr-4 self-center">Filter By:</span>
         <BButton
-          v-for="(data, index) in filterByData"
-          :key="index"
           type="primary"
-          :class="{ 'bg-black text-red-300': data.data === orderBy }"
-          px-2
-          py-2
-          hover:bg-black
-          rounded
-          capitalize
-          hover:text-red-300
-          mb-2
-          mr-2
-          >{{ data.name }}</BButton
+          class="
+            px-2
+            py-2
+            hover:bg-black
+            rounded
+            capitalize
+            hover:text-red-300
+            mb-2
+            mr-2
+          "
+          @click="filtersOpen = !filtersOpen"
+          >Open Filters +</BButton
         >
       </div>
 
@@ -97,6 +101,8 @@ export default defineComponent({
     const orderBy = ref()
     const skip = ref(0)
     const displayedSRealms = ref()
+    const filtersOpen = ref(false)
+    const first = ref(8)
     const orderByData = [
       {
         data: 'sale_date',
@@ -144,7 +150,7 @@ export default defineComponent({
     } */
 
     const { fetch } = useFetch(async () => {
-      await getSRealms()
+      await getSRealms({ first: first.value })
       displayedSRealms.value = sRealms.value
     })
 
@@ -162,9 +168,10 @@ export default defineComponent({
 
     const fetchMoreRealms = async () => {
       loading.value = true
-      skip.value = skip.value + 2
+      first.value = 8
+      skip.value = skip.value + 8
       try {
-        await getSRealms({ skip: skip.value })
+        await getSRealms({ skip: skip.value, first: first.value })
         displayedSRealms.value = displayedSRealms.value.concat(sRealms.value)
       } catch (e) {
         console.log(e)
@@ -188,6 +195,7 @@ export default defineComponent({
       filterByData,
       orderBy,
       sRealms,
+      filtersOpen,
     }
   },
 })

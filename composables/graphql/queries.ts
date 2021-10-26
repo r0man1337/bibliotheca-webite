@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 import { WalletFragment } from './fragments/wallet'
-import { RealmFragment } from './fragments/realmFragments'
+import { RealmFragment, SRealmFragment } from './fragments/realmFragments'
 import { BagFragment, defaultLoot } from './fragments/loot'
 import { TreasureFragment } from './fragments/treasure'
 import { ManaFragment } from './fragments/mana'
@@ -95,12 +95,17 @@ const getl1Adventurer = gql`
 `
 const getl2Adventurer = gql`
   ${RealmFragment}
+  ${SRealmFragment}
   query adventurer($address: String!) {
     wallet(id: $address) {
       id
       realmsHeld
       realms(first: 30) {
         ...RealmData
+      }
+      srealmsHeld
+      srealms(first: 30) {
+        ...SRealmData
       }
     }
   }

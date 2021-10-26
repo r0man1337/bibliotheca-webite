@@ -648,7 +648,7 @@ export function useTransactions() {
   })
   const sortedTransactions = computed(() => {
     if (transactions.value) {
-      return [...transactions.value]
+      return transactions.value
         .filter((tx) => tx.sender === account.value)
         .filter(
           (tx) =>

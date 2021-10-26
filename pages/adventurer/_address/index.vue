@@ -129,7 +129,7 @@ export default defineComponent({
     })
 
     useFetch(async () => {
-      await getAdventurer(address.toLowerCase())
+      await getAdventurer(address)
     })
 
     const openSeaData = ref([])

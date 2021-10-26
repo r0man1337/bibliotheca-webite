@@ -30,7 +30,6 @@ export function useRealms() {
     l1: null,
     l2: null,
   })
-  const accountSRealms = ref()
   const sRealms = ref()
 
   const fetchUserRealms = async (account, layer) => {
@@ -70,10 +69,9 @@ export function useRealms() {
   }
 
   const defaultVariables = (params?) => {
-    console.log(params)
     return {
       address: params?.address?.toLowerCase() || '',
-      first: params?.first || 2,
+      first: params?.first || 12,
       skip: params?.skip || 0,
     }
   }
@@ -89,7 +87,6 @@ export function useRealms() {
   }
 
   const getSRealms = async (params) => {
-    console.log(params)
     try {
       error.getWalletRealms = null
       loading.value = true
@@ -100,28 +97,13 @@ export function useRealms() {
       loading.value = false
     }
   }
-  const getWalletSRealms = async (params?) => {
-    try {
-      error.getWalletRealms = null
-      loading.value = true
-      console.log(params)
-
-      accountSRealms.value = await fetchSRealms(params)
-    } catch (e) {
-      console.log(e)
-    } finally {
-      loading.value = false
-    }
-  }
 
   return {
     getWalletRealms,
-    getWalletSRealms,
     getSRealms,
     error,
     loading,
     userRealms,
-    accountSRealms,
     sRealms,
   }
 }
