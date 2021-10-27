@@ -22,51 +22,32 @@
       class="group flex flex-col h-full"
       :class="{ 'bg-white hidden': active }"
     >
-      <div class="relative">
-        <div
-          class="
-            absolute
-            right-10
-            opacity-0
-            top-10
-            group-hover:opacity-100
-            transition-all
-            duration-250
-          "
-        >
-          <button
-            class="bg-gray-900 rounded p-2 ml-auto"
-            @click="active = true"
-          >
-            Flip
-          </button>
-        </div>
-        <!-- <WarriorStanding /> -->
-        <img
-          v-if="metaData"
-          class="rounded-xl"
-          :src="metaData.image_url"
-          alt=""
-        />
-
-        <Loader v-else class="w-full" />
-      </div>
-
       <div class="p-2 flex flex-col">
-        <h1 v-if="metaData" class="flex justify-between">
-          <span>{{ metaData.name }}</span>
-          <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
+        <h1 class="flex justify-between">
+          <span>{{ realm.name }}</span>
+          <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
         </h1>
         <Ens v-if="realm" :address="realm.currentOwner.address" />
 
         <div class="flex justify-between">
-          <div v-if="metaData && order(metaData.traits)" class="py-4">
+          <div class="py-4">
             <OrderChip class="text-sm" :order-id="realm.order" />
           </div>
           <Happiness class="self-center" :realm="realm.id" />
           <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
-        <RealmAgeStats :realm="realm.id" />
+        <!-- <RealmAgeStats :realm="realm.id" /> -->
+        <div v-if="raidingArmy" class="my-3">
+          <span class="uppercase text-red-400 font-display">Military</span>
+          <RealmMilitary
+            v-for="(unit, index) in raidingArmy"
+            :key="index"
+            :realm-id="realm.id"
+            :unit="unit"
+            :unit-id="index"
+          >
+          </RealmMilitary>
+        </div>
         <span class="uppercase text-red-400 font-display mt-3"
           >days unclaimed</span
         >
@@ -104,14 +85,6 @@
             :realm-id="realm.id"
           />
         </div>
-        <RaidRealm :raided-realm="realm" class="w-full" />
-      </div>
-
-      <div
-        v-if="error.stake"
-        class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
-      >
-        {{ error.stake }}
       </div>
     </div>
     <div
@@ -123,17 +96,7 @@
           Flip
         </button>
       </div>
-      <div v-if="raidingArmy" class="my-3 px-2">
-        <span class="uppercase text-red-400 font-display">Military</span>
-        <RealmMilitary
-          v-for="(unit, index) in raidingArmy"
-          :key="index"
-          :realm-id="realm.id"
-          :unit="unit"
-          :unit-id="index"
-        >
-        </RealmMilitary>
-      </div>
+
       <div v-if="buildings" class="my-3 px-2">
         <span class="uppercase text-red-400 font-display">Buildings</span>
         <RealmBuildings
@@ -144,30 +107,11 @@
           :realm-id="realm.id"
         />
       </div>
-      <div v-if="metaData" class="px-2">
-        <Levels
-          flex
-          :cities="cities"
-          :harbours="harbours"
-          :regions="regions"
-          :rivers="rivers"
-        />
-      </div>
-      <BButton
-        v-if="isAddressPage"
-        class="w-full mt-auto"
-        type="primary"
-        @click="unsettle(realm.id)"
-      >
-        <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-        <span v-else>Unsettle Realm</span>
-      </BButton>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from '@vue/composition-api'
-import axios from 'axios'
+import { defineComponent } from '@vue/composition-api'
 import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
@@ -212,75 +156,12 @@ export default defineComponent({
       raidingArmy,
     } = useMilitary()
 
-    const metaData = ref()
-
-    const unsettle = async (id) => {
-      try {
-        await withdraw(id)
-      } catch (e) {
-        console.log(e)
-      } finally {
-        context.emit('unsettle', id)
-      }
-    }
-
     useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
-      const response = await fetchRealmMetaData(props.realm.id)
-      metaData.value = response.data
       await getBuildings(props.realm.id)
       await fetchRaiding(props.realm.id)
     })
 
-    const fetchRealmMetaData = async (id) => {
-      try {
-        return await axios.get(
-          'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-            id
-        )
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    const active = ref(false)
-
-    const cities = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Cities'
-          )
-        : null
-    })
-    const harbours = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Harbors'
-          )
-        : null
-    })
-    const regions = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Regions'
-          )
-        : null
-    })
-    const rivers = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Rivers'
-          )
-        : null
-    })
-    const wonder = (traits) => {
-      return traits.find(
-        (resource) => resource.trait_type === 'Wonder (translated)'
-      )
-    }
-    const order = (traits) => {
-      return traits.find((resource) => resource.trait_type === 'Order')
-    }
     return {
       claimResources,
       getRealmsResourceBalance,
@@ -288,7 +169,6 @@ export default defineComponent({
       loading,
       error,
       result,
-      metaData,
       withdraw,
       loadingConstruction,
       errorConstruction,
@@ -296,14 +176,6 @@ export default defineComponent({
       constructBuilding,
       getBuildings,
       buildings,
-      active,
-      cities,
-      harbours,
-      regions,
-      rivers,
-      wonder,
-      order,
-      unsettle,
       isAddressPage,
       raidingArmy,
     }

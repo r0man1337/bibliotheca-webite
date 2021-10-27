@@ -20,7 +20,7 @@ export function useRaiding() {
 
   const result = reactive({ resources: null })
 
-  const buildRaiding = async (attackingRealmId, defendingRealmId) => {
+  const raidingRealm = async (attackingRealmId, defendingRealmId) => {
     try {
       error.raidingRealm = null
       loading.raidingRealm = true
@@ -38,7 +38,7 @@ export function useRaiding() {
   }
 
   return {
-    buildRaiding,
+    raidingRealm,
     error,
     loading,
     result,
