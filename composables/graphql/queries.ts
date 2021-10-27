@@ -24,7 +24,10 @@ const getSRealmsQuery = gql`
       cities
       harbors
       rivers
-      resources
+      resources {
+        id
+        name
+      }
       wonder
       order
 
