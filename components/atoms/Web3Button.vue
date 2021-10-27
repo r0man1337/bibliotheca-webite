@@ -1,5 +1,5 @@
 <template>
-  <span v-if="isAddressPage">
+  <span>
     <component
       :is="tag"
       class="button ease-in-out font-display text-center disabled:opacity-25"

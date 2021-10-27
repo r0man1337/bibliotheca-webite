@@ -1,8 +1,22 @@
 <template>
-  <div class="sprite-view-frame absolute bottom-0 z-20">
-    <div class="sprite-renderer"></div>
+  <div class="sprite-view-frame bottom-0 z-20">
+    <div :class="{ inverse: inverse }" class="sprite-renderer"></div>
   </div>
 </template>
+<script>
+import { defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
+  props: {
+    inverse: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+})
+</script>
+
 <style scoped>
 .sprite-view-frame {
   width: 155px;
@@ -33,5 +47,10 @@
   100% {
     background-position: calc(155px * 6 * -1);
   }
+}
+
+.sprite-renderer.inverse {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 </style>

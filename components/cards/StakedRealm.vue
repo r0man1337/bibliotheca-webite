@@ -41,7 +41,7 @@
             Flip
           </button>
         </div>
-        <WarriorStanding />
+        <!-- <WarriorStanding /> -->
         <img
           v-if="metaData"
           class="rounded-xl"
@@ -123,6 +123,17 @@
           Flip
         </button>
       </div>
+      <div v-if="raidingArmy" class="my-3 px-2">
+        <span class="uppercase text-red-400 font-display">Military</span>
+        <RealmMilitary
+          v-for="(unit, index) in raidingArmy"
+          :key="index"
+          :realm-id="realm.id"
+          :unit="unit"
+          :unit-id="index"
+        >
+        </RealmMilitary>
+      </div>
       <div v-if="buildings" class="my-3 px-2">
         <span class="uppercase text-red-400 font-display">Buildings</span>
         <RealmBuildings
@@ -162,6 +173,7 @@ import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
 import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+import { useMilitary } from '~/composables/military/useMilitary'
 export default defineComponent({
   components: {
     LoadingRings,
@@ -193,6 +205,13 @@ export default defineComponent({
       result: resultConstruction,
     } = useConstruction()
 
+    const {
+      //   buildRaiding,
+      fetchRaiding,
+      //   fetchUnitCost,
+      raidingArmy,
+    } = useMilitary()
+
     const metaData = ref()
 
     const unsettle = async (id) => {
@@ -210,6 +229,7 @@ export default defineComponent({
       const response = await fetchRealmMetaData(props.realm.id)
       metaData.value = response.data
       await getBuildings(props.realm.id)
+      await fetchRaiding(props.realm.id)
     })
 
     const fetchRealmMetaData = async (id) => {
@@ -285,6 +305,7 @@ export default defineComponent({
       order,
       unsettle,
       isAddressPage,
+      raidingArmy,
     }
   },
 })

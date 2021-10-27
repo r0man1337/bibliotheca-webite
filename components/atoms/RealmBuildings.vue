@@ -26,7 +26,7 @@
       </Web3Button>
 
       <template slot="popover">
-        <div class="bg-gray-300 shadow-xl p-4 rounded text-black">
+        <div class="bg-gray-300 shadow-xl p-4 rounded text-black z-50">
           <h4 class="text-center mb-1">Building Cost</h4>
 
           <div v-if="stats" class="flex justify-between capitalize">
@@ -119,10 +119,6 @@ export default defineComponent({
     const findResources = (resource) => {
       return resources.find((a) => a.id === parseInt(resource))
     }
-    // useFetch(async () => {
-    //   await fetchProductionOutput(props.realmId, props.resource)
-    // })
-
     return {
       findBuilding,
       constructBuilding,
