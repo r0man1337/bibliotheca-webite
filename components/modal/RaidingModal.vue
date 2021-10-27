@@ -14,7 +14,10 @@
     </div>
     <div class="w-4/12 flex">
       <WarriorStanding class="self-center mx-auto" />
-      <BButton class="self-center mx-auto" type="primary"> Raid</BButton>
+      <BButton class="self-center mx-auto text-xl flex" type="primary">
+        <span class="text-3xl">⚔️</span>
+        <span class="self-center ml-3">Raid</span>
+      </BButton>
       <WarriorStanding inverse class="self-center mx-auto" />
     </div>
     <div class="w-4/12">

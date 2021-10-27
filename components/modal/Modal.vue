@@ -13,7 +13,6 @@
           px-4
           pt-4
           pb-20
-          text-center
           sm:justify-center sm:p-0
           font-body
         "

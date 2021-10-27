@@ -16,7 +16,10 @@ export const SRealmFragment = gql`
     cities
     harbors
     rivers
-    resources
+    resources {
+      id
+      name
+    }
     wonder
     order
     currentOwner {

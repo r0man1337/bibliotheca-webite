@@ -3,28 +3,28 @@
     <span class="flex">
       <span
         v-if="output"
-        :class="findResources(resource).colourClass"
+        :class="findResources(resource.id).colourClass"
         class="rounded p-1 text-sm mr-2 bg-opacity-75"
         >{{ output[0] }}</span
       >
       <span class="self-center">
         <span v-if="output && !loading.resources"
-          >{{ findResources(resource).trait }}: {{ output[1] }}</span
+          >{{ findResources(resource.id).trait }}: {{ output[1] }}</span
         >
         <span v-else class="flex"
-          >{{ findResources(resource).trait }}: <LoadingDots class="w-5"
+          >{{ findResources(resource.id).trait }}: <LoadingDots class="w-5"
         /></span>
       </span>
     </span>
     <v-popover
       v-if="output && isAddressPage"
-      :content="fetchUpgradeCost(resource, output[0])"
+      :content="fetchUpgradeCost(resource.id, output[0])"
       placement="right"
       trigger="hover"
     >
       <Web3Button
         type="small"
-        @click="upgradeResource(realmId, resource, output[0])"
+        @click="upgradeResource(realmId, resource.id, output[0])"
       >
         {{ loading.resources ? 'Upgrading..' : 'Upgrade' }}
       </Web3Button>
@@ -95,7 +95,7 @@ export default defineComponent({
     }
 
     useFetch(async () => {
-      await fetchProductionOutput(props.realmId, props.resource)
+      await fetchProductionOutput(props.realmId, props.resource.id)
     })
 
     return {

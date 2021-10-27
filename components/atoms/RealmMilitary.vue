@@ -59,7 +59,7 @@ import { resources } from '@/composables/utils/resourceColours'
 export default defineComponent({
   props: {
     unit: {
-      type: Number,
+      type: Object,
       required: true,
     },
     realmId: {
