@@ -71,7 +71,7 @@ export default defineComponent({
   },
   props: {
     resource: {
-      type: Number,
+      type: Object,
       required: true,
     },
     realmId: {

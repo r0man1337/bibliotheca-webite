@@ -90,7 +90,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { raidingRealm, loading } = useRaiding()
+    const { raidingRealm, loading, raidResults } = useRaiding()
     const { getAdventurer, adventurer } = useAdventurer()
     const { account } = useWeb3()
 
@@ -110,6 +110,7 @@ export default defineComponent({
     const raiding = ref(true)
     return {
       raiding,
+      raidResults,
       adventurer,
       sRealms,
       balance,
