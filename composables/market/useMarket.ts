@@ -2,7 +2,12 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { getAddLiquidityData } from './callDataHelpers'
+import {
+  getAddLiquidityData,
+  getBuyTokenData,
+  getRemoveLiquidityData,
+  getSellTokenData,
+} from './callDataHelpers'
 
 // ABI
 import TheLordsTokenAbi from '~/abi/TheLordsToken.json'
@@ -90,17 +95,72 @@ export function useMarket() {
     }
   }
 
-  const addLiquidity = async (resourceId) => {
+  const buyTokens = async (resourceIds, resourceAmounts) => {
     try {
       error.resources = null
       // loading.resources = true
-      const supply = 100000000010000
-      const reserve = 1000000000000
-      return await addResourceLiquidity(
+      return await sendBulkBuyResources(
         activeNetwork.value.id,
-        resourceId,
-        supply,
-        reserve
+        resourceIds,
+        resourceAmounts
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+  const sellTokens = async (resourceIds, resourceAmounts) => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      return await sendBulkSellResources(
+        activeNetwork.value.id,
+        resourceIds,
+        resourceAmounts
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+  const addLiquidity = async (
+    resourceIds,
+    resourceAmounts,
+    currencyAmounts
+  ) => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      return await sendAddLiquidity(
+        activeNetwork.value.id,
+        resourceIds,
+        resourceAmounts,
+        currencyAmounts
+      )
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+  const removeLiquidity = async (
+    resourceIds,
+    resourceAmounts,
+    currencyAmounts
+  ) => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      return await sendRemoveLiquidity(
+        activeNetwork.value.id,
+        resourceIds,
+        resourceAmounts,
+        currencyAmounts
       )
     } catch (e) {
       console.log(e)
@@ -115,7 +175,10 @@ export function useMarket() {
     fetchCurrencyReserve,
     fetchResourcePrice,
     fetchLiquidityBalance,
+    buyTokens,
+    sellTokens,
     addLiquidity,
+    removeLiquidity,
     error,
     loading,
     result,
@@ -135,7 +198,7 @@ async function getResourceSupply(network, resourceId) {
   )
 
   const supply = await exchange.getTotalSupply([resourceId])
-  return ethers.utils.formatEther(supply[0])
+  return supply[0]
 }
 
 async function getCurrencyReserve(network, resourceId) {
@@ -150,7 +213,7 @@ async function getCurrencyReserve(network, resourceId) {
   )
 
   const reserve = await exchange.getCurrencyReserves([resourceId])
-  return ethers.utils.formatEther(reserve[0])
+  return reserve[0]
 }
 
 async function getResourcePrice(network, resourceId, supply, reserve) {
@@ -178,17 +241,62 @@ async function getLiquidityBalance(network, resourceId) {
     signer
   )
 
-  const liquidityBal = await exchange.balanceOf(signer.getAddress(), [
+  const liquidityBal = await exchange.balanceOf(await signer.getAddress(), [
     resourceId,
   ])
-  return ethers.utils.formatEther(liquidityBal)
+  return liquidityBal
 }
 
-async function addResourceLiquidity(
+async function validateOperation(network, lordsAmount) {
+  const exAddr = exchangeAddress[network].allTokens[0].address
+  const resourceAddr = resourceTokens[network].allTokens[0].address
+  const lordsAddr = erc20Tokens[network].getTokenByKey('LordsToken').address
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  try {
+    const resources = new ethers.Contract(
+      resourceAddr,
+      ResourceExchangeAbi.abi,
+      signer
+    )
+
+    const lordsToken = new ethers.Contract(
+      lordsAddr,
+      TheLordsTokenAbi.abi,
+      signer
+    )
+
+    const balance = await lordsToken.balanceOf(await signer.getAddress())
+    if (balance.lt(lordsAmount)) throw new Error('INSUFFICIENT LORDS')
+
+    const isApproved = await resources.isApprovedForAll(
+      await signer.getAddress(),
+      exAddr
+    )
+
+    if (!isApproved) await resources.setApprovalForAll(exAddr, true)
+
+    const lordsAllowance = await lordsToken.allowance(
+      await signer.getAddress(),
+      exAddr
+    )
+
+    if (lordsAllowance.lt(lordsAmount))
+      await lordsToken.approve(exAddr, lordsAmount)
+
+    return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
+// MARKET OPERATIONS
+
+async function sendBulkBuyResources(
   network,
-  resourceId,
-  supply,
-  reserve,
+  resourceIds,
+  resourceAmounts,
   deadline = Math.floor(Date.now() / 1000) + 100000
 ) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -196,60 +304,109 @@ async function addResourceLiquidity(
   const resourceAddr = resourceTokens[network].allTokens[0].address
   const signer = provider.getSigner()
 
-  const data = getAddLiquidityData([reserve], deadline)
+  const exchange = new ethers.Contract(exAddr, ResourceExchangeAbi.abi, signer)
 
-  const validatedOp = await validateOperation(network, reserve)
+  const costs = await exchange.getPrice_currencyToToken(
+    resourceIds,
+    resourceAmounts
+  )
+  const totalCost = costs.reduce((a, b) => a + b)
+  await validateOperation(network, totalCost)
+  await exchange.buyTokens(
+    resourceIds,
+    resourceAmounts,
+    totalCost,
+    deadline,
+    await signer.getAddress()
+  )
+}
 
-  if (!validatedOp) return false
-
+async function sendBulkSellResources(
+  network,
+  resourceIds,
+  resourceAmounts,
+  deadline = Math.floor(Date.now() / 1000) + 100000
+) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const exAddr = exchangeAddress[network].allTokens[0].address
+  const resourceAddr = resourceTokens[network].allTokens[0].address
+  const signer = provider.getSigner()
+  const exchange = new ethers.Contract(exAddr, ResourceExchangeAbi.abi, signer)
+  const prices = exchange.getPrice_tokenToCurrency(resourceIds, resourceAmounts)
+  const data = getSellTokenData(await signer.getAddress(), prices, deadline)
   const resources = new ethers.Contract(
     resourceAddr,
     ResourceExchangeAbi.abi,
     signer
   )
+  await resources.setApprovalForAll(exAddr, true)
   return await resources.safeBatchTransferFrom(
-    signer.getAddress(),
+    await signer.getAddress(),
     exAddr,
-    [resourceId],
-    [supply],
+    resourceIds,
+    resourceAmounts,
     data
   )
 }
 
-async function validateOperation(network, lordsAmount) {
+async function sendAddLiquidity(
+  network,
+  resourceIds,
+  resourceAmounts,
+  currencyAmounts,
+  deadline = Math.floor(Date.now() / 1000) + 100000
+) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
   const exAddr = exchangeAddress[network].allTokens[0].address
   const resourceAddr = resourceTokens[network].allTokens[0].address
-  const lordsAddr = erc20Tokens[network].getTokenByKey('LordsToken')
+  const signer = provider.getSigner()
 
-  try {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const resources = new ethers.Contract(
-      resourceAddr,
-      ResourceExchangeAbi.abi,
-      signer
-    )
-    const lordsToken = new ethers.Contract(
-      lordsAddr,
-      TheLordsTokenAbi.abi,
-      signer
-    )
+  const data = getAddLiquidityData(currencyAmounts, deadline)
 
-    const isApproved = await resources.isApprovedForAll(
-      signer.getAddress(),
-      exAddr
-    )
-    if (!isApproved) await resources.setApprovalForAll(exAddr, true)
+  const resources = new ethers.Contract(
+    resourceAddr,
+    ResourceTokensAbi.abi,
+    signer
+  )
+  await validateOperation(
+    network,
+    currencyAmounts.reduce((a, b) => a + b)
+  )
+  await resources.setApprovalForAll(exAddr, true)
+  return await resources.safeBatchTransferFrom(
+    await signer.getAddress(),
+    exAddr,
+    resourceIds,
+    resourceAmounts,
+    data
+  )
+}
 
-    const lordsAllowance = await lordsToken.allowance(
-      signer.getAddress(),
-      exAddr
-    )
-    if (lordsAllowance.lt(lordsAmount))
-      await lordsToken.approve(exAddr, lordsAmount)
-    return true
-  } catch (e) {
-    console.error(e)
-    return false
-  }
+async function sendRemoveLiquidity(
+  network,
+  resourceIds,
+  resourceAmounts,
+  currencyAmounts,
+  deadline = Math.floor(Date.now() / 1000) + 100000
+) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const exAddr = exchangeAddress[network].allTokens[0].address
+  const resourceAddr = resourceTokens[network].allTokens[0].address
+  const signer = provider.getSigner()
+
+  const data = getRemoveLiquidityData(
+    currencyAmounts,
+    resourceAmounts,
+    deadline
+  )
+
+  const exchange = new ethers.Contract(exAddr, ResourceExchangeAbi.abi, signer)
+  await exchange.setApprovalForAll(exAddr, true)
+  return await exchange.safeBatchTransferFrom(
+    await signer.getAddress(),
+    exAddr,
+    resourceIds,
+    resourceAmounts,
+    data
+  )
 }
