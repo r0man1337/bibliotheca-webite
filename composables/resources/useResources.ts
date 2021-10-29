@@ -2,7 +2,7 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-
+import { useNotification } from '../web3/useNotification'
 // ABI
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import ResourceTokensAbi from '~/abi/ResourceTokens.json'
@@ -14,7 +14,7 @@ import diamondAddress from '~/constant/diamondAddress'
 export function useResources() {
   const { provider, library, account, activate } = useWeb3()
   const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
-
+  const { showError } = useNotification()
   const error = reactive({
     resources: null,
   })
@@ -38,6 +38,7 @@ export function useResources() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.message)
       error.resources = e.message
     } finally {
       // loading.resources = false
@@ -55,6 +56,7 @@ export function useResources() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.message)
       error.resources = e.message
     } finally {
       // loading.resources = false
@@ -74,6 +76,7 @@ export function useResources() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.message)
       error.resources = e.message
     } finally {
       loading.fetchingResources = false
@@ -95,6 +98,7 @@ export function useResources() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.message)
       error.resources = e.message
     } finally {
       loading.resources = false

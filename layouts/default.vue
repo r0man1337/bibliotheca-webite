@@ -7,10 +7,11 @@
 
       <NuxtLink to="/"><Book class="w-12 h-12 mx-auto" /></NuxtLink>
     </div>
-
+    <NotificationBar />
     <SideBar class="fixed sm:relative w-80 min-h-screen" />
     <div class="w-full">
       <AccountButton />
+
       <Nuxt class="p-3 sm:p-8" />
       <Modal />
     </div>

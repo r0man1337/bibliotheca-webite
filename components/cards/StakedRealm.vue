@@ -104,7 +104,7 @@
             :realm-id="realm.id"
           />
         </div>
-        <RaidRealm :raided-realm="realm" class="w-full" />
+        <RaidRealm v-if="!isAddressPage" :raided-realm="realm" class="w-full" />
       </div>
 
       <div

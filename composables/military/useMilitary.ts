@@ -2,7 +2,7 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-
+import { useNotification } from '../web3/useNotification'
 // ABI
 import ArmyTrainingFacet from '~/abi/ArmyTrainingFacet.json'
 
@@ -18,7 +18,7 @@ export function useMilitary() {
     buildRaiding: false,
     fetching: false,
   })
-
+  const { showError } = useNotification()
   const result = reactive({ resources: null })
 
   const buildRaiding = async (
@@ -41,7 +41,7 @@ export function useMilitary() {
       )
     } catch (e) {
       console.log(e)
-      error.buildRaiding = e.message
+      await showError(e.data.message)
     } finally {
       loading.buildRaiding = false
     }

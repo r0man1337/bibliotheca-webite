@@ -1,7 +1,7 @@
 import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { activeNetwork } from '../web3/useNetwork'
-
+import { useNotification } from '../web3/useNotification'
 // ABI
 import RaidingFacet from '~/abi/RaidingFacet.json'
 
@@ -9,6 +9,7 @@ import RaidingFacet from '~/abi/RaidingFacet.json'
 import diamondAddress from '~/constant/diamondAddress'
 
 export function useRaiding() {
+  const { showError } = useNotification()
   const error = reactive({
     raidingRealm: null,
   })
@@ -31,6 +32,7 @@ export function useRaiding() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.data.message)
       error.raidingRealm = e.message
     } finally {
       loading.raidingRealm = false

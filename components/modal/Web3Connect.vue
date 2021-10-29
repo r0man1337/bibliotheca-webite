@@ -124,7 +124,7 @@ import { useModal } from '~/composables/useModal'
 import { injected } from '~/connectors'
 import { SUPPORTED_WALLETS } from '~/connectors/wallets'
 // import { Network, useNetwork } from '~/composables/web3/useNetwork'
-import { useNotification } from '~/composables/useNotification'
+import { useNotification } from '~/composables/web3/useNotification'
 export default defineComponent({
   props: {
     slim: {
@@ -136,7 +136,7 @@ export default defineComponent({
     const { close } = useModal()
     const { activate } = useWeb3()
     // const { activeNetworkId } = useNetwork()
-    const { showError, showAwaiting, closeAll } = useNotification()
+    const { showError, showAwaiting } = useNotification()
     const connecting = ref(false)
     const connect = async (connector) => {
       connecting.value = true
@@ -145,9 +145,7 @@ export default defineComponent({
         await activate(connector, undefined, true)
         connecting.value = false
         close()
-        closeAll()
       } catch (error) {
-        closeAll()
         showError('', error.message)
       }
       connecting.value = false

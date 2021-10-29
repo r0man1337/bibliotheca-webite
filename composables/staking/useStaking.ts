@@ -3,13 +3,13 @@ import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { activeNetwork } from '../web3/useNetwork'
 import { useBigNumber } from '../web3/useBigNumber'
+import { useNotification } from '../web3/useNotification'
 import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import SRealmTokenABI from '~/abi/SRealmToken.json'
 import GetterFacet from '~/abi/GetterFacet.json'
 import diamondAddress from '~/constant/diamondAddress'
-
 import erc721tokens from '~/constant/erc721tokens'
 import sRealmsTokens from '~/constant/sRealmsTokens'
 export function useStaking() {
@@ -17,7 +17,7 @@ export function useStaking() {
   const error = reactive({
     stake: null,
   })
-
+  const { showError } = useNotification()
   const loading = reactive({
     stake: null,
   })
@@ -31,6 +31,7 @@ export function useStaking() {
       await setApprovalForAll(account.value, activeNetwork.value.id)
       result.stake = await stake(account.value, activeNetwork.value.id, realmId)
     } catch (e) {
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -43,7 +44,7 @@ export function useStaking() {
       loading.stake = true
       balance.value = await getBalance(activeNetwork.value.id, realmId)
     } catch (e) {
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -56,7 +57,7 @@ export function useStaking() {
       loading.stake = true
       claimBalance.value = await claim(activeNetwork.value.id, realmId)
     } catch (e) {
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       await getRealmsResourceBalance(realmId)
@@ -69,7 +70,7 @@ export function useStaking() {
       loading.stake = true
       claimBalance.value = await claimAll(activeNetwork.value.id)
     } catch (e) {
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -81,7 +82,7 @@ export function useStaking() {
       loading.stake = true
       return await getResourceIds(activeNetwork.value.id, realmId)
     } catch (e) {
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -94,7 +95,7 @@ export function useStaking() {
       await setApprovalForAllSRealms(account.value, activeNetwork.value.id)
       return await unStakeAndExit(activeNetwork.value.id, realmId)
     } catch (e) {
-      console.log(e)
+      await showError(e.message)
       error.stake = e.message
     } finally {
       loading.stake = false
@@ -141,7 +142,7 @@ async function stake(owner, network, realmId) {
     signer
   )
   console.log(resourceStakingFacet)
-  const stake = await resourceStakingFacet.stakeRealm(realmId, true)
+  const stake = await resourceStakingFacet.stakeRealm(realmId)
   await stake.wait()
 
   return stake

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="w-full">
     <div class="flex flex-wrap space-x-4">
       <DataCard>
         <h5 class="text-red-200 uppercase text-center">Total Realms Settled</h5>
