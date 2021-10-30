@@ -1,22 +1,30 @@
 <template>
-  <div class="container bg-gray-900 flex p-8">
+  <div class="container bg-gray-900 flex p-8 max-h-screen">
     <div class="w-4/12">
-      <h3 class="uppercase">Choose Your Realm</h3>
+      <RaidingRealm
+        v-if="selectedAttackingRealm"
+        :realm="selectedAttackingRealm"
+        attacking
+      />
+      <h5 class="w-full">Select Realm</h5>
       <div class="flex justify-between flex-wrap">
-        <div v-if="sRealms" class="overflow-scroll h-screen">
+        <div v-if="sRealms" class="overflow-scroll h-96">
           <RaidingRealm
             v-for="(realm, index) in sRealms"
             :key="index"
             :realm="realm"
+            attacking
           />
         </div>
       </div>
     </div>
     <div class="w-4/12 flex flex-col self-center">
       <div v-if="raidResults.length" class="w-full">
+        <h3>Raid Results</h3>
         <div>Your Units Lost: {{ raidResults[0].raidingUnitsLost }}</div>
         <div>Defending Units Lost: {{ raidResults[0].defendingUnitsLost }}</div>
         <div>Attacking Units Captured: {{ raidResults[0].unitsCaptured }}</div>
+        <div>{{ raidResults[0].resourceIdsPillaged }}</div>
         <div class="flex">
           <div
             v-for="(resource, index) in raidResults[0].resourceIdsPillaged"
@@ -35,9 +43,6 @@
         </div>
 
         <br />
-
-        <!-- {{ raidResults[0].resourceIdsPillaged }}
-        {{ raidResults[0].resourceValuesPillaged }} -->
       </div>
       <div class="w-full flex">
         <WarriorFighting
@@ -73,7 +78,7 @@
       <div class="text-center bg-gray-800 rounded-xl shadow p-6">
         <div class="text-4xl font-display mb-3">
           Vault:
-          <span v-if="balance">{{ balanceRounded }} units </span>
+          <span v-if="balance">{{ balanceRounded }} days </span>
         </div>
 
         <div class="flex justify-around">
@@ -90,7 +95,6 @@
       </div>
     </div>
     <div class="w-4/12">
-      <h3 class="uppercase text-center">Raiding Realm</h3>
       <div class="flex justify-between flex-wrap">
         <RaidingRealm class="ml-auto" :realm="raidedRealm" />
       </div>
@@ -116,7 +120,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { raidingRealm, loading, raidResults } = useRaiding()
+    const {
+      raidingRealm,
+      loading,
+      raidResults,
+      selectedAttackingRealm,
+      selectAttackingRealm,
+      removeAttackingRealm,
+    } = useRaiding()
     const { getAdventurer, adventurer } = useAdventurer()
     const { account } = useWeb3()
 
@@ -143,6 +154,9 @@ export default defineComponent({
       balanceRounded,
       raidingRealm,
       loading,
+      selectedAttackingRealm,
+      selectAttackingRealm,
+      removeAttackingRealm,
     }
   },
 })

@@ -45,10 +45,10 @@
           >
           </RealmMilitary>
         </div>
-        <span class="uppercase text-red-400 font-display mt-3"
+        <span v-if="!attacking" class="uppercase text-red-400 font-display mt-3"
           >days unclaimed</span
         >
-        <div class="flex justify-between">
+        <div v-if="!attacking" class="flex justify-between">
           <div>
             <span
               >Day:
@@ -70,7 +70,7 @@
           </div>
         </div>
 
-        <div class="my-3">
+        <div v-if="!attacking" class="my-3">
           <span class="uppercase text-red-400 font-display">Resources</span>
           <div class="text-xs">
             <span class="uppercase">LVL Resource p/day</span>
@@ -82,17 +82,24 @@
             :realm-id="realm.id"
           />
         </div>
+        <BButton
+          v-if="attacking"
+          type="primary"
+          @click="selectAttackingRealm(realm)"
+          >Select Realm</BButton
+        >
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-import { useFetch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, watch } from '@vue/composition-api'
+
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
-import { useConstruction } from '~/composables/construction/useConstruction'
+
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+import { useRaiding } from '~/composables/military/useRaiding'
 import { useMilitary } from '~/composables/military/useMilitary'
 export default defineComponent({
   components: {
@@ -103,8 +110,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    attacking: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props, context) {
+    const { selectAttackingRealm, selectedAttackingRealm } = useRaiding()
     const { isAddressPage } = useConnect()
     const {
       getRealmsResourceBalance,
@@ -117,24 +130,19 @@ export default defineComponent({
     } = useStaking()
 
     const {
-      constructBuilding,
-      getBuildings,
-      buildings,
-      loading: loadingConstruction,
-      error: errorConstruction,
-      result: resultConstruction,
-    } = useConstruction()
-
-    const {
       //   buildRaiding,
       fetchRaiding,
       //   fetchUnitCost,
       raidingArmy,
     } = useMilitary()
 
-    useFetch(async () => {
+    onMounted(async () => {
       await getRealmsResourceBalance(props.realm.id)
-      await getBuildings(props.realm.id)
+      await fetchRaiding(props.realm.id)
+    })
+
+    watch(selectedAttackingRealm, async () => {
+      await getRealmsResourceBalance(props.realm.id)
       await fetchRaiding(props.realm.id)
     })
 
@@ -146,14 +154,10 @@ export default defineComponent({
       error,
       result,
       withdraw,
-      loadingConstruction,
-      errorConstruction,
-      resultConstruction,
-      constructBuilding,
-      getBuildings,
-      buildings,
       isAddressPage,
       raidingArmy,
+      selectAttackingRealm,
+      selectedAttackingRealm,
     }
   },
 })

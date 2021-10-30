@@ -1,4 +1,4 @@
-import { reactive, ref, Ref } from '@nuxtjs/composition-api'
+import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { activeNetwork } from '../web3/useNetwork'
 import { useNotification } from '../web3/useNotification'
@@ -8,6 +8,9 @@ import RaidingFacet from '~/abi/RaidingFacet.json'
 // ADDRESS CONSTS
 import diamondAddress from '~/constant/diamondAddress'
 
+const selectedAttacking = reactive({
+  realm: false,
+})
 export function useRaiding() {
   const { showError } = useNotification()
   const error = reactive({
@@ -95,8 +98,22 @@ export function useRaiding() {
     }
   }
 
+  const selectedAttackingRealm = computed(() => selectedAttacking.realm)
+
+  const selectAttackingRealm = (realm) => {
+    console.log(realm)
+    selectedAttacking.realm = realm
+  }
+
+  const removeAttackingRealm = () => {
+    selectedAttacking.realm = null
+  }
+
   return {
     raidingRealm,
+    selectedAttackingRealm,
+    selectAttackingRealm,
+    removeAttackingRealm,
     error,
     loading,
     raidResults,
