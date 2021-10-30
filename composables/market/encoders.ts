@@ -74,7 +74,7 @@ export const getAddLiquidityData = (
 ) => {
   const addLiquidityObj = {
     maxBaseTokens: baseAmountsToAdd,
-    deadline: deadline,
+    deadline,
   }
 
   return defaultAbiCoder.encode(
@@ -89,9 +89,9 @@ export const getRemoveLiquidityData = (
   deadline: number
 ) => {
   const removeLiquidityObj = {
-    minBaseTokens: minBaseTokens,
-    minTokens: minTokens,
-    deadline: deadline,
+    minBaseTokens,
+    minTokens,
+    deadline,
   }
 
   return defaultAbiCoder.encode(

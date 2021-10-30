@@ -13,7 +13,7 @@
       {{ lordsReserve }}👑 <br />
       {{ resourceReserve }}
     </td>
-    <td class="p-2">{{ (100 * lbalance) / lsupply }} %</td>
+    <td class="p-2">{{ ((100 * lbalance) / lsupply).toFixed(1) }} %</td>
     <td>
       <button type="button" @click="$emit('arrow-click')">
         <ArrowRight />
@@ -23,6 +23,7 @@
 </template>
 <script>
 import { useFetch, defineComponent, ref } from '@nuxtjs/composition-api'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useMarket } from '~/composables/market/useMarket'
 import LoadingDots from '~/assets/img/threeDots.svg?inline'
 import ArrowRight from '~/assets/img/arrow-right.svg?inline'
@@ -54,7 +55,10 @@ export default defineComponent({
     const lsupply = ref()
 
     useFetch(async () => {
-      lordsReserve.value = await fetchCurrencyReserve(props.resource.id)
+      lordsReserve.value = (await fetchCurrencyReserve(props.resource.id))
+        .div(BigNumber.from(10).pow(17))
+        .toNumber()
+        .toFixed(1)
       resourceReserve.value = await fetchResourceReserve(props.resource.id)
       lbalance.value = await fetchLiquidityBalance(props.resource.id)
       lsupply.value = await fetchLiquidityTokenSupply(props.resource.id)
