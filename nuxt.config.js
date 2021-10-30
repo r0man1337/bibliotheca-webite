@@ -163,6 +163,7 @@ export default {
     '~/components',
     '~/components/cards',
     '~/components/atoms',
+    '~/components/atoms/market'
   ],
   buildModules: [
     '@nuxtjs/eslint-module',

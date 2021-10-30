@@ -5,13 +5,15 @@
     </td>
     <td class="p-2">
       <span v-if="loading.resources"><LoadingDots class="w-8 h-2" /></span
-      ><span v-else>{{ 1 }}👑 = {{ (supply / reserve).toFixed(1) }}</span>
+      ><span v-else
+        >{{ 1 }}👑 = {{ (resourceReserve / lordsReserve).toFixed(1) }}</span
+      >
     </td>
     <td class="p-2">
-      {{ reserve }}👑 <br />
-      {{ supply }}
+      {{ lordsReserve }}👑 <br />
+      {{ resourceReserve }}
     </td>
-    <td class="p-2">{{ lbalance }}</td>
+    <td class="p-2">{{ (100 * lbalance) / lsupply }} %</td>
     <td>
       <button type="button" @click="$emit('arrow-click')">
         <ArrowRight />
@@ -39,26 +41,30 @@ export default defineComponent({
     // const { slug } = context.root.$route.params
     // const { fetchResource, loading } = useResources()
     const {
-      fetchResourceSupply,
+      fetchResourceReserve,
       fetchCurrencyReserve,
       fetchLiquidityBalance,
+      fetchLiquidityTokenSupply,
       loading,
     } = useMarket()
 
-    const reserve = ref()
-    const supply = ref()
+    const lordsReserve = ref()
+    const resourceReserve = ref()
     const lbalance = ref()
+    const lsupply = ref()
 
     useFetch(async () => {
-      reserve.value = await fetchCurrencyReserve(props.resource.id)
-      supply.value = await fetchResourceSupply(props.resource.id)
+      lordsReserve.value = await fetchCurrencyReserve(props.resource.id)
+      resourceReserve.value = await fetchResourceReserve(props.resource.id)
       lbalance.value = await fetchLiquidityBalance(props.resource.id)
+      lsupply.value = await fetchLiquidityTokenSupply(props.resource.id)
     })
 
     return {
-      reserve,
-      supply,
+      lordsReserve,
+      resourceReserve,
       lbalance,
+      lsupply,
       loading,
     }
   },

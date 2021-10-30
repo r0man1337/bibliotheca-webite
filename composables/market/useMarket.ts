@@ -36,11 +36,24 @@ export function useMarket() {
   const result = reactive({ resources: null })
   const output = ref()
 
-  const fetchResourceSupply = async (resourceId) => {
+  const fetchResourceReserve = async (resourceId) => {
     try {
       error.resources = null
       // loading.resources = true
-      return await getResourceSupply(activeNetwork.value.id, resourceId)
+      return await getResourceReserve(activeNetwork.value.id, resourceId)
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+
+  const fetchLiquidityTokenSupply = async (resourceId) => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      return await getLiquidityTokenSupply(activeNetwork.value.id, resourceId)
     } catch (e) {
       console.log(e)
       error.resources = e.message
@@ -62,18 +75,24 @@ export function useMarket() {
     }
   }
 
-  const fetchResourcePrice = async (resourceId) => {
+  const fetchResourcePrice = async (resourceId, amount = 1) => {
     try {
       error.resources = null
       // loading.resources = true
-      const supply = await fetchResourceSupply(resourceId)
-      const reserve = await fetchCurrencyReserve(resourceId)
-      return await getResourcePrice(
-        activeNetwork.value.id,
-        resourceId,
-        supply,
-        reserve
-      )
+      return (await fetchBulkResourcePrices([resourceId], [amount]))[0]
+    } catch (e) {
+      console.log(e)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+
+  const fetchBulkResourcePrices = async (resourceIds, amounts) => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      return await getBuyPrices(activeNetwork.value.id, resourceIds, amounts)
     } catch (e) {
       console.log(e)
       error.resources = e.message
@@ -171,9 +190,11 @@ export function useMarket() {
   }
 
   return {
-    fetchResourceSupply,
     fetchCurrencyReserve,
+    fetchResourceReserve,
+    fetchLiquidityTokenSupply,
     fetchResourcePrice,
+    fetchBulkResourcePrices,
     fetchLiquidityBalance,
     buyTokens,
     sellTokens,
@@ -184,21 +205,6 @@ export function useMarket() {
     result,
     output,
   }
-}
-
-async function getResourceSupply(network, resourceId) {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = exchangeAddress[network].allTokens
-  const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
-  const exchange = new ethers.Contract(
-    tokensAddrArr[0],
-    ResourceExchangeAbi.abi,
-    signer
-  )
-
-  const supply = await exchange.getTotalSupply([resourceId])
-  return supply[0]
 }
 
 async function getCurrencyReserve(network, resourceId) {
@@ -216,7 +222,22 @@ async function getCurrencyReserve(network, resourceId) {
   return reserve[0]
 }
 
-async function getResourcePrice(network, resourceId, supply, reserve) {
+async function getResourceReserve(network, resourceId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const exAddr = exchangeAddress[network].allTokens[0].address
+  const resourceAddr = resourceTokens[network].allTokens[0].address
+  const signer = provider.getSigner()
+
+  const resources = new ethers.Contract(
+    resourceAddr,
+    ResourceExchangeAbi.abi,
+    signer
+  )
+  const reserve = await resources.balanceOf(exAddr, resourceId)
+  return reserve
+}
+
+async function getLiquidityTokenSupply(network, resourceId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokensArr = exchangeAddress[network].allTokens
   const signer = provider.getSigner()
@@ -227,7 +248,8 @@ async function getResourcePrice(network, resourceId, supply, reserve) {
     signer
   )
 
-  return await exchange.getPrice_currencyToToken([resourceId], [1])
+  const supply = await exchange.getTotalSupply([resourceId])
+  return supply[0]
 }
 
 async function getLiquidityBalance(network, resourceId) {
@@ -245,6 +267,21 @@ async function getLiquidityBalance(network, resourceId) {
     resourceId,
   ])
   return liquidityBal
+}
+
+async function getBuyPrices(network, resourceIds, amounts) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = exchangeAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const exchange = new ethers.Contract(
+    tokensAddrArr[0],
+    ResourceExchangeAbi.abi,
+    signer
+  )
+
+  const prices = await exchange.getPrice_currencyToToken(resourceIds, amounts)
+  return prices
 }
 
 async function validateOperation(network, lordsAmount) {

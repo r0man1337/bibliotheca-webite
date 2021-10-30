@@ -72,7 +72,7 @@
             </tbody>
           </table>
           <br />
-          <span class="text-3xl">LORDS: ~{{ 0 }} 👑 </span>
+          <span class="text-3xl">LORDS: ~{{ lordsPrice }} 👑 </span>
           <div class="mt-12 text-center">
             <div class="my-4 flex justify-around">
               <div class="flex">
@@ -109,7 +109,13 @@ export default defineComponent({
       goldBalance,
       getAdventurersGold,
     } = useLords()
-    const { buyTokens, sellTokens, addLiquidity, removeLiquidity } = useMarket()
+    const {
+      buyTokens,
+      sellTokens,
+      addLiquidity,
+      removeLiquidity,
+      fetchBulkResourcePrices,
+    } = useMarket()
     const orderTypes = [
       {
         data: 'buy',
@@ -130,6 +136,7 @@ export default defineComponent({
     ]
     const selectedOrderType = ref(orderTypes[0])
     const selectedResources = ref([])
+    const lordsPrice = ref(0)
 
     const filteredResources = resources.filter((d) => {
       return d.value > 1
@@ -153,15 +160,26 @@ export default defineComponent({
         selectedResources.value.push(resource)
       } else {
         selectedResources.value.splice(i, 1)
+        updateLordsPrice()
       }
     }
     function onXClick(resource) {
       const i = selectedResources.value.indexOf(resource)
       selectedResources.value.splice(i, 1)
+      updateLordsPrice()
     }
     function onAmountChanged(resource, amount) {
       const i = selectedResources.value.indexOf(resource)
       selectedResources.value[i].amount = amount
+      updateLordsPrice()
+    }
+    async function updateLordsPrice() {
+      const filtered = selectedResources.value.filter((e) => e.amount > 0)
+      const ids = filtered.map((e) => e.id)
+      const amounts = filtered.map((e) => e.amount)
+      const prices = await fetchBulkResourcePrices(ids, amounts)
+      const total = prices.reduce((a, b) => a.add(b))
+      lordsPrice.value = total
     }
     async function onOrderSubmit() {
       const withAmounts = selectedResources.value.filter((e) => e.amount > 0)
@@ -185,6 +203,7 @@ export default defineComponent({
     return {
       getAdventurersLords,
       lordsBalance,
+      lordsPrice,
       worldAge,
       sortedResources,
       error,
