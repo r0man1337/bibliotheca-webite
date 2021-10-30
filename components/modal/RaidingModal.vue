@@ -13,6 +13,32 @@
       </div>
     </div>
     <div class="w-4/12 flex flex-col self-center">
+      <div v-if="raidResults.length" class="w-full">
+        <div>Your Units Lost: {{ raidResults[0].raidingUnitsLost }}</div>
+        <div>Defending Units Lost: {{ raidResults[0].defendingUnitsLost }}</div>
+        <div>Attacking Units Captured: {{ raidResults[0].unitsCaptured }}</div>
+        <div class="flex">
+          <div
+            v-for="(resource, index) in raidResults[0].resourceIdsPillaged"
+            :key="index"
+            class="flex flex-col"
+          >
+            <span> {{ resource }}</span>
+          </div>
+          <div
+            v-for="(resource, index) in raidResults[0].resourceIdsPillaged"
+            :key="index"
+            class="flex flex-col"
+          >
+            {{ resource }}
+          </div>
+        </div>
+
+        <br />
+
+        <!-- {{ raidResults[0].resourceIdsPillaged }}
+        {{ raidResults[0].resourceValuesPillaged }} -->
+      </div>
       <div class="w-full flex">
         <WarriorFighting
           v-if="loading.raidingRealm"
