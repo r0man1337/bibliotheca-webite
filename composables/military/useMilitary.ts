@@ -73,6 +73,22 @@ export function useMilitary() {
       loading.fetching = false
     }
   }
+  const raidingUnitTime = ref()
+  const fetchRaidingUnitTime = async (unitId) => {
+    try {
+      error.buildRaiding = null
+      loading.fetching = true
+      raidingUnitTime.value = await getRaidingUnitTime(
+        activeNetwork.value.id,
+        unitId
+      )
+    } catch (e) {
+      console.log(e)
+      error.buildRaiding = e.message
+    } finally {
+      loading.fetching = false
+    }
+  }
   return {
     buildRaiding,
     fetchRaiding,
@@ -130,6 +146,21 @@ async function getRaidingArmy(network, realmId) {
   )
 
   return await armyTrainingFacet.getRaidingArmy(realmId)
+}
+
+async function getRaidingUnitTime(network, realmId) {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const tokensArr = diamondAddress[network].allTokens
+  const signer = provider.getSigner()
+  const tokensAddrArr = tokensArr.map((a) => a.address)
+
+  const armyTrainingFacet = new ethers.Contract(
+    tokensAddrArr[0],
+    ArmyTrainingFacet.abi,
+    signer
+  )
+
+  return await armyTrainingFacet.getRaidingUnitTime(realmId)
 }
 
 async function getUnitCost(network, unitId) {

@@ -12,13 +12,26 @@ export const SRealmFragment = gql`
     ageSettled
     ageClaimed
     name
-    regions
-    cities
-    harbors
-    rivers
     resources {
       id
+      level
+      resourceUpgrades {
+        id
+      }
+    }
+    traits {
       name
+      value
+      buildings {
+        name
+        value
+        buildingUpgrades {
+          id
+          address {
+            id
+          }
+        }
+      }
     }
     wonder
     order

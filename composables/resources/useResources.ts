@@ -84,10 +84,13 @@ export function useResources() {
   }
   const upgradeResource = async (realmId, resourceId, level) => {
     loading.resources = true
+    console.log(realmId, resourceId, level)
     try {
       error.resources = null
       loading.resources = true
       await fetchUpgradeCost(resourceId, level)
+      console.log(upgradeCosts.value[0])
+      console.log(upgradeCosts.value[1])
       await upgradeResourceProduction(
         account.value,
         activeNetwork.value.id,
@@ -98,11 +101,11 @@ export function useResources() {
       )
     } catch (e) {
       console.log(e)
-      await showError(e.message)
-      error.resources = e.message
+      if (e.data) {
+        await showError(e.data.message)
+      }
     } finally {
       loading.resources = false
-      await fetchProductionOutput(realmId, resourceId)
     }
   }
   return {

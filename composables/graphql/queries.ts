@@ -20,17 +20,29 @@ const getSRealmsQuery = gql`
       ageSettled
       ageClaimed
       name
-      regions
-      cities
-      harbors
-      rivers
       resources {
         id
-        name
+        level
+        resourceUpgrades {
+          id
+        }
       }
       wonder
       order
-
+      traits {
+        name
+        value
+        buildings {
+          name
+          value
+          buildingUpgrades {
+            id
+            address {
+              id
+            }
+          }
+        }
+      }
       currentOwner {
         id
         address

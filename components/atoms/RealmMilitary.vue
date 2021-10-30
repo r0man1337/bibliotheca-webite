@@ -7,17 +7,17 @@
           <span>qty:</span>
           <input
             v-model="qty"
-            class="w-4 rounded bg-gray-700 text-center"
+            class="w-4 rounded bg-gray-800 text-center"
             type="text"
           />
         </div>
 
         <Web3Button
           type="small"
-          :disabled="loading.building"
+          :disabled="loading.buildRaiding"
           @click="buildRaiding(realmId, unitId, qty, unitCost[0], unitCost[1])"
         >
-          {{ loading.building ? 'Building..' : 'Build' }}
+          {{ loading.buildRaiding ? 'Building..' : 'Build' }}
         </Web3Button>
       </div>
 
@@ -40,7 +40,7 @@
             </div>
             <div class="flex flex-col">
               <span v-for="(cost, index) in unitCost[1]" :key="index">{{
-                cost
+                cost * qty
               }}</span>
               <hr class="my-2" />
             </div>

@@ -1,30 +1,32 @@
 <template>
-  <div class="my-1 flex justify-between">
-    <span class="flex">
+  <div
+    class="my-1 flex justify-between"
+    @mouseover="fetchUpgradeCost(resourceId, resourceLevel)"
+  >
+    <span v-if="resource" class="flex">
       <span
-        v-if="output"
-        :class="findResources(resource.id).colourClass"
+        :class="findResources.colourClass"
         class="rounded p-1 text-sm mr-2 bg-opacity-75"
-        >{{ output[0] }}</span
+        >{{ resourceLevel }}</span
       >
       <span class="self-center">
-        <span v-if="output && !loading.resources"
-          >{{ findResources(resource.id).trait }}: {{ output[1] }}</span
+        <span v-if="!loading.resources"
+          >{{ findResources.trait }}: {{ getOutputLevel }}</span
         >
         <span v-else class="flex"
-          >{{ findResources(resource.id).trait }}: <LoadingDots class="w-5"
+          >{{ findResources.trait }}: <LoadingDots class="w-5"
         /></span>
       </span>
     </span>
     <v-popover
-      v-if="output && isAddressPage"
-      :content="fetchUpgradeCost(resource.id, output[0])"
+      v-if="resource && isAddressPage"
       placement="right"
       trigger="hover"
     >
       <Web3Button
         type="small"
-        @click="upgradeResource(realmId, resource.id, output[0])"
+        :disabled="!upgradeCosts"
+        @click="upgradeResource(realmId, resourceId, resourceLevel)"
       >
         {{ loading.resources ? 'Upgrading..' : 'Upgrade' }}
       </Web3Button>
@@ -41,10 +43,10 @@
                 class="pr-3"
               >
                 <span
-                  :class="findResources(cost).colourClass"
+                  :class="findCostResources(cost).colourClass"
                   class="rounded-full p-2 mr-1 bg-opacity-75 border"
                 ></span
-                >{{ findResources(cost).trait }}:</span
+                >{{ findCostResources(cost).trait }}:</span
               >
             </div>
 
@@ -60,8 +62,9 @@
   </div>
 </template>
 <script>
-import { defineComponent, useFetch } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import { resources } from '@/composables/utils/resourceColours'
+import { productionOutput } from '@/composables/utils/productionOutput'
 import { useResources } from '~/composables/resources/useResources'
 import { useConnect } from '~/composables/web3/useConnect'
 import LoadingDots from '~/assets/img/threeDots.svg?inline'
@@ -90,19 +93,37 @@ export default defineComponent({
       output,
     } = useResources()
 
-    const findResources = (resource) => {
-      return resources.find((a) => a.id === parseInt(resource))
-    }
-
-    useFetch(async () => {
-      await fetchProductionOutput(props.realmId, props.resource.id)
+    const resourceId = computed(() => {
+      return props.resource ? props.resource.id.split('-')[1] : null
     })
+
+    const resourceLevel = computed(() => {
+      return props.resource.level > 0 ? parseInt(props.resource.level) + 1 : 1
+    })
+
+    const getOutputLevel = computed(() => {
+      return productionOutput.find(
+        (a) => a.level === parseInt(resourceLevel.value)
+      ).output
+    })
+
+    const findResources = computed(() => {
+      return resources.find((a) => a.id === parseInt(resourceId.value))
+    })
+
+    const findCostResources = (id) => {
+      return resources.find((a) => a.id === parseInt(id))
+    }
 
     return {
       findResources,
+      findCostResources,
       fetchProductionOutput,
       fetchUpgradeCost,
       upgradeResource,
+      getOutputLevel,
+      resourceId,
+      resourceLevel,
       upgradeCosts,
       loading,
       output,

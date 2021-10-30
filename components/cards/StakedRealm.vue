@@ -41,32 +41,34 @@
             Flip
           </button>
         </div>
-        <!-- <WarriorStanding /> -->
-        <img
+        <!-- <img
           v-if="metaData"
           class="rounded-xl"
           :src="metaData.image_url"
           alt=""
-        />
+        /> -->
 
-        <Loader v-else class="w-full" />
+        <!-- <Loader v-else class="w-full" /> -->
       </div>
 
       <div class="p-2 flex flex-col">
-        <h1 v-if="metaData" class="flex justify-between">
-          <span>{{ metaData.name }}</span>
-          <span class="text-gray-500 text-xl">#{{ metaData.token_id }}</span>
+        <h1 v-if="realm" class="flex justify-between">
+          <span>{{ realm.name }}</span>
+          <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
         </h1>
         <Ens v-if="realm" :address="realm.currentOwner.address" />
 
         <div class="flex justify-between">
-          <div v-if="metaData && order(metaData.traits)" class="py-4">
+          <div class="py-4">
             <OrderChip class="text-sm" :order-id="realm.order" />
           </div>
           <Happiness class="self-center" :realm="realm.id" />
           <RealmStatistics class="self-center" :realm="realm.id" />
         </div>
-        <RealmAgeStats :realm="realm.id" />
+        <RealmAgeStats
+          :age-claimed="realm.ageClaimed"
+          :age-settled="realm.ageSettled"
+        />
         <span class="uppercase text-red-400 font-display mt-3"
           >days unclaimed</span
         >
@@ -106,13 +108,6 @@
         </div>
         <RaidRealm v-if="!isAddressPage" :raided-realm="realm" class="w-full" />
       </div>
-
-      <div
-        v-if="error.stake"
-        class="text-red-500 py-1 px-3 rounded bg-red-200 mt-2"
-      >
-        {{ error.stake }}
-      </div>
     </div>
     <div
       class="h-full w-full flex flex-col"
@@ -144,7 +139,7 @@
           :realm-id="realm.id"
         />
       </div>
-      <div v-if="metaData" class="px-2">
+      <!-- <div v-if="metaData" class="px-2">
         <Levels
           flex
           :cities="cities"
@@ -152,7 +147,7 @@
           :regions="regions"
           :rivers="rivers"
         />
-      </div>
+      </div> -->
       <BButton
         v-if="isAddressPage"
         class="w-full mt-auto"
@@ -166,18 +161,17 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from '@vue/composition-api'
-import axios from 'axios'
-import { useFetch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@vue/composition-api'
+
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
 import { useConstruction } from '~/composables/construction/useConstruction'
-import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+// import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useMilitary } from '~/composables/military/useMilitary'
 export default defineComponent({
-  components: {
-    LoadingRings,
-  },
+  // components: {
+  //   LoadingRings,
+  // },
   props: {
     realm: {
       type: Object,
@@ -191,7 +185,6 @@ export default defineComponent({
       claimResources,
       balance,
       loading,
-      error,
       result,
       withdraw,
     } = useStaking()
@@ -224,69 +217,32 @@ export default defineComponent({
       }
     }
 
-    useFetch(async () => {
+    onMounted(async () => {
       await getRealmsResourceBalance(props.realm.id)
-      const response = await fetchRealmMetaData(props.realm.id)
-      metaData.value = response.data
+      // const response = await fetchRealmMetaData(props.realm.id)
+      // metaData.value = response.data
       await getBuildings(props.realm.id)
       await fetchRaiding(props.realm.id)
     })
 
-    const fetchRealmMetaData = async (id) => {
-      try {
-        return await axios.get(
-          'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
-            id
-        )
-      } catch (e) {
-        console.log(e)
-      }
-    }
+    // const fetchRealmMetaData = async (id) => {
+    //   try {
+    //     return await axios.get(
+    //       'https://api.opensea.io/api/v1/asset/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d/' +
+    //         id
+    //     )
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // }
 
     const active = ref(false)
 
-    const cities = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Cities'
-          )
-        : null
-    })
-    const harbours = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Harbors'
-          )
-        : null
-    })
-    const regions = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Regions'
-          )
-        : null
-    })
-    const rivers = computed(() => {
-      return metaData.value.traits.length
-        ? metaData.value.traits.find(
-            (resource) => resource.trait_type === 'Rivers'
-          )
-        : null
-    })
-    const wonder = (traits) => {
-      return traits.find(
-        (resource) => resource.trait_type === 'Wonder (translated)'
-      )
-    }
-    const order = (traits) => {
-      return traits.find((resource) => resource.trait_type === 'Order')
-    }
     return {
       claimResources,
       getRealmsResourceBalance,
       balance,
       loading,
-      error,
       result,
       metaData,
       withdraw,
@@ -297,12 +253,7 @@ export default defineComponent({
       getBuildings,
       buildings,
       active,
-      cities,
-      harbours,
-      regions,
-      rivers,
-      wonder,
-      order,
+
       unsettle,
       isAddressPage,
       raidingArmy,

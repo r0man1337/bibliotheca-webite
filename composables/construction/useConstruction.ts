@@ -2,16 +2,16 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-
+import { useNotification } from '../web3/useNotification'
 import TraitConstructionFacetAbi from '~/abi/TraitConstructionFacet.json'
 
 import diamondAddress from '~/constant/diamondAddress'
 import erc721tokens from '~/constant/erc721tokens'
 
 export function useConstruction() {
-  const { provider, library, account, activate } = useWeb3()
-  const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { account } = useWeb3()
 
+  const { showError } = useNotification()
   const error = reactive({
     building: null,
     costs: null,
@@ -45,6 +45,7 @@ export function useConstruction() {
       )
     } catch (e) {
       console.log(e)
+      await showError(e.message)
       error.building = e.message
     } finally {
       await getBuildings(realmId)

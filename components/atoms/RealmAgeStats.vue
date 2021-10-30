@@ -1,32 +1,23 @@
 <template>
   <div>
-    <span v-if="ageClaimed">
-      Age Settled: {{ ageClaimed[0] }} <br />
-      Age Last Claimed: {{ ageClaimed[1] }}
+    <span>
+      Age Settled: {{ ageSettled }} <br />
+      Age Last Claimed: {{ ageClaimed }}
     </span>
   </div>
 </template>
 <script>
-import { useFetch } from '@nuxtjs/composition-api'
 import { defineComponent } from '@vue/composition-api'
-import { useStatistics } from '~/composables/statistics/useStatistics'
 export default defineComponent({
   props: {
-    realm: {
+    ageClaimed: {
       type: String,
       required: true,
     },
-  },
-  setup(props) {
-    const { getRealmAgeClaimed, ageClaimed } = useStatistics()
-
-    useFetch(async () => {
-      await getRealmAgeClaimed(props.realm)
-    })
-
-    return {
-      ageClaimed,
-    }
+    ageSettled: {
+      type: String,
+      required: true,
+    },
   },
 })
 </script>
