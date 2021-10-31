@@ -9,8 +9,8 @@ import {
 } from '@nuxtjs/composition-api'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
-import { useNetwork, activeNetwork } from './useNetwork'
 import { useWeb3 } from '@instadapp/vue-web3'
+import { useNetwork, activeNetwork } from './useNetwork'
 import { useGraph } from './useGraph'
 import { useBigNumber } from './useBigNumber'
 import { mintedRealmsQuery } from './../graphql/queries'
@@ -101,7 +101,7 @@ export function useMint() {
         lootIds
       )
     } catch (e) {
-      error.mint = e.message
+      error.mint = e.data.message
     } finally {
       loading.mint = false
       await getAvailableTokenIds()
