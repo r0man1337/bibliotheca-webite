@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <Web3Button type="primary" @click.native="open(raidedRealm)">
-      Raid Realm
-    </Web3Button>
-  </div>
+  <Web3Button class="w-full" type="primary" @click.native="open(raidedRealm)">
+    Raid Realm
+  </Web3Button>
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'

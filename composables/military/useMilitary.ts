@@ -43,6 +43,8 @@ export function useMilitary() {
       console.log(e)
       await showError(e.data.message)
     } finally {
+      await fetchRaiding(realmId)
+      await fetchDefence(realmId)
       loading.buildRaiding = false
     }
   }

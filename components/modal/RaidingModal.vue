@@ -32,7 +32,7 @@
     </div>
     <div class="w-4/12 flex flex-col self-center">
       <div v-if="chance" class="text-2xl text-center mb-8">
-        Lord, your chance to win: <br />
+        Lord, your chance of a successful raid: <br />
         {{ chance }}%
       </div>
       <div v-if="raidResults.length" class="w-full text-2xl">

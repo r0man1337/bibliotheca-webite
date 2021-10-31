@@ -51,7 +51,7 @@
         <!-- <Loader v-else class="w-full" /> -->
       </div>
 
-      <div class="p-2 flex flex-col">
+      <div class="p-2 flex flex-col h-full">
         <h1 v-if="realm" class="flex justify-between">
           <span>{{ realm.name }}</span>
           <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
@@ -141,7 +141,11 @@
             :realm-id="realm.id"
           />
         </div>
-        <RaidRealm v-if="!isAddressPage" :raided-realm="realm" class="w-full" />
+        <RaidRealm
+          v-if="!isAddressPage"
+          :raided-realm="realm"
+          class="w-full mt-auto"
+        />
       </div>
     </div>
     <div
