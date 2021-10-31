@@ -68,7 +68,13 @@
         >
       </nav>
 
-      <div class="mt-auto flex py-10 justify-between px-4">
+      <div class="mt-auto flex flex-wrap py-10 justify-between px-4">
+        <div class="w-full text-center text-xl pb-5 hover:underline">
+          <a href="https://docs.bibliothecaforloot.com/setup">Help Docs</a>
+        </div>
+        <div class="w-full text-center text-xl pb-5 hover:underline">
+          <a href="https://forum.bibliothecaforloot.com/">Forum</a>
+        </div>
         <a
           target="blank_"
           class="hover:bg-gracy-700 self-center"
