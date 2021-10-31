@@ -105,7 +105,7 @@ export default defineComponent({
     } = useStaking()
 
     const sRealms = computed(() => {
-      return adventurer.value.l2?.srealms || []
+      return adventurer.l2?.srealms || []
     })
 
     onMounted(async () => {
@@ -121,8 +121,8 @@ export default defineComponent({
     })
 
     const popFromArray = (value) => {
-      const index = adventurer.value.l2.srealms.map((e) => e.id).indexOf(value)
-      adventurer.value.l2.srealms.splice(index, 1)
+      const index = adventurer.l2.srealms.map((e) => e.id).indexOf(value)
+      adventurer.l2.srealms.splice(index, 1)
     }
 
     return {

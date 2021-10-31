@@ -1,5 +1,5 @@
 /* eslint-disable max-depth */
-import { reactive, ref } from '@nuxtjs/composition-api'
+import { computed, reactive, ref } from '@nuxtjs/composition-api'
 import { getl1Adventurer, getl2Adventurer } from './graphql/queries'
 import { useNetwork } from '~/composables/web3/useNetwork'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
@@ -8,6 +8,11 @@ export enum Layers {
   l1,
   l2,
 }
+
+const adventurer = reactive({
+  l1: null,
+  l2: null,
+})
 export function useAdventurer() {
   const loading = ref(false)
   const error = reactive({
@@ -15,11 +20,6 @@ export function useAdventurer() {
   })
   const { gqlRequest } = useGraph()
   const { useL1Network, useL2Network } = useNetwork()
-  const adventurer = ref({
-    l1: null,
-    l2: null,
-  })
-
   const fetchAdventurer = async (address, layer) => {
     if (layer === 'l1') {
       const { wallet } = await gqlRequest(
@@ -27,14 +27,15 @@ export function useAdventurer() {
         { address },
         useL1Network.value.id
       )
-      adventurer.value.l1 = wallet
+      adventurer.l1 = wallet
     } else {
       const { wallet } = await gqlRequest(
         getl2Adventurer,
         { address },
         useL2Network.value.id
       )
-      adventurer.value.l2 = wallet
+
+      adventurer.l2 = wallet
     }
   }
 
@@ -59,10 +60,15 @@ export function useAdventurer() {
     }
   }
 
+  const l2 = computed(() => {
+    return adventurer
+  })
+
   return {
     getAdventurer,
     adventurer,
     error,
     loading,
+    l2,
   }
 }

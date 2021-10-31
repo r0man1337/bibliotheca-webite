@@ -10,8 +10,8 @@
       transition
       duration-150
       min-h-80
-      hover:shadow-2xl hover:border-gray-800
-      border border-black
+      hover:shadow-2xl hover:border-green-300
+      border-2 border-black
       flex flex-col
       group
       p-2

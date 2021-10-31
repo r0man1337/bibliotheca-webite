@@ -19,6 +19,7 @@
           border-gray-900
           w-auto
           border
+          shadow
         "
       >
         <a
@@ -122,7 +123,7 @@ export default defineComponent({
     const { getAdventurer, adventurer } = useAdventurer()
 
     onMounted(async () => {
-      if (adventurer.value.l1) {
+      if (adventurer.l1) {
         await openSeaFetch()
       }
     })
@@ -136,7 +137,7 @@ export default defineComponent({
     const offset = ref(0)
     const openSeaFetch = async (off) => {
       loading.value = true
-      const numPages = Math.ceil(adventurer.value.l1.realmsHeld / 50)
+      const numPages = Math.ceil(adventurer.l1.realmsHeld / 50)
 
       for (let page = 0; page < numPages; page++) {
         try {

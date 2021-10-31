@@ -18,9 +18,9 @@
         :realm="selectedAttackingRealm"
         attacking
       />
-      <h5 class="w-full text-2xl text-gray-300">Select Realm</h5>
+      <h5 class="w-full text-2xl text-gray-300 pb-4">Select Realm</h5>
       <div class="flex justify-between flex-wrap">
-        <div v-if="sRealms" class="overflow-scroll max-h-1/2">
+        <div v-if="sRealms" class="overflow-y-scroll max-h-1/2">
           <RaidingRealm
             v-for="(realm, index) in sRealms"
             :key="index"
@@ -164,7 +164,7 @@ export default defineComponent({
       raidChance,
       chance,
     } = useRaiding()
-    const { getAdventurer, adventurer } = useAdventurer()
+    const { getAdventurer, adventurer, l2 } = useAdventurer()
     const { account } = useWeb3()
 
     const { getRealmsResourceBalance, balance } = useStaking()
@@ -174,7 +174,11 @@ export default defineComponent({
       await raidChance(selectedAttackingRealm.value.id, props.raidedRealm.id)
     })
     const sRealms = computed(() => {
-      return adventurer.value.l2?.srealms || []
+      return selectedAttackingRealm.value
+        ? adventurer.l2?.srealms.filter(
+            (a) => a.id !== selectedAttackingRealm.value.id
+          )
+        : adventurer.l2?.srealms
     })
 
     const balanceRounded = computed(() => {
@@ -200,6 +204,7 @@ export default defineComponent({
       selectAttackingRealm,
       removeAttackingRealm,
       raidChance,
+      l2,
       chance,
     }
   },
