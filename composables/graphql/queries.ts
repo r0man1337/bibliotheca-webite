@@ -62,6 +62,16 @@ const getRealms = gql`
     }
   }
 `
+const getResourceListQuery = gql`
+  query getResourceListQuery {
+    resources(first: 25) {
+      id
+      name
+      stakedRealms
+      totalRealms
+    }
+  }
+`
 const getl1Adventurer = gql`
   ${WalletFragment}
   ${RealmFragment}
@@ -192,4 +202,5 @@ export {
   lastOutboxEntryQuery,
   getWithdrawalsQuery,
   messageHasExecutedQuery,
+  getResourceListQuery,
 }
