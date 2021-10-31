@@ -71,6 +71,7 @@ export function useRealms() {
   const defaultVariables = (params?) => {
     return {
       address: params?.address?.toLowerCase() || '',
+      resources: params?.resources || [],
       first: params?.first || 12,
       skip: params?.skip || 0,
     }
