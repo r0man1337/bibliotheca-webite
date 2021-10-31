@@ -14,7 +14,7 @@
 
         <Web3Button
           type="small"
-          :disabled="loading.buildRaiding"
+          :disabled="!unitCost"
           @click="buildRaiding(realmId, unitId, qty, unitCost[0], unitCost[1])"
         >
           {{ loading.buildRaiding ? 'Building..' : 'Build' }}

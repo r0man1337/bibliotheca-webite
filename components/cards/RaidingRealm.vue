@@ -15,7 +15,7 @@
       border-2 border-gray-800
       flex flex-col
       group
-      p-2
+      p-4
       w-80
     "
   >

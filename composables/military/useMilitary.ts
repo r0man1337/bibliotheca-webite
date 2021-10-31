@@ -122,14 +122,24 @@ async function buildRaidingArmy(
     ArmyTrainingFacet.abi,
     signer
   )
-
-  const build = await armyTrainingFacet.buildRaidingArmy(
-    realmId,
-    unitId,
-    quantity,
-    resourceIds,
-    resourceValues
-  )
+  let build
+  if (unitId === 0 || unitId === 1) {
+    build = await armyTrainingFacet.buildRaidingArmy(
+      realmId,
+      unitId,
+      quantity,
+      resourceIds,
+      resourceValues
+    )
+  } else {
+    build = await armyTrainingFacet.buildDefenceArmy(
+      realmId,
+      unitId,
+      quantity,
+      resourceIds,
+      resourceValues
+    )
+  }
 
   await build.wait()
 

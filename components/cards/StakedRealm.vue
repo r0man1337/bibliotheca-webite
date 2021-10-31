@@ -14,7 +14,7 @@
       border-2 border-black
       flex flex-col
       group
-      p-2
+      p-4
       w-80
     "
   >
@@ -69,7 +69,7 @@
           :age-claimed="realm.ageClaimed"
           :age-settled="realm.ageSettled"
         />
-        <div v-if="raidingArmy" class="my-2">
+        <div v-if="raidingArmy && defensiveArmy" class="my-2">
           <span class="uppercase text-red-400 font-display">Military</span>
           <RealmMilitary
             :realm-id="realm.id"
@@ -83,6 +83,20 @@
             :unit="raidingArmy[2]"
             :unit-id="1"
             :time="raidingArmy[3]"
+          >
+          </RealmMilitary>
+          <RealmMilitary
+            :realm-id="realm.id"
+            :unit="defensiveArmy[0]"
+            :unit-id="2"
+            :time="defensiveArmy[1]"
+          >
+          </RealmMilitary>
+          <RealmMilitary
+            :realm-id="realm.id"
+            :unit="defensiveArmy[2]"
+            :unit-id="3"
+            :time="defensiveArmy[3]"
           >
           </RealmMilitary>
         </div>
@@ -214,6 +228,8 @@ export default defineComponent({
       fetchRaiding,
       //   fetchUnitCost,
       raidingArmy,
+      fetchDefence,
+      defensiveArmy,
     } = useMilitary()
 
     const metaData = ref()
@@ -233,6 +249,7 @@ export default defineComponent({
       // metaData.value = response.data
       await getBuildings(props.realm.id)
       await fetchRaiding(props.realm.id)
+      await fetchDefence(props.realm.id)
     })
 
     // const fetchRealmMetaData = async (id) => {
@@ -267,6 +284,8 @@ export default defineComponent({
       unsettle,
       isAddressPage,
       raidingArmy,
+      fetchDefence,
+      defensiveArmy,
     }
   },
 })

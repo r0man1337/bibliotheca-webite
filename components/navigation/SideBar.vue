@@ -31,6 +31,14 @@
 
       <nav class="flex flex-col p-2 capitalize mt-8">
         <h3 class="mt-8 uppercase text-gray-500">Settling</h3>
+        <BButton
+          v-for="link in settlingLinks"
+          :key="link.title"
+          type="navLink"
+          :to="link.page"
+          @click.native="toggleSideBar"
+          >{{ link.title }}</BButton
+        >
         <h3 class="mt-8 uppercase text-gray-500">Loot Assets</h3>
         <BButton
           v-for="(link, i) in adventureLinks"
@@ -123,10 +131,7 @@ export default {
         page: '/realms',
         title: 'Realms',
       },
-      {
-        page: '/settled-realms',
-        title: 'Settled Realms',
-      },
+
       {
         page: '/manas',
         title: 'Genesis Mana',
@@ -158,6 +163,12 @@ export default {
         title: 'Search All',
       },
     ]
+    const settlingLinks = [
+      {
+        page: '/settled-realms',
+        title: 'Settled Realms',
+      },
+    ]
 
     onMounted(() => {
       getGoldPrice()
@@ -174,6 +185,7 @@ export default {
       assetLinks,
       utilLinks,
       adventureLinks,
+      settlingLinks,
     }
   },
 }
