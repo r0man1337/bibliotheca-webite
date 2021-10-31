@@ -15,7 +15,7 @@
       sideBarOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
     "
   >
-    <div class="sm:sticky top-10 flex flex-col z-30">
+    <div class="sm:sticky top-10 flex flex-col z-30 h-screen">
       <div class="sm:hidden w-full">
         <button class="ml-auto" @click="toggleSideBar">
           <Close class="w-6 h-6" />
@@ -23,54 +23,47 @@
       </div>
 
       <h2>
-        <NuxtLink to="/"><Book class="w-12 h-12 mx-auto sm:mt-12" /></NuxtLink>
+        <NuxtLink to="/"><Book class="w-16 h-16 mx-auto sm:mt-12" /></NuxtLink>
       </h2>
-      <span class="text-xl text-center"
+      <span class="text-center font-semibold text-2xl"
         ><span class="text-yellow-400">${{ goldPrice }}</span> $AGLD</span
       >
 
-      <nav class="flex flex-col p-2 text-center capitalize">
-        <NuxtLink
+      <nav class="flex flex-col p-2 capitalize mt-8">
+        <h3 class="mt-8 uppercase text-gray-500">Settling</h3>
+        <h3 class="mt-8 uppercase text-gray-500">Loot Assets</h3>
+        <BButton
           v-for="(link, i) in adventureLinks"
           :key="i"
-          class="
-            w-full
-            text-xl
-            rounded-xl
-            hover:bg-black
-            p-2
-            flex
-            justify-around
-          "
+          type="navLink"
           :to="link.page"
           @click.native="toggleSideBar"
         >
           <span class="flex"> {{ link.title }}</span>
-        </NuxtLink>
-
-        <NuxtLink
+        </BButton>
+        <BButton
           v-for="link in assetLinks"
           :key="link.title"
-          class="w-full text-xl rounded-xl hover:bg-black p-2"
+          type="navLink"
           :to="link.page"
           @click.native="toggleSideBar"
-          >{{ link.title }}</NuxtLink
+          >{{ link.title }}</BButton
         >
-        <hr class="my-2 border-gray-600" />
-        <NuxtLink
+        <h3 class="mt-8 uppercase text-gray-500">Utilities</h3>
+        <BButton
           v-for="link in utilLinks"
           :key="link.title"
-          class="w-full text-xl rounded-xl hover:bg-black p-2"
+          type="navLink"
           :to="link.page"
           @click.native="toggleSideBar"
-          >{{ link.title }}</NuxtLink
+          >{{ link.title }}</BButton
         >
       </nav>
 
-      <div class="mx-auto my-20">
+      <div class="mt-auto flex py-10 justify-between px-4">
         <a
           target="blank_"
-          class="hover:bg-gracy-700"
+          class="hover:bg-gracy-700 self-center"
           href="https://github.com/BibliothecaForAdventurers/bibliotheca-webite"
           ><Github class="w-8 h-8"
         /></a>
@@ -78,23 +71,22 @@
           target="blank_"
           class="hover:bg-gracy-700"
           href="https://discord.gg/8NS4JxGmUC"
-          ><Discord class="w-8 h-8 fill-current mt-4"
+          ><Discord class="w-8 h-8 fill-current"
         /></a>
         <a
           target="blank_"
           class="hover:bg-gracy-700"
           href="https://twitter.com/lootgraph"
-          ><Twitter class="w-8 h-8 fill-current mt-4"
+          ><Twitter class="w-8 h-8 fill-current"
         /></a>
         <a
           target="blank_"
           class="hover:bg-gracy-700"
           href="https://medium.com/@bibliotheca"
         >
-          <Medium class="w-8 h-8 fill-current mt-4" />
+          <Medium class="w-8 h-8 fill-current" />
         </a>
       </div>
-      <p class="text-center">Data on this site may be delayed.</p>
     </div>
   </div>
 </template>

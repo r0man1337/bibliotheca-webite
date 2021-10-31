@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    class="button ease-in-out font-display text-center disabled:opacity-25"
+    class="button ease-in-out font-display disabled:opacity-25"
     :class="[buttonColor]"
     v-bind="$attrs"
     :disabled="disabled"

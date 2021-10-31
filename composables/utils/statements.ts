@@ -30,4 +30,76 @@ export const statements = [
       },
     ],
   },
+  {
+    error: 'NO_UNITS',
+    messages: [
+      {
+        title: 'Build a Unit',
+        text: 'Construct a Knight or Footsoldier',
+      },
+    ],
+  },
+  {
+    error: 'CANT_ATTACK_SAME_ORDER',
+    messages: [
+      {
+        title: 'My Leige, these are our Tribe.',
+        text: 'You cannot attack your own order.',
+      },
+    ],
+  },
+  {
+    error: 'NO_LORDS_AVAILABLE',
+    messages: [
+      {
+        title: 'No Lords available yet',
+        text: 'You have no available Lords.',
+      },
+    ],
+  },
+  {
+    error: 'NOT_ENOUGH_RESOURCES',
+    messages: [
+      {
+        title: 'Not enough resources',
+        text: 'You do not have enough resources to build this',
+      },
+    ],
+  },
+  {
+    error: 'NO_CITIES',
+    messages: [
+      {
+        title: 'You have no space left',
+        text: 'Your cities are full',
+      },
+    ],
+  },
+  {
+    error: 'NO_RIVERS',
+    messages: [
+      {
+        title: 'You have no space left',
+        text: 'Your rivers are full',
+      },
+    ],
+  },
+  {
+    error: 'NO_REGIONS',
+    messages: [
+      {
+        title: 'You have no space left',
+        text: 'Your regions are full',
+      },
+    ],
+  },
+  {
+    error: 'NO_HARBOURS',
+    messages: [
+      {
+        title: 'You have no space left',
+        text: 'Your harbours are full',
+      },
+    ],
+  },
 ]
