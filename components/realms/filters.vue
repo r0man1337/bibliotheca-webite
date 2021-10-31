@@ -37,13 +37,13 @@
       </button>
     </div>
 
-    <form class="mt-4 border-t border-gray-200">
+    <div class="mt-4 border-t border-gray-200">
       <div
         v-for="section in filters"
         :key="section.id"
         class="border-t border-gray-200 px-4 py-6"
       >
-        <h3 class="-mx-2 -my-3 flow-root">
+        <h4 class="-mx-2 -my-3 flow-root">
           <!-- Expand/collapse section button -->
           <button
             type="button"
@@ -61,7 +61,7 @@
             aria-expanded="false"
             @click="toggleSection(section)"
           >
-            <span class="font-medium text-gray-300"> {{ section.name }} </span>
+            <span class="text-gray-300"> {{ section.name }} </span>
             <span class="ml-6 flex items-center">
               <svg
                 v-if="!section.open"
@@ -98,7 +98,7 @@
               </svg>
             </span>
           </button>
-        </h3>
+        </h4>
         <!-- Filter section, show/hide based on section state. -->
         <div v-if="section.open" id="filter-section-mobile-0" class="pt-6">
           <div class="space-y-2">
@@ -109,10 +109,9 @@
             >
               <input
                 :id="'filter-' + resource.id"
-                v-model="resource.checked"
-                name="color[]"
+                v-model="checkedResources"
+                :value="resource.id"
                 type="checkbox"
-                :checked="resource.checked"
                 class="
                   h-4
                   w-4
@@ -129,17 +128,17 @@
                 {{ resource.name }} ({{ resource.stakedRealms }})
               </label>
             </div>
-            <BButton type="primary" @click="updateFilters()"
+            <BButton type="primary" @click="updateResources()"
               >Update Resources</BButton
             >
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 <script>
-import { onMounted, ref, computed } from '@vue/composition-api'
+import { onMounted, ref } from '@vue/composition-api'
 import BButton from '../atoms/BButton.vue'
 import Close from '~/assets/img/x-square.svg?inline'
 // import { resources } from '@/composables/utils/resourceColours'
@@ -158,7 +157,7 @@ export default {
       type: Boolean,
     },
   },
-  setup() {
+  setup(props, context) {
     const { getResourceList, resourceList, resourceListOrdered } =
       useResources()
     const filters = ref([
@@ -184,11 +183,10 @@ export default {
     ])
     const openFilter = ref(null)
 
-    const checkedResources = computed(() => {
-      return filters.value[0].options.filter((option) => {
-        return (option.checked = true)
-      })
-    })
+    const checkedResources = ref([])
+    const updateResources = () => {
+      context.emit('searchFilter', checkedResources.value)
+    }
     const toggleSection = (section) => {
       section.open = !section.open
     }
@@ -218,6 +216,7 @@ export default {
       filters,
       resourceListOrdered,
       toggleSection,
+      updateResources,
       openFilter,
       adventureLinks,
       checkedResources,

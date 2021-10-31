@@ -60,6 +60,7 @@ export default {
   },
   methods: {
     externalSite() {
+      console.log('external site buytton')
       if (this.href) {
         window.location = this.href
       }

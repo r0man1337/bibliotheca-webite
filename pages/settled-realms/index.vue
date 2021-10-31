@@ -5,6 +5,7 @@
         class="fixed w-80 min-h-screen"
         :filters-open="filtersOpen"
         @toggleFilter="filtersOpen = !filtersOpen"
+        @searchFilter="searchFilter"
       />
       <h1>Settled Realms</h1>
       <form class="flex sm:w-1/3" method="POST" @submit.prevent="submitSearch">
@@ -58,16 +59,16 @@
         </BButton>
       </div>
 
-      <div v-if="!$fetchState.pending" class="flex flex-wrap w-full">
+      <div v-if="$fetchState.pending || loading" class="flex flex-wrap mt-6">
+        <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
+      </div>
+      <div v-else class="flex flex-wrap w-full">
         <StakedRealm
           v-for="realm in displayedSRealms"
           :key="realm.id"
           :realm="realm"
         />
         <!--<RealmCard :id="realm.token_id" :realm="realm" />-->
-      </div>
-      <div v-else class="flex flex-wrap mt-6">
-        <Loader v-for="(loader, index) in 6" :key="index" class="mr-3 mb-3" />
       </div>
 
       <div v-if="!$fetchState.pending">
@@ -91,13 +92,12 @@ import { useRealms } from '~/composables/web3/useRealms'
 export default defineComponent({
   setup(props, context) {
     const { shortenHash } = useFormatting()
-    const { getSRealms, sRealms } = useRealms()
+    const { getSRealms, sRealms, loading } = useRealms()
 
     const adventurer = ref(null)
     const usersGold = ref(null)
     const search = ref()
     const openSeaData = ref()
-    const loading = ref()
     const orderBy = ref()
     const skip = ref(0)
     const displayedSRealms = ref()
@@ -123,6 +123,13 @@ export default defineComponent({
         name: 'wonder',
       },
     ]
+    const searchFilter = async (resources) => {
+      const resourceNumbers = resources.map((item) => {
+        return parseInt(item)
+      })
+      await getSRealms({ resources: resourceNumbers, first: first.value })
+      displayedSRealms.value = sRealms.value
+    }
     /* const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
@@ -167,7 +174,6 @@ export default defineComponent({
     }
 
     const fetchMoreRealms = async () => {
-      loading.value = true
       first.value = 8
       skip.value = skip.value + 8
       try {
@@ -175,13 +181,12 @@ export default defineComponent({
         displayedSRealms.value = displayedSRealms.value.concat(sRealms.value)
       } catch (e) {
         console.log(e)
-      } finally {
-        loading.value = false
       }
     }
 
     return {
       adventurer,
+      searchFilter,
       shortenHash,
       usersGold,
       openSeaData,
