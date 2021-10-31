@@ -4,13 +4,14 @@
       <span
         v-if="getOutputLevel"
         :class="findResources.colourClass"
-        class="rounded p-1 text-sm mr-2 bg-opacity-75"
+        class="rounded p-1 mr-2 bg-opacity-75"
         >{{ resourceLevel }}</span
       >
       <span class="self-center">
         <span v-if="!loading.resources"
-          >{{ findResources.trait }}: {{ getOutputLevel * vault }} units</span
-        >
+          >{{ findResources.trait }}:
+          {{ getOutputLevel * vault }}
+        </span>
         <span v-else class="flex"
           >{{ findResources.trait }}: <LoadingDots class="w-5"
         /></span>

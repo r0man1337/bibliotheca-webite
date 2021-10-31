@@ -72,7 +72,6 @@
         <div v-if="raidingArmy" class="my-2">
           <span class="uppercase text-red-400 font-display">Military</span>
           <RealmMilitary
-            :key="index"
             :realm-id="realm.id"
             :unit="raidingArmy[0]"
             :unit-id="0"
@@ -80,7 +79,6 @@
           >
           </RealmMilitary>
           <RealmMilitary
-            :key="index"
             :realm-id="realm.id"
             :unit="raidingArmy[2]"
             :unit-id="1"

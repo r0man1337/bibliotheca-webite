@@ -2,7 +2,7 @@
   <div class="flex justify-between my-1" @mouseover="fetchUnitCost(unitId)">
     <div>{{ unitValues.name }}: {{ unit }}</div>
     <v-popover placement="right" trigger="hover">
-      <div class="flex">
+      <div v-if="isAddressPage" class="flex">
         <div class="mr-2">
           <span>qty:</span>
           <input
@@ -56,6 +56,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import { militaryUnits } from '@/composables/utils/militaryUnits'
 import { useMilitary } from '~/composables/military/useMilitary'
 import { resources } from '@/composables/utils/resourceColours'
+import { useConnect } from '~/composables/web3/useConnect'
 export default defineComponent({
   props: {
     unit: {
@@ -85,7 +86,7 @@ export default defineComponent({
       loading,
       result,
     } = useMilitary()
-
+    const { isAddressPage } = useConnect()
     const unitValues = computed(() => {
       return militaryUnits.find((a) => a.id === parseInt(props.unitId))
     })
@@ -105,6 +106,7 @@ export default defineComponent({
       loading,
       result,
       unitValues,
+      isAddressPage,
     }
   },
 })

@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="{ 'border-green-300': selectedAttackingRealm.id === realm.id }"
     class="
       bg-black
       rounded-xl
@@ -10,8 +11,8 @@
       transition
       duration-150
       min-h-80
-      hover:shadow-2xl hover:border-gray-800
-      border border-black
+      hover:shadow-2xl hover:border-green-300
+      border-2 border-gray-800
       flex flex-col
       group
       p-2
@@ -30,14 +31,12 @@
           <div class="py-4">
             <OrderChip class="text-sm" :order-id="realm.order" />
           </div>
-          <Happiness class="self-center" :realm="realm.id" />
-          <RealmStatistics class="self-center" :realm="realm.id" />
+          <!-- <Happiness class="self-center" :realm="realm.id" /> -->
         </div>
-        <!-- <RealmAgeStats :realm="realm.id" /> -->
-        <div v-if="raidingArmy" class="my-3">
+        <RealmStatistics :icon="false" :realm="realm.id" />
+        <div v-if="raidingArmy && defensiveArmy" class="my-3">
           <span class="uppercase text-red-400 font-display">Military</span>
           <RealmMilitary
-            :key="index"
             :realm-id="realm.id"
             :unit="raidingArmy[0]"
             :unit-id="0"
@@ -45,53 +44,30 @@
           >
           </RealmMilitary>
           <RealmMilitary
-            :key="index"
             :realm-id="realm.id"
             :unit="raidingArmy[2]"
             :unit-id="1"
             :time="raidingArmy[3]"
           >
           </RealmMilitary>
-        </div>
-        <span v-if="!attacking" class="uppercase text-red-400 font-display mt-3"
-          >days unclaimed</span
-        >
-        <div v-if="!attacking" class="flex justify-between">
-          <div>
-            <span
-              >Day:
-              <span v-if="balance">{{ (balance.day / 3600).toFixed(4) }} </span>
-            </span>
-            <br />
-            <span
-              >Vault:
-              <span v-if="balance"
-                >{{ (balance.month / 3600).toFixed(4) }}
-              </span>
-            </span>
-          </div>
-          <div v-if="isAddressPage">
-            <BButton type="small" @click="claimResources(realm.id)">
-              <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-              <span v-else>Claim</span>
-            </BButton>
-          </div>
+          <RealmMilitary
+            :realm-id="realm.id"
+            :unit="defensiveArmy[0]"
+            :unit-id="2"
+            :time="defensiveArmy[1]"
+          >
+          </RealmMilitary>
+          <RealmMilitary
+            :realm-id="realm.id"
+            :unit="defensiveArmy[2]"
+            :unit-id="3"
+            :time="defensiveArmy[3]"
+          >
+          </RealmMilitary>
         </div>
 
-        <div v-if="!attacking" class="my-3">
-          <span class="uppercase text-red-400 font-display">Resources</span>
-          <div class="text-xs">
-            <span class="uppercase">LVL Resource p/day</span>
-          </div>
-          <StakedRealmResource
-            v-for="(resource, index) in realm.resources"
-            :key="index"
-            :resource="resource"
-            :realm-id="realm.id"
-          />
-        </div>
         <BButton
-          v-if="attacking"
+          v-if="attacking && selectedAttackingRealm.id !== realm.id"
           type="primary"
           @click="selectAttackingRealm(realm)"
           >Select Realm</BButton
@@ -106,13 +82,9 @@ import { defineComponent, onMounted, watch } from '@vue/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
 
-import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useRaiding } from '~/composables/military/useRaiding'
 import { useMilitary } from '~/composables/military/useMilitary'
 export default defineComponent({
-  components: {
-    LoadingRings,
-  },
   props: {
     realm: {
       type: Object,
@@ -128,36 +100,30 @@ export default defineComponent({
     const { selectAttackingRealm, selectedAttackingRealm } = useRaiding()
     const { isAddressPage } = useConnect()
     const {
-      getRealmsResourceBalance,
       claimResources,
-      balance,
+
       loading,
       error,
       result,
       withdraw,
     } = useStaking()
 
-    const {
-      //   buildRaiding,
-      fetchRaiding,
-      //   fetchUnitCost,
-      raidingArmy,
-    } = useMilitary()
+    const { fetchRaiding, raidingArmy, fetchDefence, defensiveArmy } =
+      useMilitary()
 
     onMounted(async () => {
-      await getRealmsResourceBalance(props.realm.id)
       await fetchRaiding(props.realm.id)
+      await fetchDefence(props.realm.id)
     })
 
     watch(selectedAttackingRealm, async () => {
-      await getRealmsResourceBalance(props.realm.id)
       await fetchRaiding(props.realm.id)
+      await fetchDefence(props.realm.id)
     })
 
     return {
       claimResources,
-      getRealmsResourceBalance,
-      balance,
+
       loading,
       error,
       result,
@@ -166,6 +132,8 @@ export default defineComponent({
       raidingArmy,
       selectAttackingRealm,
       selectedAttackingRealm,
+      fetchDefence,
+      defensiveArmy,
     }
   },
 })

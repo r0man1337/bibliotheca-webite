@@ -59,6 +59,22 @@ export function useMilitary() {
       loading.fetching = false
     }
   }
+  const defensiveArmy = ref()
+  const fetchDefence = async (realmId) => {
+    try {
+      error.buildRaiding = null
+      loading.fetching = true
+      defensiveArmy.value = await getDefensiveArmy(
+        activeNetwork.value.id,
+        realmId
+      )
+    } catch (e) {
+      console.log(e)
+      error.buildRaiding = e.message
+    } finally {
+      loading.fetching = false
+    }
+  }
 
   const unitCost = ref()
   const fetchUnitCost = async (unitId) => {
@@ -73,23 +89,10 @@ export function useMilitary() {
       loading.fetching = false
     }
   }
-  const raidingUnitTime = ref()
-  const fetchRaidingUnitTime = async (unitId) => {
-    try {
-      error.buildRaiding = null
-      loading.fetching = true
-      raidingUnitTime.value = await getRaidingUnitTime(
-        activeNetwork.value.id,
-        unitId
-      )
-    } catch (e) {
-      console.log(e)
-      error.buildRaiding = e.message
-    } finally {
-      loading.fetching = false
-    }
-  }
+
   return {
+    fetchDefence,
+    defensiveArmy,
     buildRaiding,
     fetchRaiding,
     fetchUnitCost,
@@ -148,7 +151,7 @@ async function getRaidingArmy(network, realmId) {
   return await armyTrainingFacet.getRaidingArmy(realmId)
 }
 
-async function getRaidingUnitTime(network, realmId) {
+async function getDefensiveArmy(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokensArr = diamondAddress[network].allTokens
   const signer = provider.getSigner()
@@ -160,7 +163,7 @@ async function getRaidingUnitTime(network, realmId) {
     signer
   )
 
-  return await armyTrainingFacet.getRaidingUnitTime(realmId)
+  return await armyTrainingFacet.getDefensiveArmy(realmId)
 }
 
 async function getUnitCost(network, unitId) {

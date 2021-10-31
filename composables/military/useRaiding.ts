@@ -15,14 +15,40 @@ export function useRaiding() {
   const { showError } = useNotification()
   const error = reactive({
     raidingRealm: null,
+    raidChance: null,
   })
 
   const loading = reactive({
     raidingRealm: false,
     fetching: false,
+    raidChance: false,
   })
 
   const raidResults = ref([])
+  const chance = ref()
+  const raidChance = async (attackingRealmIdIn, defendingRealmIdIn) => {
+    try {
+      error.raidChance = null
+      loading.raidChance = true
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const tokensArr = diamondAddress[activeNetwork.value.id].allTokens
+      const signer = provider.getSigner()
+      const tokensAddrArr = tokensArr.map((a) => a.address)
+      const raidingFacet = new ethers.Contract(
+        tokensAddrArr[0],
+        RaidingFacet.abi,
+        signer
+      )
+      chance.value = await raidingFacet.getChance(
+        attackingRealmIdIn,
+        defendingRealmIdIn
+      )
+    } catch (e) {
+      await showError(e.data.message)
+    } finally {
+      loading.raidChance = false
+    }
+  }
 
   const raidingRealm = async (attackingRealmIdIn, defendingRealmIdIn) => {
     try {
@@ -110,6 +136,8 @@ export function useRaiding() {
   }
 
   return {
+    raidChance,
+    chance,
     raidingRealm,
     selectedAttackingRealm,
     selectAttackingRealm,

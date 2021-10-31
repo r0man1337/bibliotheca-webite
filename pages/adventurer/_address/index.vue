@@ -19,7 +19,6 @@
           border-gray-900
           w-auto
           border
-          shadow
         "
       >
         <a

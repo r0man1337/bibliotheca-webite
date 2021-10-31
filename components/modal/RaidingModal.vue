@@ -1,14 +1,26 @@
 <template>
-  <div class="container bg-gray-900 flex p-8 max-h-screen">
+  <div
+    class="
+      container
+      bg-gray-900
+      flex
+      p-8
+      max-h-screen
+      rounded-2xl
+      shadow-3xl
+      border-4
+      h-screen
+    "
+  >
     <div class="w-4/12">
       <RaidingRealm
         v-if="selectedAttackingRealm"
         :realm="selectedAttackingRealm"
         attacking
       />
-      <h5 class="w-full">Select Realm</h5>
+      <h5 class="w-full text-2xl text-gray-300">Select Realm</h5>
       <div class="flex justify-between flex-wrap">
-        <div v-if="sRealms" class="overflow-scroll h-96">
+        <div v-if="sRealms" class="overflow-scroll max-h-1/2">
           <RaidingRealm
             v-for="(realm, index) in sRealms"
             :key="index"
@@ -19,6 +31,10 @@
       </div>
     </div>
     <div class="w-4/12 flex flex-col self-center">
+      <div v-if="chance" class="text-2xl text-center mb-8">
+        Lord, your chance to win: <br />
+        {{ chance }}%
+      </div>
       <div v-if="raidResults.length" class="w-full text-2xl">
         <h3>Raid Results</h3>
         <div>Your Units Lost: {{ raidResults[0].raidingUnitsLost }}</div>
@@ -54,7 +70,10 @@
         <BButton
           class="self-center mx-auto text-xl flex"
           type="primary"
-          @click.native="raidingRealm(sRealms[0].id, raidedRealm.id)"
+          :disabled="!selectedAttackingRealm"
+          @click.native="
+            raidingRealm(selectedAttackingRealm.id, raidedRealm.id)
+          "
           @mouseenter.native="raiding = false"
           @mouseleave.native="raiding = true"
         >
@@ -75,10 +94,20 @@
         />
         <WarriorRunning v-else inverse class="self-center mx-auto" />
       </div>
-      <div class="text-center bg-gray-800 rounded-xl shadow p-6">
-        <div class="text-4xl font-display mb-3">
-          Vault:
-          <span v-if="balance">{{ balanceRounded }} days </span>
+      <div
+        class="
+          text-center
+          bg-black
+          rounded-t-full
+          shadow
+          p-6
+          pt-8
+          border-yellow-300 border-4
+        "
+      >
+        <div class="text-2xl font-display mb-3">
+          {{ raidedRealm.name }} Vault: <br />
+          <span v-if="balance" class="text-3xl">{{ balanceRounded }} Days</span>
         </div>
 
         <div class="flex justify-around">
@@ -92,10 +121,14 @@
             />
           </div>
         </div>
+        <div class="pt-8">
+          You will win 25% of the total resources on a successful raid.
+        </div>
       </div>
     </div>
     <div class="w-4/12">
       <div class="flex justify-between flex-wrap">
+        <h2 class="w-full text-center mb-8">You are Raiding</h2>
         <RaidingRealm class="ml-auto" :realm="raidedRealm" />
       </div>
     </div>
@@ -108,6 +141,7 @@ import {
   defineComponent,
   computed,
   ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useAdventurer } from '~/composables/useAdventurer'
 import { useStaking } from '~/composables/staking/useStaking'
@@ -127,6 +161,8 @@ export default defineComponent({
       selectedAttackingRealm,
       selectAttackingRealm,
       removeAttackingRealm,
+      raidChance,
+      chance,
     } = useRaiding()
     const { getAdventurer, adventurer } = useAdventurer()
     const { account } = useWeb3()
@@ -135,6 +171,7 @@ export default defineComponent({
     useFetch(async () => {
       await getRealmsResourceBalance(props.raidedRealm.id)
       await getAdventurer(account.value, 'l2')
+      await raidChance(selectedAttackingRealm.value.id, props.raidedRealm.id)
     })
     const sRealms = computed(() => {
       return adventurer.value.l2?.srealms || []
@@ -145,6 +182,11 @@ export default defineComponent({
     })
 
     const raiding = ref(true)
+
+    watch(selectedAttackingRealm, async () => {
+      await raidChance(selectedAttackingRealm.value.id, props.raidedRealm.id)
+    })
+
     return {
       raiding,
       raidResults,
@@ -157,6 +199,8 @@ export default defineComponent({
       selectedAttackingRealm,
       selectAttackingRealm,
       removeAttackingRealm,
+      raidChance,
+      chance,
     }
   },
 })

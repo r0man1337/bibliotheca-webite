@@ -1,63 +1,68 @@
 <template>
-  <div class="flex space-x-2">
-    <v-popover v-if="realmStatistics" trigger="hover">
-      <button>
-        <span class="text-2xl">⚔️</span>
-      </button>
+  <div>
+    <div v-if="!icon && realmStatistics" class="text-left">
+      Defence: {{ realmStatistics[0] }}
+    </div>
+    <div v-else class="flex space-x-2">
+      <v-popover v-if="realmStatistics" trigger="hover">
+        <button>
+          <span class="text-2xl">⚔️</span>
+        </button>
 
-      <template slot="popover">
-        <div
-          class="
-            bg-gray-300
-            shadow-xl
-            p-4
-            rounded
-            text-black
-            flex
-            justify-between
-          "
-        >
-          <div class="flex flex-col pr-2">
-            <span>Defence:</span>
-            <span>Offence:</span>
-            <span>Magic:</span>
+        <template slot="popover">
+          <div
+            class="
+              bg-gray-300
+              shadow-xl
+              p-4
+              rounded
+              text-black
+              flex
+              justify-between
+            "
+          >
+            <div class="flex flex-col pr-2">
+              <span>Defence:</span>
+              <!-- <span>Offence:</span>
+              <span>Magic:</span> -->
+            </div>
+            <div class="flex flex-col">
+              <span>{{ realmStatistics[0] }}</span>
+              <!-- <span>{{ realmStatistics[1] }}</span>
+              <span>{{ realmStatistics[2] }}</span> -->
+            </div>
           </div>
-          <div class="flex flex-col">
-            <span>{{ realmStatistics[0] }}</span>
-            <span>{{ realmStatistics[1] }}</span>
-            <span>{{ realmStatistics[2] }}</span>
-          </div>
-        </div>
-      </template>
-    </v-popover>
-    <v-popover v-if="realmStatistics" trigger="hover">
-      <button>
-        <span class="text-2xl">🍎</span>
-      </button>
+        </template>
+      </v-popover>
+      <v-popover v-if="realmStatistics" trigger="hover">
+        <button>
+          <span class="text-2xl">🍎</span>
+        </button>
 
-      <template slot="popover">
-        <div
-          class="
-            bg-gray-300
-            shadow-xl
-            p-4
-            rounded
-            text-black
-            flex
-            justify-between
-          "
-        >
-          <div class="flex flex-col pr-2">
-            <span>Population:</span>
-            <span>Food Supply:</span>
+        <template slot="popover">
+          <div
+            class="
+              bg-gray-300
+              shadow-xl
+              p-4
+              rounded
+              text-black
+              flex
+              justify-between
+            "
+          >
+            <div class="flex flex-col pr-2">
+              <span>Population:</span>
+              <span>Food Supply:</span>
+            </div>
+            <div class="flex flex-col">
+              <span>{{ realmStatistics[4] }}</span>
+              <span>{{ realmStatistics[3] }}</span>
+            </div>
           </div>
-          <div class="flex flex-col">
-            <span>{{ realmStatistics[4] }}</span>
-            <span>{{ realmStatistics[3] }}</span>
-          </div>
-        </div>
-      </template>
-    </v-popover>
+        </template>
+      </v-popover>
+    </div>
   </div>
 </template>
 <script>
@@ -68,6 +73,11 @@ export default defineComponent({
     realm: {
       type: String,
       required: true,
+    },
+    icon: {
+      type: Boolean,
+      default: true,
+      required: false,
     },
   },
   setup(props) {
