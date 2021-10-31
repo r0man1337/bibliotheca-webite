@@ -7,12 +7,18 @@ import { ManaFragment } from './fragments/mana'
 import { GAdventurerFragment } from './fragments/gadventurer'
 
 const getSRealmsQuery = gql`
-  query getSRealms($address: String, $first: Int, $skip: Int) {
+  query getSRealms(
+    $address: String
+    $resources: [Int]
+    $first: Int
+    $skip: Int
+  ) {
     srealms(
       first: $first
       where: {
         currentOwner_contains: $address
         currentOwner_not: "0x0000000000000000000000000000000000000000"
+        resourceIds_contains: $resources
       }
       skip: $skip
     ) {
@@ -22,6 +28,9 @@ const getSRealmsQuery = gql`
       name
       resources {
         id
+        resource {
+          name
+        }
         level
         resourceUpgrades {
           id

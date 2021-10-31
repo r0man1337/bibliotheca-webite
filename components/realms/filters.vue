@@ -108,10 +108,10 @@
               class="flex items-center"
             >
               <input
-                id="filter-mobile-color-0"
+                :id="'filter-' + resource.id"
+                v-model="resource.checked"
                 name="color[]"
                 type="checkbox"
-                :value="resource.checked"
                 :checked="resource.checked"
                 class="
                   h-4
@@ -123,12 +123,15 @@
                 "
               />
               <label
-                for="filter-mobile-color-0"
+                :for="'filter-' + resource.id"
                 class="ml-3 min-w-0 flex-1 text-gray-500"
               >
                 {{ resource.name }} ({{ resource.stakedRealms }})
               </label>
             </div>
+            <BButton type="primary" @click="updateFilters()"
+              >Update Resources</BButton
+            >
           </div>
         </div>
       </div>
@@ -136,7 +139,8 @@
   </div>
 </template>
 <script>
-import { onMounted, ref } from '@vue/composition-api'
+import { onMounted, ref, computed } from '@vue/composition-api'
+import BButton from '../atoms/BButton.vue'
 import Close from '~/assets/img/x-square.svg?inline'
 // import { resources } from '@/composables/utils/resourceColours'
 import { useResources } from '~/composables/resources/useResources'
@@ -146,6 +150,7 @@ export default {
   name: 'Filters',
   components: {
     Close,
+    BButton,
   },
   props: {
     filtersOpen: {
@@ -179,6 +184,11 @@ export default {
     ])
     const openFilter = ref(null)
 
+    const checkedResources = computed(() => {
+      return filters.value[0].options.filter((option) => {
+        return (option.checked = true)
+      })
+    })
     const toggleSection = (section) => {
       section.open = !section.open
     }
@@ -210,6 +220,7 @@ export default {
       toggleSection,
       openFilter,
       adventureLinks,
+      checkedResources,
     }
   },
 }
