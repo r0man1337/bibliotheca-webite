@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="w-4/12 flex flex-col self-center">
-      <div v-if="raidResults.length" class="w-full">
+      <div v-if="raidResults.length" class="w-full text-2xl">
         <h3>Raid Results</h3>
         <div>Your Units Lost: {{ raidResults[0].raidingUnitsLost }}</div>
         <div>Defending Units Lost: {{ raidResults[0].defendingUnitsLost }}</div>

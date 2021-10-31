@@ -70,6 +70,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    time: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
     const {

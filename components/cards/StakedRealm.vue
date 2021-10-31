@@ -69,28 +69,51 @@
           :age-claimed="realm.ageClaimed"
           :age-settled="realm.ageSettled"
         />
-        <span class="uppercase text-red-400 font-display mt-3"
-          >days unclaimed</span
-        >
-        <div class="flex justify-between">
-          <div>
-            <span
-              >Day:
-              <span v-if="balance">{{ (balance.day / 3600).toFixed(4) }} </span>
-            </span>
-            <br />
-            <span
-              >Vault:
-              <span v-if="balance"
-                >{{ (balance.month / 3600).toFixed(4) }}
+        <div v-if="raidingArmy" class="my-2">
+          <span class="uppercase text-red-400 font-display">Military</span>
+          <RealmMilitary
+            :key="index"
+            :realm-id="realm.id"
+            :unit="raidingArmy[0]"
+            :unit-id="0"
+            :time="raidingArmy[1]"
+          >
+          </RealmMilitary>
+          <RealmMilitary
+            :key="index"
+            :realm-id="realm.id"
+            :unit="raidingArmy[2]"
+            :unit-id="1"
+            :time="raidingArmy[3]"
+          >
+          </RealmMilitary>
+        </div>
+        <div>
+          <span class="uppercase text-red-400 font-display my-1"
+            >days unclaimed</span
+          >
+          <div class="flex justify-between">
+            <div>
+              <span
+                >Day:
+                <span v-if="balance" class="font-semibold text-gray-300"
+                  >{{ (balance.day / 3600).toFixed(4) }}
+                </span>
               </span>
-            </span>
-          </div>
-          <div v-if="isAddressPage">
-            <BButton type="small" @click="claimResources(realm.id)">
-              <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
-              <span v-else>Claim</span>
-            </BButton>
+              <br />
+              <span
+                >Vault:
+                <span v-if="balance" class="font-semibold text-gray-300"
+                  >{{ (balance.month / 3600).toFixed(4) }}
+                </span>
+              </span>
+            </div>
+            <div v-if="isAddressPage">
+              <BButton type="small" @click="claimResources(realm.id)">
+                <LoadingRings v-if="loading.stake" class="mx-auto w-7 h-7" />
+                <span v-else>Claim</span>
+              </BButton>
+            </div>
           </div>
         </div>
 
@@ -118,17 +141,7 @@
           Flip
         </button>
       </div>
-      <div v-if="raidingArmy" class="my-3 px-2">
-        <span class="uppercase text-red-400 font-display">Military</span>
-        <RealmMilitary
-          v-for="(unit, index) in raidingArmy"
-          :key="index"
-          :realm-id="realm.id"
-          :unit="unit"
-          :unit-id="index"
-        >
-        </RealmMilitary>
-      </div>
+
       <div v-if="buildings" class="my-3 px-2">
         <span class="uppercase text-red-400 font-display">Buildings</span>
         <RealmBuildings

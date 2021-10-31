@@ -51,9 +51,10 @@
         @unsettle="popFromArray"
       />
     </div>
-    <div v-else>
+    <div v-else-if="loadingSRealms">
       <Loader />
     </div>
+    <div v-else>No settled Realms yet</div>
   </div>
 </template>
 <script>
@@ -68,7 +69,11 @@ import { useAdventurer } from '~/composables/useAdventurer'
 export default defineComponent({
   setup(props, context) {
     const { address } = context.root.$route.params
-    const { getAdventurer, adventurer } = useAdventurer()
+    const {
+      getAdventurer,
+      adventurer,
+      loading: loadingSRealms,
+    } = useAdventurer()
 
     const {
       claimLords,
@@ -116,8 +121,8 @@ export default defineComponent({
     })
 
     const popFromArray = (value) => {
-      const index = adventurer.value.map((e) => e.id).indexOf(value)
-      adventurer.value.l2.srealms.value.splice(index, 1)
+      const index = adventurer.value.l2.srealms.map((e) => e.id).indexOf(value)
+      adventurer.value.l2.srealms.splice(index, 1)
     }
 
     return {
@@ -139,6 +144,7 @@ export default defineComponent({
       getTimeToNextAge,
       loadingLords,
       timeNextAge,
+      loadingSRealms,
     }
   },
 })

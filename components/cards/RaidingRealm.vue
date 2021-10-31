@@ -37,11 +37,19 @@
         <div v-if="raidingArmy" class="my-3">
           <span class="uppercase text-red-400 font-display">Military</span>
           <RealmMilitary
-            v-for="(unit, index) in raidingArmy"
             :key="index"
             :realm-id="realm.id"
-            :unit="unit"
-            :unit-id="index"
+            :unit="raidingArmy[0]"
+            :unit-id="0"
+            :time="raidingArmy[1]"
+          >
+          </RealmMilitary>
+          <RealmMilitary
+            :key="index"
+            :realm-id="realm.id"
+            :unit="raidingArmy[2]"
+            :unit-id="1"
+            :time="raidingArmy[3]"
           >
           </RealmMilitary>
         </div>
