@@ -1,19 +1,23 @@
-import { reactive, ref, Ref } from '@nuxtjs/composition-api'
+import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useNotification } from '../web3/useNotification'
 // ABI
+import { getResourceListQuery } from './../graphql/queries'
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import ResourceTokensAbi from '~/abi/ResourceTokens.json'
 
 // ADDRESS CONSTS
 import resourceTokens from '~/constant/resourceTokens'
 import diamondAddress from '~/constant/diamondAddress'
+import { useGraph } from '~/composables/web3/useGraph'
 
 export function useResources() {
   const { provider, library, account, activate } = useWeb3()
   const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
+  const { gqlRequest } = useGraph()
+
   const { showError } = useNotification()
   const error = reactive({
     resources: null,
@@ -26,6 +30,32 @@ export function useResources() {
 
   const result = reactive({ resources: null })
   const output = ref()
+  const resourceList = ref([])
+
+  const getResourceList = async () => {
+    try {
+      error.resources = null
+      // loading.resources = true
+      const { resources } = await gqlRequest(
+        getResourceListQuery,
+        null,
+        useL2Network.value.id
+      )
+      resourceList.value = resources
+    } catch (e) {
+      console.log(e)
+      await showError(e.message)
+      error.resources = e.message
+    } finally {
+      // loading.resources = false
+    }
+  }
+
+  const resourceListOrdered = computed(() => {
+    return resourceList.value.sort((a, b) => {
+      return b.totalRealms - a.totalRealms
+    })
+  })
 
   const fetchResource = async (account, resourceId) => {
     try {
@@ -109,6 +139,9 @@ export function useResources() {
     }
   }
   return {
+    resourceList,
+    resourceListOrdered,
+    getResourceList,
     fetchResource,
     fetchProductionOutput,
     upgradeResource,

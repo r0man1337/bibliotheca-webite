@@ -210,10 +210,9 @@ export default defineComponent({
     const unsettle = async (id) => {
       try {
         await withdraw(id)
+        context.emit('unsettle', id)
       } catch (e) {
         console.log(e)
-      } finally {
-        context.emit('unsettle', id)
       }
     }
 

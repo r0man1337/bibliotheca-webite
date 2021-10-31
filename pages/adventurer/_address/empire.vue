@@ -116,8 +116,8 @@ export default defineComponent({
     })
 
     const popFromArray = (value) => {
-      const index = adventurer.value.map((e) => e.id).indexOf(value)
-      adventurer.value.l2.srealms.value.splice(index, 1)
+      const index = adventurer.value.l2.srealms.map((e) => e.id).indexOf(value)
+      adventurer.value.l2.srealms.splice(index, 1)
     }
 
     return {
