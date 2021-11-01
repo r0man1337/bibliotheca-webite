@@ -36,6 +36,7 @@
         <RealmStatistics :icon="false" :realm="realm.id" />
         <div v-if="raidingArmy && defensiveArmy" class="my-3">
           <span class="uppercase text-red-400 font-display">Military</span>
+          <span class="text-sm uppercase">Units | Offence | defence</span>
           <RealmMilitary
             :realm-id="realm.id"
             :unit="raidingArmy[0]"
