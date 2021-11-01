@@ -55,6 +55,10 @@
       <Loader />
     </div>
     <div v-else>No settled Realms yet</div>
+
+    <div class="mt-8">
+      <h2>Empire Raiding</h2>
+    </div>
   </div>
 </template>
 <script>

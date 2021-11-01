@@ -9,9 +9,9 @@ import StakingFacetAbi from '~/abi/StakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import SRealmTokenABI from '~/abi/SRealmToken.json'
 import GetterFacet from '~/abi/GetterFacet.json'
-import diamondAddress from '~/constant/diamondAddress'
-import erc721tokens from '~/constant/erc721tokens'
-import sRealmsTokens from '~/constant/sRealmsTokens'
+import contractAddress from '~/constant/contractAddress'
+import erc721tokens from '~/constant/erc721Tokens'
+
 export function useStaking() {
   const { account } = useWeb3()
   const error = reactive({
@@ -132,12 +132,11 @@ export function useStaking() {
 
 async function stake(owner, network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )
@@ -149,66 +148,64 @@ async function stake(owner, network, realmId) {
 }
 // TODO: make generic
 async function setApprovalForAll(owner, network) {
-  const tokensArr = diamondAddress[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const diamondAddress = contractAddress[network].realmsDiamond
 
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const realmsTokensArr = erc721tokens[network].allTokens
+  const realmsAddress = erc721tokens[network].realms.address
   const signer = provider.getSigner()
-  const realmsTokensAddrArr = realmsTokensArr.map((a) => a.address)
+
   const realmsContract = new ethers.Contract(
-    realmsTokensAddrArr[0],
+    realmsAddress,
     lootRealmsABI,
     signer
   )
 
   const isApproved = await realmsContract.isApprovedForAll(
     owner,
-    tokensAddrArr[0]
+    diamondAddress
   )
   console.log(isApproved)
   if (isApproved) {
     return
   }
-  const approve = await realmsContract.setApprovalForAll(tokensAddrArr[0], true)
+  const approve = await realmsContract.setApprovalForAll(diamondAddress, true)
   await approve.wait()
   return approve
 }
 // TODO: make generic
 async function setApprovalForAllSRealms(owner, network) {
-  const tokensArr = diamondAddress[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const diamondAddress = contractAddress[network].realmsDiamond
 
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const sRealmTokenArr = sRealmsTokens[network].allTokens
+  const srealmsAddress = erc721tokens[network].srealms.address
+
   const signer = provider.getSigner()
-  const sRealmsTokensAddrArr = sRealmTokenArr.map((a) => a.address)
+
   const realmsContract = new ethers.Contract(
-    sRealmsTokensAddrArr[0],
+    srealmsAddress,
     SRealmTokenABI.abi,
     signer
   )
   const isApproved = await realmsContract.isApprovedForAll(
     owner,
-    tokensAddrArr[0]
+    diamondAddress
   )
   console.log(isApproved)
   if (isApproved) {
     return
   }
-  const approve = await realmsContract.setApprovalForAll(tokensAddrArr[0], true)
+  const approve = await realmsContract.setApprovalForAll(diamondAddress, true)
   await approve.wait()
   return approve
 }
 
 async function getBalance(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const getterFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     GetterFacet.abi,
     signer
   )
@@ -225,12 +222,11 @@ async function getBalance(network, realmId) {
 
 async function claim(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )
@@ -246,12 +242,11 @@ async function claim(network, realmId) {
 }
 async function claimAll(network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )
@@ -264,12 +259,11 @@ async function claimAll(network) {
 }
 async function getResourceIds(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )
@@ -279,12 +273,11 @@ async function getResourceIds(network, realmId) {
 
 async function getAllTraits(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )
@@ -293,12 +286,11 @@ async function getAllTraits(network, realmId) {
 }
 async function unStakeAndExit(network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
   const resourceStakingFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     StakingFacetAbi.abi,
     signer
   )

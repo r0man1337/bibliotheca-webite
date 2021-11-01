@@ -9,8 +9,8 @@ import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import ResourceTokensAbi from '~/abi/ResourceTokens.json'
 
 // ADDRESS CONSTS
-import resourceTokens from '~/constant/resourceTokens'
-import diamondAddress from '~/constant/diamondAddress'
+import erc1155Tokens from '~/constant/erc1155Tokens'
+import contractAddress from '~/constant/contractAddress'
 import { useGraph } from '~/composables/web3/useGraph'
 
 export function useResources() {
@@ -156,11 +156,11 @@ export function useResources() {
 
 async function getResourceBalance(owner, network, resourceId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = resourceTokens[network].allTokens
+  const resourcesAddress =
+    erc1155Tokens[network].getTokenByKey('realm-resources').address
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
   const resources = new ethers.Contract(
-    tokensAddrArr[0],
+    resourcesAddress,
     ResourceTokensAbi.abi,
     signer
   )
@@ -170,11 +170,11 @@ async function getResourceBalance(owner, network, resourceId) {
 
 async function resourceProductionOutput(owner, network, realmId, resourceId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const diamondAddress = contractAddress[network].realmsDiamond
+
   const signer = provider.getSigner()
   const resourceConstructionFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     ResourceConstructionFacetAbi.abi,
     signer
   )
@@ -194,11 +194,10 @@ async function upgradeResourceProduction(
   upgradeResourceValues
 ) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
   const resourceConstructionFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     ResourceConstructionFacetAbi.abi,
     signer
   )
@@ -214,11 +213,10 @@ async function upgradeResourceProduction(
 
 async function upgradeCost(owner, network, resourceId, level) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = diamondAddress[network].allTokens
-  const tokensAddrArr = tokensArr.map((a) => a.address)
+  const diamondAddress = contractAddress[network].realmsDiamond
   const signer = provider.getSigner()
   const resourceConstructionFacet = new ethers.Contract(
-    tokensAddrArr[0],
+    diamondAddress,
     ResourceConstructionFacetAbi.abi,
     signer
   )

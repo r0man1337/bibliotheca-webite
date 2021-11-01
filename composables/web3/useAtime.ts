@@ -16,7 +16,7 @@ import { mintedRealmsQuery } from './../graphql/queries'
 import { useRealms } from './useRealms'
 import { useWeb3 } from './'
 import atimeABI from '~/abi/atime.json'
-import erc721tokens from '~/constant/erc721tokens'
+import erc20Tokens from '~/constant/erc20Tokens'
 import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 
 const result = reactive({ claim: null })
@@ -139,11 +139,10 @@ export function useAtime() {
 
 async function claimAtimeById(owner, network, lootId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = erc721tokens[network].allTokens
+  const atimeAddress = erc20Tokens[network].getTokenByKey('atime').address
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
-  const tokenContract = new ethers.Contract(tokensAddrArr[1], atimeABI, signer)
+  const tokenContract = new ethers.Contract(atimeAddress, atimeABI, signer)
 
   const mint = await tokenContract.claimById(lootId)
   await mint.wait()
@@ -153,11 +152,10 @@ async function claimAtimeById(owner, network, lootId) {
 
 async function claimAllAtimeForOwner(owner, network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const tokensArr = erc721tokens[network].allTokens
+  const atimeAddress = erc20Tokens[network].getTokenByKey('atime').address
   const signer = provider.getSigner()
-  const tokensAddrArr = tokensArr.map((a) => a.address)
 
-  const tokenContract = new ethers.Contract(tokensAddrArr[1], atimeABI, signer)
+  const tokenContract = new ethers.Contract(atimeAddress, atimeABI, signer)
 
   const mint = await tokenContract.claimAllForOwner()
   await mint.wait()
