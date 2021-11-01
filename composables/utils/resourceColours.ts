@@ -11,14 +11,14 @@ export const resources = [
     trait: 'Stone',
     value: 3941,
     colour: '#e0e0e0',
-    colourClass: 'bg-gray-500 text-gray-800 border-gray-300',
+    colourClass: 'bg-gray-500 text-gray-300 border-gray-300',
     id: 3,
   },
   {
     trait: 'Coal',
     value: 3833,
     colour: '#757575',
-    colourClass: 'bg-gray-700 border-gray-600',
+    colourClass: 'bg-gray-300 border-gray-600 text-black',
     id: 2,
   },
   {

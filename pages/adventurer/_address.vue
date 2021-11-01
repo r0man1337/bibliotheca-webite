@@ -62,7 +62,7 @@ export default defineComponent({
     const displayedLinks = computed(() => {
       if (isAddressPage.value) {
         return menuLinks.value.concat({
-          title: 'Realm Settling',
+          title: 'Realms available to Settle',
           slug: 'settling',
         })
       } else return menuLinks.value
