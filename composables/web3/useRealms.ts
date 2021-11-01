@@ -69,11 +69,15 @@ export function useRealms() {
   }
 
   const defaultVariables = (params?) => {
+    console.log(params)
     return {
-      address: params?.address?.toLowerCase() || '',
-      resources: params?.resources || [],
-      first: params?.first || 12,
-      skip: params?.skip || 0,
+      address: params?.value?.address?.toLowerCase() || '',
+      resources: params?.value?.resources || [],
+      orders: params?.value?.orders.length
+        ? params?.value?.orders
+        : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+      first: params?.value?.first || 12,
+      skip: params?.value?.skip || 0,
     }
   }
 

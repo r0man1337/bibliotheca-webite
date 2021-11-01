@@ -5,7 +5,7 @@
         class="fixed w-80 min-h-screen"
         :filters-open="filtersOpen"
         @toggleFilter="filtersOpen = !filtersOpen"
-        @searchFilter="searchFilter"
+        @searchFilter="filterEmit"
       />
       <h1>Settled Realms</h1>
       <form class="flex sm:w-1/3" method="POST" @submit.prevent="submitSearch">
@@ -84,7 +84,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useFetch,
+  computed,
+} from '@nuxtjs/composition-api'
 // import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/web3/useRealms'
@@ -98,11 +103,15 @@ export default defineComponent({
     const usersGold = ref(null)
     const search = ref()
     const openSeaData = ref()
-    const orderBy = ref()
-    const skip = ref(0)
+
     const displayedSRealms = ref()
     const filtersOpen = ref(false)
     const first = ref(8)
+    const orderBy = ref()
+    const skip = ref(0)
+    const resources = ref()
+    const orders = ref()
+
     const orderByData = [
       {
         data: 'sale_date',
@@ -123,13 +132,26 @@ export default defineComponent({
         name: 'wonder',
       },
     ]
-    const searchFilter = async (resources) => {
-      const resourceNumbers = resources.map((item) => {
-        return parseInt(item)
-      })
-      await getSRealms({ resources: resourceNumbers, first: first.value })
-      displayedSRealms.value = sRealms.value
+    const filters = computed(() => {
+      return {
+        first: first.value,
+        skip: skip.value,
+        orderBy: orderBy.value,
+        resources: resources.value,
+        orders: orders.value,
+      }
+    })
+    const filterEmit = async (checked) => {
+      orders.value = checked.orders
+      resources.value = checked.resources
+      await fetch()
     }
+    const setOrderBy = async (data) => {
+      skip.value = 0
+      orderBy.value = data.data
+      await fetch()
+    }
+
     /* const baseAssetAddress =
       'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
 
@@ -157,15 +179,9 @@ export default defineComponent({
     } */
 
     const { fetch } = useFetch(async () => {
-      await getSRealms({ first: first.value })
+      await getSRealms(filters)
       displayedSRealms.value = sRealms.value
     })
-
-    const setOrderBy = async (data) => {
-      skip.value = 0
-      orderBy.value = data.data
-      await fetch()
-    }
 
     const submitSearch = () => {
       if (search.value > 0 && search.value <= 8000) {
@@ -177,7 +193,7 @@ export default defineComponent({
       first.value = 8
       skip.value = skip.value + 8
       try {
-        await getSRealms({ skip: skip.value, first: first.value })
+        await getSRealms(filters)
         displayedSRealms.value = displayedSRealms.value.concat(sRealms.value)
       } catch (e) {
         console.log(e)
@@ -186,7 +202,8 @@ export default defineComponent({
 
     return {
       adventurer,
-      searchFilter,
+      filters,
+      filterEmit,
       shortenHash,
       usersGold,
       openSeaData,

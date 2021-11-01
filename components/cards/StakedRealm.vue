@@ -285,7 +285,6 @@ export default defineComponent({
       getBuildings,
       buildings,
       active,
-
       unsettle,
       isAddressPage,
       raidingArmy,

@@ -10,6 +10,7 @@ const getSRealmsQuery = gql`
   query getSRealms(
     $address: String
     $resources: [Int]
+    $orders: [Int]
     $first: Int
     $skip: Int
   ) {
@@ -19,6 +20,7 @@ const getSRealmsQuery = gql`
         currentOwner_contains: $address
         currentOwner_not: "0x0000000000000000000000000000000000000000"
         resourceIds_contains: $resources
+        order_in: $orders
       }
       skip: $skip
     ) {
