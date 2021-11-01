@@ -10,8 +10,9 @@
       transition-all
       left-0
       top-0
+      h-screen
       flex flex-col
-      overflow-y-auto
+      overflow-y-scroll
       z-30
     "
     :class="filtersOpen ? 'translate-x-0 shadow-xl' : '-translate-x-full'"
@@ -103,14 +104,15 @@
         <div v-if="section.open" id="filter-section-mobile-0" class="pt-6">
           <div class="space-y-2">
             <div
-              v-for="resource in section.options"
-              :key="resource.id"
+              v-for="option in section.options"
+              :key="option.id"
               class="flex items-center"
             >
               <input
-                :id="'filter-' + resource.id"
-                v-model="checkedResources"
-                :value="resource.id"
+                :id="'filter-' + option.id"
+                v-model="checked[section.id]"
+                :value="parseInt(option.id)"
+                :checked="option.checked"
                 type="checkbox"
                 class="
                   h-4
@@ -122,10 +124,13 @@
                 "
               />
               <label
-                :for="'filter-' + resource.id"
+                :for="'filter-' + option.id"
                 class="ml-3 min-w-0 flex-1 text-gray-500"
               >
-                {{ resource.name }} ({{ resource.stakedRealms }})
+                {{ option.name }}
+                <span v-if="option.stakedRealms"
+                  >({{ option.stakedRealms }})</span
+                >
               </label>
             </div>
             <BButton type="primary" @click="updateResources()"
@@ -143,6 +148,7 @@ import BButton from '../atoms/BButton.vue'
 import Close from '~/assets/img/x-square.svg?inline'
 // import { resources } from '@/composables/utils/resourceColours'
 import { useResources } from '~/composables/resources/useResources'
+import { gaOrders } from '~/composables/ordersData'
 
 // import Helm from '~/assets/img/helm.svg?inline'
 export default {
@@ -165,7 +171,13 @@ export default {
         id: 'resources',
         name: 'Resources',
         open: false,
-        options: [{ value: 'white', label: 'White', checked: false }],
+        options: [],
+      },
+      {
+        id: 'orders',
+        name: 'Orders',
+        open: false,
+        options: gaOrders,
       },
       {
         id: 'defence',
@@ -183,9 +195,10 @@ export default {
     ])
     const openFilter = ref(null)
 
-    const checkedResources = ref([])
+    const checked = ref({ resources: [], orders: [] })
+
     const updateResources = () => {
-      context.emit('searchFilter', checkedResources.value)
+      context.emit('searchFilter', checked.value)
     }
     const toggleSection = (section) => {
       section.open = !section.open
@@ -219,7 +232,7 @@ export default {
       updateResources,
       openFilter,
       adventureLinks,
-      checkedResources,
+      checked,
     }
   },
 }
