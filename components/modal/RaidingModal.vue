@@ -31,42 +31,20 @@
       </div>
     </div>
     <div class="w-4/12 flex flex-col self-center">
-      <div v-if="chance" class="text-2xl text-center mb-8">
-        Lord, your chance of a successful raid: <br />
-        {{ chance }}%
-      </div>
-      <div v-if="raidResults" class="w-full text-2xl">
-        <span v-if="raidResults.resourceIdsPillaged" class="text-green-400"
-          >Raid successful!!</span
+      <div class="text-2xl text-center mb-8">
+        Sir, your chance of a successful raid: <br />
+        <span v-if="chance" class="font-semibold text-3xl">{{ chance }}%</span>
+        <span v-else class="font-semibold text-3xl"
+          >0% <br />
+          (You have no raiding units)</span
         >
-        <span v-else class="text-red-400">You have failed</span>
-        <h2>Raid Results</h2>
-
-        <h3 class="mt-4">{{ selectedAttackingRealm.name }}</h3>
-        <div>Units Lost: {{ raidResults.raidingUnitsLost }}</div>
-        <div>Units Captured: {{ raidResults.unitsCaptured }}</div>
-        <div v-if="raidResults.resourceIdsPillaged" class="flex">
-          <div
-            v-for="(resource, index) in raidResults.resourceIdsPillaged"
-            :key="index"
-            class="flex flex-col"
-          >
-            <span> Resource: {{ resource }}</span>
-          </div>
-          <div
-            v-for="(resource, index) in raidResults.resourceValuesPillaged"
-            :key="index"
-            class="flex flex-col"
-          >
-            {{ resource }}
-          </div>
-        </div>
-        <div v-else>No Resources captured</div>
-        <h3 class="mt-4">{{ raidedRealm.name }}</h3>
-        <div>Units Lost: {{ raidResults.defendingUnitsLost }}</div>
-
-        <br />
       </div>
+      <RaidResults
+        v-if="raidResults"
+        :raid-results="raidResults"
+        :defending-realm="raidedRealm"
+        :attacking-realm="selectedAttackingRealm"
+      />
       <div class="w-full flex">
         <WarriorFighting
           v-if="loading.raidingRealm"
