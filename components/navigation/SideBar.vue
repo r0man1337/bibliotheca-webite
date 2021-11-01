@@ -32,6 +32,13 @@
       <nav class="flex flex-col p-2 capitalize mt-8">
         <h4 class="mt-8 uppercase text-gray-500 tracking-widest">Settling</h4>
         <BButton
+          v-if="account"
+          :to="'/adventurer/' + account + '/empire'"
+          type="navLink"
+        >
+          <span class="self-center">See My Empire</span>
+        </BButton>
+        <BButton
           v-for="link in settlingLinks"
           :key="link.title"
           type="navLink"
@@ -107,7 +114,8 @@
   </div>
 </template>
 <script>
-import { onMounted } from '@vue/composition-api'
+import { onMounted, ref } from '@vue/composition-api'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useUiState, usePrice } from '~/composables'
 import Book from '~/assets/img/book-open.svg?inline'
 import Close from '~/assets/img/x-square.svg?inline'
@@ -115,7 +123,6 @@ import Github from '~/assets/img/github.svg?inline'
 import Discord from '~/assets/img/discord.svg?inline'
 import Medium from '~/assets/img/medium.svg?inline'
 import Twitter from '~/assets/img/twitter.svg?inline'
-// import Helm from '~/assets/img/helm.svg?inline'
 export default {
   name: 'SideBar',
   components: {
@@ -127,6 +134,7 @@ export default {
     Twitter,
   },
   setup() {
+    const { account } = useWeb3()
     const { toggleSideBar, sideBarOpen } = useUiState()
     const { goldPrice, getGoldPrice } = usePrice()
 
@@ -171,12 +179,12 @@ export default {
         title: 'Search All',
       },
     ]
-    const settlingLinks = [
+    const settlingLinks = ref([
       {
         page: '/settled-realms',
         title: 'Settled Realms',
       },
-    ]
+    ])
 
     onMounted(() => {
       getGoldPrice()
@@ -194,6 +202,7 @@ export default {
       utilLinks,
       adventureLinks,
       settlingLinks,
+      account,
     }
   },
 }

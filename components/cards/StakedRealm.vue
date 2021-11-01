@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="{ 'bg-gray-900': active }"
     class="
       bg-black
       rounded-xl

@@ -102,4 +102,13 @@ export const statements = [
       },
     ],
   },
+  {
+    error: 'NOT_ENOUGH_RESOURCES',
+    messages: [
+      {
+        title: 'No Resources.',
+        text: 'You do enough resources for this building.',
+      },
+    ],
+  },
 ]
