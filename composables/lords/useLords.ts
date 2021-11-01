@@ -11,10 +11,11 @@ import LordsTokenAbi from '~/abi/TheLordsToken.json'
 import SRealmTokenAbi from '~/abi/SRealmToken.json'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
 // ADDRESS CONSTS
-import resourceTokens from '~/constant/resourceTokens'
-import diamondAddress from '~/constant/diamondAddress'
-import lordsAddress from '~/constant/erc20Tokens'
-import sRealmsToken from '~/constant/sRealmsTokens'
+import erc1155Tokens from '~/constant/erc1155Tokens'
+import contractAddress from '~/constant/contractAddress'
+import erc20Tokens from '~/constant/erc20Tokens'
+import erc721Tokens from '~/constant/erc721Tokens'
+
 import GoldAbi from '~/abi/gold.json'
 export function useLords() {
   const { provider, library, account, activate } = useWeb3()
@@ -125,11 +126,10 @@ async function claimAllLords(owner, network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const LordstokensFacet = diamondAddress[network].allTokens
-  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+  const lordsTokensFacetAddress = contractAddress[network].realmsDiamond
 
   const lordsTokens = new ethers.Contract(
-    lordstokensFacetArr[0],
+    lordsTokensFacetAddress,
     LordsClaimingFacetAbi.abi,
     signer
   )
@@ -142,11 +142,10 @@ async function getAge(owner, network, realmId) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const LordstokensFacet = diamondAddress[network].allTokens
-  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+  const lordsTokensFacetAddress = contractAddress[network].realmsDiamond
 
   const lordsTokens = new ethers.Contract(
-    lordstokensFacetArr[0],
+    lordsTokensFacetAddress,
     LordsClaimingFacetAbi.abi,
     signer
   )
@@ -159,11 +158,10 @@ async function getLordsBalance(owner, network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const LordstokensFacet = lordsAddress[network].allTokens
-  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+  const lordsTokensAddress = erc20Tokens[network].getTokenByKey('lords')
 
   const lordsTokens = new ethers.Contract(
-    lordstokensFacetArr[0],
+    lordsTokensAddress,
     LordsTokenAbi.abi,
     signer
   )
@@ -175,9 +173,6 @@ async function getLordsBalance(owner, network) {
 async function getGoldBalance(owner, network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
-
-  const LordstokensFacet = lordsAddress[network].allTokens
-  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
 
   const goldToken = new ethers.Contract(
     '0x32353A6C91143bfd6C7d363B546e62a9A2489A20',
@@ -193,11 +188,10 @@ async function timeToNextAge(network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const LordstokensFacet = diamondAddress[network].allTokens
-  const lordstokensFacetArr = LordstokensFacet.map((a) => a.address)
+  const lordsTokensFacetAddress = contractAddress[network].realmsDiamond
 
   const lordsTokens = new ethers.Contract(
-    lordstokensFacetArr[0],
+    lordsTokensFacetAddress,
     LordsClaimingFacetAbi.abi,
     signer
   )

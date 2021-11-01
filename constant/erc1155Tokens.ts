@@ -3,7 +3,7 @@ import { createTokenUtils } from '~/utils/create-token-utils'
 export default {
   arbitrumRinkeby: createTokenUtils([
     {
-      key: 'resourceTokens',
+      key: 'realm-resources',
       type: 'erc1155',
       symbol: 'resourceTokens',
       name: 'Realms Resource Tokens',

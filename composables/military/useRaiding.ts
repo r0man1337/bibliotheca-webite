@@ -6,7 +6,7 @@ import { useNotification } from '../web3/useNotification'
 import RaidingFacet from '~/abi/RaidingFacet.json'
 
 // ADDRESS CONSTS
-import diamondAddress from '~/constant/diamondAddress'
+import contractAddress from '~/constant/contractAddress'
 
 const selectedAttacking = reactive({
   realm: false,
@@ -31,11 +31,11 @@ export function useRaiding() {
       error.raidChance = null
       loading.raidChance = true
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const tokensArr = diamondAddress[activeNetwork.value.id].allTokens
+      const diamondAddress =
+        contractAddress[activeNetwork.value.id].realmsDiamond
       const signer = provider.getSigner()
-      const tokensAddrArr = tokensArr.map((a) => a.address)
       const raidingFacet = new ethers.Contract(
-        tokensAddrArr[0],
+        diamondAddress,
         RaidingFacet.abi,
         signer
       )
@@ -55,12 +55,12 @@ export function useRaiding() {
       error.raidingRealm = null
       loading.raidingRealm = true
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const tokensArr = diamondAddress[activeNetwork.value.id].allTokens
+      const diamondAddress =
+        contractAddress[activeNetwork.value.id].realmsDiamond
       const signer = provider.getSigner()
-      const tokensAddrArr = tokensArr.map((a) => a.address)
       let realmsResult
       const raidingFacet = new ethers.Contract(
-        tokensAddrArr[0],
+        diamondAddress,
         RaidingFacet.abi,
         signer
       )

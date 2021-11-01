@@ -20,7 +20,7 @@ import { useNotification } from '../web3/useNotification'
 import realmsLockBoxABI from '~/abi/realmsLockBox.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
 import lootRealmsL2ABI from '~/abi/lootRealmsL2.json'
-import erc721tokens from '~/constant/erc721tokens'
+import erc721Tokens from '~/constant/erc721Tokens'
 import { useRealms } from '~/composables/web3/useRealms'
 import {
   useTransactions,
@@ -200,11 +200,11 @@ export function useBridge() {
           realmsLockBoxABI,
           await getL1Signer()
         )
-        const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
-        const tokensAddrArr = tokensArr.map((a) => a.address)
+        const realmsAddress =
+          erc721Tokens[activeNetwork.value.id].realms.address
 
         const realmsContract = new ethers.Contract(
-          tokensAddrArr[0],
+          realmsAddress,
           lootRealmsABI,
           await getL1Signer()
         )
@@ -305,8 +305,7 @@ export function useBridge() {
 
       const tx = await lootRealmsL2.withdrawToL1(id)
 
-      const tokensArr = erc721tokens[activeNetwork.value.id].allTokens
-      const tokensAddrArr = tokensArr.map((a) => a.address)
+      const realmsAddress = erc721Tokens[activeNetwork.value.id].realms.address
 
       try {
         addTransaction({
@@ -338,7 +337,7 @@ export function useBridge() {
           const l2ToL2EventDataResultPlus = {
             ...l2ToL2EventDataResult,
             type: AssetType.ERC721,
-            tokenAddress: tokensAddrArr[0],
+            tokenAddress: realmsAddress,
             value: id,
             outgoingMessageState,
           }
