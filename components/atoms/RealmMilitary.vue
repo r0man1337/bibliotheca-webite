@@ -1,6 +1,11 @@
 <template>
   <div class="flex justify-between my-1" @mouseover="fetchUnitCost(unitId)">
-    <div>{{ unitValues.name }}: {{ unit }}</div>
+    <div>
+      {{ unitValues.name }}: <span class="font-semibold">{{ unit }}</span>
+      <span class="text-gray-400"
+        >{{ unitValues.offence * unit }} | {{ unitValues.defence * unit }}</span
+      >
+    </div>
     <v-popover placement="right" trigger="hover">
       <div v-if="isAddressPage" class="flex">
         <div class="mr-2">

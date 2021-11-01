@@ -30,7 +30,7 @@
       >
 
       <nav class="flex flex-col p-2 capitalize mt-8">
-        <h3 class="mt-8 uppercase text-gray-500">Settling</h3>
+        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">Settling</h4>
         <BButton
           v-for="link in settlingLinks"
           :key="link.title"
@@ -39,7 +39,9 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
-        <h3 class="mt-8 uppercase text-gray-500">Loot Assets</h3>
+        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">
+          Loot Assets
+        </h4>
         <BButton
           v-for="(link, i) in adventureLinks"
           :key="i"
@@ -57,7 +59,7 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
-        <h3 class="mt-8 uppercase text-gray-500">Utilities</h3>
+        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">Utilities</h4>
         <BButton
           v-for="link in utilLinks"
           :key="link.title"

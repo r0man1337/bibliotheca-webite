@@ -1,18 +1,16 @@
 <template>
-  <span>
-    <component
-      :is="tag"
-      class="button ease-in-out font-display text-center disabled:opacity-25"
-      :class="[buttonColor]"
-      v-bind="$attrs"
-      :disabled="disabled"
-      :to="to"
-      v-on="$listeners"
-    >
-      <slot v-if="!loading" />
-      <span v-else><LoadingRings class="mx-auto w-7 h-7" /></span>
-    </component>
-  </span>
+  <component
+    :is="tag"
+    class="button ease-in-out font-display text-center disabled:opacity-25"
+    :class="[buttonColor]"
+    v-bind="$attrs"
+    :disabled="disabled"
+    :to="to"
+    v-on="$listeners"
+  >
+    <slot v-if="!loading" />
+    <span v-else><LoadingRings class="mx-auto w-7 h-7" /></span>
+  </component>
 </template>
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'

@@ -51,7 +51,7 @@
         <!-- <Loader v-else class="w-full" /> -->
       </div>
 
-      <div class="p-2 flex flex-col">
+      <div class="p-2 flex flex-col h-full">
         <h1 v-if="realm" class="flex justify-between">
           <span>{{ realm.name }}</span>
           <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
@@ -71,6 +71,7 @@
         />
         <div v-if="raidingArmy && defensiveArmy" class="my-2">
           <span class="uppercase text-red-400 font-display">Military</span>
+          <span class="text-sm uppercase">Units | Offence | defence</span>
           <RealmMilitary
             :realm-id="realm.id"
             :unit="raidingArmy[0]"
@@ -141,7 +142,11 @@
             :realm-id="realm.id"
           />
         </div>
-        <RaidRealm v-if="!isAddressPage" :raided-realm="realm" class="w-full" />
+        <RaidRealm
+          v-if="!isAddressPage"
+          :raided-realm="realm"
+          class="w-full mt-auto"
+        />
       </div>
     </div>
     <div

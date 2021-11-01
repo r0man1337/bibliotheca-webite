@@ -24,7 +24,7 @@ export function useRaiding() {
     raidChance: false,
   })
 
-  const raidResults = ref([])
+  const raidResults = ref()
   const chance = ref()
   const raidChance = async (attackingRealmIdIn, defendingRealmIdIn) => {
     try {
@@ -67,6 +67,7 @@ export function useRaiding() {
       raidingFacet.on(
         'RaidResult',
         (
+          raidResult,
           attackingRealmId,
           defendingRealmId,
           attackerAddress,
@@ -81,6 +82,7 @@ export function useRaiding() {
             attackingRealmId.toNumber() === parseInt(attackingRealmIdIn) &&
             defendingRealmId.toNumber() === parseInt(defendingRealmIdIn)
           ) {
+            console.log('Raid Result ' + raidResult)
             console.log('attackingRealm ' + attackingRealmId)
             console.log('defendingRealm ' + defendingRealmId)
             console.log('attackerAddress ' + attackerAddress)
@@ -91,6 +93,7 @@ export function useRaiding() {
             console.log('resourcesValuesPillaged ' + resourcesValuesPillaged)
             console.log('unitsCaptured ' + unitsCaptured)
             const result = {
+              raidResult: raidResult.toNumber(),
               attackingRealmId: attackingRealmId.toNumber(),
               defendingRealmId: defendingRealmId.toNumber(),
               attackerAddress,
@@ -102,7 +105,7 @@ export function useRaiding() {
               unitsCaptured: unitsCaptured.toNumber(),
             }
             console.log(result)
-            raidResults.value = raidResults.value.concat(result)
+            raidResults.value = result
 
             raidingFacet.removeAllListeners('RaidResult')
           }
