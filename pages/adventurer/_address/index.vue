@@ -1,6 +1,9 @@
 <template>
   <section>
-    <div v-if="!$fetchState.pending && !adventurer.l1">
+    <div v-if="useL1Network.id !== 'mainnet'">
+      Assets not available on Testnets
+    </div>
+    <div v-else-if="!$fetchState.pending && !adventurer.l1">
       No Loot or Derivatives for this adventurer... yet.
     </div>
 
@@ -112,14 +115,14 @@ import axios from 'axios'
 
 import { useFormatting } from '~/composables/useFormatting'
 import { useAdventurer } from '~/composables/useAdventurer'
-
+import { useNetwork } from '~/composables/web3/useNetwork'
 import { useRarity } from '~/composables'
 export default defineComponent({
   setup(props, context) {
     const { checkRealmRarity } = useRarity()
     const { shortenHash } = useFormatting()
     const { address } = context.root.$route.params
-
+    const { useL1Network } = useNetwork()
     const { getAdventurer, adventurer } = useAdventurer()
 
     onMounted(async () => {
@@ -180,6 +183,7 @@ export default defineComponent({
     })
 
     return {
+      useL1Network,
       adventurer,
       address,
       shortenHash,

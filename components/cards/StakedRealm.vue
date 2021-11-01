@@ -56,7 +56,8 @@
           <span>{{ realm.name }}</span>
           <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
         </h1>
-        <Ens v-if="realm" :address="realm.currentOwner.address" />
+        <Ens v-if="realm && !isMyRealm" :address="realm.currentOwner.address" />
+        <div v-else-if="realm">Your Realm</div>
 
         <div class="flex justify-between">
           <div class="py-4">
@@ -143,7 +144,7 @@
           />
         </div>
         <RaidRealm
-          v-if="!isAddressPage"
+          v-if="!isAddressPage && !isMyRealm"
           :raided-realm="realm"
           class="w-full mt-auto"
         />
@@ -191,13 +192,15 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { defineComponent, onMounted, ref, computed } from '@vue/composition-api'
 
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
+
 import { useConstruction } from '~/composables/construction/useConstruction'
 // import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useMilitary } from '~/composables/military/useMilitary'
+import { useWeb3 } from '~/composables/web3'
 export default defineComponent({
   // components: {
   //   LoadingRings,
@@ -218,7 +221,7 @@ export default defineComponent({
       result,
       withdraw,
     } = useStaking()
-
+    const { account } = useWeb3()
     const {
       constructBuilding,
       getBuildings,
@@ -238,6 +241,14 @@ export default defineComponent({
     } = useMilitary()
 
     const metaData = ref()
+
+    const isMyRealm = computed(() => {
+      if (account.value) {
+        return account.value.toLowerCase() === props.realm.currentOwner.id
+      } else {
+        return false
+      }
+    })
 
     const unsettle = async (id) => {
       try {
@@ -272,6 +283,7 @@ export default defineComponent({
 
     return {
       claimResources,
+      isMyRealm,
       getRealmsResourceBalance,
       balance,
       loading,

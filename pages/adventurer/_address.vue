@@ -2,7 +2,7 @@
   <div>
     <h3 class="text-gray-400">
       <span v-if="ensName">{{ ensName }}</span>
-      <span v-else>{{ shortenHash(address) }}'</span>
+      <span v-else>{{ shortenHash(address) }}</span>
     </h3>
     <h1 v-if="isAddressPage" class="mb-8">My Lord, your vast empire</h1>
     <h1 v-else class="mb-8">Adventurer's Empire</h1>

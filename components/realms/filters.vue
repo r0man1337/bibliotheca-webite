@@ -212,12 +212,6 @@ export default {
 
     onMounted(async () => {
       await getResourceList()
-      console.log(
-        resourceListOrdered.value.map((obj) => {
-          obj.checked = false
-          return obj
-        })
-      )
       filters.value[0].options = resourceListOrdered.value.map((obj) => {
         obj.checked = false
         return obj

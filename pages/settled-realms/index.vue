@@ -89,6 +89,7 @@ import {
   ref,
   useFetch,
   computed,
+  onMounted,
 } from '@nuxtjs/composition-api'
 // import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
@@ -97,7 +98,8 @@ import { useRealms } from '~/composables/web3/useRealms'
 export default defineComponent({
   setup(props, context) {
     const { shortenHash } = useFormatting()
-    const { getSRealms, sRealms, loading } = useRealms()
+    const { getSRealms, sRealms, loading, userSRealms, getUserSRealms } =
+      useRealms()
 
     const adventurer = ref(null)
     const usersGold = ref(null)
@@ -178,7 +180,12 @@ export default defineComponent({
       }
     } */
 
+    onMounted(async () => {
+      await getUserSRealms()
+    })
+
     const { fetch } = useFetch(async () => {
+      console.log('fetching')
       await getSRealms(filters)
       displayedSRealms.value = sRealms.value
     })
@@ -201,6 +208,7 @@ export default defineComponent({
     }
 
     return {
+      userSRealms,
       adventurer,
       filters,
       filterEmit,
