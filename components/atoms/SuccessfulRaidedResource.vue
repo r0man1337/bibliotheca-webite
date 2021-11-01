@@ -1,15 +1,14 @@
 <template>
-  <div
-    class="my-1 flex justify-between bg-gray-800 roudned p-3"
-    :class="findResources.colourClass"
-  >
+  <div class="my-1 flex justify-between rounded p-3 font-semibold">
     <span class="flex">
-      <span class="self-center">
-        <span
-          >{{ findResources.trait }}:
-          <span v-if="!value">{{ getOutputLevel * vault }}</span>
-          <span v-else>{{ value }}</span>
-        </span>
+      <div
+        :class="findResources.colourClass"
+        class="w-4 h-6 rounded mr-4"
+      ></div>
+      <span
+        >{{ findResources.trait }}:
+        <span v-if="!value">{{ getOutputLevel * vault }}</span>
+        <span v-else>{{ value }}</span>
       </span>
     </span>
   </div>

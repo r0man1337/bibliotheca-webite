@@ -3,7 +3,7 @@
     :class="{ 'bg-gray-900': active }"
     class="
       bg-black
-      rounded-xl
+      rounded-3xl
       mr-8
       my-4
       text-white
@@ -12,7 +12,7 @@
       duration-150
       min-h-80
       hover:shadow-2xl hover:border-green-300
-      border-2 border-black
+      border-2 border-gray-900
       flex flex-col
       group
       p-4
@@ -58,7 +58,7 @@
           <span class="text-gray-500 text-xl">#{{ realm.id }}</span>
         </h1>
         <Ens v-if="realm && !isMyRealm" :address="realm.currentOwner.address" />
-        <div v-else-if="realm">Your Realm</div>
+        <div v-else-if="realm">👑 Your Realm</div>
 
         <div class="flex justify-between">
           <div class="py-4">
@@ -71,8 +71,11 @@
           :age-claimed="realm.ageClaimed"
           :age-settled="realm.ageSettled"
         />
-        <div v-if="raidingArmy && defensiveArmy" class="my-2">
-          <span class="uppercase text-red-400 font-display">Military</span>
+        <div
+          v-if="raidingArmy && defensiveArmy"
+          class="my-2 border-t border-b py-3 border-gray-900"
+        >
+          <span class="uppercase text-red-600 font-display">Military</span>
           <span class="text-sm uppercase">Units | Offence | defence</span>
           <RealmMilitary
             :realm-id="realm.id"
@@ -103,8 +106,8 @@
           >
           </RealmMilitary>
         </div>
-        <div>
-          <span class="uppercase text-red-400 font-display my-1"
+        <div class="my-2 border-b pb-3 border-gray-900">
+          <span class="uppercase text-red-600 font-display"
             >days unclaimed</span
           >
           <div class="flex justify-between">
@@ -133,7 +136,7 @@
         </div>
 
         <div class="my-3">
-          <span class="uppercase text-red-400 font-display">Resources</span>
+          <span class="uppercase text-red-600 font-display">Resources</span>
           <div class="text-xs">
             <span class="uppercase">LVL Resource p/day</span>
           </div>

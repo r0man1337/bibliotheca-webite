@@ -27,8 +27,14 @@
 
       <template slot="popover">
         <div class="bg-gray-300 shadow-xl p-4 rounded text-black z-50">
-          <h4 class="text-center mb-1">Unit Cost</h4>
-
+          <h4 class="text-center mb-1">{{ unitValues.name }} Cost</h4>
+          <div>
+            {{ unitValues.description }}
+          </div>
+          <div class="my-3">
+            Offence: +{{ unitValues.offence }} <br />
+            Defence: +{{ unitValues.defence }}
+          </div>
           <div v-if="unitCost" class="flex justify-between capitalize">
             <div class="flex flex-col capitalize">
               <span

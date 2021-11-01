@@ -1,8 +1,8 @@
 <template>
-  <span>
+  <NuxtLink :to="'/adventurer/' + address + '/empire'">
     <span v-if="ensName">{{ ensName }}</span>
     <span v-else>{{ shortenHash(address) }}</span>
-  </span>
+  </NuxtLink>
 </template>
 
 <script>

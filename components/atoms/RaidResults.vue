@@ -1,15 +1,17 @@
 <template>
-  <div class="w-full text-2xl">
+  <div class="w-full">
     <span v-if="raidResults.resourcesIdsPillaged.length" class="text-green-400"
       >Raid successful!!</span
     >
+
     <span v-else class="text-red-400">You have failed</span>
     <h2>Raid Results</h2>
-
+    <hr />
     <h3 class="mt-4">{{ attackingRealm.name }}</h3>
     <div>Units Lost: {{ raidResults.raidingUnitsLost }}</div>
     <div>Units Captured: {{ raidResults.unitsCaptured }}</div>
     <div v-if="raidResults.resourcesIdsPillaged.length">
+      <div class="mt-2">Resources Pillaged:</div>
       <SuccessfulRaidedResource
         v-for="(resource, index) in raidResults.resourcesIdsPillaged"
         :key="index"
@@ -17,22 +19,9 @@
         vault="1"
         :value="raidResults.resourcesValuesPillaged[index]"
       />
-      <!-- <div
-        v-for="(resource, index) in raidResults.resourcesIdsPillaged"
-        :key="index"
-        class="flex flex-col"
-      >
-        <div class="w-full">{{ resource }}</div>
-      </div>
-      <div
-        v-for="(resource, index) in raidResults.resourcesValuesPillaged"
-        :key="index"
-        class="flex flex-col"
-      >
-        {{ resource }}
-      </div> -->
     </div>
     <div v-else>No resources pillaged</div>
+    <hr />
     <h3 class="mt-4">{{ defendingRealm.name }}</h3>
     <div>Units Lost: {{ raidResults.defendingUnitsLost }}</div>
 

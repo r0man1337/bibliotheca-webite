@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="flex flex-wrap space-x-4">
       <DataCard>
-        <h5 class="text-red-200 uppercase text-center">Total Realms Settled</h5>
+        <h5 class="text-red-600 uppercase text-center">Total Realms Settled</h5>
         <div v-if="sRealms.length" class="text-6xl p-4 text-center">
           {{ adventurer.l2.srealmsHeld }}
         </div>
@@ -11,7 +11,7 @@
         >
       </DataCard>
       <DataCard class="w-40">
-        <h5 class="text-red-200 uppercase text-center">Age</h5>
+        <h5 class="text-red-600 uppercase text-center">Age</h5>
         <div v-if="worldAge" class="text-6xl text-center p-4">
           {{ worldAge }}
         </div>
@@ -28,7 +28,7 @@
         </no-ssr>
       </DataCard>
       <DataCard>
-        <h5 class="text-red-200 uppercase text-center">Lords</h5>
+        <h5 class="text-red-600 uppercase text-center">Lords</h5>
         <div class="mt-auto">
           <BButton
             :loading="loadingLords.claim"

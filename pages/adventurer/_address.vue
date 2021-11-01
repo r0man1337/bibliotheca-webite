@@ -17,7 +17,7 @@
             px-6
             py-3
             text-gray-400
-            hover:bg-black hover:text-red-200
+            hover:bg-black hover:text-red-600
             uppercase
           "
           :to="'/adventurer/' + address + '/' + link.slug"
