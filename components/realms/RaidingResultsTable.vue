@@ -3,78 +3,38 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div
-          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          class="shadow overflow-hidden border-b border-gray-800 sm:rounded-lg"
         >
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+          <table class="min-w-full divide-y">
+            <thead class="bg-gray-900 text-gray-300">
               <tr>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Raiding Realm
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Defending Realm
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Dice Roll
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Time
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   Resources Pillaged
                 </th>
@@ -83,61 +43,56 @@
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-gray-900 divide-y divide-gray-200 text-white">
               <tr v-for="result in results" :key="result.id">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <!--<div class="flex-shrink-0 h-10 w-10">
-                      <img
-                        class="h-10 w-10 rounded-full"
-                        :src="person.image"
-                        alt=""
-                      />
-                    </div>-->
                     <div class="">
-                      <div class="text-sm font-medium text-gray-900">
+                      <div class="text-xl font-display">
                         Realm ID: {{ result.raiderRealm.id }}
                       </div>
-                      <div class="text-sm text-gray-500">
-                        Raider: {{ result.raider.id }}
-                      </div>
-                      <div class="text-sm text-red-400">
+                      <div>Raider: {{ result.raider.id }}</div>
+                      <div class="text-red-600 font-semibold">
                         Units Lost: {{ result.raiderUnitsLost }}
                       </div>
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">
+                  <div class="text-xl font-display">
                     Realm ID: {{ result.defenderRealm.id }}
                   </div>
-                  <div class="text-sm text-gray-500">
+                  <div>
                     {{ result.defender.id }}
                   </div>
-                  <div class="text-sm text-red-400">
+                  <div class="text-red-600 font-semibold">
                     Units Lost: {{ result.defenderUnitsLost }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span
+                    :class="{
+                      'bg-green-100 text-green-800':
+                        result.resourcesPillaged.length,
+                    }"
                     class="
-                      px-2
+                      p-4
                       inline-flex
-                      text-xs
+                      text-2xl
                       leading-5
                       font-semibold
                       rounded-full
-                      bg-green-100
-                      text-green-800
+                      bg-red-100
+                      text-red-800
                     "
                   >
                     {{ result.result }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-sm">
                   {{ getTime(result.timestamp) }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap">
                   <div v-if="result.resourcesPillaged.length">
                     <SuccessfulRaidedResource
                       v-for="(resource, index) in result.resourcesPillaged"
@@ -148,7 +103,7 @@
                       class="my-1 flex justify-between rounded font-semibold"
                     />
                   </div>
-                  <div v-else class="px-6 py-4 whitespace-nowrap text-red-500">
+                  <div v-else class="px-6 py-4 whitespace-nowrap font-semibold">
                     Raid Unsuccessful
                   </div>
                 </td>
