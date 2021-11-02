@@ -55,7 +55,7 @@
             :realm-id="realm.id"
             :unit="raidingArmy[4]"
             :unit-id="2"
-            :time="defensiveArmy[5]"
+            :time="raidingArmy[5]"
           >
           </RealmMilitary>
           <RealmMilitary

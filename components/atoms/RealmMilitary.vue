@@ -25,17 +25,13 @@
           </div>
 
           <div class="mx-auto flex justify-center">
-            <button class="px-2 bg-gray-500 rounded-full" @click="qty--">
-              -
-            </button>
+            <button class="px-2 bg-gray-500 rounded" @click="qty--">-</button>
             <input
               v-model="qty"
               class="w-4 rounded bg-gray-300 text-center"
               type="text"
             />
-            <button class="px-2 bg-gray-500 rounded-full" @click="qty++">
-              +
-            </button>
+            <button class="px-2 bg-gray-500 rounded" @click="qty++">+</button>
           </div>
           <div v-if="isAddressPage" class="flex my-2 justify-center">
             <Web3Button
