@@ -1,9 +1,11 @@
 import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
-import { activeNetwork } from '../web3/useNetwork'
 import { useNotification } from '../web3/useNotification'
 // ABI
+import { useGraph } from '../web3/useGraph'
 import RaidingFacet from '~/abi/RaidingFacet.json'
+import { getAdventurerRaidResultsQuery } from '~/composables/graphql/queries'
+import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
 
 // ADDRESS CONSTS
 import contractAddress from '~/constant/contractAddress'
@@ -12,15 +14,19 @@ const selectedAttacking = reactive({
   realm: false,
 })
 export function useRaiding() {
+  const { gqlRequest } = useGraph()
+  const { useL2Network } = useNetwork()
+
   const { showError } = useNotification()
   const error = reactive({
     raidingRealm: null,
     raidChance: null,
+    raidResults: null,
   })
 
   const loading = reactive({
     raidingRealm: false,
-    fetching: false,
+    raidResults: false,
     raidChance: false,
   })
 
@@ -82,16 +88,6 @@ export function useRaiding() {
             attackingRealmId.toNumber() === parseInt(attackingRealmIdIn) &&
             defendingRealmId.toNumber() === parseInt(defendingRealmIdIn)
           ) {
-            console.log('Raid Result ' + raidResult)
-            console.log('attackingRealm ' + attackingRealmId)
-            console.log('defendingRealm ' + defendingRealmId)
-            console.log('attackerAddress ' + attackerAddress)
-            console.log('defenderAddress ' + defenderAddress)
-            console.log('raidingUnitsLost ' + raidingUnitsLost)
-            console.log('defendingUnitsLost ' + defendingUnitsLost)
-            console.log('resourcesIdsPillaged ' + resourcesIdsPillaged)
-            console.log('resourcesValuesPillaged ' + resourcesValuesPillaged)
-            console.log('unitsCaptured ' + unitsCaptured)
             const result = {
               raidResult: raidResult.toNumber(),
               attackingRealmId: attackingRealmId.toNumber(),
@@ -137,16 +133,49 @@ export function useRaiding() {
   const removeAttackingRealm = () => {
     selectedAttacking.realm = null
   }
+  enum OrderBy {
+    raidAttacks,
+  }
+  const defaultVariables = (params?) => {
+    return {
+      address: params?.value?.address?.toLowerCase() || '',
+      first: params?.value?.first || 12,
+      skip: params?.value?.skip || 0,
+      orderBy: params?.value?.orderBy || null,
+      orderDirection: params?.value?.orderDirection || '',
+    }
+  }
+
+  const getAdventurerRaidResults = async (params) => {
+    try {
+      error.raidResults = null
+      loading.raidResults = true
+      console.log(defaultVariables(params))
+
+      const { wallets } = await gqlRequest(
+        getAdventurerRaidResultsQuery,
+        defaultVariables(params),
+        useL2Network.value.id
+      )
+      return wallets
+    } catch (e) {
+      console.log(e)
+      error.raidResults = e
+    } finally {
+      loading.raidResults = false
+    }
+  }
 
   return {
     raidChance,
     chance,
     raidingRealm,
+    raidResults,
+    getAdventurerRaidResults,
     selectedAttackingRealm,
     selectAttackingRealm,
     removeAttackingRealm,
     error,
     loading,
-    raidResults,
   }
 }

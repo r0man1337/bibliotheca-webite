@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 import { WalletFragment } from './fragments/wallet'
 import { RealmFragment, SRealmFragment } from './fragments/realmFragments'
+import { RaidResultFragment } from './fragments/raidResults'
 import { BagFragment, defaultLoot } from './fragments/loot'
 import { TreasureFragment } from './fragments/treasure'
 import { ManaFragment } from './fragments/mana'
@@ -73,6 +74,7 @@ const getRealms = gql`
     }
   }
 `
+
 const getResourceListQuery = gql`
   query getResourceListQuery {
     resources(first: 25) {
@@ -133,6 +135,7 @@ const getl1Adventurer = gql`
 const getl2Adventurer = gql`
   ${RealmFragment}
   ${SRealmFragment}
+  ${RaidResultFragment}
   query adventurer($address: String!) {
     wallet(id: $address) {
       id
@@ -144,10 +147,49 @@ const getl2Adventurer = gql`
       srealms(first: 30) {
         ...SRealmData
       }
+      raiderResults(orderBy: timestamp, orderDirection: desc) {
+        ...RaidResultFragment
+      }
+      defenderResults(orderBy: timestamp, orderDirection: desc) {
+        ...RaidResultFragment
+      }
     }
   }
 `
-
+enum OrderBy {
+  raidAttacks,
+}
+const getAdventurerRaidResultsQuery = gql`
+  ${RaidResultFragment}
+  query getAdventurerRaidResultsQuery(
+    $address: String
+    $first: Int
+    $skip: Int
+    $orderBy: String
+    $orderDirection: String
+  ) {
+    wallets(
+      first: $first
+      where: {
+        address_contains: $address
+        address_not: "0x0000000000000000000000000000000000000000"
+      }
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
+      address
+      raidAttacks
+      raidDefends
+      raiderResults {
+        ...RaidResultFragment
+      }
+      defenderResults {
+        ...RaidResultFragment
+      }
+    }
+  }
+`
 const mintedRealmsQuery = gql`
   query mintedRealmsQuery($lastID: String) {
     realms(
@@ -208,6 +250,7 @@ export {
   getRealms,
   mintedRealmsQuery,
   getSRealmsQuery,
+  getAdventurerRaidResultsQuery,
   getl1Adventurer,
   getl2Adventurer,
   lastOutboxEntryQuery,

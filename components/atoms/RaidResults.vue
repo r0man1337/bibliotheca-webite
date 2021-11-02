@@ -18,6 +18,7 @@
         :resource="resource"
         vault="1"
         :value="raidResults.resourcesValuesPillaged[index]"
+        class="my-1 flex justify-between rounded p-3 font-semibold"
       />
     </div>
     <div v-else>No resources pillaged</div>
