@@ -1,6 +1,6 @@
 <template>
-  <div class="my-1 flex justify-between rounded p-3 font-semibold">
-    <span class="flex">
+  <div>
+    <span v-if="findResources" class="flex">
       <div
         :class="findResources.colourClass"
         class="w-4 h-6 rounded mr-4"

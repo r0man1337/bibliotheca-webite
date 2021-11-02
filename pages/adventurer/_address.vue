@@ -59,6 +59,10 @@ export default defineComponent({
         title: 'Assets',
         slug: '',
       },
+      {
+        title: 'Raid Results',
+        slug: 'raid-results',
+      },
     ])
     const displayedLinks = computed(() => {
       if (isAddressPage.value) {

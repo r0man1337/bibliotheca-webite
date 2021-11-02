@@ -188,6 +188,10 @@ export default {
         page: '/settled-realms',
         title: 'Settled Realms',
       },
+      {
+        page: '/raiding/leaderboard',
+        title: 'Raiding Leaderboard',
+      },
     ])
 
     onMounted(() => {
