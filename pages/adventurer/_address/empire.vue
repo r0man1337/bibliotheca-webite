@@ -6,7 +6,11 @@
         <div v-if="sRealms.length" class="text-6xl p-4 text-center">
           {{ adventurer.l2.srealmsHeld }}
         </div>
-        <BButton class="mt-auto" type="primary" @click="claimAllResources()"
+        <BButton
+          v-if="isAddressPage"
+          class="mt-auto"
+          type="primary"
+          @click="claimAllResources()"
           >Claim all your resources</BButton
         >
       </DataCard>
@@ -27,7 +31,7 @@
           </vac>
         </no-ssr>
       </DataCard>
-      <DataCard>
+      <DataCard v-if="isAddressPage">
         <h5 class="text-red-600 uppercase text-center">Lords</h5>
         <div class="mt-auto">
           <BButton
@@ -69,6 +73,7 @@ import { useLords } from '~/composables/lords/useLords'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
 import { useAdventurer } from '~/composables/useAdventurer'
+import { useConnect } from '~/composables/web3/useConnect'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 export default defineComponent({
   setup(props, context) {
@@ -78,7 +83,7 @@ export default defineComponent({
       adventurer,
       loading: loadingSRealms,
     } = useAdventurer()
-
+    const { isAddressPage } = useConnect()
     const {
       claimLords,
       getWorldAge,
@@ -149,6 +154,7 @@ export default defineComponent({
       loadingLords,
       timeNextAge,
       loadingSRealms,
+      isAddressPage,
     }
   },
 })

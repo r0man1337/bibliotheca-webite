@@ -30,7 +30,9 @@
       >
 
       <nav class="flex flex-col p-2 capitalize mt-8">
-        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">Settling</h4>
+        <h4 class="mt-8 uppercase text-gray-700 tracking-wide pl-4">
+          Settling
+        </h4>
         <BButton
           v-if="account"
           :to="'/adventurer/' + account + '/empire'"
@@ -46,7 +48,7 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
-        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">
+        <h4 class="mt-8 uppercase text-gray-700 tracking-wide pl-4">
           Loot Assets
         </h4>
         <BButton
@@ -66,7 +68,9 @@
           @click.native="toggleSideBar"
           >{{ link.title }}</BButton
         >
-        <h4 class="mt-8 uppercase text-gray-500 tracking-widest">Utilities</h4>
+        <h4 class="mt-8 uppercase text-gray-700 tracking-wide pl-4">
+          Utilities
+        </h4>
         <BButton
           v-for="link in utilLinks"
           :key="link.title"

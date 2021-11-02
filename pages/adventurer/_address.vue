@@ -18,6 +18,7 @@
             py-3
             text-gray-400
             hover:bg-black hover:text-red-600
+            border-2 border-transparent
             uppercase
           "
           :to="'/adventurer/' + address + '/' + link.slug"

@@ -8,14 +8,6 @@
     </div>
     <v-popover placement="right" trigger="hover">
       <div v-if="isAddressPage" class="flex">
-        <div class="mr-2">
-          <input
-            v-model="qty"
-            class="w-4 rounded bg-gray-800 text-center"
-            type="text"
-          />
-        </div>
-
         <Web3Button
           type="small"
           :disabled="!unitCost"
@@ -30,6 +22,31 @@
           <h4 class="text-center mb-1">{{ unitValues.name }} Cost</h4>
           <div>
             {{ unitValues.description }}
+          </div>
+
+          <div class="mx-auto flex justify-center">
+            <button class="px-2 bg-gray-500 rounded-full" @click="qty--">
+              -
+            </button>
+            <input
+              v-model="qty"
+              class="w-4 rounded bg-gray-300 text-center"
+              type="text"
+            />
+            <button class="px-2 bg-gray-500 rounded-full" @click="qty++">
+              +
+            </button>
+          </div>
+          <div v-if="isAddressPage" class="flex my-2 justify-center">
+            <Web3Button
+              type="small"
+              :disabled="!unitCost"
+              @click="
+                buildRaiding(realmId, unitId, qty, unitCost[0], unitCost[1])
+              "
+            >
+              {{ loading.buildRaiding ? 'Building..' : 'Build' }}
+            </Web3Button>
           </div>
           <div class="my-3">
             Offence: +{{ unitValues.offence }} <br />

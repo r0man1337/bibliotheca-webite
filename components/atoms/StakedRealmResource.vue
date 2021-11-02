@@ -34,7 +34,11 @@
       <template slot="popover">
         <div class="bg-gray-300 shadow-xl p-4 rounded text-gray-900">
           <h4 class="text-center mb-1">Upgrade Cost</h4>
-
+          <p class="text-center mb-4">
+            This will increase production <br />
+            to <span class="font-semibold">{{ getNextOutputLevel }}</span> per
+            day
+          </p>
           <div v-if="upgradeCosts" class="flex justify-between">
             <div class="flex flex-col">
               <span
@@ -107,6 +111,12 @@ export default defineComponent({
       ).output
     })
 
+    const getNextOutputLevel = computed(() => {
+      return productionOutput.find(
+        (a) => a.level === parseInt(resourceLevel.value + 1)
+      ).output
+    })
+
     const findResources = computed(() => {
       return resources.find((a) => a.id === parseInt(resourceId.value))
     })
@@ -128,6 +138,7 @@ export default defineComponent({
       loading,
       output,
       isAddressPage,
+      getNextOutputLevel,
     }
   },
 })

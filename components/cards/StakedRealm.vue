@@ -72,7 +72,7 @@
           :age-settled="realm.ageSettled"
         />
         <div
-          v-if="raidingArmy && defensiveArmy"
+          v-if="raidingArmy"
           class="my-2 border-t border-b py-3 border-gray-900"
         >
           <span class="uppercase text-red-600 font-display">Military</span>
@@ -93,16 +93,16 @@
           </RealmMilitary>
           <RealmMilitary
             :realm-id="realm.id"
-            :unit="defensiveArmy[0]"
+            :unit="raidingArmy[4]"
             :unit-id="2"
-            :time="defensiveArmy[1]"
+            :time="raidingArmy[5]"
           >
           </RealmMilitary>
           <RealmMilitary
             :realm-id="realm.id"
-            :unit="defensiveArmy[2]"
+            :unit="raidingArmy[6]"
             :unit-id="3"
-            :time="defensiveArmy[3]"
+            :time="raidingArmy[7]"
           >
           </RealmMilitary>
         </div>
@@ -164,7 +164,7 @@
         </button>
       </div>
 
-      <div v-if="buildings" class="my-3 px-2">
+      <div v-if="buildings && realm.traits" class="my-3 px-2">
         <span class="uppercase text-red-400 font-display">Buildings</span>
         <RealmBuildings
           v-for="(building, index) in buildings"
@@ -172,17 +172,18 @@
           :building-id="index"
           :building="building"
           :realm-id="realm.id"
+          :realm-traits="realm.traits"
         />
       </div>
-      <!-- <div v-if="metaData" class="px-2">
+      <div v-if="realm.traits" class="px-2">
         <Levels
           flex
-          :cities="cities"
-          :harbours="harbours"
-          :regions="regions"
-          :rivers="rivers"
+          :cities="realm.traits[1]"
+          :harbours="realm.traits[2]"
+          :regions="realm.traits[0]"
+          :rivers="realm.traits[3]"
         />
-      </div> -->
+      </div>
       <BButton
         v-if="isAddressPage"
         class="w-full mt-auto"
@@ -240,8 +241,6 @@ export default defineComponent({
       fetchRaiding,
       //   fetchUnitCost,
       raidingArmy,
-      fetchDefence,
-      defensiveArmy,
     } = useMilitary()
 
     const metaData = ref()
@@ -269,7 +268,6 @@ export default defineComponent({
       // metaData.value = response.data
       await getBuildings(props.realm.id)
       await fetchRaiding(props.realm.id)
-      await fetchDefence(props.realm.id)
     })
 
     // const fetchRealmMetaData = async (id) => {
@@ -304,8 +302,6 @@ export default defineComponent({
       unsettle,
       isAddressPage,
       raidingArmy,
-      fetchDefence,
-      defensiveArmy,
     }
   },
 })

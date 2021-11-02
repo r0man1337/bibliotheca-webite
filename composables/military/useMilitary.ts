@@ -42,10 +42,12 @@ export function useMilitary() {
       )
     } catch (e) {
       console.log(e)
-      await showError(e.data.message)
+      if (e.data) {
+        await showError(e.data.message)
+      }
     } finally {
+      console.log('2')
       await fetchRaiding(realmId)
-      await fetchDefence(realmId)
       loading.buildRaiding = false
     }
   }
@@ -54,6 +56,7 @@ export function useMilitary() {
     try {
       error.buildRaiding = null
       loading.fetching = true
+      console.log('2')
       raidingArmy.value = await getRaidingArmy(useL2Network.value.id, realmId)
     } catch (e) {
       console.log(e)
