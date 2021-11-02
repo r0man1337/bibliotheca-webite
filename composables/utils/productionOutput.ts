@@ -19,4 +19,12 @@ export const productionOutput = [
     level: 5,
     output: 180,
   },
+  {
+    level: 6,
+    output: 185,
+  },
+  {
+    level: 7,
+    output: 189,
+  },
 ]
