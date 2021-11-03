@@ -52,12 +52,15 @@ export function useMilitary() {
     }
   }
   const raidingArmy = ref()
+  const offence = ref()
   const fetchRaiding = async (realmId) => {
     try {
       error.buildRaiding = null
       loading.fetching = true
       console.log('2')
       raidingArmy.value = await getRaidingArmy(useL2Network.value.id, realmId)
+
+      offence.value = raidingArmy.value[0] * 250 + raidingArmy.value[2] * 100
     } catch (e) {
       console.log(e)
       error.buildRaiding = e.message
@@ -107,6 +110,7 @@ export function useMilitary() {
     error,
     loading,
     result,
+    offence,
   }
 }
 

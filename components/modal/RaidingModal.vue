@@ -46,8 +46,12 @@
         :attacking-realm="selectedAttackingRealm"
       />
       <div class="w-full flex">
+        <WarriorDeath
+          v-if="raidResults && !raidResults.resourcesIdsPillaged.length"
+          class="self-center mx-auto"
+        />
         <WarriorFighting
-          v-if="loading.raidingRealm"
+          v-else-if="loading.raidingRealm"
           class="self-center mx-auto"
         />
         <WarriorStanding v-else-if="raiding" class="self-center mx-auto" />
@@ -67,8 +71,12 @@
             loading.raidingRealm ? 'RAIDING!!!' : 'Raid'
           }}</span>
         </BButton>
+        <WarriorDeath
+          v-if="raidResults && raidResults.resourcesIdsPillaged.length"
+          class="self-center mx-auto"
+        />
         <WarriorFighting
-          v-if="loading.raidingRealm"
+          v-else-if="loading.raidingRealm"
           inverse
           class="self-center mx-auto"
         />

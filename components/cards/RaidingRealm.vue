@@ -33,7 +33,7 @@
           </div>
           <!-- <Happiness class="self-center" :realm="realm.id" /> -->
         </div>
-        <RealmStatistics :icon="false" :realm="realm.id" />
+        <RealmStatistics :offence="offence" :icon="false" :realm="realm.id" />
         <div v-if="raidingArmy" class="my-3">
           <span class="uppercase text-red-400 font-display">Military</span>
           <span class="text-sm uppercase">Units | Offence | defence</span>
@@ -109,7 +109,7 @@ export default defineComponent({
       withdraw,
     } = useStaking()
 
-    const { fetchRaiding, raidingArmy } = useMilitary()
+    const { fetchRaiding, raidingArmy, offence } = useMilitary()
 
     onMounted(async () => {
       await fetchRaiding(props.realm.id)
@@ -130,6 +130,7 @@ export default defineComponent({
       raidingArmy,
       selectAttackingRealm,
       selectedAttackingRealm,
+      offence,
     }
   },
 })

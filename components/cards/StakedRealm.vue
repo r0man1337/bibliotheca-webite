@@ -71,10 +71,14 @@
 
         <div class="flex justify-between">
           <div class="py-4">
-            <OrderChip class="text-sm" :order-id="realm.order" />
+            <OrderChip class="text-sm font-semibold" :order-id="realm.order" />
           </div>
           <Happiness class="self-center" :realm="realm.id" />
-          <RealmStatistics class="self-center" :realm="realm.id" />
+          <RealmStatistics
+            :offence="offence"
+            class="self-center"
+            :realm="realm.id"
+          />
         </div>
         <RealmAgeStats
           :age-claimed="realm.ageClaimed"
@@ -227,6 +231,7 @@ import { useConstruction } from '~/composables/construction/useConstruction'
 // import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useMilitary } from '~/composables/military/useMilitary'
 import { useWeb3 } from '~/composables/web3'
+// import { militaryUnits } from '@/composables/utils/militaryUnits'
 export default defineComponent({
   // components: {
   //   LoadingRings,
@@ -262,6 +267,7 @@ export default defineComponent({
       fetchRaiding,
       //   fetchUnitCost,
       raidingArmy,
+      offence,
     } = useMilitary()
 
     const metaData = ref()
@@ -323,6 +329,7 @@ export default defineComponent({
       unsettle,
       isAddressPage,
       raidingArmy,
+      offence,
     }
   },
 })
