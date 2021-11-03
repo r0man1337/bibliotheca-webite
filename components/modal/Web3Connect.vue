@@ -124,7 +124,7 @@ import { useModal } from '~/composables/useModal'
 import { injected } from '~/connectors'
 import { SUPPORTED_WALLETS } from '~/connectors/wallets'
 // import { Network, useNetwork } from '~/composables/web3/useNetwork'
-import { useNotification } from '~/composables/web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 export default defineComponent({
   props: {
     slim: {

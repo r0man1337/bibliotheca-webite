@@ -13,7 +13,7 @@
                   class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   <span v-if="type === 'raid'">Raider</span>
-                  <spam v-else>Defender</spam>
+                  <span v-else>Defender</span>
                 </th>
                 <th
                   scope="col"

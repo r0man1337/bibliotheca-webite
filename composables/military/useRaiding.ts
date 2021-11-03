@@ -1,8 +1,8 @@
 import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
-import { useNotification } from '../web3/useNotification'
-// ABI
 import { useGraph } from '../web3/useGraph'
+import { useNotification } from '~/composables/useNotification'
+// ABI
 import RaidingFacet from '~/abi/RaidingFacet.json'
 import { getAdventurerRaidResultsQuery } from '~/composables/graphql/queries'
 import { useNetwork, activeNetwork } from '~/composables/web3/useNetwork'
@@ -17,7 +17,7 @@ export function useRaiding() {
   const { gqlRequest } = useGraph()
   const { useL2Network } = useNetwork()
 
-  const { showError } = useNotification()
+  const { showError, showSuccess } = useNotification()
   const error = reactive({
     raidingRealm: null,
     raidChance: null,
@@ -70,7 +70,7 @@ export function useRaiding() {
         RaidingFacet.abi,
         signer
       )
-      raidingFacet.on(
+      /* raidingFacet.on(
         'RaidResult',
         (
           raidResult,
@@ -106,14 +106,18 @@ export function useRaiding() {
             raidingFacet.removeAllListeners('RaidResult')
           }
         }
-      )
-      const raid = await raidingFacet.raidRealm(
+      ) */
+      const tx = await raidingFacet.raidRealm(
         attackingRealmIdIn,
         defendingRealmIdIn
       )
+      const { events } = await tx.wait()
+      const args = events.find(({ event }) => event === 'RaidResult').args
+      const result = getRaidResults(args)
+      const body = 'The battle reasult was ' + result.raidResult
+      showSuccess('Raid Completed', body)
 
-      await raid.wait()
-      console.log(raid)
+      raidResults.value = result
     } catch (e) {
       console.log(e)
       await showError(e.data.message)
@@ -123,10 +127,23 @@ export function useRaiding() {
     }
   }
 
+  const getRaidResults = (args) => {
+    return {
+      raidResult: args.raidResult.toNumber(),
+      attackingRealm: args.attackingRealm.toNumber(),
+      defendingRealm: args.defendingRealm.toNumber(),
+      attackerAddress: args.attackerAddress,
+      defenderAddress: args.defenderAddress,
+      raidingUnitsLost: args.raidingUnitsLost.toNumber(),
+      defendingUnitsLost: args.defendingUnitsLost.toNumber(),
+      resourcesIdsPillaged: args.resourcesIdsPillaged,
+      resourcesValuesPillaged: args.resourcesValuesPillaged,
+      unitsCaptured: args.unitsCaptured.toNumber(),
+    }
+  }
   const selectedAttackingRealm = computed(() => selectedAttacking.realm)
 
   const selectAttackingRealm = (realm) => {
-    console.log(realm)
     selectedAttacking.realm = realm
   }
 
@@ -142,7 +159,7 @@ export function useRaiding() {
       first: params?.value?.first || 12,
       skip: params?.value?.skip || 0,
       orderBy: params?.value?.orderBy || null,
-      orderDirection: params?.value?.orderDirection || '',
+      orderDirection: params?.value?.orderDirection || 'desc',
     }
   }
 

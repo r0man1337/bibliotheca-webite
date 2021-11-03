@@ -2,9 +2,9 @@ import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { useNotification } from '../web3/useNotification'
-// ABI
 import { getResourceListQuery } from './../graphql/queries'
+import { useNotification } from '~/composables/useNotification'
+// ABI
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import ResourceTokensAbi from '~/abi/ResourceTokens.json'
 

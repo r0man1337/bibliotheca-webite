@@ -26,7 +26,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useNotification } from '~/composables/web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 
 export default defineComponent({
   setup() {

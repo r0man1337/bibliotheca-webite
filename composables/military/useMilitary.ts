@@ -2,7 +2,7 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { useNotification } from '../web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 // ABI
 import ArmyTrainingFacet from '~/abi/ArmyTrainingFacet.json'
 
