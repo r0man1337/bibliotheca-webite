@@ -55,7 +55,10 @@
         flex
         justify-between
         w-full
-        hover:text-black hover:shadow-xl hover:-translate-y-1 hover:bg-red-200
+        hover:text-black hover:shadow-xl
+        bg-green-500
+        hover:-translate-y-1 hover:bg-green-200
+        text-green-900
         transform
         transition
         duration-300
