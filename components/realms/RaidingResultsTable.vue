@@ -89,7 +89,7 @@
                     {{ result.result }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <td class="px-6 py-4 whitespace-nowrap">
                   {{ getTime(result.timestamp) }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -106,19 +106,6 @@
                   <div v-else class="px-6 py-4 whitespace-nowrap font-semibold">
                     Raid Unsuccessful
                   </div>
-                </td>
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-right text-sm
-                    font-medium
-                  "
-                >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900"
-                    >View</a
-                  >
                 </td>
               </tr>
             </tbody>

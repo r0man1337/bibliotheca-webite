@@ -36,7 +36,16 @@
           "
         >
           <button
-            class="bg-gray-900 rounded p-2 ml-auto"
+            class="
+              bg-gray-300
+              rounded
+              p-2
+              ml-auto
+              text-gray-500
+              hover:bg-gray-600
+              shadow
+              font-body
+            "
             @click="active = true"
           >
             Flip
@@ -159,7 +168,19 @@
       :class="{ 'bg-white hidden': !active }"
     >
       <div class="flex p-3">
-        <button class="bg-gray-900 rounded p-2 ml-auto" @click="active = false">
+        <button
+          class="
+            bg-gray-300
+            rounded
+            p-2
+            ml-auto
+            text-gray-500
+            hover:bg-gray-600
+            shadow
+            font-body
+          "
+          @click="active = false"
+        >
           Flip
         </button>
       </div>

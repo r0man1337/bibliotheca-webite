@@ -5,11 +5,11 @@
       bg-gray-900
       flex
       p-8
-      max-h-screen
       rounded-2xl
       shadow-3xl
       border-4
       h-screen
+      overflow-y-scroll
     "
   >
     <div class="w-4/12">

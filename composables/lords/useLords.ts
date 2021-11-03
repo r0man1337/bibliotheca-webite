@@ -57,7 +57,9 @@ export function useLords() {
       loading.lords = true
       worldAge.value = await getAge(account, activeNetwork.value.id, realmId)
     } catch (e) {
-      await showError(e.data.message)
+      if (e.data) {
+        await showError(e.data.message)
+      }
     } finally {
       loading.lords = false
     }
