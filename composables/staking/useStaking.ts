@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { activeNetwork } from '../web3/useNetwork'
 import { useBigNumber } from '../web3/useBigNumber'
-import { useNotification } from '../web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 import { useRealms } from '~/composables/web3/useRealms'
 import StakingFacetAbi from '~/abi/StakingFacet.json'
 import lootRealmsABI from '~/abi/lootRealms.json'
@@ -17,7 +17,7 @@ export function useStaking() {
   const error = reactive({
     stake: null,
   })
-  const { showError } = useNotification()
+  const { showError, showSuccess } = useNotification()
   const loading = reactive({
     stake: null,
   })
@@ -30,6 +30,8 @@ export function useStaking() {
       loading.stake = true
       await setApprovalForAll(account.value, activeNetwork.value.id)
       result.stake = await stake(account.value, activeNetwork.value.id, realmId)
+      const body = 'Successfully staked Realm ' + realmId
+      showSuccess('Realm staked', body)
     } catch (e) {
       await showError(e.message)
       error.stake = e.message

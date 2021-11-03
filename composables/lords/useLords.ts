@@ -4,7 +4,7 @@ import { useNetwork, activeNetwork } from '../web3/useNetwork'
 import { useWeb3 } from '../web3'
 import { ageDistributions } from '../lordsTokenDistribution'
 // ABI
-import { useNotification } from '../web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 import ResourceConstructionFacetAbi from '~/abi/ResourceConstructionFacet.json'
 import LordsClaimingFacetAbi from '~/abi/LordsClaimingFacet.json'
 import LordsTokenAbi from '~/abi/TheLordsToken.json'
@@ -160,8 +160,8 @@ async function getLordsBalance(owner, network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const lordsTokensAddress = erc20Tokens[network].getTokenByKey('lords')
-
+  const lordsTokensAddress = erc20Tokens[network].getTokenByKey('lords').address
+  console.log(lordsTokensAddress)
   const lordsTokens = new ethers.Contract(
     lordsTokensAddress,
     LordsTokenAbi.abi,

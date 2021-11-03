@@ -1,7 +1,7 @@
 import { ref } from '@nuxtjs/composition-api'
 
-import { useRandom } from './useRandom'
-import { NetworkId, activeNetworkId } from './useNetwork'
+import { useRandom } from '~/composables/web3/useRandom'
+import { NetworkId, activeNetworkId } from '~/composables/web3/useNetwork'
 import { useFormatting } from '@/composables/useFormatting'
 import { statements } from '@/composables/utils/statements'
 const { makeid, getRandomInt } = useRandom()

@@ -2,7 +2,7 @@ import { reactive, ref, Ref } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
 import { useWeb3 } from '@instadapp/vue-web3'
 import { useNetwork, activeNetwork } from '../web3/useNetwork'
-import { useNotification } from '../web3/useNotification'
+import { useNotification } from '~/composables/useNotification'
 // ABI
 import ArmyTrainingFacet from '~/abi/ArmyTrainingFacet.json'
 
@@ -57,7 +57,6 @@ export function useMilitary() {
     try {
       error.buildRaiding = null
       loading.fetching = true
-      console.log('2')
       raidingArmy.value = await getRaidingArmy(useL2Network.value.id, realmId)
 
       offence.value = raidingArmy.value[0] * 250 + raidingArmy.value[2] * 100
