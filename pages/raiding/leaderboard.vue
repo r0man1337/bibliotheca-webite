@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="w-full text-center">
       <h1>Raiding Leaderboard</h1>
-      <p>Find the top Raiders, the most raided Realms & more</p>
+      <p class="text-2xl">Find the top Raiders, & the most raided Realms.</p>
 
       <h2 class="mt-8">Top Raiders</h2>
       <RaidingResultsLeaderboardTable type="raid" :results="raiderResults" />

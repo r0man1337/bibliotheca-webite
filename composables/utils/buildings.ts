@@ -42,6 +42,6 @@ export const allBuildings = [
   {
     name: 'Fishing Villages',
     id: 8,
-    trait: 'regions',
+    trait: 'rivers',
   },
 ]

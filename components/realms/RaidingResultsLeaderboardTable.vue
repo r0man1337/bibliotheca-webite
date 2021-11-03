@@ -6,62 +6,30 @@
           class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
         >
           <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-800">
               <tr>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-left uppercase tracking-wider"
                 >
                   <span v-if="type === 'raid'">Raider</span>
                   <spam v-else>Defender</spam>
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-center uppercase tracking-wider"
                 >
                   Raids
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-center uppercase tracking-wider"
                 >
                   Units Killed
                 </th>
                 <th
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    uppercase
-                    tracking-wider
-                  "
+                  class="px-6 py-3 text-center uppercase tracking-wider"
                 >
                   Units Lost
                 </th>
@@ -70,26 +38,20 @@
                 </th>
               </tr>
             </thead>
-            <tbody v-if="results" class="bg-white divide-y divide-gray-200">
-              <tr v-for="result in results" :key="result.id">
+            <tbody v-if="results" class="bg-gray-900 divide-y divide-gray-200">
+              <tr v-for="(result, index) in results" :key="index">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <!--<div class="flex-shrink-0 h-10 w-10">
-                      <img
-                        class="h-10 w-10 rounded-full"
-                        :src="person.image"
-                        alt=""
-                      />
-                    </div>-->
                     <div class="">
-                      <div class="text-sm text-gray-500">
-                        <nuxt-link
+                      <div class="text-2xl font-semibold">
+                        <span v-if="index === 0">👑</span>
+                        <NuxtLink
                           :to="
                             '/adventurer/' + result.address + '/raid-results'
                           "
-                          class="font-semibold text-ocean-blue-pure"
-                          >{{ result.address }}
-                        </nuxt-link>
+                        >
+                          <Ens :address="result.address" />
+                        </NuxtLink>
                       </div>
                     </div>
                   </div>
@@ -97,9 +59,10 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span
                     class="
-                      px-2
+                      p-4
                       inline-flex
-                      text-xs
+                      text-2xl
+                      mx-auto
                       leading-5
                       font-semibold
                       rounded-full
@@ -111,15 +74,15 @@
                     <span v-else>{{ result.raidDefends }}</span>
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500">
+                <td class="px-6 py-4 text-2xl">
+                  <div>
                     <span v-if="type === 'raid'">{{
                       getUnitsKilled(result)
                     }}</span>
                     <span v-else>{{ getUnitsLost(result) }}</span>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 text-2xl">
                   <span v-if="type === 'raid'">{{ getUnitsLost(result) }}</span>
                   <span v-else>{{ getUnitsKilled(result) }}</span>
                 </td>
@@ -132,11 +95,11 @@
                     font-medium
                   "
                 >
-                  <nuxt-link
-                    class="text-indigo-600 hover:text-indigo-900"
+                  <BButton
+                    type="primary"
                     :to="'/adventurer/' + result.address + '/raid-results'"
-                    >View
-                  </nuxt-link>
+                    >View Lord
+                  </BButton>
                 </td>
               </tr>
             </tbody>
