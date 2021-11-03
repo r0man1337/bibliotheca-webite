@@ -27,7 +27,7 @@
       </nav>
     </div>
 
-    <NuxtChild />
+    <NuxtChild keep-alive />
   </div>
 </template>
 <script>

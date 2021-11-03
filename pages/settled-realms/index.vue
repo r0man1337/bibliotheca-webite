@@ -89,13 +89,13 @@ import {
   ref,
   useFetch,
   computed,
-  onMounted,
 } from '@nuxtjs/composition-api'
 // import axios from 'axios'
 import { useFormatting } from '~/composables/useFormatting'
 import { useRealms } from '~/composables/web3/useRealms'
 
 export default defineComponent({
+  fetchOnServer: false,
   setup(props, context) {
     const { shortenHash } = useFormatting()
     const { getSRealms, sRealms, loading, userSRealms, getUserSRealms } =
@@ -154,33 +154,7 @@ export default defineComponent({
       await fetch()
     }
 
-    /* const baseAssetAddress =
-      'https://api.opensea.io/api/v1/assets?asset_contract_address=0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d&limit=50'
-
-    const getOSData = async () => {
-      if (orderBy.value) {
-        return await axios.get(
-          baseAssetAddress +
-            '&offset=' +
-            offset.value +
-            '&order_by=' +
-            orderBy.value,
-          {
-            headers: {
-              'X-API-KEY': process.env.OPENSEA,
-            },
-          }
-        )
-      } else {
-        return await axios.get(baseAssetAddress + '&offset=' + offset.value, {
-          headers: {
-            'X-API-KEY': process.env.OPENSEA,
-          },
-        })
-      }
-    } */
-
-    onMounted(async () => {
+    useFetch(async () => {
       await getUserSRealms()
     })
 

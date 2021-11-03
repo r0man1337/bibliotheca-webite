@@ -33,7 +33,12 @@
           </div>
           <!-- <Happiness class="self-center" :realm="realm.id" /> -->
         </div>
-        <RealmStatistics :offence="offence" :icon="false" :realm="realm.id" />
+        <RealmStatistics
+          v-if="offence !== null"
+          :offence="offence"
+          :icon="false"
+          :realm="realm.id"
+        />
         <div v-if="raidingArmy" class="my-3">
           <span class="uppercase text-red-400 font-display">Military</span>
           <span class="text-sm uppercase">Units | Offence | defence</span>

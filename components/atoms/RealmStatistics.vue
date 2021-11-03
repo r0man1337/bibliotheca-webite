@@ -67,9 +67,11 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { useFetch } from '@nuxtjs/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { useStatistics } from '~/composables/statistics/useStatistics'
 export default defineComponent({
+  fetchOnServer: false,
   props: {
     realm: {
       type: String,
@@ -88,7 +90,7 @@ export default defineComponent({
   setup(props) {
     const { getStatistics, realmStatistics } = useStatistics()
 
-    onMounted(async () => {
+    useFetch(async () => {
       await getStatistics(props.realm)
     })
 

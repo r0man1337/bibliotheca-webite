@@ -46,11 +46,12 @@
   </div>
 </template>
 <script>
-import { onMounted, defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useFetch } from '@nuxtjs/composition-api'
 import { resources } from '@/composables/utils/resourceColours'
 import { useLords } from '~/composables/lords/useLords'
 import { usePrice } from '~/composables'
 export default defineComponent({
+  fetchOnServer: false,
   setup(props, context) {
     const { goldPrice } = usePrice()
     const { address } = context.root.$route.params
@@ -73,7 +74,7 @@ export default defineComponent({
     const sortedResources = filteredResources.sort((a, b) => {
       return b.value - a.value
     })
-    onMounted(async () => {
+    useFetch(async () => {
       await getAdventurersLords(address)
       // await getAdventurersGold(address)
     })

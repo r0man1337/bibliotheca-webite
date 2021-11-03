@@ -75,6 +75,7 @@
           </div>
           <Happiness class="self-center" :realm="realm.id" />
           <RealmStatistics
+            v-if="offence !== null"
             :offence="offence"
             class="self-center"
             :realm="realm.id"
@@ -222,20 +223,22 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed } from '@vue/composition-api'
 
+import { useFetch } from '@nuxtjs/composition-api'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useConnect } from '~/composables/web3/useConnect'
 
 import { useConstruction } from '~/composables/construction/useConstruction'
-// import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useMilitary } from '~/composables/military/useMilitary'
 import { useWeb3 } from '~/composables/web3'
 // import { militaryUnits } from '@/composables/utils/militaryUnits'
 export default defineComponent({
-  // components: {
-  //   LoadingRings,
-  // },
+  components: {
+    LoadingRings,
+  },
+  fetchOnServer: false,
   props: {
     realm: {
       type: Object,
@@ -289,7 +292,7 @@ export default defineComponent({
       }
     }
 
-    onMounted(async () => {
+    useFetch(async () => {
       await getRealmsResourceBalance(props.realm.id)
       // const response = await fetchRealmMetaData(props.realm.id)
       // metaData.value = response.data

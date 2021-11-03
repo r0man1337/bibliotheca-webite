@@ -22,15 +22,15 @@ import { useConnect } from '~/composables/web3/useConnect'
 export default defineComponent({
   props: {
     resource: {
-      type: Object,
+      type: String,
       required: true,
     },
     vault: {
-      type: Number,
+      type: String,
       required: true,
     },
     value: {
-      type: Object,
+      type: String,
       required: false,
       default: null,
     },

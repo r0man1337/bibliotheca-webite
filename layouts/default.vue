@@ -12,7 +12,7 @@
     <div class="w-full">
       <AccountButton />
 
-      <Nuxt class="p-3 sm:p-8" />
+      <Nuxt keep-alive class="p-3 sm:p-8" />
       <Modal />
     </div>
   </div>

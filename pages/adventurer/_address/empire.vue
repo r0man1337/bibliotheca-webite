@@ -66,9 +66,10 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, computed } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 
 import { useWeb3 } from '@instadapp/vue-web3'
+import { useFetch } from '@nuxtjs/composition-api'
 import { useLords } from '~/composables/lords/useLords'
 import { useStaking } from '~/composables/staking/useStaking'
 import { useNetwork } from '~/composables/web3/useNetwork'
@@ -76,6 +77,7 @@ import { useAdventurer } from '~/composables/useAdventurer'
 import { useConnect } from '~/composables/web3/useConnect'
 // import { useWeb3Modal } from '~/composables/web3/useWeb3Modal'
 export default defineComponent({
+  fetchOnServer: false,
   setup(props, context) {
     const { address } = context.root.$route.params
     const {
@@ -117,16 +119,17 @@ export default defineComponent({
       return adventurer.l2?.srealms || []
     })
 
-    onMounted(async () => {
-      await getWorldAge()
-      await getAdventurer(address, 'l2')
-      await getTimeToNextAge()
+    useFetch(async () => {
       activeNetworkId.value = useL2Network.value.id
       if (account.value) {
         if (networkMismatch.value) {
           checkForNetworkMismatch()
         }
       }
+
+      await getWorldAge()
+      await getAdventurer(address, 'l2')
+      await getTimeToNextAge()
     })
 
     const popFromArray = (value) => {
@@ -136,6 +139,7 @@ export default defineComponent({
 
     return {
       adventurer,
+      activeNetworkId,
       popFromArray,
       stakeRealm,
       claimResources,

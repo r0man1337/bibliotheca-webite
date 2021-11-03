@@ -11,13 +11,14 @@
   </tr>
 </template>
 <script>
-import { defineComponent, ref, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
 import { useResources } from '~/composables/resources/useResources'
 import LoadingDots from '~/assets/img/threeDots.svg?inline'
 export default defineComponent({
   components: {
     LoadingDots,
   },
+  fetchOnServer: false,
   props: {
     resource: {
       type: Object,
@@ -29,7 +30,7 @@ export default defineComponent({
     const { address } = context.root.$route.params
     const { fetchResource, loading } = useResources()
     const balance = ref()
-    onMounted(async () => {
+    useFetch(async () => {
       balance.value = await fetchResource(address, props.resource.id)
     })
     return {
