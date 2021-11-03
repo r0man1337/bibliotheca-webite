@@ -22,8 +22,8 @@
         </span>
       </span> -->
       <br />
-      <span v-if="lordsBalance" class="text-3xl"
-        >LORDS: {{ lordsBalance }} 👑
+      <span v-if="lordsBalanceFormatted" class="text-3xl"
+        >LORDS: {{ lordsBalanceFormatted }} 👑
       </span>
       <table class="table-fixed w-full">
         <thead>
@@ -46,7 +46,7 @@
   </div>
 </template>
 <script>
-import { useFetch, defineComponent } from '@nuxtjs/composition-api'
+import { onMounted, defineComponent, computed } from '@nuxtjs/composition-api'
 import { resources } from '@/composables/utils/resourceColours'
 import { useLords } from '~/composables/lords/useLords'
 import { usePrice } from '~/composables'
@@ -65,17 +65,22 @@ export default defineComponent({
     const filteredResources = resources.filter((d) => {
       return d.value > 1
     })
-
+    const lordsBalanceFormatted = computed(() => {
+      if (lordsBalance.value) {
+        return parseFloat(lordsBalance.value)?.toFixed(2)
+      }
+    })
     const sortedResources = filteredResources.sort((a, b) => {
       return b.value - a.value
     })
-    useFetch(async () => {
+    onMounted(async () => {
       await getAdventurersLords(address)
       // await getAdventurersGold(address)
     })
     return {
       getAdventurersLords,
       lordsBalance,
+      lordsBalanceFormatted,
       worldAge,
       sortedResources,
       error,

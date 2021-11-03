@@ -160,8 +160,8 @@ async function getLordsBalance(owner, network) {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
 
-  const lordsTokensAddress = erc20Tokens[network].getTokenByKey('lords')
-
+  const lordsTokensAddress = erc20Tokens[network].getTokenByKey('lords').address
+  console.log(lordsTokensAddress)
   const lordsTokens = new ethers.Contract(
     lordsTokensAddress,
     LordsTokenAbi.abi,
