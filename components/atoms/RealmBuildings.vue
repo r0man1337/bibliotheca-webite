@@ -103,7 +103,7 @@ export default defineComponent({
       required: true,
     },
     realmTraits: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },

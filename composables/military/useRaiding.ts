@@ -1,5 +1,7 @@
 import { reactive, ref, Ref, computed } from '@nuxtjs/composition-api'
 import { ethers } from 'ethers'
+import { getAccountPath } from '@ethersproject/hdnode'
+import { useWeb3 } from '@instadapp/vue-web3'
 import { useGraph } from '../web3/useGraph'
 import { useNotification } from '~/composables/useNotification'
 // ABI
@@ -14,6 +16,7 @@ const selectedAttacking = reactive({
   realm: false,
 })
 export function useRaiding() {
+  const { account } = useWeb3()
   const { gqlRequest } = useGraph()
   const { useL2Network } = useNetwork()
 
@@ -70,43 +73,7 @@ export function useRaiding() {
         RaidingFacet.abi,
         signer
       )
-      /* raidingFacet.on(
-        'RaidResult',
-        (
-          raidResult,
-          attackingRealmId,
-          defendingRealmId,
-          attackerAddress,
-          defenderAddress,
-          raidingUnitsLost,
-          defendingUnitsLost,
-          resourcesIdsPillaged,
-          resourcesValuesPillaged,
-          unitsCaptured
-        ) => {
-          if (
-            attackingRealmId.toNumber() === parseInt(attackingRealmIdIn) &&
-            defendingRealmId.toNumber() === parseInt(defendingRealmIdIn)
-          ) {
-            const result = {
-              raidResult: raidResult.toNumber(),
-              attackingRealmId: attackingRealmId.toNumber(),
-              defendingRealmId: defendingRealmId.toNumber(),
-              attackerAddress,
-              defenderAddress,
-              raidingUnitsLost: raidingUnitsLost.toNumber(),
-              defendingUnitsLost: defendingUnitsLost.toNumber(),
-              resourcesIdsPillaged,
-              resourcesValuesPillaged,
-              unitsCaptured: unitsCaptured.toNumber(),
-            }
-            console.log(result)
-            raidResults.value = result
-
-            raidingFacet.removeAllListeners('RaidResult')
-          }
-        }
-      ) */
+      addRaidResultListener()
       const tx = await raidingFacet.raidRealm(
         attackingRealmIdIn,
         defendingRealmIdIn
@@ -125,6 +92,58 @@ export function useRaiding() {
     } finally {
       loading.raidingRealm = false
     }
+  }
+
+  const addRaidResultListener = () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const diamondAddress = contractAddress[activeNetwork.value.id].realmsDiamond
+    const signer = provider.getSigner()
+    let realmsResult
+    const raidingFacet = new ethers.Contract(
+      diamondAddress,
+      RaidingFacet.abi,
+      signer
+    )
+    console.log('adding raid result listener')
+    raidingFacet.on(
+      'RaidResult',
+      (
+        raidResult,
+        attackingRealmId,
+        defendingRealmId,
+        attackerAddress,
+        defenderAddress,
+        raidingUnitsLost,
+        defendingUnitsLost,
+        resourcesIdsPillaged,
+        resourcesValuesPillaged,
+        unitsCaptured
+      ) => {
+        console.log('raid result from lister' + raidResult)
+        if (defenderAddress === account.value) {
+          const args = {
+            raidResult,
+            attackingRealm: attackingRealmId,
+            defendingRealm: defendingRealmId,
+            attackerAddress,
+            defenderAddress,
+            raidingUnitsLost,
+            defendingUnitsLost,
+            resourcesIdsPillaged,
+            resourcesValuesPillaged,
+            unitsCaptured,
+          }
+          const result = getRaidResults(args)
+          console.log(result)
+          raidResults.value = result
+          const body =
+            result.attackerAddress +
+            ' captured resources: ' +
+            resourcesIdsPillaged
+          showSuccess('You were raided!', body)
+        }
+      }
+    )
   }
 
   const getRaidResults = (args) => {
@@ -186,6 +205,7 @@ export function useRaiding() {
   return {
     raidChance,
     chance,
+    addRaidResultListener,
     raidingRealm,
     raidResults,
     getAdventurerRaidResults,

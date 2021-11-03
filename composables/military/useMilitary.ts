@@ -56,7 +56,6 @@ export function useMilitary() {
     try {
       error.buildRaiding = null
       loading.fetching = true
-      console.log('2')
       raidingArmy.value = await getRaidingArmy(useL2Network.value.id, realmId)
     } catch (e) {
       console.log(e)

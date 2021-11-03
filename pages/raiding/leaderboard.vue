@@ -69,7 +69,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, useFetch, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  reactive,
+  ref,
+} from '@nuxtjs/composition-api'
 import { useRaiding } from '~/composables/military/useRaiding'
 
 export default defineComponent({
@@ -79,6 +84,10 @@ export default defineComponent({
     const defenderResults = ref([])
     const first = ref(8)
     const skip = ref({ raider: 0, defender: 0 })
+    const loading = reactive({
+      raiderResults: false,
+      defenderResults: false,
+    })
     const raiderOrderByOptions = [
       {
         id: 'raidAttacks',
@@ -111,13 +120,19 @@ export default defineComponent({
       orderBy.value[type] = option.id
       console.log(getFilters('raider'))
       if (type === 'raider ') {
+        loading.raiderResults = true
+
         raiderResults.value = await getAdventurerRaidResults(
           getFilters('raider')
         )
+        loading.raiderResults = false
       } else {
+        loading.defenderResults = true
+
         defenderResults.value = await getAdventurerRaidResults(
           getFilters('defender')
         )
+        loading.defenderResults = false
       }
     }
     const getFilters = (type) => {
@@ -130,14 +145,19 @@ export default defineComponent({
       }
     }
     useFetch(async () => {
+      loading.raiderResults = true
+      loading.defenderResults = true
       raiderResults.value = await getAdventurerRaidResults(getFilters('raider'))
       defenderResults.value = await getAdventurerRaidResults(
         getFilters('defender')
       )
+      loading.raiderResults = false
+      loading.defenderResults = false
     })
     return {
       raiderResults,
       orderBy,
+      loading,
       setOrderBy,
       defenderResults,
       raiderOrderByOptions,

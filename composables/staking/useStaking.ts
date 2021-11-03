@@ -17,7 +17,7 @@ export function useStaking() {
   const error = reactive({
     stake: null,
   })
-  const { showError } = useNotification()
+  const { showError, showSuccess } = useNotification()
   const loading = reactive({
     stake: null,
   })
@@ -30,6 +30,8 @@ export function useStaking() {
       loading.stake = true
       await setApprovalForAll(account.value, activeNetwork.value.id)
       result.stake = await stake(account.value, activeNetwork.value.id, realmId)
+      const body = 'Successfully staked Realm ' + realmId
+      showSuccess('Realm staked', body)
     } catch (e) {
       await showError(e.message)
       error.stake = e.message
