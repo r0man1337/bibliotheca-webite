@@ -14,13 +14,6 @@ const claimsList: Claim[] = [
     status: 'Completed',
     requirements: ['N/A'],
   },
-  {
-    title: '$ATIME',
-    slug: 'atime-claim',
-    type: 'Claim',
-    status: 'Available',
-    requirements: ['Realm'],
-  },
 ]
 
 export function useClaims() {
