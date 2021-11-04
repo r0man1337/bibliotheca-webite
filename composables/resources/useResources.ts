@@ -12,7 +12,7 @@ import ResourceTokensAbi from '~/abi/ResourceTokens.json'
 import erc1155Tokens from '~/constant/erc1155Tokens'
 import contractAddress from '~/constant/contractAddress'
 import { useGraph } from '~/composables/web3/useGraph'
-
+const allUsersResources = ref()
 export function useResources() {
   const { provider, library, account, activate } = useWeb3()
   const { partnerNetwork, useL1Network, useL2Network } = useNetwork()
@@ -56,12 +56,12 @@ export function useResources() {
       return b.totalRealms - a.totalRealms
     })
   })
-
+  const balance = ref()
   const fetchResource = async (account, resourceId) => {
     try {
       error.resources = null
       // loading.resources = true
-      return await getResourceBalance(
+      balance.value = await getResourceBalance(
         account,
         activeNetwork.value.id,
         resourceId
@@ -72,6 +72,24 @@ export function useResources() {
       error.resources = e.message
     } finally {
       // loading.resources = false
+    }
+  }
+
+  const fetchUsersBalance = async (address) => {
+    const balances = []
+    for (let i = 1; i <= 22; i++) {
+      try {
+        const balance = await getResourceBalance(
+          account.value,
+          activeNetwork.value.id,
+          i
+        )
+        balances.push(balance)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        console.log('ss')
+      }
     }
   }
   const fetchProductionOutput = async (realmId, resourceId) => {

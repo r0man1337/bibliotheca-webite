@@ -23,7 +23,9 @@
           <div class="pb-2">
             {{ unitValues.description }}
           </div>
-          <div v-if="maxArmy" class="text-center">Max Units: {{ maxArmy }}</div>
+          <div v-if="maxArmy" class="text-center">
+            Total Max Units: {{ maxArmy }}
+          </div>
           <div class="mx-auto flex justify-center">
             <button
               class="px-2 bg-gray-100 rounded hover:bg-gray-200"
@@ -109,7 +111,7 @@ export default defineComponent({
       required: true,
     },
     maxArmy: {
-      type: Object,
+      type: Number,
       required: false,
       default: null,
     },
