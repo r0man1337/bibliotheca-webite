@@ -117,6 +117,7 @@ export function useResources() {
     try {
       error.resources = null
       loading.resources = true
+
       await fetchUpgradeCost(resourceId, level)
       await upgradeResourceProduction(
         account.value,

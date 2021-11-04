@@ -96,6 +96,7 @@
             :unit="raidingArmy[0]"
             :unit-id="0"
             :time="raidingArmy[1]"
+            :max-army="maxArmy"
           >
           </RealmMilitary>
           <RealmMilitary
@@ -103,6 +104,7 @@
             :unit="raidingArmy[2]"
             :unit-id="1"
             :time="raidingArmy[3]"
+            :max-army="maxArmy"
           >
           </RealmMilitary>
           <RealmMilitary
@@ -233,6 +235,7 @@ import { useConstruction } from '~/composables/construction/useConstruction'
 import LoadingRings from '~/assets/img/loadingRings.svg?inline'
 import { useMilitary } from '~/composables/military/useMilitary'
 import { useWeb3 } from '~/composables/web3'
+
 // import { militaryUnits } from '@/composables/utils/militaryUnits'
 export default defineComponent({
   components: {
@@ -313,7 +316,17 @@ export default defineComponent({
 
     const active = ref(false)
 
+    const maxArmy = computed(() => {
+      // const knights = parseInt(raidingArmy.value[0])
+      // const footsoliders = parseInt(raidingArmy.value[2])
+
+      // const castles = parseInt(buildings.value[2]) * 5 + parseInt(buildings.value[4]) * 2;
+
+      return parseInt(buildings.value[2]) * 5 + parseInt(buildings.value[4]) * 2
+    })
+
     return {
+      maxArmy,
       claimResources,
       isMyRealm,
       getRealmsResourceBalance,

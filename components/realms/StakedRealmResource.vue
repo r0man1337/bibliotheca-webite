@@ -28,7 +28,7 @@
         :disabled="!upgradeCosts"
         @click="upgradeResource(realmId, resourceId, resourceLevel)"
       >
-        {{ loading.resources ? 'Upgrading..' : 'Upgrade' }}
+        {{ loading.resources ? 'Upgrading...' : 'Upgrade' }}
       </Web3Button>
 
       <template slot="popover">

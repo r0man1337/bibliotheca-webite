@@ -1,18 +1,20 @@
 <template>
   <div>
     <div class="flex">
-      <nav class="space-x-4 mb-8 bg-gray-900 px-3 py-5 rounded-2xl">
+      <nav class="space-x-4 mb-8 bg-gray-900 px-2 py-3 rounded-2xl">
         <BButton
           v-for="(link, index) in menuLinks"
           :key="index"
           class="
             rounded-xl
             px-6
+            py-3
+            font-body
             hover:bg-black hover:text-red-600
             border-2 border-transparent
             uppercase
           "
-          :class="[activeTab === link.slug ? 'text-red-400' : 'text-gray-400']"
+          :class="[activeTab === link.slug ? 'text-red-600' : 'text-gray-400']"
           @click.native="currentTab(link.slug)"
           >{{ link.title }}</BButton
         >

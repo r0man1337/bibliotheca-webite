@@ -18,35 +18,45 @@
       </div>
 
       <template slot="popover">
-        <div class="bg-gray-300 shadow-xl p-4 rounded text-black z-50">
-          <h4 class="text-center mb-1">{{ unitValues.name }} Cost</h4>
-          <div>
+        <div class="bg-gray-300 shadow-xl p-4 rounded-2xl text-black z-50">
+          <h3 class="text-center mb-1">{{ unitValues.name }}</h3>
+          <div class="pb-2">
             {{ unitValues.description }}
           </div>
-
+          <div v-if="maxArmy" class="text-center">Max Units: {{ maxArmy }}</div>
           <div class="mx-auto flex justify-center">
-            <button class="px-2 bg-gray-500 rounded" @click="qty--">-</button>
+            <button
+              class="px-2 bg-gray-100 rounded hover:bg-gray-200"
+              @click="qty--"
+            >
+              -
+            </button>
             <input
               v-model="qty"
-              class="w-4 rounded bg-gray-300 text-center"
-              type="text"
+              type="number"
+              min="1"
+              max="10"
+              class="w-9 rounded bg-gray-300 text-center hover:bg-gray-200"
             />
-            <button class="px-2 bg-gray-500 rounded" @click="qty++">+</button>
+            <button class="px-2 bg-gray-100 rounded" @click="qty++">+</button>
           </div>
           <div v-if="isAddressPage" class="flex my-2 justify-center">
             <Web3Button
               type="small"
+              class="w-full hover:text-white"
               :disabled="!unitCost"
               @click="
                 buildRaiding(realmId, unitId, qty, unitCost[0], unitCost[1])
               "
             >
-              {{ loading.buildRaiding ? 'Building..' : 'Build' }}
+              {{ loading.buildRaiding ? 'Building..' : 'Build Unit' }}
             </Web3Button>
           </div>
           <div class="my-3">
-            Offence: +{{ unitValues.offence }} <br />
-            Defence: +{{ unitValues.defence }}
+            Offence:
+            <span class="font-semibold">+{{ unitValues.offence }}</span> <br />
+            Defence:
+            <span class="font-semibold">+{{ unitValues.defence }}</span>
           </div>
           <div v-if="unitCost" class="flex justify-between capitalize">
             <div class="flex flex-col capitalize">
@@ -97,6 +107,11 @@ export default defineComponent({
     time: {
       type: Object,
       required: true,
+    },
+    maxArmy: {
+      type: Object,
+      required: false,
+      default: null,
     },
   },
   setup(props) {
