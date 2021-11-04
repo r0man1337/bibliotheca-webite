@@ -38,7 +38,10 @@
                 </th>
               </tr>
             </thead>
-            <tbody v-if="results" class="bg-gray-900 divide-y divide-gray-200">
+            <tbody
+              v-if="results && !loading"
+              class="bg-gray-900 divide-y divide-gray-200"
+            >
               <tr v-for="(result, index) in results" :key="index">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
@@ -103,6 +106,10 @@
                 </td>
               </tr>
             </tbody>
+            <span v-else
+              ><LoadingRings class="mx-auto w-24 h-24 mr-8" />Not
+              Implemented</span
+            >
           </table>
         </div>
       </div>
@@ -112,8 +119,13 @@
 
 <script>
 import dayjs from 'dayjs'
+import LoadingRings from '~/assets/img/loadingRings.svg?inline'
+
 // import { computed } from '@nuxtjs/composition-api'
 export default {
+  components: {
+    LoadingRings,
+  },
   props: {
     results: {
       type: Array,
@@ -122,6 +134,10 @@ export default {
     type: {
       type: String,
       default: 'raid',
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

@@ -118,10 +118,9 @@ export default defineComponent({
     const setOrderBy = async (option, type) => {
       skip.value[type] = 0
       orderBy.value[type] = option.id
-      console.log(getFilters('raider'))
-      if (type === 'raider ') {
+      // TODO update subgraph format for wallet raid results
+      if (type === 'raider') {
         loading.raiderResults = true
-
         raiderResults.value = await getAdventurerRaidResults(
           getFilters('raider')
         )
