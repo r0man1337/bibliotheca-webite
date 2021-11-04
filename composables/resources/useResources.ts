@@ -63,7 +63,7 @@ export function useResources() {
       // loading.resources = true
       return await getResourceBalance(
         account,
-        activeNetwork.value.id,
+        useL2Network.value.id,
         resourceId
       )
     } catch (e) {
