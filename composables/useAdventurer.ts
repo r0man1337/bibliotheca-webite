@@ -9,10 +9,6 @@ export enum Layers {
   l2,
 }
 
-const adventurer = reactive({
-  l1: null,
-  l2: null,
-})
 export function useAdventurer() {
   const loading = ref(false)
   const error = reactive({
@@ -20,6 +16,10 @@ export function useAdventurer() {
   })
   const { gqlRequest } = useGraph()
   const { useL1Network, useL2Network } = useNetwork()
+  const adventurer = reactive({
+    l1: null,
+    l2: null,
+  })
   const fetchAdventurer = async (address, layer) => {
     if (layer === 'l1') {
       const { wallet } = await gqlRequest(
@@ -60,15 +60,10 @@ export function useAdventurer() {
     }
   }
 
-  const l2 = computed(() => {
-    return adventurer
-  })
-
   return {
     getAdventurer,
     adventurer,
     error,
     loading,
-    l2,
   }
 }
