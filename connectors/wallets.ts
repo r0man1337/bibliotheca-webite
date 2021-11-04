@@ -3,7 +3,7 @@ import {
   injected,
   walletconnect,
   portis,
-  walletlink /*, ledger */,
+  /* walletlink , ledger , */
 } from '~/connectors'
 
 import METAMASK_ICON_URL from '~/assets/icons/metamask.svg?inline'
@@ -34,12 +34,12 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     name: 'Portis',
     iconURL: PORTIS_ICON_URL,
   },
-  WALLET_LINK: {
+  /* WALLET_LINK: {
     connector: walletlink,
     name: 'Coinbase Wallet',
     iconURL: COINBASE_ICON_URL,
   },
-  /* LEDGER: {
+   LEDGER: {
     connector: ledger,
     name: 'Ledger',
     iconURL: LEDGER_ICON_URL,

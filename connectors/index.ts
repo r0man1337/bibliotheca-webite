@@ -1,7 +1,7 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { PortisConnector } from '@web3-react/portis-connector'
-import { WalletLinkConnector } from '@web3-react/walletlink-connector'
+// import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { Web3Provider } from '@ethersproject/providers'
 import { setWeb3LibraryCallback } from '@instadapp/vue-web3'
 
@@ -27,12 +27,12 @@ const RPC_URLS: { [chainId: number]: string } = {
 export const injected = new InjectedConnector({
   supportedChainIds: [1, 4, 421611, 42161],
 })
-
+/*
 export const walletlink = new WalletLinkConnector({
   url: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
   appName: 'Bibliotheca x Realms',
   appLogoUrl: Book,
-})
+}) */
 
 export const walletconnect = new WalletConnectConnector({
   rpc: { 1: RPC_URLS[1] },
