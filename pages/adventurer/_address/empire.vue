@@ -47,13 +47,18 @@
     <div class="mt-8">
       <h2>Settled Realms</h2>
     </div>
-    <div v-if="sRealms.length" class="flex flex-wrap">
-      <StakedRealm
-        v-for="realm in adventurer.l2.srealms"
-        :key="realm.id"
-        :realm="realm"
-        @unsettle="popFromArray"
-      />
+    <div v-if="sRealms.length">
+      <div class="flex flex-wrap">
+        <StakedRealm
+          v-for="realm in adventurer.l2.srealms"
+          :key="realm.id"
+          :realm="realm"
+          @unsettle="popFromArray"
+        />
+      </div>
+      <BButton type="primary" :to="'/adventurer/' + address + '/realms'">
+        See all Realms</BButton
+      >
     </div>
     <div v-else-if="loadingSRealms">
       <Loader />
@@ -139,6 +144,7 @@ export default defineComponent({
 
     return {
       adventurer,
+      address,
       activeNetworkId,
       popFromArray,
       stakeRealm,

@@ -84,7 +84,7 @@ export default defineComponent({
     },
     offence: {
       type: Number,
-      required: true,
+      default: 0,
     },
   },
   setup(props) {

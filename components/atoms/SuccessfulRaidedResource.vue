@@ -22,7 +22,7 @@ import { useConnect } from '~/composables/web3/useConnect'
 export default defineComponent({
   props: {
     resource: {
-      type: String,
+      type: Object,
       required: true,
     },
     vault: {
@@ -30,7 +30,7 @@ export default defineComponent({
       required: true,
     },
     value: {
-      type: String,
+      type: Object,
       required: false,
       default: null,
     },

@@ -140,11 +140,11 @@ const getl2Adventurer = gql`
     wallet(id: $address) {
       id
       realmsHeld
-      realms(first: 30) {
+      realms(first: 5) {
         ...RealmData
       }
       srealmsHeld
-      srealms(first: 30) {
+      srealms(first: 5) {
         ...SRealmData
       }
       raiderResults(orderBy: timestamp, orderDirection: desc) {

@@ -110,7 +110,7 @@
             >
               <input
                 :id="'filter-' + option.id"
-                v-model="checked[section.id]"
+                v-model="checked[type][section.id]"
                 :value="parseInt(option.id)"
                 :checked="option.checked"
                 type="checkbox"
@@ -162,6 +162,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    type: {
+      type: String,
+      default: 'all',
+    },
   },
   setup(props, context) {
     const { getResourceList, resourceList, resourceListOrdered } =
@@ -195,10 +199,13 @@ export default {
     ])
     const openFilter = ref(null)
 
-    const checked = ref({ resources: [], orders: [] })
+    const checked = ref({
+      user: { resources: [], orders: [] },
+      all: { resources: [], orders: [] },
+    })
 
     const updateResources = () => {
-      context.emit('searchFilter', checked.value)
+      context.emit('searchFilter', checked.value[props.type])
     }
     const toggleSection = (section) => {
       section.open = !section.open

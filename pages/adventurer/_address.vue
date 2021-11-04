@@ -60,17 +60,21 @@ export default defineComponent({
         slug: '',
       },
       {
+        title: 'Realms',
+        slug: 'realms',
+      },
+      {
         title: 'Raid Results',
         slug: 'raid-results',
       },
     ])
     const displayedLinks = computed(() => {
-      if (isAddressPage.value) {
+      /* if (isAddressPage.value) {
         return menuLinks.value.concat({
           title: 'Realms available to Settle',
           slug: 'settling',
         })
-      } else return menuLinks.value
+      } else */ return menuLinks.value
     })
 
     if (isAddressPage) {
