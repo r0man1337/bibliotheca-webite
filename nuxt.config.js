@@ -153,6 +153,7 @@ export default {
     '~/plugins/vue-formulate',
     '~/plugins/analytics.js',
     '~/plugins/v-click-outside.js',
+    '~/plugins/v-scroll.js',
     '~/plugins/vue-awesome-countdown.js',
     '~/plugins/v-tooltip.js',
   ],

@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "add": "^2.0.6",
-    "vue-toast-notification": "^2.0"
+    "vue-toast-notification": "^2.0",
+    "vue-scroll": "^2.1.13"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
