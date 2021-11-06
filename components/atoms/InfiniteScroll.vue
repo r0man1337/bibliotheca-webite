@@ -1,5 +1,5 @@
 <template>
-  <div v-scroll="fetchNextBlockIfNeeded">
+  <div>
     <slot />
   </div>
 </template>
@@ -36,7 +36,7 @@ export default defineComponent({
 
     function fetchNextBlockIfNeeded(e) {
       const div = e.target.documentElement
-      const divGap = window.top.scrollMaxY - div.scrollTop
+      const divGap = div.scrollHeight - div.clientHeight - div.scrollTop
       if (divGap < loadGap) {
         if (!locked) {
           locked = true
